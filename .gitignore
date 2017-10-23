@@ -16,10 +16,8 @@ robots.txt
 .htaccess
 venv/*
 
-data/ref/communes.shp
-data/ref/communes.shx
-data/ref/communes.dbf
-data/ref/communes.prj
+data/*
+
 
 static/custom/territoire.json
 static/custom/glossaire.json
