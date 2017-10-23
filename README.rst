@@ -2,6 +2,7 @@
 Plateforme de visualisation des données naturalistes des Pays de la Loire, basée sur GeoNature-atlas
 ===============
 
+Projet de plateforme web permettant de visualiser les données du réseau naturaliste des Pays de la Loire, porté par le Conservatoire d'espaces naturels des Pays de la Loire.
 
 
 GeoNature-atlas
