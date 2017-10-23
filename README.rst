@@ -4,7 +4,9 @@ Plateforme de visualisation des données naturalistes des Pays de la Loire, bas�
 
 Projet de plateforme web permettant de visualiser les données du réseau naturaliste des Pays de la Loire, porté par le `Conservatoire d'espaces naturels des Pays de la Loire <http://www.cenpaysdelaloire.fr/>`_.
 
-Cette plateforme est développée à partir de `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_, sur un serveur Ubuntu 16.04 (fichiers d'installation <https://github.com/Splendens/install_all_geonature_ubuntu16_04>`_).
+.. image :: docs/images/cenpdl-logo-couleur.jpg
+
+Cette plateforme est développée à partir de `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_, sur un serveur Ubuntu 16.04 (`fichiers d'installation <https://github.com/Splendens/install_all_geonature_ubuntu16_04>`_).
 
 
 GeoNature-atlas
