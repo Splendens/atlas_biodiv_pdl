@@ -12,7 +12,7 @@ Bases de développement
 ------------
 
 
-Cette plateforme est développée à partir des outils de gestion de données naturalistes (voir `GeoNature <http://geonature.fr>`_) développés par le Parc National des Ecrins :
+Cette plateforme est développée à partir des outils de gestion de données naturalistes (voir `GeoNature <http://geonature.fr>`_) développés par le Parc National des Ecrins et le Parc national des Cévennes:
 
 - la structure de base de données de `GeoNature <https://github.com/PnEcrins/GeoNature>`_ ;
 - l'outil complet `UsersHub <https://github.com/PnEcrins/UsersHub>`_ ;
