@@ -12,7 +12,7 @@ Bases de développement
 ------------
 
 
-Cette plateforme est développée à partir des outils de gestion de données naturalistes (voir `GeoNature <http://geonature.fr>`_)développés par le Parc National des Ecrins :
+Cette plateforme est développée à partir des outils de gestion de données naturalistes (voir `GeoNature <http://geonature.fr>`_) développés par le Parc National des Ecrins :
 
 - la structure de base de données de `GeoNature <https://github.com/PnEcrins/GeoNature>`_ ;
 - l'outil complet `UsersHub <https://github.com/PnEcrins/UsersHub>`_ ;
@@ -30,7 +30,7 @@ Ces outils sont déployés sur un serveur Ubuntu 16.04 (`fichiers d'installation
 La plateforme Biodiversité - Pays de la Loire
 ------------
 
-La plateforme de visusalistion est bassée sur `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_, en cours de modification pour permettre : 
+La plateforme de visusalistion est basée sur `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_, en cours de modification pour permettre : 
 
 - le moissonnage des données naturalistes dégradées (= non précises) des bases de données des partenaires naturalistes ;
 - l'affichage des données par mailles, communes et intercommunalités ;
