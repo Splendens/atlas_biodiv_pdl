@@ -53,3 +53,16 @@ Modifications en cours
 - Ajout des fonctionnalités de visualisation des données par communes et intercommunalités
 - Ajout des fonctionnalités de visualisation de graphes de statistiques sur les territoires
 
+
+
+Modifications apportées
+------------
+
+**Bases de données**
+
+- Insertion des zonages (territoire, communes) des Pays de la Loire
+
+
+**Application**
+
+-
