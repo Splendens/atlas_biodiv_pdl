@@ -39,7 +39,7 @@ La plateforme de visusalistion est basée sur `Geonature-atlas <https://github.c
 Modifications en cours
 ------------
 
-** Bases de données **
+**Bases de données**
 
 - Ajout d'un schéma par base de données partenaires moissonnées à la DB geonaturedb
 - Ajout des triggers pour l'insertion des données des partenaires dans la table de synthèse
@@ -47,7 +47,7 @@ Modifications en cours
 - Ajout de vues matérialisées à la DB geonatureatlas pour l'affichage par communes et intercommunalités
 
 
-** Application **
+**Application**
 
 - Modification de la page d'accueil 
 - Ajout des fonctionnalités de visualisation des données par communes et intercommunalités
