@@ -6,73 +6,33 @@ Projet de plateforme web permettant de visualiser les données "biodiversité" d
 
 .. image :: docs/images/cenpdl-logo-couleur.jpg
 
-Cette plateforme est développée à partir de `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_ du Parc National des Ecrins, sur un serveur Ubuntu 16.04 (`fichiers d'installation <https://github.com/Splendens/install_all_geonature_ubuntu16_04>`_).
 
 
-GeoNature-atlas
-===============
-
-.. image :: docs/images/geonature-atlas-screenshot.jpg
-
-Atlas WEB dynamique Faune-Flore basé sur les données présentes dans la synthèse de `GeoNature <http://geonature.fr>`_.
-
-Utilisé pour Biodiv'Ecrins, l'atlas de faune et de la flore du Parc national des Ecrins (http://biodiversite.ecrins-parcnational.fr).
-
-Il permet de générer dynamiquement des fiches espèces avec des données calculées automatiquement (cartes de répartition, répartition altitudinale et phénologique, communes, secteurs, observateurs...) ainsi que des données saisies pour chaque espèce (photos, description...). 
-
-L'outil a été développé de manière générique pour pouvoir être déployé sur d'autres BDD que GeoNature (SERENA, SICEN, INPN, fichier CSV, etc).
-
-**Interrogez vos observations naturalistes, croisez-les avec TAXREF, publiez votre atlas en ligne dynamique**
-
-.. image :: docs/images/geonature-atlas-schema-01.jpg
-
-**Ou déployez l'ensemble complet d'applications de gestion de données naturalistes** (`UsersHub <https://github.com/PnEcrins/UsersHub>`_, `TaxHub <https://github.com/PnX-SI/TaxHub>`_, `GeoNature <https://github.com/PnEcrins/GeoNature>`_)
-
-.. image :: docs/images/geonature-atlas-schema-02.jpg
-
-Documentation d'installation : https://github.com/PnEcrins/GeoNature-atlas/blob/master/docs/installation.rst
-
-Présentation générale : https://github.com/PnEcrins/GeoNature-atlas/blob/master/docs/2016-09-GeoNature-atlas-PRESENTATION.pdf
-
-Rapport de stage (Théo Lechemia) : https://github.com/PnEcrins/GeoNature-atlas/blob/master/docs/2016-09-30-rapport_stage_Theo-Lechemia.pdf
-
-Soutenance de stage (Théo Lechemia) : https://github.com/PnEcrins/GeoNature-atlas/blob/master/docs/2016-09-soutenance-Theo-Lechemia.pdf
-
-Technologies
+Bases de développement
 ------------
 
-- Langages : Python, HTML, JS, CSS
-- BDD : PostgreSQL, PostGIS
-- Serveur : Debian ou Ubuntu
-- Framework Python : Flask
-- Framework JS : jQuery
-- Framework carto : Leaflet
-- Serveur carto : Aucun
-- Fonds rasters : Geoportail, OpenStreetMap, Google Maps, WMS...
 
-Généricité
-----------
+Cette plateforme est développée à partir des outils de gestion de données naturalistes (voir `GeoNature <http://geonature.fr>`_)développés par le Parc National des Ecrins :
 
-L'API de GeoNature-atlas se sert directement dans des vues. Ainsi chacun peut personnaliser ses vues en fonction des besoins et des différences dans les tables. 
+- la structure de base de données de `GeoNature <https://github.com/PnEcrins/GeoNature>`_ ;
+- l'outil complet `UsersHub <https://github.com/PnEcrins/UsersHub>`_ ;
+- l'outil complet `TaxHub <https://github.com/PnX-SI/TaxHub>`_ ;
+- l'outil complet `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_ modifié pour les besoins du CEN Pays de la Loire.
 
-L'ensemble des vues sont regroupées dans un schéma spécifique « atlas », ce qui laisse la possibilité de les remplir avec autre chose que GeoNature.
+
+Ces outils sont déployés sur un serveur Ubuntu 16.04 (`fichiers d'installation <https://github.com/Splendens/install_all_geonature_ubuntu16_04>`_).
 
 
 
-Auteurs
--------
-
-- Théo Lechemia
-- Gil Deluermoz
-- Camille Monchicourt
-
-Licence
--------
-
-* OpenSource - GPL V3
-* Copyright (c) 2016 - Parc National des Écrins
 
 
-.. image:: http://geonature.fr/img/logo-pne.jpg
-    :target: http://www.ecrins-parcnational.fr
+
+La plateforme Biodiversité - Pays de la Loire
+------------
+
+La plateforme de visusalistion est bassée sur `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_, en cours de modification pour permettre : 
+
+- le moissonnage des données naturalistes dégradées (= non précises) des bases de données des partenaires naturalistes ;
+- l'affichage des données par mailles, communes et intercommunalités ;
+- l'affichage de graphes de synthèses sur les territoires (statistiques par groupes, statistiques par statuts...).
 
