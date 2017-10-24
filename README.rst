@@ -45,12 +45,13 @@ Modifications en cours
 - Ajout des triggers pour l'insertion des données des partenaires dans la table de synthèse
 - Ajout des fonctions de moissonnage des DB externes
 - Ajout de vues matérialisées à la DB geonatureatlas pour l'affichage par communes et intercommunalités
+- Modifications de la récupération des mailles (données dégradées aux centroïdes des mailles ?)
 
 
 **Application**
 
 - Modification de la page d'accueil 
-- Ajout des fonctionnalités de visualisation des données par communes et intercommunalités
+- Ajout des fonctionnalités de visualisation des données par communes et intercommunalités 
 - Ajout des fonctionnalités de visualisation de graphes de statistiques sur les territoires
 
 
