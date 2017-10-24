@@ -25,8 +25,6 @@ Ces outils sont déployés sur un serveur Ubuntu 16.04 (`fichiers d'installation
 
 
 
-
-
 La plateforme Biodiversité - Pays de la Loire
 ------------
 
@@ -35,4 +33,23 @@ La plateforme de visusalistion est basée sur `Geonature-atlas <https://github.c
 - le moissonnage des données naturalistes dégradées (= non précises) des bases de données des partenaires naturalistes ;
 - l'affichage des données par mailles, communes et intercommunalités ;
 - l'affichage de graphes de synthèses sur les territoires (statistiques par groupes, statistiques par statuts...).
+
+
+
+Modifications en cours
+------------
+
+** Bases de données **
+
+- Ajout d'un schéma par base de données partenaires moissonnées à la DB geonaturedb
+- Ajout des triggers pour l'insertion des données des partenaires dans la table de synthèse
+- Ajout des fonctions de moissonnage des DB externes
+- Ajout de vues matérialisées à la DB geonatureatlas pour l'affichage par communes et intercommunalités
+
+
+** Application **
+
+- Modification de la page d'accueil 
+- Ajout des fonctionnalités de visualisation des données par communes et intercommunalités
+- Ajout des fonctionnalités de visualisation de graphes de statistiques sur les territoires
 
