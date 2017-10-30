@@ -1,69 +1,67 @@
-
-Plateforme de visualisation des données naturalistes des Pays de la Loire, basée sur GeoNature-atlas
+GeoNature-atlas
 ===============
 
-Projet de plateforme web permettant de visualiser les données "biodiversité" du réseau naturaliste des Pays de la Loire. Projet porté par le `Conservatoire d'espaces naturels des Pays de la Loire <http://www.cenpaysdelaloire.fr/>`_.
+.. image :: docs/images/geonature-atlas-screenshot.jpg
 
-.. image :: docs/images/cenpdl-logo-couleur.jpg
+Atlas WEB dynamique Faune-Flore basé sur les données présentes dans la synthèse de `GeoNature <http://geonature.fr>`_.
 
+Utilisé pour Biodiv'Ecrins, l'atlas de faune et de la flore du Parc national des Ecrins (http://biodiversite.ecrins-parcnational.fr).
 
+Il permet de générer dynamiquement des fiches espèces avec des données calculées automatiquement (cartes de répartition, répartition altitudinale et phénologique, communes, secteurs, observateurs...) ainsi que des données saisies pour chaque espèce (photos, description...). 
 
-Bases de développement
+L'outil a été développé de manière générique pour pouvoir être déployé sur d'autres BDD que GeoNature (SERENA, SICEN, INPN, fichier CSV, etc).
+
+**Interrogez vos observations naturalistes, croisez-les avec TAXREF, publiez votre atlas en ligne dynamique**
+
+.. image :: docs/images/geonature-atlas-schema-01.jpg
+
+**Ou déployez l'ensemble complet d'applications de gestion de données naturalistes** (`UsersHub <https://github.com/PnEcrins/UsersHub>`_, `TaxHub <https://github.com/PnX-SI/TaxHub>`_, `GeoNature <https://github.com/PnEcrins/GeoNature>`_)
+
+.. image :: docs/images/geonature-atlas-schema-02.jpg
+
+Documentation d'installation : https://github.com/PnEcrins/GeoNature-atlas/blob/master/docs/installation.rst
+
+Présentation générale : https://github.com/PnEcrins/GeoNature-atlas/blob/master/docs/2016-09-GeoNature-atlas-PRESENTATION.pdf
+
+Rapport de stage (Théo Lechemia) : https://github.com/PnEcrins/GeoNature-atlas/blob/master/docs/2016-09-30-rapport_stage_Theo-Lechemia.pdf
+
+Soutenance de stage (Théo Lechemia) : https://github.com/PnEcrins/GeoNature-atlas/blob/master/docs/2016-09-soutenance-Theo-Lechemia.pdf
+
+Technologies
 ------------
 
+- Langages : Python, HTML, JS, CSS
+- BDD : PostgreSQL, PostGIS
+- Serveur : Debian ou Ubuntu
+- Framework Python : Flask
+- Framework JS : jQuery
+- Framework carto : Leaflet
+- Serveur carto : Aucun
+- Fonds rasters : Geoportail, OpenStreetMap, Google Maps, WMS...
 
-Cette plateforme est développée à partir des outils de gestion de données naturalistes (voir `GeoNature <http://geonature.fr>`_) développés par le Parc National des Ecrins et le Parc national des Cévennes :
+Généricité
+----------
 
-- la structure de base de données de `GeoNature <https://github.com/PnEcrins/GeoNature>`_ ;
-- l'outil complet `UsersHub <https://github.com/PnEcrins/UsersHub>`_ ;
-- l'outil complet `TaxHub <https://github.com/PnX-SI/TaxHub>`_ ;
-- l'outil complet `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_ modifié pour les besoins du CEN Pays de la Loire.
+L'API de GeoNature-atlas se sert directement dans des vues. Ainsi chacun peut personnaliser ses vues en fonction des besoins et des différences dans les tables. 
 
-
-Ces outils sont déployés sur un serveur Ubuntu 16.04 (`fichiers d'installation <https://github.com/Splendens/install_all_geonature_ubuntu16_04>`_).
-
-
-
-
-La plateforme Biodiversité - Pays de la Loire
-------------
-
-La plateforme de visusalistion est basée sur `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_, en cours de modification pour permettre : 
-
-- le moissonnage des données naturalistes dégradées (= non précises) des bases de données des partenaires naturalistes ;
-- l'affichage des données par mailles, communes et intercommunalités ;
-- l'affichage de graphes de synthèses sur les territoires (statistiques par groupes, statistiques par statuts...).
+L'ensemble des vues sont regroupées dans un schéma spécifique « atlas », ce qui laisse la possibilité de les remplir avec autre chose que GeoNature.
 
 
 
-Modifications en cours
-------------
+Auteurs
+-------
 
-**Bases de données**
+- Théo Lechemia
+- Gil Deluermoz
+- Camille Monchicourt
 
-- Ajout d'un schéma par base de données partenaires moissonnées à la DB geonaturedb
-- Ajout des triggers pour l'insertion des données des partenaires dans la table de synthèse
-- Ajout des fonctions de moissonnage des DB externes
-- Ajout de vues matérialisées à la DB geonatureatlas pour l'affichage par communes et intercommunalités
-- Modifications de la récupération des mailles (données dégradées aux centroïdes des mailles ?)
+Licence
+-------
 
-
-**Application**
-
-- Modification de la page d'accueil 
-- Ajout des fonctionnalités de visualisation des données par communes et intercommunalités 
-- Ajout des fonctionnalités de visualisation de graphes de statistiques sur les territoires
+* OpenSource - GPL V3
+* Copyright (c) 2016 - Parc National des Écrins
 
 
+.. image:: http://geonature.fr/img/logo-pne.jpg
+    :target: http://www.ecrins-parcnational.fr
 
-Modifications apportées
-------------
-
-**Bases de données**
-
-- Insertion des zonages (territoire, communes) des Pays de la Loire
-
-
-**Application**
-
--
