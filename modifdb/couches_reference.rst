@@ -13,7 +13,7 @@ Se placer dans le répertoire ``/home/MYUSERLINUX/atlas`` et lancer la commande 
 
 En BD :
 
-TRUNCATE TABLE  atlas.t_layer_territoire;
+``TRUNCATE TABLE  atlas.t_layer_territoire;``
 
 Lancer la commande shell :
 
@@ -21,10 +21,10 @@ Lancer la commande shell :
 
 En BD :
 
-ALTER TABLE atlas.t_layer_territoire OWNER TO "geonatuser";
+``ALTER TABLE atlas.t_layer_territoire OWNER TO "geonatuser";
 
 ALTER TABLE atlas.t_layer_territoire RENAME COLUMN geom TO the_geom; 
-CREATE INDEX index_gist_t_layer_territoire ON atlas.t_layer_territoire USING gist(the_geom); 
+CREATE INDEX index_gist_t_layer_territoire ON atlas.t_layer_territoire USING gist(the_geom);``
 
 Lancer la commande shell :
 
@@ -42,7 +42,7 @@ Lancer la commande shell :
 
 En BD :
 
-TRUNCATE TABLE  atlas.l_communes;
+``TRUNCATE TABLE  atlas.l_communes;``
 
 Lancer la commande shell :
 
@@ -50,7 +50,7 @@ Lancer la commande shell :
 
 En BD :
 
-ALTER TABLE atlas.l_communes RENAME COLUMN "nom_comm" TO commune_maj;
+``ALTER TABLE atlas.l_communes RENAME COLUMN "nom_comm" TO commune_maj;
 
 ALTER TABLE atlas.l_communes RENAME COLUMN  "insee_comm" TO insee;
 
@@ -58,7 +58,7 @@ ALTER TABLE atlas.l_communes RENAME COLUMN geom TO the_geom;
 
 CREATE INDEX index_gist_t_layers_communes ON atlas.l_communes USING gist (the_geom);
 
-ALTER TABLE atlas.l_communes OWNER TO "geonatuser";
+ALTER TABLE atlas.l_communes OWNER TO "geonatuser";``
 
 
 Changement des mailles
@@ -68,7 +68,7 @@ Creation de la table atlas.t_mailles_territoire avec la taille de maille désir�
 
 En BD :
 
-TRUNCATE TABLE  atlas.t_mailles_territoire;
+``TRUNCATE TABLE  atlas.t_mailles_territoire;
 
 CREATE TABLE atlas.t_mailles_territoire as
                                     SELECT m.geom AS the_geom, ST_AsGeoJSON(st_transform(m.geom, 4326)) as geojson_maille
@@ -83,7 +83,7 @@ CREATE TABLE atlas.t_mailles_territoire as
                                     ADD PRIMARY KEY (id_maille);
 
 
-ALTER TABLE atlas.t_mailles_territoire OWNER TO "geonatuser";
+ALTER TABLE atlas.t_mailles_territoire OWNER TO "geonatuser";``
 
 
 
