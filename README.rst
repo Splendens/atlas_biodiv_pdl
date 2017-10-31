@@ -61,7 +61,7 @@ Modifications apportées
 
 **Bases de données**
 
-- Insertion des zonages (territoire, communes) des Pays de la Loire
+- `Modification des zonages <https://github.com/Splendens/atlas_biodiv_pdl/blob/master/modifdb/couches_reference.rst>`_ (territoire, communes) pour les Pays de la Loire
 
 
 **Application**
