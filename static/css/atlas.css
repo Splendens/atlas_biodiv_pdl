@@ -32,6 +32,7 @@ a.btn.btn-default:hover{
 
 .modal{
     top: 40px;
+    z-index: 2000;
 }
 
 /* Navbar */
