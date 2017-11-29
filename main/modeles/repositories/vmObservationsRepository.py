@@ -263,3 +263,19 @@ def genericStatMedias(connection, tab):
         return None
     else :
         return tabStat
+
+
+
+def getOrgasObservations(connection, cd_ref):
+    sql = "select distinct(orgaobs) \
+    FROM  atlas.vm_observations \
+    WHERE cd_ref in ( \
+    SELECT * from atlas.find_all_taxons_childs(:thiscdref) \
+    )OR cd_ref = :thiscdref \
+    GROUP BY orgaobs".encode('UTF-8')
+    req = connection.execute(text(sql), thiscdref = cd_ref)
+    listOrgas = list()
+    for r in req:
+        temp = {'orgaobs': r.orgaobs}
+        listOrgas.append(temp)
+    return listOrgas

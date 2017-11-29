@@ -232,12 +232,42 @@
                     </div>
                     <div class="col-sm-2" id="mapStat">
                         <ul>
-                            <li> <span data-icon="&#xe037;" style="font-size: 30px;"></span> </br> 
-                                    <b>{{taxon.taxonSearch.nb_obs}}</b> </br> observations</li>
-                            <li> <img id="picto" src="{{url_for('static', filename='images/church.png')}}" style="width"><br/><b>{{communes|length}}</b><br/>communes</li>
-                            <li> <span data-icon="&#xe040;"  style="font-size: 30px;"></span><br/><b>{{observers|length}}</b><br/>observateurs</li>
-                            <li id="firstObs" class="pointer"><span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span><br/><b>Première observation</b><br/>{{taxon.taxonSearch.yearmin|int}}</li>
-                            <li id="lastObs" class="pointer"><span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span><br/><b>Dernière observation</b><br/>{{taxon.taxonSearch.yearmax|int}}</li>
+                            <li> 
+                                <span data-icon="&#xe037;" style="font-size: 20px;"></span> </br> 
+                                <b>{{taxon.taxonSearch.nb_obs}}</b> </br> 
+                                {% if communes|length > 1 %} Observations
+                                {% else %} Observation
+                                {% endif %}
+                            </li>
+                            <li>
+                                <img id="picto" src="{{url_for('static', filename='images/church.png')}}" style="width"><br/>
+                                <b>{{communes|length}}</b><br/>
+                                {% if communes|length > 1 %} Communes
+                                {% else %} Commune
+                                {% endif %}
+                            </li>
+                            <li> 
+                                <span data-icon="&#xe040;"  style="font-size: 20px;"></span><br/>
+                                <b>{{observers|length}}</b><br/>
+                                {% if observers|length > 1 %} Observateurs
+                                {% else %} Observateur
+                                {% endif %}
+                            </li>
+                            <li> 
+                                <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="width"><br/>
+                                <b>{{orgas|length}}</b><br/>
+                                {% if orgas|length > 1 %} Structures
+                                {% else %} Structure
+                                {% endif %}
+                            </li>
+                            <li id="firstObs" class="pointer">
+                                <span data-icon="&#xe037;" style="font-size: 20px; color: brown"></span><br/><b>Première observation</b><br/>
+                                {{taxon.taxonSearch.yearmin|int}}
+                            </li>
+                            <li id="lastObs" class="pointer">
+                                <span data-icon="&#xe037;" style="font-size: 20px; color: blue"></span><br/><b>Dernière observation</b><br/>
+                                {{taxon.taxonSearch.yearmax|int}}
+                            </li>
 
                         </ul>
                     </div>
@@ -249,11 +279,32 @@
                           <ul class="nav nav-tabs">
                             {% if articles | length != 0 %}
                             <li class="active"><a data-toggle="tab" href="#articles"><b>{{articles|length}}</b> articles</a></li>
-                            <li><a data-toggle="tab" href="#communes"> <b>{{communes|length}}</b> communes</a></li>
+                            <li>
+                                <a data-toggle="tab" href="#communes"> <b>{{communes|length}}</b> 
+                                {% if communes|length > 1 %} Communes
+                                {% else %} Commune
+                                {% endif %}</a>
+                            </li>
                             {% else %}
-                            <li class="active"><a data-toggle="tab" href="#communes"> <b>{{communes|length}}</b> communes</a></li>
+                            <li class="active">
+                                <a data-toggle="tab" href="#communes"> <b>{{communes|length}}</b> 
+                                {% if communes|length > 1 %} Communes
+                                {% else %} Commune
+                                {% endif %}</a></a>
+                            </li>
                             {% endif %}
-                            <li><a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> observateurs</a></li>
+                            <li>
+                                <a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> 
+                                {% if observers|length > 1 %} Observateurs
+                                {% else %} Observateur
+                                {% endif %}</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#structures"> <b>{{orgas|length}} </b> 
+                                {% if orgas|length > 1 %} Structures
+                                {% else %} Structure
+                                {% endif %}</a>
+                            </li>
                           </ul>
 
                         <div class="tab-content" style="width:100%;">
@@ -319,6 +370,14 @@
                             <div id="observateurs" class="tab-pane fade">
                                 {% for o in observers %}
                                     {{o }}
+                                    {% if  not loop.last %}
+                                    -
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div id="structures" class="tab-pane fade">
+                                {% for s in orgas %}
+                                    {{s.orgaobs }}
                                     {% if  not loop.last %}
                                     -
                                     {% endif %}

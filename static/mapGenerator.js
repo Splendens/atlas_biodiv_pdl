@@ -94,7 +94,6 @@ baseMap[configuration.MAP.FIRST_MAP.tileName]=firstMapTile;
     fullScreenButton.attr("data-original-title", "Plein écran");
     $('.leaflet-control-fullscreen-button').removeAttr('title');
 
-    
 
     return map
 }
@@ -592,9 +591,6 @@ function generateSliderOnMap(){
                             +"<p id='nbObs'> Nombre d'observation(s): "+nb_obs+" </p>");
 
 
-
-
-
         return sliderContainer;
       }
 
@@ -618,3 +614,30 @@ function generateSliderOnMap(){
 }
 
 
+
+
+// ajout d'un contrôle pour changer le type d'analyse (mailles / communes)
+    L.control.custom({
+    position: 'bottomleft',
+    content : '<fieldset>' +
+                 '<div class="switch-toggle switch-candy">' +
+                    '<input id="Communes" name="view" type="radio" checked>' +
+                    '<label for="Communes" onclick=""><span data-toggle="tooltip" data-placement="bottom" title="Analyse par mailles Communales"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></span></label>' +
+                    '<input id="Mailles" name="view" type="radio">' +
+                    '<label for="Mailles" onclick=""><span data-toggle="tooltip" data-placement="bottom" title="Analyse par mailles régulières"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></span></label>' +
+                    '<a></a>' +
+                 '</div>' +
+                '</fieldset>',
+    style   :
+    {
+        margin: '10px',
+        padding: '0px 0 0 0',
+        cursor: 'pointer',
+    }
+})
+.addTo(map);
+
+// Activation des tooltips
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});

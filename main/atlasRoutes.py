@@ -79,6 +79,7 @@ def ficheEspece(cd_ref):
     videoAudio = vmMedias.getVideo_and_audio(connection, cd_ref, config.ATTR_AUDIO, config.ATTR_VIDEO_HEBERGEE, config.ATTR_YOUTUBE, config.ATTR_DAILYMOTION, config.ATTR_VIMEO)
     articles = vmMedias.getLinks_and_articles(connection, cd_ref, config.ATTR_LIEN, config.ATTR_PDF)
     taxonDescription = vmCorTaxonAttribut.getAttributesTaxon(connection, cd_ref, config.ATTR_DESC, config.ATTR_COMMENTAIRE, config.ATTR_MILIEU, config.ATTR_CHOROLOGIE)
+    orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
 
     configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION, 'LIMIT_FICHE_LISTE_HIERARCHY' : config.LIMIT_FICHE_LISTE_HIERARCHY, 'PATRIMONIALITE':config.PATRIMONIALITE, \
@@ -90,7 +91,7 @@ def ficheEspece(cd_ref):
 
     return render_template('templates/ficheEspece.html', taxon=taxon, listeTaxonsSearch=[], observations=[],\
      cd_ref=cd_ref, altitudes=altitudes, months=months, synonyme=synonyme, communes=communes, communesSearch=communesSearch, taxonomyHierarchy = taxonomyHierarchy,\
-      firstPhoto= firstPhoto, photoCarousel=photoCarousel, videoAudio=videoAudio, articles=articles, taxonDescription=taxonDescription, observers=observers, \
+      firstPhoto= firstPhoto, photoCarousel=photoCarousel, videoAudio=videoAudio, articles=articles, taxonDescription=taxonDescription, orgas=orgas, observers=observers, \
       configuration=configuration)
 
 
