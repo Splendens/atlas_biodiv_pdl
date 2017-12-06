@@ -59,7 +59,7 @@ Modifications apportées
 **Bases de données**
 
 - `Modification des zonages <https://github.com/Splendens/atlas_biodiv_pdl/blob/master/modifdb/couches_reference.rst>`_ (territoire, communes) pour les Pays de la Loire
-- Ajout des structures productriuces des données affichées (Modification de la BD et entités, modèles et vues des fiches espèces, fiches groupes et fiches communes)
+- Ajout des structures productrices des données affichées (modifications : BD, entités, modèles et vues des fiches espèces, fiches groupes et fiches communes)
 
 
 **Application**
