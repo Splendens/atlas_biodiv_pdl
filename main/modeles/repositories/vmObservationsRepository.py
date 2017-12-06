@@ -279,3 +279,18 @@ def getOrgasObservations(connection, cd_ref):
         temp = {'orgaobs': r.orgaobs}
         listOrgas.append(temp)
     return listOrgas
+
+
+def getOrgasCommunes(connection, insee):
+    sql = "select distinct(orgaobs) \
+    FROM  atlas.vm_observations \
+    WHERE insee = :thisInsee  \
+    GROUP BY orgaobs".encode('UTF-8')
+    req = connection.execute(text(sql), thisInsee = insee)
+    listOrgasCom = list()
+    for r in req:
+        temp = {'orgaobs': r.orgaobs}
+        listOrgasCom.append(temp)
+    return listOrgasCom
+
+

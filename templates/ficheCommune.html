@@ -33,6 +33,7 @@
        <!-- Atlas -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}"/>       
+                <!--link rel="stylesheet" href="{{url_for('static', filename='css/ficheEspece.css') }}" /-->
         <link rel="stylesheet" href="{{url_for('static', filename='css/listEspeces.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='css/icones.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}"/>
@@ -52,9 +53,22 @@
 					<div class="row">
                         <h4><b>Commune de {{referenciel.communeName}}</b></h4>
                         <ul id="stat">
-                            <li><span data-icon="&#xe037;" style="font-size: 30px;"></span><br/><b>{{listTaxons.nbObsTotal}}</b><br/>observations</li>
-                            <li><span data-icon="&#xe03b;" style="font-size: 30px;"></span></br><b>{{listTaxons.taxons|length}}</b><br/>espèces</li>
-                            <li><span data-icon="&#xe040;" style="font-size: 30px;"></span></br><b>{{observers | length}}</b><br/>observateurs</li>
+                            <li>
+                                <span data-icon="&#xe037;" style="font-size: 30px;"></span><br/>
+                                <b>{{listTaxons.nbObsTotal}}</b><br/>{{ 'Observations' if listTaxons.nbObsTotal > 1 else 'Observation' }}
+                            </li>
+                            <li>
+                                <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
+                                <b>{{listTaxons.taxons|length}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
+                            </li>
+                            <li>
+                                <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
+                                <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
+                            </li>
+                            <li>
+                                <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="font-size:30px;margin:5%;"></br>
+                                <b>{{orgas|length}}</b><br/>{{ 'Structures' if orgas|length > 1 else 'Structure' }}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -78,6 +92,40 @@
 						</div>
 					</div>
 				</div>
+
+                 <!--div class="panel panel-default" id="otherInformationsPanel">
+                    <div class="row" id="otherInformations">
+                      <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> 
+                            {{ 'Observateurs' if observers|length > 1 else 'Observateur' }}</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#structures"> <b>{{orgas|length}} </b> 
+                            {{ 'Structures' if orgas|length > 1 else 'Structure' }}</a>
+                        </li>
+                      </ul>
+                        <div class="tab-content" style="width:100%;">
+                            <div id="observateurs" class="tab-pane fade in active">
+                                {% for o in observers %}
+                                    {{o }}
+                                    {% if  not loop.last %}
+                                    -
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div id="structures" class="tab-pane fade">
+                                {% for s in orgas %}
+                                    {{s.orgaobs }}
+                                    {% if  not loop.last %}
+                                    -
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div-->
+
             </div> 
             
         </div>

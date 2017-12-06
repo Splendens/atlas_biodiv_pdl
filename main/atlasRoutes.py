@@ -109,6 +109,7 @@ def ficheCommune(insee):
         observations = vmObservationsRepository.lastObservationsCommune(connection, config.NB_LAST_OBS, insee)
 
     observers = vmObservationsRepository.getObserversCommunes(connection, insee)
+    orgas = vmObservationsRepository.getOrgasCommunes(connection, insee)
     configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION, 'NB_LAST_OBS': config.NB_LAST_OBS, 'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE, 'MAP': config.MAP, \
     'URL_APPLICATION': config.URL_APPLICATION, 'MYTYPE' : 1, 'PATRIMONIALITE': config.PATRIMONIALITE, 'PROTECTION': config.PROTECTION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
     
@@ -117,7 +118,7 @@ def ficheCommune(insee):
     connection.close()
 
     return render_template('templates/ficheCommune.html', listTaxons = listTaxons, referenciel = commune, communesSearch = communesSearch, observations = observations, \
-    observers=observers, configuration = configuration)
+    orgas=orgas, observers=observers, configuration = configuration)
 
 
 @main.route('/liste/<cd_ref>', methods=['GET', 'POST'])
@@ -129,6 +130,7 @@ def ficheRangTaxonomie(cd_ref):
     referenciel = vmTaxrefRepository.getInfoFromCd_ref(session, cd_ref)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
+    orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
     
     connection.close()
@@ -137,7 +139,7 @@ def ficheRangTaxonomie(cd_ref):
     configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION, 'LIMIT_FICHE_LISTE_HIERARCHY' : config.LIMIT_FICHE_LISTE_HIERARCHY,\
      'URL_APPLICATION': config.URL_APPLICATION, 'MYTYPE' : 0, 'PATRIMONIALITE': config.PATRIMONIALITE, 'PROTECTION': config.PROTECTION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
     return render_template('templates/ficheRangTaxonomique.html', listTaxons = listTaxons, referenciel = referenciel, communesSearch = communesSearch,\
-        taxonomyHierarchy=taxonomyHierarchy, observers=observers, configuration=configuration)
+        taxonomyHierarchy=taxonomyHierarchy, orgas=orgas, observers=observers, configuration=configuration)
 
 @main.route('/groupe/<groupe>', methods=['GET', 'POST'])
 def ficheGroupe(groupe):
@@ -147,6 +149,7 @@ def ficheGroupe(groupe):
     groups=vmTaxonsRepository.getAllINPNgroup(connection)
     listTaxons = vmTaxonsRepository.getTaxonsGroup(connection, groupe)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    orgas = vmObservationsRepository.getGroupeOrgas(connection, cd_ref)
     observers = vmObservationsRepository.getGroupeObservers(connection, groupe)
 
     session.close()
@@ -154,7 +157,7 @@ def ficheGroupe(groupe):
 
     configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION, 'LIMIT_FICHE_LISTE_HIERARCHY' : config.LIMIT_FICHE_LISTE_HIERARCHY,\
      'URL_APPLICATION': config.URL_APPLICATION, 'MYTYPE' : 0, 'PATRIMONIALITE': config.PATRIMONIALITE, 'PROTECTION': config.PROTECTION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
-    return render_template('templates/ficheGroupe.html', listTaxons = listTaxons,  communesSearch = communesSearch, referenciel= groupe, groups=groups, observers=observers,configuration=configuration)
+    return render_template('templates/ficheGroupe.html', listTaxons = listTaxons,  communesSearch = communesSearch, referenciel= groupe, groups=groups, orgas=orgas, observers=observers,configuration=configuration)
 
 
 @main.route('/presentation', methods=['GET', 'POST'])

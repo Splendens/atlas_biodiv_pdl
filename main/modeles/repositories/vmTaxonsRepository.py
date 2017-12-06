@@ -43,7 +43,7 @@ def getTaxonsChildsList(connection, cd_ref):
     rank = config.LIMIT_FICHE_LISTE_HIERARCHY
     sql = """SELECT *, tax.cd_ref
     FROM atlas.vm_taxons tax 
-    JOIN atlas.bib_taxref_rangs bib_rang on tax.id_rang= bib_rang.id_rang
+    JOIN atlas.bib_taxref_rangs bib_rang ON trim(tax.id_rang) = trim(bib_rang.id_rang)
     LEFT JOIN atlas.vm_medias m ON m.cd_ref = tax.cd_ref AND m.id_type="""+ str(config.ATTR_MAIN_PHOTO) +""" 
     WHERE tax.cd_ref in ( select * from atlas.find_all_taxons_childs(:thiscdref) 
     ) """.encode('UTF-8')
