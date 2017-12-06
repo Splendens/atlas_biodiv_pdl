@@ -16,8 +16,7 @@ Cette plateforme est développée à partir des outils de gestion de données na
 - l'outil complet `TaxHub <https://github.com/PnX-SI/TaxHub>`_ ;
 - l'outil complet `Geonature-atlas <https://github.com/PnEcrins/GeoNature-atlas>`_ modifié pour les besoins du CEN Pays de la Loire.
 
-
-Ces outils sont déployés sur un serveur Ubuntu 16.04 (`fichiers d'installation <https://github.com/Splendens/install_all_geonature_ubuntu16_04>`_).
+La plateforme est développée sur un serveur Ubuntu 16.04 (`fichiers d'installation <https://github.com/Splendens/install_all_geonature_ubuntu16_04>`_)
 
 
 
