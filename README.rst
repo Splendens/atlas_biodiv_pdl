@@ -2,10 +2,7 @@
 Plateforme de visualisation des données naturalistes des Pays de la Loire, basée sur GeoNature-atlas
 ===============
 
-Projet de plateforme web permettant de visualiser les données "biodiversité" du réseau naturaliste des Pays de la Loire. Projet porté par le `Conservatoire d'espaces naturels des Pays de la Loire <http://www.cenpaysdelaloire.fr/>`_.
-
-.. image :: docs/images/cenpdl-logo-couleur.jpg
-
+Projet de plateforme web permettant de visualiser les données "biodiversité" du réseau naturaliste des Pays de la Loire. 
 
 
 Bases de développement
@@ -62,6 +59,7 @@ Modifications apportées
 **Bases de données**
 
 - `Modification des zonages <https://github.com/Splendens/atlas_biodiv_pdl/blob/master/modifdb/couches_reference.rst>`_ (territoire, communes) pour les Pays de la Loire
+- Ajout des structures productriuces des données affichées (Modification de la BD et entités, modèles et vues des fiches espèces, fiches groupes et fiches communes)
 
 
 **Application**
