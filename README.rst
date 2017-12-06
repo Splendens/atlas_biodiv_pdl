@@ -63,5 +63,5 @@ Modifications apportées
 
 **Application**
 
-- Afichage des structures productrices des données affichées (modifications des entités, modèles et vues des fiches espèces, fiches groupes, rang taxonomique et fiches communes)
+- Affichage des structures productrices des données affichées (modifications des entités, modèles et vues des fiches espèces, fiches groupes, rang taxonomique et fiches communes)
 
