@@ -28,28 +28,28 @@
 				<div class="panel panel-default">
 					<div class="row">
 						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6"  style="margin:1%;margin-left:5%">
-							<a href="http://www.paysdelaloire.fr/" target="_bank"><img src="{{url_for('static', filename='custom/images/logo_region_pdl.png') }}"  width="150%"></a>
+							<a href="#" target="_bank"><img src="{{url_for('static', filename='custom/images/logo-structure2.png') }}"  width="150%"></a>
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
-							<a href="http://www.pays-de-la-loire.developpement-durable.gouv.fr/" target="_bank"><img src="{{url_for('static', filename='custom/images/logo_dreal_pdl.jpg') }}"  width="150%"></a>
+							<a href="#" target="_bank"><img src="{{url_for('static', filename='custom/images/logo-structure2.png') }}"  width="150%"></a>
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
-							<a href="http://cenpaysdelaloire.fr/" target="_bank"><img src="{{url_for('static', filename='custom/images/logo_cen_pdl.jpg') }}"  width="150%"></a>
+							<a href="#" target="_bank"><img src="{{url_for('static', filename='custom/images/logo-structure2.png') }}"  width="150%"></a>
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
-							<a href="http://www.gretia.org/" target="_bank"><img src="{{url_for('static', filename='custom/images/logo_gretia.png') }}"  width="150%"></a>
+							<a href="#" target="_bank"><img src="{{url_for('static', filename='custom/images/logo-structure2.png') }}"  width="150%"></a>
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
-							<a href="http://paysdelaloire.lpo.fr/" target="_bank"><img src="{{url_for('static', filename='custom/images/logo_coordi_lpo_pdl.jpg') }}"  width="150%"></a>
+							<a href="#" target="_bank"><img src="{{url_for('static', filename='custom/images/logo-structure2.png') }}"  width="150%"></a>
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
-							<a href="http://www.cbnbrest.fr" target="_bank"><img src="{{url_for('static', filename='custom/images/logo_CBN_de_Brest.jpg') }}"  width="150%"></a>
+							<a href="#" target="_bank"><img src="{{url_for('static', filename='custom/images/logo-structure2.png') }}"  width="150%"></a>
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
-							<a href="http://urcpie-paysdelaloire.org/" target="_bank"><img src="{{url_for('static', filename='custom/images/logo_urcpie_pdl.jpg') }}"  width="150%"></a>
+							<a href="#" target="_bank"><img src="{{url_for('static', filename='custom/images/logo-structure2.png') }}"  width="150%"></a>
 						</div>
 						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
-							<a href="https://inpn.mnhn.fr/accueil/index" target="_bank"><img src="{{url_for('static', filename='custom/images/logo_inpn.png') }}"  width="150%"></a>
+							<a href="#" target="_bank"><img src="{{url_for('static', filename='custom/images/logo-structure2.png') }}"  width="150%"></a>
 						</div>							
 					</div>
 				</div>
