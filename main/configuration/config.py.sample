@@ -31,6 +31,12 @@ ID_GOOGLE_ANALYTICS = "UA-xxxxxxx-xx"
 # Utiliser et afficher le glossaire (static/custom/glossaire.json.sample)
 GLOSSAIRE = False
 
+# Afficher le lien vers page collectivités dans le sidebar (si AFFICHAGE_LOGOS_ORGAS = True)
+AFFICHAGE_NAV_COLLECTIVITE = True
+
+# Afficher le lien vers page particuliers dans le sidebar (si AFFICHAGE_LOGOS_ORGAS = True)
+AFFICHAGE_NAV_PARTICULIER = True
+
 ###########################
 ###### Cartographie #######
 ###########################
