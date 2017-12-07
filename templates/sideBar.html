@@ -6,7 +6,7 @@
             <li class="sidebar-brand"><span class="glyphicon glyphicon-question-sign"></span></li>
           </a>
           {% if configuration.AFFICHAGE_GLOBAL_MAP %}
-          <a href="{{url_for('main.cartographie')}}" data-toggle="tooltip" data-original-title="Cartographie interactive des Pays de la Loire" data-placement="right">
+          <a href="{{url_for('main.cartographie')}}" data-toggle="tooltip" data-original-title="Cartographie interactive des {{configuration.STRUCTURE}}" data-placement="right">
             <li class="sidebar-brand"><span class="glyphicon glyphicon glyphicon-globe"></span></li>
           </a>
           {% endif %}
