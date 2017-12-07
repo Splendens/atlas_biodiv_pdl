@@ -134,6 +134,53 @@
               </div>
               <div style="clear: both;"></div>
               
+            {% if configuration.AFFICHAGE_NAV_PARTICULIER or configuration.AFFICHAGE_NAV_COLLECTIVITE %}
+              <hr class="featurette-divider">
+                  
+              {% if configuration.AFFICHAGE_NAV_PARTICULIER and configuration.AFFICHAGE_NAV_COLLECTIVITE %}
+
+                  <!-- Twpo columns of text  -->
+                  <div class="row faq">
+                    {% if configuration.AFFICHAGE_NAV_PARTICULIER %}
+                    <div class="col-lg-6">
+                      <h2>Vous êtes un particulier ?</h2>
+                      <p>Découvrez comment participer aux inventaires de la biodiversité</p>
+                      <p><a class="btn btn-default" href="{{url_for('main.particulier') }}" role="button">Découvrir &raquo;</a></p>
+                    </div><!-- /.col-lg-6 -->
+                    {% endif %}
+                    {% if configuration.AFFICHAGE_NAV_COLLECTIVITE %}
+                    <div class="col-lg-6">
+                      <h2>Vous êtes une collectivité ?</h2>
+                      <p>Découvrez comment collecter et/ou fournir vos données de biodiversité.</p>
+                      <p><a class="btn btn-default" href="{{url_for('main.collectivite') }}" role="button">Découvrir &raquo;</a></p>
+                    </div><!-- /.col-lg-6 -->
+                  {% endif %}
+                  </div><!-- /.row -->
+
+              {% else %}
+                  <!-- Twpo columns of text  -->
+                  <div class="row faq">
+                    {% if configuration.AFFICHAGE_NAV_PARTICULIER %}
+                    <div class="col-lg-offset-2 col-lg-6">
+                      <h2>Vous êtes un particulier ?</h2>
+                      <p>Découvrez comment participer aux inventaires de la biodiversité</p>
+                      <p><a class="btn btn-default" href="{{url_for('main.particulier') }}" role="button">Découvrir &raquo;</a></p>
+                    </div><!-- /.col-lg-6 -->
+                    {% endif %}
+                    {% if configuration.AFFICHAGE_NAV_COLLECTIVITE %}
+                    <div class="col-lg-offset-2 col-lg-6">
+                      <h2>Vous êtes une collectivité ?</h2>
+                      <p>Découvrez comment collecter et/ou fournir vos données de biodiversité.</p>
+                      <p><a class="btn btn-default" href="{{url_for('main.collectivite') }}" role="button">Découvrir &raquo;</a></p>
+                    </div><!-- /.col-lg-6 -->
+                  {% endif %}
+                  </div><!-- /.row -->
+
+              {% endif %}
+
+            {% endif %}
+
+              
               <hr class="featurette-divider">
               
               <!-- Three columns of text below the carousel -->
