@@ -38,7 +38,7 @@
 <!-- Dernières espèces observées (Carte et liste) -->
       <div class="col-sm-12" id="DernieresObservations"> 
           <div class="panel panel-default" >
-              <div class="panel-heading"><h3> {{configuration.TEXT_LAST_OBS}} {{observations | length}} {{ 'observations' if observations | length > 1 else 'observation' }}</h3></div>
+              <div class="panel-heading"><h3> Découvrez les {{ stat.nbTotalObs }} {{ 'observations' if stat.nbTotalObs > 1 else 'observation' }} de la faune et de la flore</h3></div>
               <div class="row" id="mapRow">
               <!-- CARTE des dernières observations -->
               <div id="blocMap" class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
