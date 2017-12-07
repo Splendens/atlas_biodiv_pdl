@@ -5,6 +5,11 @@
           <a href="{{url_for('main.presentation')}}" data-toggle="tooltip" data-original-title="Présentation de l'atlas" data-placement="right">
             <li class="sidebar-brand"><span class="glyphicon glyphicon-question-sign"></span></li>
           </a>
+          {% if configuration.AFFICHAGE_GLOBAL_MAP %}
+          <a href="{{url_for('main.cartographie')}}" data-toggle="tooltip" data-original-title="Cartographie interactive des Pays de la Loire" data-placement="right">
+            <li class="sidebar-brand"><span class="glyphicon glyphicon glyphicon-globe"></span></li>
+          </a>
+          {% endif %}
           {% if configuration.AFFICHAGE_NAV_PARTICULIER %}
           <a href="{{url_for('main.particulier')}}" data-toggle="tooltip" data-original-title="Informations pour les particuliers" data-placement="right">
             <li class="sidebar-brand"><span class="glyphicon glyphicon-user"></span></li>
