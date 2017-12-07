@@ -41,6 +41,11 @@
   text-align: center;
 }
 
+.presentation .faq .col-lg-6 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .presentation h2 {
   font-weight: normal;
 }
@@ -246,3 +251,4 @@ footer {
         margin-left: 0;
     }
 }
+

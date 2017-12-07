@@ -170,6 +170,29 @@ def presentation():
     session.close()
     return render_template('static/custom/templates/presentation.html', communesSearch = communesSearch, configuration=configuration)
 	
+
+@main.route('/collectivite', methods=['GET', 'POST'])
+def collectivite():
+    session = utils.loadSession()
+
+    communesSearch = vmCommunesRepository.getAllCommunes(session)
+    configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
+
+    session.close()
+    return render_template('static/custom/templates/collectivite.html', communesSearch = communesSearch, configuration=configuration)
+
+
+@main.route('/particulier', methods=['GET', 'POST'])
+def particulier():
+    session = utils.loadSession()
+
+    communesSearch = vmCommunesRepository.getAllCommunes(session)
+    configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
+
+    session.close()
+    return render_template('static/custom/templates/particulier.html', communesSearch = communesSearch, configuration=configuration)
+
+
 @main.route('/photos', methods=['GET', 'POST'])
 def photos():
     session = utils.loadSession()
