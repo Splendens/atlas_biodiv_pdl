@@ -92,40 +92,6 @@
 						</div>
 					</div>
 				</div>
-
-                 <!--div class="panel panel-default" id="otherInformationsPanel">
-                    <div class="row" id="otherInformations">
-                      <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> 
-                            {{ 'Observateurs' if observers|length > 1 else 'Observateur' }}</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="#structures"> <b>{{orgas|length}} </b> 
-                            {{ 'Structures' if orgas|length > 1 else 'Structure' }}</a>
-                        </li>
-                      </ul>
-                        <div class="tab-content" style="width:100%;">
-                            <div id="observateurs" class="tab-pane fade in active">
-                                {% for o in observers %}
-                                    {{o }}
-                                    {% if  not loop.last %}
-                                    -
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div id="structures" class="tab-pane fade">
-                                {% for s in orgas %}
-                                    {{s.orgaobs }}
-                                    {% if  not loop.last %}
-                                    -
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div-->
-
             </div> 
         </div>
         
