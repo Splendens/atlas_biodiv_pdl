@@ -294,3 +294,35 @@ def getOrgasCommunes(connection, insee):
     return listOrgasCom
 
 
+  
+def allObservations(connection, idPhoto):
+    sql = """SELECT obs.*, 
+    tax.lb_nom, tax.nom_vern, tax.group2_inpn, 
+    medias.url, medias.chemin 
+    FROM atlas.vm_observations obs 
+    JOIN atlas.vm_taxons tax ON tax.cd_ref = obs.cd_ref 
+    LEFT JOIN atlas.vm_medias medias ON medias.cd_ref = obs.cd_ref AND medias.id_type = :thisidphoto
+    ORDER BY obs.dateobs DESC 
+    LIMIT 1000 """
+    
+
+    observations = connection.execute(text(sql), thisidphoto=idPhoto)
+    obsList=list()
+    for o in observations:
+        if o.nom_vern:
+            inter = o.nom_vern.split(',')
+            taxon = inter[0] +' | '+ o.lb_nom
+        else:
+            taxon = o.lb_nom
+        temp = {'id_observation' : o.id_observation,
+                'cd_ref': o.cd_ref,
+                'dateobs': str(o.dateobs),
+                'altitude_retenue' : o.altitude_retenue,
+                'effectif_total' : o.effectif_total,
+                'taxon': taxon,
+                'geojson_point':ast.literal_eval(o.geojson_point),
+                'group2_inpn': utils.deleteAccent(o.group2_inpn),
+                'pathImg' : utils.findPath(o)
+                }
+        obsList.append(temp)
+    return obsList
