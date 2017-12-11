@@ -548,6 +548,50 @@
             </div>
             {% endif %}
 
+
+
+            <div class="panel panel-default" id="blocInfos">
+            {% if configuration.AFFICHAGE_NAV_PARTICULIER or configuration.AFFICHAGE_NAV_COLLECTIVITE %}
+                  
+              {% if configuration.AFFICHAGE_NAV_PARTICULIER and configuration.AFFICHAGE_NAV_COLLECTIVITE %}
+
+                  <!-- Twpo columns of text  -->
+                  <div class="row faq">
+                    {% if configuration.AFFICHAGE_NAV_PARTICULIER %}
+                    <div class="col-lg-6">
+                      <h2>Particulier ?</h2>
+                      <p><a class="btn btn-default" href="{{url_for('main.particulier') }}" role="button">Participer à l'inventaire ! &raquo;</a></p>
+                    </div><!-- /.col-lg-6 -->
+                    {% endif %}
+                    {% if configuration.AFFICHAGE_NAV_COLLECTIVITE %}
+                    <div class="col-lg-6">
+                      <h2>Collectivité ?</h2>
+                      <p><a class="btn btn-default" href="{{url_for('main.collectivite') }}" role="button">Collecter ou fournir des données &raquo;</a></p>
+                    </div><!-- /.col-lg-6 -->
+                  {% endif %}
+                  </div><!-- /.row -->
+              {% else %}
+                  <!-- Twpo columns of text  -->
+                  <div class="row faq">
+                    {% if configuration.AFFICHAGE_NAV_PARTICULIER %}
+                    <div class="col-lg-6">
+                      <h2>Vous êtes un particulier ?</h2>
+                      <p><a class="btn btn-default" href="{{url_for('main.particulier') }}" role="button">Participer à l'inventaire &raquo;</a></p>
+                    </div><!-- /.col-lg-6 -->
+                    {% endif %}
+                    {% if configuration.AFFICHAGE_NAV_COLLECTIVITE %}
+                    <div class="col-lg-6">
+                      <h2>Collectivité ?</h2>
+                      <p><a class="btn btn-default" href="{{url_for('main.collectivite') }}" role="button">Collecter ou fournir des données &raquo;</a></p>
+                    </div><!-- /.col-lg-6 -->
+                  {% endif %}
+                  </div><!-- /.row -->
+              {% endif %}
+
+            {% endif %}
+        </div>
+
+
             <div class="panel panel-default" id="graphBloc">
                 <h3 class="text-center">Observations par classes d'altitudes</h3>
                 <div id="altiChart"></div>
