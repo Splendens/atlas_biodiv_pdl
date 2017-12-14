@@ -2,33 +2,15 @@
           <a href="{{url_for('main.index')}}" id="menu-toggle" data-toggle="tooltip" data-original-title="Retour à l'accueil" data-placement="right">
             <li class="sidebar-brand"><span id="main_icon" class="glyphicon glyphicon-home"></span></li>
           </a>
-          <a href="{{url_for('main.presentation')}}" data-toggle="tooltip" data-original-title="Présentation de l'atlas" data-placement="right">
-            <li class="sidebar-brand"><span class="glyphicon glyphicon-question-sign"></span></li>
-          </a>
-          {% if configuration.AFFICHAGE_GLOBAL_MAP %}
-          <a href="{{url_for('main.cartographie')}}" data-toggle="tooltip" data-original-title="Cartographie interactive des {{configuration.STRUCTURE}}" data-placement="right">
-            <li class="sidebar-brand"><span class="glyphicon glyphicon glyphicon-globe"></span></li>
-          </a>
-          {% endif %}
-          {% if configuration.AFFICHAGE_NAV_PARTICULIER %}
-          <a href="{{url_for('main.particulier')}}" data-toggle="tooltip" data-original-title="Informations pour les particuliers" data-placement="right">
-            <li class="sidebar-brand"><span class="glyphicon glyphicon-user"></span></li>
-          </a>
-          {% endif %}
-          {% if configuration.AFFICHAGE_NAV_COLLECTIVITE %}
-          <a href="{{url_for('main.collectivite')}}" data-toggle="tooltip" data-original-title="Informations pour les collectivités" data-placement="right">
-            <li class="sidebar-brand"><span class="glyphicon glyphicon-equalizer"></span></li>
-          </a>
-          {% endif %}
+            <!-- Génération des liens de la sidebar à partir de la table atlas.t_atlas, les variables récupérées ici sont à modifier en base de données. -->
+            <!-- Pour rajouter des pages : créer des routes dans atlasRoutes.py sur le même modèle que presentation(); et des templates pour chaque page -->
+            {% for page in pages %}
+                <a href="{{ page.route }}" data-toggle="tooltip" data-original-title="{{page.titre}}" data-placement="right">
+                  <li class="sidebar-brand"><span class="glyphicon glyphicon-{{page.picto}}"></span></li>
+                </a>
+            {% endfor %}
+
           <a href="{{url_for('main.photos')}}" data-toggle="tooltip" data-original-title="Galerie photos" data-placement="right">
             <li class="sidebar-brand"><span class="glyphicon glyphicon-camera"></span></li>
           </a>
-          <!--
-          <a data-toggle="tooltip" data-original-title="Rechercher une espèce" data-placement="right">
-            <li class="sidebar-brand"><span class="glyphicon glyphicon-search"></span></li>
-          </a>
-          <a href="{{url_for('main.presentation')}}" data-toggle="tooltip" data-original-title="Liens et partenaires" data-placement="right">
-            <li class="sidebar-brand"><span class="sub_icon glyphicon glyphicon-link"></span></li>
-          </a>
-          -->
         </ul>

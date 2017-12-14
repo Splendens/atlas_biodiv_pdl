@@ -31,14 +31,6 @@ ID_GOOGLE_ANALYTICS = "UA-xxxxxxx-xx"
 # Utiliser et afficher le glossaire (static/custom/glossaire.json.sample)
 GLOSSAIRE = False
 
-# Afficher le lien vers page collectivités dans le sidebar (si AFFICHAGE_NAV_COLLECTIVITE = True)
-AFFICHAGE_NAV_COLLECTIVITE = True
-
-# Afficher le lien vers page particuliers dans le sidebar (si AFFICHAGE_NAV_PARTICULIER = True)
-AFFICHAGE_NAV_PARTICULIER = True
-
-# Afficher le lien vers la cartographie globale du territoire (si AFFICHAGE_GLOBAL_MAP = True)
-AFFICHAGE_GLOBAL_MAP = True
 
 ###########################
 ###### Cartographie #######
