@@ -193,6 +193,20 @@ def collectivite():
     return render_template('static/custom/templates/collectivite.html', pages=pages, communesSearch = communesSearch, configuration=configuration)
 
 
+@main.route('/partenaires', methods=['GET', 'POST'])
+def partenaires():
+    session = utils.loadSession()
+    connection = utils.engine.connect()
+
+    communesSearch = vmCommunesRepository.getAllCommunes(session)
+    pages = tPagesRepository.getPages(connection)
+
+    configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
+
+    session.close()
+    return render_template('static/custom/templates/partenaires.html', pages=pages, communesSearch = communesSearch, configuration=configuration)
+
+
 @main.route('/particulier', methods=['GET', 'POST'])
 def particulier():
     session = utils.loadSession()
