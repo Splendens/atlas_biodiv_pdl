@@ -66,7 +66,7 @@ def lastObservationsCommuneMaille(connection, mylimit, insee):
     JOIN atlas.vm_taxons t ON  obs.cd_ref = t.cd_ref \
     WHERE c.insee = :thisInsee \
     ORDER BY obs.dateobs DESC \
-    LIMIT :thislimit \
+    LIMIT (:thislimit) \
     )\
     SELECT l.lb_nom, l.nom_vern, l.cd_ref, m.id_maille, m.geojson_maille \
     FROM atlas.t_mailles_territoire m \
@@ -110,7 +110,7 @@ def getObservationsTaxonCommuneMaille(connection, insee, cd_ref):
 
 
 # all observation for cartographie.html
-def allObservationsMaillesOLD(connection, idPhoto):
+def allObservationsMailles(connection, idPhoto):
     sql = """SELECT obs.*, 
     tax.lb_nom, tax.nom_vern, tax.group2_inpn, 
     o.dateobs, o.altitude_retenue, 
@@ -146,25 +146,25 @@ def allObservationsMaillesOLD(connection, idPhoto):
 
 
 # With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
-def allObservationsMailles(connection, idPhoto):
-    sql = """SELECT DISTINCT obs.id_maille, max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs, COUNT(o.id_observation) AS nb_obs
-        FROM atlas.vm_observations_mailles obs 
-        JOIN atlas.vm_observations o ON obs.id_observation=o.id_observation
-        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
-        GROUP BY obs.id_maille"""
-    req = connection.execute(text(sql))
-    taxonCommunesList=list()
-    nbObsTotal = 0
-    obsListall=list()
-    for r in req:
-
-        temp = {'id_maille' : r.id_maille, 
-                'nb_obs' : r.nb_obs, 
-                'cd_ref' : r.cd_ref,
-                'last_obs' : r.last_obs, 
-                'first_obs'  : r.first_obs 
-                }
-        obsListall.append(temp)
-    return obsListall
+#def allObservationsMailles(connection, idPhoto):
+#    sql = """SELECT DISTINCT obs.id_maille, max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs, COUNT(o.id_observation) AS nb_obs
+#        FROM atlas.vm_observations_mailles obs 
+#        JOIN atlas.vm_observations o ON obs.id_observation=o.id_observation
+#        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+#        GROUP BY obs.id_maille"""
+#    req = connection.execute(text(sql))
+#    taxonCommunesList=list()
+#    nbObsTotal = 0
+#    obsListall=list()
+#    for r in req:
+#
+#        temp = {'id_maille' : r.id_maille, 
+#                'nb_obs' : r.nb_obs, 
+#                'cd_ref' : r.cd_ref,
+#                'last_obs' : r.last_obs, 
+#                'first_obs'  : r.first_obs 
+#                }
+#        obsListall.append(temp)
+#    return obsListall
 
 

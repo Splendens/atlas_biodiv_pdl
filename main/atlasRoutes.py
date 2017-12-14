@@ -165,6 +165,23 @@ def ficheGroupe(groupe):
     return render_template('templates/ficheGroupe.html', pages=pages, listTaxons = listTaxons,  communesSearch = communesSearch, referenciel= groupe, groups=groups, orgas=orgas, observers=observers,configuration=configuration)
 
 
+@main.route('/photos', methods=['GET', 'POST'])
+def photos():
+    session = utils.loadSession()
+    connection = utils.engine.connect()
+    
+    groups = vmTaxonsRepository.getINPNgroupPhotos(connection)
+    communesSearch = vmCommunesRepository.getAllCommunes(session)
+    pages = tPagesRepository.getPages(connection)
+
+    configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
+
+    session.close()
+    connection.close()
+    return render_template('templates/galeriePhotos.html', pages=pages, communesSearch = communesSearch, groups=groups, configuration=configuration)
+
+
+
 @main.route('/presentation', methods=['GET', 'POST'])
 def presentation():
     session = utils.loadSession()
@@ -219,22 +236,6 @@ def particulier():
 
     session.close()
     return render_template('static/custom/templates/particulier.html', pages=pages, communesSearch = communesSearch, configuration=configuration)
-
-@main.route('/photos', methods=['GET', 'POST'])
-def photos():
-    session = utils.loadSession()
-    connection = utils.engine.connect()
-    
-    groups = vmTaxonsRepository.getINPNgroupPhotos(connection)
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    pages = tPagesRepository.getPages(connection)
-
-    configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
-
-    session.close()
-    connection.close()
-    return render_template('templates/galeriePhotos.html', pages=pages, communesSearch = communesSearch, groups=groups, configuration=configuration)
-
 
 @main.route('/cartographie' , methods=['GET', 'POST'])
 def cartographie():
