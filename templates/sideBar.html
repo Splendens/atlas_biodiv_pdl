@@ -1,16 +1,15 @@
-        <ul id="sidebar_menu" class="sidebar-nav">
-          <a href="{{url_for('main.index')}}" id="menu-toggle" data-toggle="tooltip" data-original-title="Retour à l'accueil" data-placement="right">
-            <li class="sidebar-brand"><span id="main_icon" class="glyphicon glyphicon-home"></span></li>
-          </a>
-            <!-- Génération des liens de la sidebar à partir de la table atlas.t_atlas, les variables récupérées ici sont à modifier en base de données. -->
-            <!-- Pour rajouter des pages : créer des routes dans atlasRoutes.py sur le même modèle que presentation(); et des templates pour chaque page -->
-            {% for page in pages %}
-                <a href="../../../{{ page.route }}" data-toggle="tooltip" data-original-title="{{page.titre}}" data-placement="right">
-                  <li class="sidebar-brand"><span class="glyphicon glyphicon-{{page.picto}}"></span></li>
-                </a>
-            {% endfor %}
+<ul id="sidebar_menu" class="sidebar-nav">
+  <a href="{{url_for('main.index')}}" id="menu-toggle" data-toggle="tooltip" data-original-title="Retour à l'accueil" data-placement="right">
+    <li class="sidebar-brand"><span id="main_icon" class="glyphicon glyphicon-home"></span></li>
+  </a>
+  {% for page_key, page_values in configuration.STATIC_PAGES.items()|sort(attribute='1.order') %}
+    <a href="{{url_for('main.get_staticpages', page=page_key)}}" data-toggle="tooltip"
+      data-original-title="{{page_values.title}}" data-placement="right">
+      <li class="sidebar-brand"><span class="glyphicon {{page_values.picto}}"></span></li>
+    </a>
+  {% endfor %}
 
-          <a href="{{url_for('main.photos')}}" data-toggle="tooltip" data-original-title="Galerie photos" data-placement="right">
-            <li class="sidebar-brand"><span class="glyphicon glyphicon-camera"></span></li>
-          </a>
-        </ul>
+  <a href="{{url_for('main.photos')}}" data-toggle="tooltip" data-original-title="Galerie photos" data-placement="right">
+    <li class="sidebar-brand"><span class="glyphicon glyphicon-camera"></span></li>
+  </a>
+</ul>
