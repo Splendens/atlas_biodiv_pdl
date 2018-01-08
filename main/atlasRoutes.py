@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, request, render_template, jsonify, redirect, abort
 from configuration import config
-from modeles.repositories import vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, tPagesRepository, \
+from modeles.repositories import vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, \
  vmSearchTaxonRepository, vmMoisRepository, vmTaxrefRepository, vmCommunesRepository, vmObservationsMaillesRepository, vmMedias, vmCorTaxonAttribut, \
  vmTaxonsMostView
 import json
