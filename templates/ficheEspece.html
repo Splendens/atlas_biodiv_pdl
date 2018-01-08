@@ -560,13 +560,13 @@
                     {% if configuration.AFFICHAGE_NAV_PARTICULIER %}
                     <div class="col-lg-6">
                       <h2>Particulier ?</h2>
-                      <p><a class="btn btn-default" href="{{url_for('main.particulier') }}" role="button">Participer à l'inventaire ! &raquo;</a></p>
+                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='particulier') }}" role="button">Participer à l'inventaire ! &raquo;</a></p>
                     </div><!-- /.col-lg-6 -->
                     {% endif %}
                     {% if configuration.AFFICHAGE_NAV_COLLECTIVITE %}
                     <div class="col-lg-6">
                       <h2>Collectivité ?</h2>
-                      <p><a class="btn btn-default" href="{{url_for('main.collectivite') }}" role="button">Collecter ou fournir des données &raquo;</a></p>
+                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='collectivite') }}" role="button">Collecter ou fournir des données &raquo;</a></p>
                     </div><!-- /.col-lg-6 -->
                   {% endif %}
                   </div><!-- /.row -->
@@ -576,13 +576,13 @@
                     {% if configuration.AFFICHAGE_NAV_PARTICULIER %}
                     <div class="col-lg-6">
                       <h2>Vous êtes un particulier ?</h2>
-                      <p><a class="btn btn-default" href="{{url_for('main.particulier') }}" role="button">Participer à l'inventaire &raquo;</a></p>
+                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='particulier') }}" role="button">Participer à l'inventaire &raquo;</a></p>
                     </div><!-- /.col-lg-6 -->
                     {% endif %}
                     {% if configuration.AFFICHAGE_NAV_COLLECTIVITE %}
                     <div class="col-lg-6">
                       <h2>Collectivité ?</h2>
-                      <p><a class="btn btn-default" href="{{url_for('main.collectivite') }}" role="button">Collecter ou fournir des données &raquo;</a></p>
+                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='collectivite') }}" role="button">Collecter ou fournir des données &raquo;</a></p>
                     </div><!-- /.col-lg-6 -->
                   {% endif %}
                   </div><!-- /.row -->

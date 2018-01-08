@@ -61,8 +61,6 @@ def index():
     stat = vmObservationsRepository.statIndex(connection)
     customStat = vmObservationsRepository.genericStat(connection, config.RANG_STAT)
     customStatMedias = vmObservationsRepository.genericStatMedias(connection, config.RANG_STAT)
-    #pages = tPagesRepository.getPages(connection)
-
 
     configuration = base_configuration.copy()
     configuration.update({
@@ -76,11 +74,11 @@ def index():
          'COLONNES_RANG_STAT': config.COLONNES_RANG_STAT,
          'RANG_STAT_FR': config.RANG_STAT_FR,
          'MAP': config.MAP,
-         'AFFICHAGE_INTRODUCTION': config.AFFICHAGE_INTRODUCTION
+         'AFFICHAGE_INTRODUCTION': config.AFFICHAGE_INTRODUCTION,
+         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
+         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
     })
 
-
-    #configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'HOMEMAP': True, 'TEXT_LAST_OBS': config.TEXT_LAST_OBS, 'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE, 'AFFICHAGE_DERNIERES_OBS': config.AFFICHAGE_DERNIERES_OBS, 'AFFICHAGE_EN_CE_MOMENT': config.AFFICHAGE_EN_CE_MOMENT, 'AFFICHAGE_STAT_GLOBALES': config.AFFICHAGE_STAT_GLOBALES, 'AFFICHAGE_RANG_STAT': config.AFFICHAGE_RANG_STAT, 'COLONNES_RANG_STAT': config.COLONNES_RANG_STAT, 'RANG_STAT_FR': config.RANG_STAT_FR,'MAP': config.MAP, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_INTRODUCTION': config.AFFICHAGE_INTRODUCTION, 'AFFICHAGE_LOGOS_ORGAS' : config.AFFICHAGE_LOGOS_ORGAS, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
     
     connection.close()
     session.close()
@@ -109,8 +107,6 @@ def ficheEspece(cd_ref):
     taxonDescription = vmCorTaxonAttribut.getAttributesTaxon(connection, cd_ref, config.ATTR_DESC, config.ATTR_COMMENTAIRE, config.ATTR_MILIEU, config.ATTR_CHOROLOGIE)
     orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
-    #pages = tPagesRepository.getPages(connection)
-
 
     configuration = base_configuration.copy()
     configuration.update({
@@ -122,12 +118,10 @@ def ficheEspece(cd_ref):
          'ZOOM_LEVEL_POINT': config.ZOOM_LEVEL_POINT,
          'LIMIT_CLUSTER_POINT': config.LIMIT_CLUSTER_POINT,
          'FICHE_ESPECE': True,
-         'MAP': config.MAP
+         'MAP': config.MAP,
+         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
+         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
     })
-
-
-    #configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION, 'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'LIMIT_FICHE_LISTE_HIERARCHY' : config.LIMIT_FICHE_LISTE_HIERARCHY, 'PATRIMONIALITE':config.PATRIMONIALITE, 'PROTECTION': config.PROTECTION, 'GLOSSAIRE': config.GLOSSAIRE, 'AFFICHAGE_MAILLE' : config.AFFICHAGE_MAILLE, 'ZOOM_LEVEL_POINT': config.ZOOM_LEVEL_POINT, 'LIMIT_CLUSTER_POINT': config.LIMIT_CLUSTER_POINT, 'FICHE_ESPECE': True, 'MAP': config.MAP, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
-
     
     connection.close()
     session.close()
@@ -153,7 +147,6 @@ def ficheCommune(insee):
 
     observers = vmObservationsRepository.getObserversCommunes(connection, insee)
     orgas = vmObservationsRepository.getOrgasCommunes(connection, insee)
-   # pages = tPagesRepository.getPages(connection)
 
     configuration = base_configuration.copy()
     configuration.update({
@@ -162,11 +155,11 @@ def ficheCommune(insee):
          'MAP': config.MAP,
          'MYTYPE': 1,
          'PATRIMONIALITE': config.PATRIMONIALITE,
-         'PROTECTION': config.PROTECTION
+         'PROTECTION': config.PROTECTION,
+         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
+         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
     })
 
-
-   # configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION, 'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'NB_LAST_OBS': config.NB_LAST_OBS, 'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE, 'MAP': config.MAP, 'URL_APPLICATION': config.URL_APPLICATION, 'MYTYPE' : 1, 'PATRIMONIALITE': config.PATRIMONIALITE, 'PROTECTION': config.PROTECTION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
     
     session.close()
     connection.close()
@@ -185,7 +178,6 @@ def ficheRangTaxonomie(cd_ref):
     taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
     orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
-    #pages = tPagesRepository.getPages(connection)
 
     connection.close()
     session.close()
@@ -195,11 +187,10 @@ def ficheRangTaxonomie(cd_ref):
          'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
          'MYTYPE': 0,
          'PATRIMONIALITE': config.PATRIMONIALITE,
-         'PROTECTION': config.PROTECTION
+         'PROTECTION': config.PROTECTION,
+         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
+         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
     })
-
-
-    #configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'LIMIT_FICHE_LISTE_HIERARCHY' : config.LIMIT_FICHE_LISTE_HIERARCHY, 'URL_APPLICATION': config.URL_APPLICATION, 'MYTYPE' : 0, 'PATRIMONIALITE': config.PATRIMONIALITE, 'PROTECTION': config.PROTECTION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
 
     return render_template('templates/ficheRangTaxonomique.html', listTaxons = listTaxons, referenciel = referenciel, communesSearch = communesSearch, taxonomyHierarchy=taxonomyHierarchy, orgas=orgas, observers=observers, configuration=configuration)
 
@@ -214,7 +205,6 @@ def ficheGroupe(groupe):
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     orgas = vmObservationsRepository.getGroupeOrgas(connection, cd_ref)
     observers = vmObservationsRepository.getGroupeObservers(connection, groupe)
-    #pages = tPagesRepository.getPages(connection)
 
     session.close()
     connection.close()
@@ -224,35 +214,30 @@ def ficheGroupe(groupe):
          'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
          'MYTYPE': 0,
          'PATRIMONIALITE': config.PATRIMONIALITE,
-         'PROTECTION': config.PROTECTION
+         'PROTECTION': config.PROTECTION,
+         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
+         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
     })
-
-    #configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'LIMIT_FICHE_LISTE_HIERARCHY' : config.LIMIT_FICHE_LISTE_HIERARCHY, 'URL_APPLICATION': config.URL_APPLICATION, 'MYTYPE' : 0, 'PATRIMONIALITE': config.PATRIMONIALITE, 'PROTECTION': config.PROTECTION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
     
     return render_template('templates/ficheGroupe.html', listTaxons = listTaxons,  communesSearch = communesSearch, referenciel= groupe, groups=groups, orgas=orgas, observers=observers,configuration=configuration)
 
 
 
-@main.route('/static_page/<page>', methods=['GET', 'POST'])
+@main.route('/<page>', methods=['GET', 'POST'])
 def get_staticpages(page):
     session = utils.loadSession()
     if (page not in config.STATIC_PAGES):
         abort(404)
     static_page = config.STATIC_PAGES[page]
-
-    #connection = utils.engine.connect()
-    
     communesSearch = vmCommunesRepository.getAllCommunes(session)
-    #pages = tPagesRepository.getPages(connection)
-
-
-
-    #configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
-    
     configuration = base_configuration
     session.close()
-    return render_template(static_page['template'], communesSearch = communesSearch, configuration=configuration) 
-    
+    return render_template(
+        static_page['template'],
+        communesSearch=communesSearch,
+        configuration=configuration
+    )
+  
 
 @main.route('/photos', methods=['GET', 'POST'])
 def photos():
@@ -261,10 +246,12 @@ def photos():
     
     groups = vmTaxonsRepository.getINPNgroupPhotos(connection)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
-    #pages = tPagesRepository.getPages(connection)
     
-    configuration = base_configuration
-    #configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
+    configuration = base_configuration.copy()
+    configuration.update({
+         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
+         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+    })    
 
     session.close()
     connection.close()
@@ -285,12 +272,22 @@ def cartographie():
     stat = vmObservationsRepository.statIndex(connection)
     customStat = vmObservationsRepository.genericStat(connection, config.RANG_STAT)
     customStatMedias = vmObservationsRepository.genericStatMedias(connection, config.RANG_STAT)
-    pages = tPagesRepository.getPages(connection)
 
-    configuration = {'STRUCTURE' : config.STRUCTURE, 'NOM_APPLICATION' : config.NOM_APPLICATION,  'AFFICHAGE_GLOBAL_MAP' : config.AFFICHAGE_GLOBAL_MAP, 'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE, 'HOMEMAP': True, 'TEXT_LAST_OBS': config.TEXT_LAST_OBS, 'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE, \
-    'AFFICHAGE_DERNIERES_OBS': config.AFFICHAGE_DERNIERES_OBS, 'AFFICHAGE_EN_CE_MOMENT': config.AFFICHAGE_EN_CE_MOMENT, 'AFFICHAGE_STAT_GLOBALES': config.AFFICHAGE_STAT_GLOBALES, 'AFFICHAGE_RANG_STAT': config.AFFICHAGE_RANG_STAT, 'COLONNES_RANG_STAT': config.COLONNES_RANG_STAT, 'RANG_STAT_FR': config.RANG_STAT_FR, \
-    'MAP': config.MAP, 'URL_APPLICATION': config.URL_APPLICATION, 'AFFICHAGE_INTRODUCTION': config.AFFICHAGE_INTRODUCTION, 'AFFICHAGE_LOGOS_ORGAS' : config.AFFICHAGE_LOGOS_ORGAS, \
-    'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER, 'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS}
+    configuration = base_configuration.copy()
+    configuration.update({
+         'HOMEMAP': True,
+         'TEXT_LAST_OBS': config.TEXT_LAST_OBS,
+         'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+         'AFFICHAGE_DERNIERES_OBS': config.AFFICHAGE_DERNIERES_OBS, 
+         'AFFICHAGE_EN_CE_MOMENT': config.AFFICHAGE_EN_CE_MOMENT,
+         'MAP': config.MAP,
+         'AFFICHAGE_STAT_GLOBALES': config.AFFICHAGE_STAT_GLOBALES, 
+         'AFFICHAGE_RANG_STAT': config.AFFICHAGE_RANG_STAT, 
+         'COLONNES_RANG_STAT': config.COLONNES_RANG_STAT, 
+         'RANG_STAT_FR': config.RANG_STAT_FR,
+         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
+         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+    })   
     
     connection.close()
     session.close()
