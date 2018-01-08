@@ -66,6 +66,6 @@ Modifications apportées
 **Application**
 
 - Affichage des structures productrices des données affichées (modifications des entités, modèles et vues des fiches espèces, fiches groupes, rang taxonomique et fiches communes)
-- Ajout de la génération générique de pages d'informations + création de pages "partenaires", "collectivtés", "particuliers"
+- Ajout de la _`génération générique de pages d'informations <https://github.com/PnEcrins/GeoNature-atlas/issues/131>`_  + création de pages "partenaires", "collectivtés", "particuliers"
 - Ajout de bouttons vers les pages dédiées aux utilisateurs à côté des cartographies (informations pour fournir ou récupérer des données) 
 
