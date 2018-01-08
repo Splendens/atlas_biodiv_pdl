@@ -230,7 +230,13 @@ def get_staticpages(page):
         abort(404)
     static_page = config.STATIC_PAGES[page]
     communesSearch = vmCommunesRepository.getAllCommunes(session)
-    configuration = base_configuration
+
+    configuration = base_configuration.copy()
+    configuration.update({
+         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
+         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+    })        
+
     session.close()
     return render_template(
         static_page['template'],
