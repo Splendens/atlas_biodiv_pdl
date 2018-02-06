@@ -40,7 +40,7 @@ En BD :
 
 Lancer la commande shell :
 
-``ogr2ogr -f "GeoJSON" -t_srs "EPSG:4326" ./static/custom/terrtoire.json /home/MYUSERLINUX/atlas/data/ref/monterrtoire.shp``
+``ogr2ogr -f "GeoJSON" -t_srs "EPSG:4326" ./static/custom/territoire.json /home/MYUSERLINUX/atlas/data/ref/monterritoire.shp``
 
 
 Changement des communes
