@@ -167,6 +167,7 @@ def observersParser(req):
     return sorted(finalList)
 
 
+
 def getObservers(connection, cd_ref):
     sql = "SELECT distinct observateurs \
     FROM atlas.vm_observations \

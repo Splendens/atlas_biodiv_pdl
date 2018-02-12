@@ -75,9 +75,7 @@ def index():
          'RANG_STAT_FR': config.RANG_STAT_FR,
          'MAP': config.MAP,
          'AFFICHAGE_INTRODUCTION': config.AFFICHAGE_INTRODUCTION,
-         'AFFICHAGE_LOGOS_ORGAS' : config.AFFICHAGE_LOGOS_ORGAS,
-         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
-         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+         'AFFICHAGE_LOGOS_ORGAS' : config.AFFICHAGE_LOGOS_ORGAS
     })
 
     
@@ -119,9 +117,7 @@ def ficheEspece(cd_ref):
          'ZOOM_LEVEL_POINT': config.ZOOM_LEVEL_POINT,
          'LIMIT_CLUSTER_POINT': config.LIMIT_CLUSTER_POINT,
          'FICHE_ESPECE': True,
-         'MAP': config.MAP,
-         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
-         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+         'MAP': config.MAP
     })
     
     connection.close()
@@ -156,9 +152,8 @@ def ficheCommune(insee):
          'MAP': config.MAP,
          'MYTYPE': 1,
          'PATRIMONIALITE': config.PATRIMONIALITE,
-         'PROTECTION': config.PROTECTION,
-         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
-         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+         'PROTECTION': config.PROTECTION
+
     })
 
     
@@ -188,9 +183,7 @@ def ficheRangTaxonomie(cd_ref):
          'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
          'MYTYPE': 0,
          'PATRIMONIALITE': config.PATRIMONIALITE,
-         'PROTECTION': config.PROTECTION,
-         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
-         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+         'PROTECTION': config.PROTECTION
     })
 
     return render_template('templates/ficheRangTaxonomique.html', listTaxons = listTaxons, referenciel = referenciel, communesSearch = communesSearch, taxonomyHierarchy=taxonomyHierarchy, orgas=orgas, observers=observers, configuration=configuration)
@@ -215,9 +208,7 @@ def ficheGroupe(groupe):
          'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
          'MYTYPE': 0,
          'PATRIMONIALITE': config.PATRIMONIALITE,
-         'PROTECTION': config.PROTECTION,
-         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
-         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+         'PROTECTION': config.PROTECTION
     })
     
     return render_template('templates/ficheGroupe.html', listTaxons = listTaxons,  communesSearch = communesSearch, referenciel= groupe, groups=groups, orgas=orgas, observers=observers,configuration=configuration)
@@ -232,11 +223,7 @@ def get_staticpages(page):
     static_page = config.STATIC_PAGES[page]
     communesSearch = vmCommunesRepository.getAllCommunes(session)
 
-    configuration = base_configuration.copy()
-    configuration.update({
-         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
-         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
-    })        
+    configuration = base_configuration.copy()     
 
     session.close()
     return render_template(
@@ -255,14 +242,11 @@ def photos():
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     
     configuration = base_configuration.copy()
-    configuration.update({
-         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
-         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
-    })    
 
     session.close()
     connection.close()
     return render_template('templates/galeriePhotos.html', communesSearch = communesSearch, groups=groups, configuration=configuration)
+
 
 
 @main.route('/cartographie' , methods=['GET', 'POST'])
@@ -273,7 +257,7 @@ def cartographie():
     if config.AFFICHAGE_MAILLE:
         observations = vmObservationsMaillesRepository.allObservationsMailles(connection, config.ATTR_MAIN_PHOTO)
     else:
-        observations = vmObservationsRepository.allObservations(connection, config.ATTR_MAIN_PHOTO)
+        observations = vmObservationsRepository.lastObservations(connection, config.ATTR_MAIN_PHOTO)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     mostViewTaxon = vmTaxonsMostView.mostViewTaxon(connection)
     stat = vmObservationsRepository.statIndex(connection)
@@ -291,9 +275,7 @@ def cartographie():
          'AFFICHAGE_STAT_GLOBALES': config.AFFICHAGE_STAT_GLOBALES, 
          'AFFICHAGE_RANG_STAT': config.AFFICHAGE_RANG_STAT, 
          'COLONNES_RANG_STAT': config.COLONNES_RANG_STAT, 
-         'RANG_STAT_FR': config.RANG_STAT_FR,
-         'AFFICHAGE_NAV_PARTICULIER' : config.AFFICHAGE_NAV_PARTICULIER, 
-         'AFFICHAGE_NAV_COLLECTIVITE' : config.AFFICHAGE_NAV_COLLECTIVITE
+         'RANG_STAT_FR': config.RANG_STAT_FR
     })   
     
     connection.close()
@@ -302,3 +284,6 @@ def cartographie():
     return render_template('static/custom/templates/cartographie.html', observations=observations, communesSearch=communesSearch, \
      mostViewTaxon=mostViewTaxon, stat=stat, customStat = customStat, customStatMedias=customStatMedias, configuration = configuration)
 
+
+
+    
