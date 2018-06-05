@@ -31,14 +31,6 @@ ID_GOOGLE_ANALYTICS = "UA-xxxxxxx-xx"
 # Utiliser et afficher le glossaire (static/custom/glossaire.json.sample)
 GLOSSAIRE = False
 
-# Afficher le lien vers page collectivités dans le sidebar (si AFFICHAGE_NAV_COLLECTIVITE = True)
-AFFICHAGE_NAV_COLLECTIVITE = True
-
-# Afficher le lien vers page particuliers dans le sidebar (si AFFICHAGE_NAV_PARTICULIER = True)
-AFFICHAGE_NAV_PARTICULIER = True
-
-# Afficher le lien vers la cartographie globale du territoire (si AFFICHAGE_GLOBAL_MAP = True)
-AFFICHAGE_GLOBAL_MAP = True
 
 ###########################
 ###### Cartographie #######
@@ -168,3 +160,12 @@ ATTR_VIMEO = 9
 # La table des taxons contient-elle les informations suivantes ?
 PATRIMONIALITE = True
 PROTECTION = True
+
+############################################
+#### Pages statistiques                #####
+############################################
+# Pour l'instant les pictos se limitent au glyphicon proposés par bootstrap
+# https://getbootstrap.com/docs/3.3/components/
+STATIC_PAGES = {
+    'presentation': {'title': u"Présentation de l'atlas", 'picto': 'glyphicon-question-sign', 'order': 0, 'template': 'static/custom/templates/presentation.html'}
+}

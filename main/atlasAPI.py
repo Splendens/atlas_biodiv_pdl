@@ -67,3 +67,12 @@ def getPhotosGallery():
     connection.close()
     return Response(json.dumps(photos), mimetype='application/json')
 
+
+
+ 
+#@api.route('/allObservationsMaille', methods=['GET'])
+#def getAllObservationsMailleAPI():
+#    connection = utils.engine.connect()
+#    observations = vmObservationsMaillesRepository.getAllObservationsMaillesChilds(connection, cd_ref)
+#    connection.close()
+#    return Response(json.dumps(observations), mimetype='application/json')  

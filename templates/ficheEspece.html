@@ -548,6 +548,27 @@
             </div>
             {% endif %}
 
+
+                <div class="panel panel-default" id="blocInfos">
+                  <!-- Twpo columns of text  -->
+                  <div class="row faq">
+                    <h2 class="text-center">Informations sur les données</h2>
+                    <div class="col-lg-4">
+                      <h3  style="font-size:160%;">Particulier ?</h3>
+                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='particulier') }}" role="button">Participer à<br/>l'inventaire ! &raquo;</a></p>
+                    </div><!-- /.col-lg-4 -->
+                    <div class="col-lg-4">
+                      <h3 style="font-size:160%;">Collectivité ?</h3>
+                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='collectivite') }}" role="button">Collecter ou fournir<br/>des données &raquo;</a></p>
+                    </div><!-- /.col-lg-4 -->
+                    <div class="col-lg-4">
+                      <h3 style="font-size:160%;">Personne morale ?</h3>
+                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='persmorale') }}" role="button">Informations sur<br/>les données &raquo;</a></p>
+                    </div><!-- /.col-lg-4 -->
+                  </div><!-- /.row -->
+                </div>
+           
+
             <div class="panel panel-default" id="graphBloc">
                 <h3 class="text-center">Observations par classes d'altitudes</h3>
                 <div id="altiChart"></div>
@@ -587,7 +608,6 @@
     {% else %}
         <script src="{{url_for('static', filename='mapPoint.js') }}"></script>
     {% endif %}
-    <script src="{{url_for('static', filename='ficheEspece.js') }}"></script>
 
     </body>
 </html>

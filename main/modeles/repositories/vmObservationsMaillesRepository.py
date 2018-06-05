@@ -10,6 +10,7 @@ def getObservationsMaillesChilds(connection, cd_ref):
     sql = "SELECT \
     obs.id_maille, \
     obs.geojson_maille, \
+    o.orgaobs, \
     o.dateobs, \
     extract(YEAR FROM o.dateobs) as annee \
     FROM atlas.vm_observations_mailles obs \
@@ -20,7 +21,7 @@ def getObservationsMaillesChilds(connection, cd_ref):
     observations = connection.execute(text(sql), thiscdref = cd_ref)
     tabObs = list()
     for o in observations:
-        temp = {'id_maille': o.id_maille, 'nb_observations': 1, 'annee': o.annee, 'dateobs': str(o.dateobs), 'geojson_maille':ast.literal_eval(o.geojson_maille)}
+        temp = {'id_maille': o.id_maille, 'nb_observations': 1, 'structure_obs': o.orgaobs, 'annee': o.annee, 'dateobs': str(o.dateobs), 'geojson_maille':ast.literal_eval(o.geojson_maille)}
         tabObs.append(temp)
     return tabObs
 
@@ -66,7 +67,7 @@ def lastObservationsCommuneMaille(connection, mylimit, insee):
     JOIN atlas.vm_taxons t ON  obs.cd_ref = t.cd_ref \
     WHERE c.insee = :thisInsee \
     ORDER BY obs.dateobs DESC \
-    LIMIT :thislimit \
+    LIMIT (:thislimit) \
     )\
     SELECT l.lb_nom, l.nom_vern, l.cd_ref, m.id_maille, m.geojson_maille \
     FROM atlas.t_mailles_territoire m \
@@ -142,3 +143,50 @@ def allObservationsMailles(connection, idPhoto):
                 }
         obsList.append(temp)
     return obsList
+<<<<<<< HEAD
+=======
+
+
+
+# With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
+#def allObservationsMailles(connection, idPhoto):
+#    sql = """SELECT DISTINCT obs.id_maille, max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs, COUNT(o.id_observation) AS nb_obs
+#        FROM atlas.vm_observations_mailles obs 
+#        JOIN atlas.vm_observations o ON obs.id_observation=o.id_observation
+#        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+#        GROUP BY obs.id_maille"""
+#    req = connection.execute(text(sql))
+#    taxonCommunesList=list()
+#    nbObsTotal = 0
+#    obsListall=list()
+#    for r in req:
+#
+#        temp = {'id_maille' : r.id_maille, 
+#                'nb_obs' : r.nb_obs, 
+#                'cd_ref' : r.cd_ref,
+#                'last_obs' : r.last_obs, 
+#                'first_obs'  : r.first_obs 
+#                }
+#        obsListall.append(temp)
+#    return obsListall
+
+
+
+
+
+#def getAllObservationsMaillesChilds(connection, cd_ref):
+#    sql = "SELECT \
+#    obs.id_maille, \
+#    obs.geojson_maille, \
+#    o.dateobs, \
+#    extract(YEAR FROM o.dateobs) as annee \
+#    FROM atlas.vm_observations_mailles obs \
+#    JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation \
+#    "
+#    observations = connection.execute(text(sql), thiscdref = cd_ref)
+#    tabObs = list()
+#    for o in observations:
+#        temp = {'id_maille': o.id_maille, 'nb_observations': 1, 'annee': o.annee, 'dateobs': str(o.dateobs), 'geojson_maille':ast.literal_eval(o.geojson_maille)}
+#        tabObs.append(temp)
+#    return tabObs
+>>>>>>> 248df1f8c8b80840c4a950f5c93a344e11a7d382

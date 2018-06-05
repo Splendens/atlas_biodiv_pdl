@@ -37,18 +37,15 @@ Modifications en cours
 
 **Bases de données**
 
-- Ajout d'un schéma par base de données partenaires moissonnées à la DB geonaturedb
-- Ajout des triggers pour l'insertion des données des partenaires dans la table de synthèse
-- Ajout des fonctions de moissonnage des DB externes
-- Ajout de vues matérialisées à la DB geonatureatlas pour l'affichage par communes et intercommunalités
-- Modifications de la récupération des mailles (données dégradées aux centroïdes des mailles ?)
+- Ajout de vues matérialisées à la DB geonatureatlas pour l'affichage par communes, intercommunalités, départements
 
 
 **Application**
 
-- Modification de la page d'accueil 
-- Ajout des fonctionnalités de visualisation des données par communes et intercommunalités 
+- Ajout des fonctionnalités de visualisation des données par communes, intercommunalités et département 
+- Ajout des fonctionnalités de visualisation des données par mailles utm
 - Ajout des fonctionnalités de visualisation de graphes de statistiques sur les territoires
+- Cartographie globale du territoire avec des filtres
 
 
 
@@ -59,9 +56,14 @@ Modifications apportées
 
 - `Modification des zonages <https://github.com/Splendens/atlas_biodiv_pdl/blob/master/modifdb/couches_reference.rst>`_ (territoire, communes) pour les Pays de la Loire
 - Ajout des structures productrices des données affichées (modifications de la vm_observations)
-
+- Ajout d'un schéma par base de données partenaires moissonnées à la DB geonatureatlas 
+- Récupération des données des DB externes (via FDW)
+- Modifications de la récupération des mailles (données dégradées aux centroïdes des mailles)
 
 **Application**
 
+- Modification de la page d'accueil 
 - Affichage des structures productrices des données affichées (modifications des entités, modèles et vues des fiches espèces, fiches groupes, rang taxonomique et fiches communes)
+- Ajout de la `génération générique de pages d'informations <https://github.com/PnEcrins/GeoNature-atlas/issues/131>`_  + création de pages "partenaires", "collectivtés", "particuliers"
+- Ajout de bouttons vers les pages dédiées aux utilisateurs à côté des cartographies (informations pour fournir ou récupérer des données) 
 

@@ -26,6 +26,8 @@ static/custom/images/*
 static/custom/templates/presentation.html
 static/custom/templates/collectivite.html
 static/custom/templates/particulier.html
+static/custom/templates/partenaires.html
+static/custom/templates/cartographie.html
 static/custom/templates/footer.html
 static/custom/templates/introduction.html
 static/custom/templates/credits.html
