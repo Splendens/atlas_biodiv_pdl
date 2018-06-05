@@ -105,3 +105,40 @@ def getObservationsTaxonCommuneMaille(connection, insee, cd_ref):
     return tabObs
 
 
+
+
+
+
+# all observation for cartographie.html
+def allObservationsMailles(connection, idPhoto):
+    sql = """SELECT obs.*, 
+    tax.lb_nom, tax.nom_vern, tax.group2_inpn, 
+    o.dateobs, o.altitude_retenue, 
+    medias.url, medias.chemin 
+    FROM atlas.vm_observations_mailles obs 
+    JOIN atlas.vm_taxons tax ON tax.cd_ref = obs.cd_ref 
+    JOIN atlas.vm_observations o ON o.id_observation=obs.id_observation
+    LEFT JOIN atlas.vm_medias medias ON medias.cd_ref = obs.cd_ref AND medias.id_type = :thisID
+    ORDER BY o.dateobs DESC 
+    LIMIT 1000 """
+
+    observations = connection.execute(text(sql), thisID=idPhoto)
+    obsList=list()
+    for o in observations:
+        if o.nom_vern:
+            inter = o.nom_vern.split(',')
+            taxon = inter[0] +' | '+ o.lb_nom
+        else:
+            taxon = o.lb_nom
+        temp = {'id_observation' : o.id_observation,
+                'id_maille' : o.id_maille,
+                'cd_ref': o.cd_ref,
+                'dateobs': str(o.dateobs),
+                'altitude_retenue' : o.altitude_retenue,
+                'taxon': taxon,
+                'geojson_maille':ast.literal_eval(o.geojson_maille),
+                'group2_inpn': utils.deleteAccent(o.group2_inpn),
+                'pathImg' : utils.findPath(o)
+                }
+        obsList.append(temp)
+    return obsList

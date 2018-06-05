@@ -212,9 +212,9 @@ def cartographie():
     connection = utils.engine.connect()
     
     if config.AFFICHAGE_MAILLE:
-        observations = vmObservationsMaillesRepository.lastObservationsMailles(connection, config.NB_DAY_LAST_OBS, config.ATTR_MAIN_PHOTO)
+        observations = vmObservationsMaillesRepository.allObservationsMailles(connection, config.ATTR_MAIN_PHOTO)
     else:
-        observations = vmObservationsRepository.lastObservations(connection, config.NB_DAY_LAST_OBS, config.ATTR_MAIN_PHOTO)
+        observations = vmObservationsRepository.allObservations(connection, config.ATTR_MAIN_PHOTO)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     mostViewTaxon = vmTaxonsMostView.mostViewTaxon(connection)
     stat = vmObservationsRepository.statIndex(connection)
