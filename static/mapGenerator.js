@@ -1,33 +1,29 @@
 function generateMap() {
 
+    // Map initialization
+    firstMapTile = L.tileLayer(configuration.MAP.FIRST_MAP.url, {attribution : configuration.MAP.FIRST_MAP.attribution} );
+    orthoMap =  L.tileLayer(configuration.MAP.SECOND_MAP.url, {attribution: configuration.MAP.SECOND_MAP.attribution});
 
-// Map initialization
-firstMapTile = L.tileLayer(configuration.MAP.FIRST_MAP.url, {attribution : configuration.MAP.FIRST_MAP.attribution} );
-orthoMap =  L.tileLayer(configuration.MAP.SECOND_MAP.url, {attribution: configuration.MAP.SECOND_MAP.attribution});
-
-baseMap = {};
-baseMap[configuration.MAP.FIRST_MAP.tileName]=firstMapTile;
-
+    baseMap = {};
+    baseMap[configuration.MAP.FIRST_MAP.tileName]=firstMapTile;
 
 
-      var map = L.map('map',{
-        crs: L.CRS.EPSG3857,
-        center: configuration.MAP.LAT_LONG, 
-        geosearch: true,
-        zoom: configuration.MAP.ZOOM,
-        layers : [firstMapTile],
-        fullscreenControl: true,
-        });
+    var map = L.map('map',{
+      crs: L.CRS.EPSG3857,
+      center: configuration.MAP.LAT_LONG, 
+      geosearch: true,
+      zoom: configuration.MAP.ZOOM,
+      layers : [firstMapTile],
+      fullscreenControl: true,
+      });
 
     // Style of territory on map
     territoryStyle = {
-        fill: false,
-        color: configuration.MAP.BORDERS_COLOR,
-        weight: configuration.MAP.BORDERS_WEIGHT
+      fill: false,
+      color: configuration.MAP.BORDERS_COLOR,
+      weight: configuration.MAP.BORDERS_WEIGHT
     }
 
-/*    L.control.layers(baseMap).addTo(map);
-*/
      // Add limits of the territory to the map
      $(document).ready(function()
           {
@@ -47,41 +43,39 @@ baseMap[configuration.MAP.FIRST_MAP.tileName]=firstMapTile;
         position: 'bottomleft' 
       },
 
-    onAdd: function (map) {
-        currentTileMap = "earth";
+      onAdd: function (map) {
+        currentTileMap = "topo";
         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
      
         container.style.backgroundColor = 'white';
-        container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_topo_map.PNG)";
+        container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)";
         container.style.width = '50px';
         container.style.height = '50px';
         container.style.border = 'solid white 1px';
         container.style.cursor = 'pointer';
         $(container).attr("data-placement", "right");
         $(container).attr("data-toggle", "tooltip");
-        $(container).attr("data-original-title", "Plan");
+        $(container).attr("data-original-title", "Photos aérienne");
 
 
         container.onclick = function(){
-          if(currentTileMap == "earth"){
-          container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)";
-          $(container).attr("data-original-title", "Photos aérienne");
-          map.removeLayer(firstMapTile);
-          orthoMap.addTo(map);
-          currentTileMap = "topo";
-          }
-          else{
+          if(currentTileMap == "topo"){
           container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_topo_map.PNG)";
           $(container).attr("data-original-title", "Plan");
+          map.removeLayer(firstMapTile);
+          orthoMap.addTo(map);
+          currentTileMap = "earth";
+          }
+          else{
+          container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)";
+          $(container).attr("data-original-title", "Photos aérienne");
           map.removeLayer(orthoMap);
           firstMapTile.addTo(map);
-          currentTileMap = "earth";
+          currentTileMap = "topo";
           }
         }
         return container;
       }
-    
-
     });
 
     map.addControl(new LayerControl());
@@ -94,22 +88,7 @@ baseMap[configuration.MAP.FIRST_MAP.tileName]=firstMapTile;
     fullScreenButton.attr("data-original-title", "Plein écran");
     $('.leaflet-control-fullscreen-button').removeAttr('title');
 
-    // add tooltip on zoom-out button
-
-    zoomOutButton = $(".leaflet-control-zoom-out");
-    zoomOutButton.attr("data-placement", "right");
-    zoomOutButton.attr("data-toggle", "tooltip");
-    zoomOutButton.attr("data-original-title", "Zoom arrière");
-    $('.leaflet-control-zoom-out').removeAttr('title');
-
-    // add tooltip on zoom-in button
-
-    zoomInButton = $(".leaflet-control-zoom-in");
-    zoomInButton.attr("data-placement", "right");
-    zoomInButton.attr("data-toggle", "tooltip");
-    zoomInButton.attr("data-original-title", "Zoom avant");
-    $('.leaflet-control-zoom-in').removeAttr('title');
-
+    
 
     return map
 }
@@ -136,7 +115,7 @@ function onEachFeaturePoint(feature, layer){
 
 // popup Maille
 function onEachFeatureMaille(feature, layer){
-    popupContent = "<b>Nombre d'observation(s): </b>"+ feature.properties.nb_observations+"</br> <b> Structure(s): </b>"+ feature.properties.structure_obs+ " "+"</br> <b> Dernière observation: </b>"+ feature.properties.last_observation+ " " ;
+    popupContent = "<b>Nombre d'observation(s): </b>"+ feature.properties.nb_observations+"</br> <b> Dernière observation: </b>"+ feature.properties.last_observation+ " " ;
     layer.bindPopup(popupContent)
 }
 
@@ -164,8 +143,6 @@ function styleMaille(feature) {
 
 
 function generateLegendMaille(){
-    var legend = L.control({position: 'bottomright'});
-
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
@@ -184,7 +161,6 @@ function generateLegendMaille(){
     };
 
     legend.addTo(map);
-    compteurLegend=compteurLegend+1;
 }
 
 
@@ -203,7 +179,7 @@ function generateGeojsonMaille(observations, yearMin, yearMax) {
     if(observations[i].annee >= yearMin && observations[i].annee <= yearMax ) {
       geometry = observations[i].geojson_maille;
       idMaille = observations[i].id_maille;
-      properties = {id_maille : idMaille, nb_observations : 1, structure_obs: observations[i].structure_obs, last_observation: observations[i].annee, tabDateobs: [new Date(observations[i].dateobs)]};
+      properties = {id_maille : idMaille, nb_observations : 1, last_observation: observations[i].annee, tabDateobs: [new Date(observations[i].dateobs)]};
       var j = i+1;
       while (j<observations.length && observations[j].id_maille <= idMaille){
         if(observations[j].annee >= yearMin && observations[j].annee <= yearMax ){
@@ -212,9 +188,6 @@ function generateGeojsonMaille(observations, yearMin, yearMax) {
         }
         if (observations[j].annee >=  properties.last_observation){
           properties.last_observation = observations[j].annee
-        }
-        if (observations[j].structure_obs != properties.structure_obs) {
-          properties.structure_obs += (' <br/> ' + observations[j].structure_obs)
         }
         j = j+1
       }
@@ -245,12 +218,8 @@ function displayMailleLayerFicheEspece(observationsMaille, yearMin, yearMax){
   });
   currentLayer.addTo(map);
 
-// ajout de la légende
-
-    if(compteurLegend == 0){
-      generateLegendMaille();
-  }
-
+  // ajout de la légende
+  generateLegendMaille();
 }
 
 
@@ -293,50 +262,47 @@ function displayMailleLayerCommune(observations){
   });
   currentLayer.addTo(map);
 
-// ajout de la légende
-
-    if(compteurLegend == 0){
-      generateLegendMaille();
-  }
+  // ajout de la légende
+  generateLegendMaille();
 
 }
 
 
 // GeoJson Point
 function generateGeojsonPointFicheEspece(observationsPoint, yearMin, yearMax){
-   myGeoJson = {'type': 'FeatureCollection','features' : []}
-      observationsPoint.forEach(function(obs){
-          if(obs.year >= yearMin && obs.year <= yearMax ) {
-              geometry = obs.geojson_point;
-              properties = {'id_observation' : obs.id_observation,
-                            'cd_ref': obs.cd_ref,
-                            'dateobsCompare': new Date(obs.dateobs),
-                            'dateobsPopup': obs.dateobs,
-                            'observateurs' : obs.observateurs,
-                            'altitude_retenue' : obs.altitude_retenue,
-                            'effectif_total' : obs.effectif_total,
-                            'year': obs.dateobs.year,
-                            'nb_observations': 1
-                            }
-              myGeoJson.features.push({
-                'type' : 'Feature',
-                'properties' : properties,
-                'geometry' : geometry   
-              })
-         } 
-      });
-  return myGeoJson
+    myGeoJson = {'type': 'FeatureCollection','features' : []}
+    observationsPoint.forEach(function(obs){
+        if(obs.year >= yearMin && obs.year <= yearMax ) {
+            properties = obs;
+            properties['dateobsCompare'] = new Date(obs.dateobs);
+            properties['dateobsPopup'] = obs.dateobs;
+            properties['nb_observations'] =1;
+            myGeoJson.features.push({
+              'type' : 'Feature',
+              'properties' : properties,
+              'geometry' : obs.geojson_point   
+            });
+        } 
+    });
+    return myGeoJson
 }
 
 // Display marker Layer (cluster or not)
 function displayMarkerLayerFicheEspece(observationsPoint, yearMin, yearMax){
 
-  myGeojson = generateGeojsonPointFicheEspece(observationsPoint, yearMin, yearMax)
+  myGeojson = generateGeojsonPointFicheEspece(observationsPoint, yearMin, yearMax);
+
+  if (typeof pointDisplayOptionsFicheEspece == 'undefined') {
+    pointDisplayOptionsFicheEspece = function(feature) {
+      return {};
+    }
+  }
   currentLayer = L.geoJson(myGeojson, {
           onEachFeature : onEachFeaturePoint,
+          
           pointToLayer: function (feature, latlng) {
-                           return L.circleMarker(latlng);
-                           }
+            return L.circleMarker(latlng, pointDisplayOptionsFicheEspece(feature));
+          }
   });
   if (myGeojson.features.length > configuration.LIMIT_CLUSTER_POINT) {
       newLayer = currentLayer;
@@ -344,9 +310,18 @@ function displayMarkerLayerFicheEspece(observationsPoint, yearMin, yearMax){
       currentLayer.addLayer(newLayer);
       map.addLayer(currentLayer)
 
-  } else {
+  }
+  else {
     currentLayer.addTo(map);
-
+  }
+  
+  if (typeof divLegendeFicheEspece !== 'undefined') {
+    legend.onAdd = function (map) {
+        var div =  L.DomUtil.create('div', 'info legend');
+        div.innerHTML = divLegendeFicheEspece;
+        return div;
+    };
+    legend.addTo(map);
   }
 }
 
@@ -358,39 +333,40 @@ function displayMarkerLayerFicheEspece(observationsPoint, yearMin, yearMax){
   /* *** Point ****/
 
 function onEachFeaturePointLastObs(feature, layer){
-    popupContent = "<b>Espèce: </b>"+ feature.properties.taxon_name+
-                "</br><b>Date: </b>"+ feature.properties.dateobs+"</br><b>Altitude: </b>"+ feature.properties.altitude_retenue;
+    popupContent = "<b>Espèce: </b>"+ feature.properties.taxon+
+                "</br><b>Date: </b>"+ feature.properties.dateobs+"</br><b>Altitude: </b>"+ 
+                feature.properties.altitude_retenue;
 
-                layer.bindPopup(popupContent + "</br> <a href='"+ configuration.URL_APPLICATION+"/espece/"+feature.properties.cd_ref+"'> Fiche espèce </a>")
+    layer.bindPopup(popupContent + "</br> <a href='"+ configuration.URL_APPLICATION+"/espece/"+feature.properties.cd_ref+"'> Fiche espèce </a>")
 }
 
 function onEachFeaturePointCommune(feature, layer){
-    popupContent = "<b>Espèce: </b>"+ feature.properties.taxon_name+
-                "</br><b>Date: </b>"+ feature.properties.dateobs+"</br><b>Altitude: </b>"+ feature.properties.altitude_retenue+
+    popupContent = "<b>Espèce: </b>"+ feature.properties.taxon+
+                "</br><b>Date: </b>"+ feature.properties.dateobs+"</br><b>Altitude: </b>"+ 
+                feature.properties.altitude_retenue+
                 "</br><b> Observateurs(s): </b>"+ feature.properties.observateurs
 
                 layer.bindPopup(popupContent + "</br> <a href='"+ configuration.URL_APPLICATION+"/espece/"+feature.properties.cd_ref+"'> Fiche espèce </a>")
 }
 
-
 function generateGeojsonPointLastObs(observationsPoint){
     myGeoJson = {'type': 'FeatureCollection','features' : []}
 
       observationsPoint.forEach(function(obs){
-              geometry = obs.geojson_point;
-              properties = {'id_observation' : obs.id_observation,
-                             'taxon_name' : obs.taxon,
-                            'cd_ref': obs.cd_ref,
-                            'dateobs': obs.dateobs,
-                            'altitude_retenue' : obs.altitude_retenue,
-                            'effectif_total' : obs.effectif_total,
-                            'observateurs': obs.observateurs
-                            }
-              myGeoJson.features.push({
-                'type' : 'Feature',
-                'properties' : properties,
-                'geometry' : geometry   
-              })
+          properties = obs;
+          properties['dateobsCompare'] = new Date(obs.dateobs);
+          properties['dateobsPopup'] = obs.dateobs;
+          properties['nb_observations'] =1;
+          myGeoJson.features.push({
+            'type' : 'Feature',
+            'properties' : properties,
+            'geometry' : obs.geojson_point   
+          });
+          myGeoJson.features.push({
+            'type' : 'Feature',
+            'properties' : properties,
+            'geometry' :  obs.geojson_point   
+          })
       });
   return myGeoJson
 }
@@ -398,29 +374,50 @@ function generateGeojsonPointLastObs(observationsPoint){
 
 function displayMarkerLayerPointLastObs(observationsPoint){
   myGeojson = generateGeojsonPointLastObs(observationsPoint);
+  if (typeof pointDisplayOptionsFicheCommuneHome == 'undefined') {
+    pointDisplayOptionsFicheCommuneHome = function(feature) {
+      return {};
+    }
+  }
+
   currentLayer = L.geoJson(myGeojson, {
-          onEachFeature : onEachFeaturePointLastObs,
-          pointToLayer: function (feature, latlng) {
-                           return L.circleMarker(latlng);
-                           }
+      onEachFeature : onEachFeaturePointLastObs,
+      pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng, pointDisplayOptionsFicheCommuneHome(feature));
+      }
   });
 
-      map.addLayer(currentLayer)
+  map.addLayer(currentLayer);
+  if (typeof divLegendeFicheCommuneHome !== 'undefined') {
+    legend.onAdd = function (map) {
+        var div =  L.DomUtil.create('div', 'info legend');
+        div.innerHTML = divLegendeFicheCommuneHome;
+        return div;
+    };
+    legend.addTo(map);
   }
+}
 
 
 function displayMarkerLayerPointCommune(observationsPoint){
-  myGeojson = generateGeojsonPointLastObs(observationsPoint);
-  currentLayer = L.geoJson(myGeojson, {
-          onEachFeature : onEachFeaturePointCommune,
-          pointToLayer: function (feature, latlng) {
-                           return L.circleMarker(latlng);
-                           }
-  });
-      newLayer = currentLayer;
-      currentLayer = L.markerClusterGroup();
-      currentLayer.addLayer(newLayer);
-      map.addLayer(currentLayer)
+    myGeojson = generateGeojsonPointLastObs(observationsPoint);
+    if (typeof pointDisplayOptionsFicheCommuneHome == 'undefined') {
+      pointDisplayOptionsFicheCommuneHome = function(feature) {
+        return {};
+      }
+    }
+
+    currentLayer = L.geoJson(myGeojson, {
+        onEachFeature : onEachFeaturePointCommune,
+        pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng, pointDisplayOptionsFicheCommuneHome(feature));
+        }
+    });
+
+    newLayer = currentLayer;
+    currentLayer = L.markerClusterGroup();
+    currentLayer.addLayer(newLayer);
+    map.addLayer(currentLayer);
 }
 
 //  ** MAILLE ***
@@ -608,9 +605,7 @@ function generateSliderOnMap(){
         $(sliderContainer).css("text-align", "center");
         $(sliderContainer).append("<p> <span id='yearMin'> </span> <input id='sliderControl' type='text'/> <span id='yearMax'>  </span>  </p>"
                             +"<p id='nbObs'> Nombre d'observation(s): "+nb_obs+" </p>");
-
         L.DomEvent.disableClickPropagation(sliderContainer);
-
         return sliderContainer;
       }
 
@@ -631,166 +626,6 @@ function generateSliderOnMap(){
 
 
 
-
-
-
-     // contrôle pour changer le type d'analyse (mailles / communes)
-
-
-
-/*
-
-  var MailleControl = L.Control.extend({
-
-options: {
-    position: 'topright',
-  },
-
-
-
-    onAdd: function (map) {
-        currentTileMap = "maille";
-        var containerMaille = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom glyphicon glyphicon-th');
-        //var containerComm = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom glyphicon glyphicon-th');
-     
-        containerMaille.style.backgroundColor = 'white';
-        containerMaille.style.width = '25px';
-        containerMaille.style.height = '25px';
-        containerMaille.style.border = 'solid white 1px';
-        containerMaille.style.margin = '8px 50px 0 0';
-        containerMaille.style.padding = '6px';
-        containerMaille.style.cursor = 'pointer';
-        $(containerMaille).attr("data-placement", "bottom");
-        $(containerMaille).attr("data-toggle", "tooltip");
-        $(containerMaille).attr("data-original-title", "Analyse par mailles régulières");
-*/
-
-        /*containerComm.style.backgroundColor = 'white';
-        containerComm.style.width = '25px';
-        containerComm.style.height = '25px';
-        containerComm.style.border = 'solid white 1px';
-        containerComm.style.cursor = 'pointer';
-        $(containerComm).attr("data-placement", "bottom");
-        $(containerComm).attr("data-toggle", "tooltip");
-        $(containerComm).attr("data-original-title", "Analyse par mailles régulières");*/
-
-/*
-        containerMaille.onclick = function(){
-          if(currentTileMap == "maille"){
-          //containerMaille.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)";
-          $(containerMaille).attr("data-original-title", "Analyse par mailles Communales");
-          map.removeLayer(firstMapTile);
-          orthoMap.addTo(map);
-          currentTileMap = "comm";
-          }
-          else{
-          //containerMaille.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_topo_map.PNG)";
-          $(containerMaille).attr("data-original-title", "Analyse par mailles régulières");
-          map.removeLayer(orthoMap);
-          firstMapTile.addTo(map);
-          currentTileMap = "maille";
-          }
-        }
-        return containerMaille;
-      }
-    
-
-    });
-
-    map.addControl(new MailleControl());
-    
-
-  var MailleCommControl = L.Control.extend({
-
-
-    onAdd: function (map) {
-        //currentTileMap = "maille";
-        var containerCommMaille = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom glyphicon glyphicon-map-marker');
-        //var containerComm = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom glyphicon glyphicon-th');
-     
-        containerCommMaille.style.backgroundColor = 'white';
-        containerCommMaille.style.width = '25px';
-        containerCommMaille.style.height = '25px';
-        containerCommMaille.style.border = 'solid white 1px';
-        containerCommMaille.style.margin = '8px 25px 0 0';
-        containerCommMaille.style.padding = '5px';
-        containerCommMaille.style.cursor = 'pointer';
-        $(containerCommMaille).attr("data-placement", "bottom");
-        $(containerCommMaille).attr("data-toggle", "tooltip");
-        $(containerCommMaille).attr("data-original-title", "Analyse par mailles communales");
-
-*/
-
-        /*containerComm.style.backgroundColor = 'white';
-        containerComm.style.width = '25px';
-        containerComm.style.height = '25px';
-        containerComm.style.border = 'solid white 1px';
-        containerComm.style.cursor = 'pointer';
-        $(containerComm).attr("data-placement", "bottom");
-        $(containerComm).attr("data-toggle", "tooltip");
-        $(containerComm).attr("data-original-title", "Analyse par mailles régulières");*/
-
-        /* containerMaille.onclick = function(){
-          if(currentTileMap == "maille"){
-          //containerMaille.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)";
-          $(containerCommMaille).attr("data-original-title", "Analyse par mailles Communales");
-          map.removeLayer(firstMapTile);
-          orthoMap.addTo(map);
-          currentTileMap = "comm";
-          }
-          else{
-          //containerMaille.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_topo_map.PNG)";
-          $(containerCommMaille).attr("data-original-title", "Analyse par mailles régulières");
-          map.removeLayer(orthoMap);
-          firstMapTile.addTo(map);
-          currentTileMap = "maille";
-          }
-        }*/
-/*        return containerCommMaille;
-      }
-    
-
-    });
-
-    map.addControl(new MailleCommControl());
-
-
-*/
 }
 
 
-// ajout d'un contrôle pour changer le type d'analyse (mailles / communes)
-/*
-   L.control.custom({
-    position: 'bottomleft',
-    content : '<fieldset>' +
-                 '<div class="switch-toggle switch-candy">' 
-
-                 +
-
-                    '<input id="Communes" name="view" type="radio" checked>' +
-                    '<label for="Communes" onclick=""><span data-toggle="tooltip" data-placement="bottom" title="Analyse par mailles Communales"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></span></label>' 
-                    
-                    +
-
-                    '<input id="Mailles" name="view" type="radio">' +
-                    '<label for="Mailles" onclick=""><span data-toggle="tooltip" data-placement="bottom" title="Analyse par mailles régulières"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></span></label>' +
-                    '<a></a>' 
-
-                    +
-
-                 '</div>' +
-                '</fieldset>',
-    style   :
-    {
-        margin: '10px',
-        padding: '0px 0 0 0',
-        cursor: 'pointer',
-    }
-})
-.addTo(map);
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-});
-*/

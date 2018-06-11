@@ -1,9 +1,10 @@
 var map = generateMap();
 generateSliderOnMap();
+var legend = L.control({position: 'bottomright'});
 
 // Legende
 
-htmlLegend = "<i style='border: solid "+configuration.MAP.BORDERS_WEIGHT+"px "+configuration.MAP.BORDERS_COLOR+";'> &nbsp; &nbsp; &nbsp;</i> Limite des "+ configuration.STRUCTURE;
+htmlLegend = "<i style='border: solid "+configuration.MAP.BORDERS_WEIGHT+"px "+configuration.MAP.BORDERS_COLOR+";'> &nbsp; &nbsp; &nbsp;</i> Limite du "+ configuration.STRUCTURE;
 generateLegende(htmlLegend);
 
 

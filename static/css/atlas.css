@@ -32,7 +32,6 @@ a.btn.btn-default:hover{
 
 .modal{
     top: 40px;
-    z-index: 2000;
 }
 
 /* Navbar */
@@ -293,26 +292,6 @@ li.sidebar-brand {
 }
 
 /*// END block actual species */
-
-/*Stat commune block*/
-
-#statCom {
-	margin-top: 20px;
-}
-
-#statCom {
-	padding-right: 20px;
-	padding-left: 20px;
-}
-
-div#statCom{
-	padding-top: 1px;
-}
-
-
-
-/*END*/
-
 
 /* Footer */
 

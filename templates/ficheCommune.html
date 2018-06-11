@@ -16,24 +16,19 @@
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.css') }}" />
         <script src="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.js') }}"></script>
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.css') }}" />
-		<link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.Default.css') }}" />
+		    <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.Default.css') }}" />
 
         <!-- DataTable -->
-        <!--<script type="text/javascript" src="{{url_for('static', filename='lib/dataTable/datatables.min.js') }}"></script>
-		<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-          <link rel="stylesheet" href="{{url_for('static', filename='lib/dataTable/jquery.dataTables.min.css') }}" />  -->
-		<link rel="stylesheet" href="{{url_for('static', filename='lib/datatables/datatables.min.css') }}"/>
+		    <link rel="stylesheet" href="{{url_for('static', filename='lib/datatables/datatables.min.css') }}"/>
         <script type="text/javascript" src="{{url_for('static', filename='lib/datatables/datatables.min.js') }}"></script>
-        
+
         <!-- Bootstrap -->
         <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}"></link>
         <script type="text/javascript" src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
 
        <!-- Atlas -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}"/>       
-        <link rel="stylesheet" href="{{url_for('static', filename='css/ficheEspece.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='css/listEspeces.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='css/icones.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}"/>
@@ -47,131 +42,46 @@
 			{% include 'templates/sideBar.html' %}
 		</div>
 		<div class="container-fluid" id="page">
-            
-            <div class="col-xs-12">
+
+            <div class="col-sm-7">
                  <div class="panel panel-default" id="parent">
-					<div class="row">
-                        <h3><b>Commune de {{referenciel.communeName}}</b></h3>
+					          <div class="row">
+                        <h4><b>Commune de {{referenciel.communeName}}</b></h4>
                         <ul id="stat">
-                            <li>
-                                <span data-icon="&#xe037;" style="font-size: 30px;"></span><br/>
-                                <b>{{listTaxons.nbObsTotal}}</b><br/>{{ 'Observations' if listTaxons.nbObsTotal > 1 else 'Observation' }}
-                            </li>
-                            <li>
-                                <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
-                                <b>{{listTaxons.taxons|length}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
-                            </li>
-                            <li>
-                                <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
-                                <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
-                            </li>
-                            <li>
-                                <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="font-size:30px;margin:5%;"></br>
-                                <b>{{orgas|length}}</b><br/>{{ 'Structures' if orgas|length > 1 else 'Structure' }}
-                            </li>
+                            <li><span data-icon="&#xe037;" style="font-size: 30px;"></span><br/><b>{{listTaxons.nbObsTotal}}</b><br/>{{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }}</li>
+                            <li><span data-icon="&#xe03b;" style="font-size: 30px;"></span></br><b>{{listTaxons.taxons|length}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}</li>
+                            <li><span data-icon="&#xe040;" style="font-size: 30px;"></span></br><b>{{observers | length}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}</li>
                         </ul>
                     </div>
                 </div>
-            </div>
 
-
-            <div class="col-xs-5">
-                <div class="panel panel-default" id="otherInformationsPanel">
-                    <div class="row" id="otherInformations">
-                      <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> 
-                            {{ 'Observateurs' if observers|length > 1 else 'Observateur' }}</a>
-                        </li>
-                        <li> 
-                            <a data-toggle="tab" href="#structures"> <b>{{orgas|length}} </b> 
-                            {{ 'Structures' if orgas|length > 1 else 'Structure' }}</a>
-                        </li>
-                      </ul>
-                        <div class="tab-content" style="width:100%;">
-                            <div id="observateurs" class="tab-pane fade in active">
-                                {% for o in observers %}
-                                    {{o }}
-                                    {% if  not loop.last %}
-                                    -
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div id="structures" class="tab-pane fade">
-                                {% for s in orgas %}
-                                    {{s.orgaobs }}
-                                    {% if  not loop.last %}
-                                    -
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
+                <div class="row rowMargin" id="clear">
+                        <div class="panel panel-default">
+                            {% include 'templates/tabTaxons.html' %}
                         </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default" id="blocInfos">
-                  <!-- Twpo columns of text  -->
-                  <div class="row faq">
-                      <h2 class="text-center">Informations sur les données</h2>
-                    <div class="col-lg-4">
-                      <h3 style="font-size:160%;">Particulier ?</h3>
-                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='particulier') }}" role="button">Participer à<br/>l'inventaire ! &raquo;</a></p>
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-4">
-                      <h3 style="font-size:160%;">Collectivité ?</h3>
-                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='collectivite') }}" role="button">Collecter ou fournir<br/>des données &raquo;</a></p>
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-4">
-                      <h3 style="font-size:160%;">Personne morale ?</h3>
-                      <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='persmorale') }}" role="button">Informations sur<br/>les données &raquo;</a></p>
-                    </div><!-- /.col-lg-4 -->
-                  </div><!-- /.row -->
-                </div>
-           
-
-            </div>
-
-
-            <div class="col-xs-7">
-                <div class="panel panel-default" id="statCom">
-                    <div class="row" id="statCom">
-                        <h2>Statistiques sur le territoire</h2>
-                        <img class="img-responsive" id="picto" src="{{url_for('static', filename='custom/images/specimen_exemple_graph_stat.png')}}" style="font-size:30px;margin:2%;">
-                    </div>
                 </div>
             </div>
 
-
-
-            <div class="row rowMargin" id="clear">
-                <div class="col-xs-12" id="ObsCommunes"> 
-                    <div class="panel panel-default" >
-                        <div class="panel-heading"><h3> {{listTaxons.nbObsTotal}} observations sur la commune de <i>{{referenciel.communeName}}</i></h3></div>
-                        <div class="row" id="mapRow">
-                            <!-- CARTE des dernières observations -->
-                            <div id="blocMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div id="map"></div>
-                            </div>
-                            <!-- LISTE des dernières observations -->
-                            <div id="listMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
-                                 <div id="listTaxonsCommune" class="panel panel-default">
-                                    {% include 'templates/tabTaxons.html' %}
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>           
+            <div class="col-sm-5" id="mapWrapper">
+				<div  class="panel panel-default" id="mapContainer">
+					<div class="row ">
+						<img id ="loadingGif" src="">
+						<div class="panel-heading"><strong>
+							 <h4 id="titleMap"> {{configuration.NB_LAST_OBS}} dernières observations sur la commune de <i>{{referenciel.communeName}}</i></h4> </strong>
+						</div>
+						<div class="panel-body">
+							 <div id="map"> </div>
+						</div>
+					</div>
+				</div>
             </div>
-
 
         </div>
-
-
 
         {% if configuration.AFFICHAGE_FOOTER %}
             {% include 'static/custom/templates/footer.html' %}
         {% endif %}
-        
+
         <script type="text/javascript">
             var communesSearch = {{communesSearch|tojson}};
             var configuration = {{configuration|tojson}};
@@ -185,10 +95,12 @@
             var noSordedColumns=[nbColumn-2,nbColumn-1]; //var for dataTables js lib
             var defaultSortedColumn=nbColumn-4; //var for dataTables js lib
         </script>
+	  	<script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
         <script src="{{url_for('static', filename='listeEspeces.js') }}"></script>
 		<script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
         <script src="{{url_for('static', filename='mapCommune.js') }}"></script>
         <script src="{{url_for('static', filename='main.js') }}"></script>
 
-   </body> 
+   </body>
 </html>
+

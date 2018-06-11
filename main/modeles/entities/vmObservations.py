@@ -16,7 +16,6 @@ class VmObservations(Base):
     'vm_observations', metadata,
     Column('id_observation', Integer, primary_key=True, unique=True),
     Column('id_source', Integer),
-    Column('orgaobs', Text, index=True),
     Column('id_fiche_source', String(50)),
     Column('code_fiche_source', String(50)),
     Column('id_protocole', Integer),
