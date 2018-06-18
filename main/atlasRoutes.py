@@ -101,7 +101,8 @@ def index():
         'COLONNES_RANG_STAT': config.COLONNES_RANG_STAT,
         'RANG_STAT_FR': config.RANG_STAT_FR,
         'MAP': config.MAP,
-        'AFFICHAGE_INTRODUCTION': config.AFFICHAGE_INTRODUCTION
+        'AFFICHAGE_INTRODUCTION': config.AFFICHAGE_INTRODUCTION,
+        'AFFICHAGE_LOGOS_ORGAS': config.AFFICHAGE_LOGOS_ORGAS
     })
 
     connection.close()

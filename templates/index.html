@@ -39,6 +39,10 @@
 			{% if configuration.AFFICHAGE_INTRODUCTION %}
 				{% include 'static/custom/templates/introduction.html' %}
 			{% endif %}
+			
+			{% if configuration.AFFICHAGE_LOGOS_ORGAS %}
+				{% include 'static/custom/templates/logospartenaires.html' %}
+			{% endif %}
 
 			{% if configuration.AFFICHAGE_STAT_GLOBALES %}
 			<!-- Statistiques globales -->

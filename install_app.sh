@@ -52,6 +52,9 @@ fi
 if [ ! -f ./static/custom/templates/introduction.html ]; then
   cp ./static/custom/templates/introduction.html.sample ./static/custom/templates/introduction.html
 fi
+if [ ! -f ./static/custom/templates/logospartenaires.html ]; then
+  cp ./static/custom/templates/logospartenaires.html.sample ./static/custom/templates/logospartenaires.html
+fi
 if [ ! -f ./static/custom/templates/presentation.html ]; then
   cp ./static/custom/templates/presentation.html.sample ./static/custom/templates/presentation.html
 fi

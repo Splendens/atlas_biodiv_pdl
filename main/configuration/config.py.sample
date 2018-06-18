@@ -85,6 +85,9 @@ NB_LAST_OBS=100
 # Bloc d'introduction presentant l'atlas. Affichage True/False
 AFFICHAGE_INTRODUCTION = False
 
+# Afficher la bande logo apres le texte d'introduction (static/custom/templates/logospartenaires.html). Affichage True/False
+AFFICHAGE_LOGOS_ORGAS = True
+
 # Afficher le Footer sur toutes les pages (static/custom/templates/footer.html)
 AFFICHAGE_FOOTER = False
 

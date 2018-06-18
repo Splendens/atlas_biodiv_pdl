@@ -1,0 +1,46 @@
+			<div class="col-sm-12">
+				<div class="panel panel-default">
+					<div class="row">
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6"  style="margin:1%;margin-left:5%">
+							<a href="#" target="_blank">
+								<img src="{{url_for('static', filename='custom/images/logo_patrimonial.png') }}"  width="150%">
+							</a>
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
+							<a href="#" target="_blank">
+								<img src="{{url_for('static', filename='custom/images/logo_patrimonial.png') }}"  width="150%">
+							</a>
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
+							<a href="#" target="_blank">
+								<img src="{{url_for('static', filename='custom/images/logo_patrimonial.png') }}"  width="150%">
+							</a>
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
+							<a href="#" target="_blank">
+								<img src="{{url_for('static', filename='custom/images/logo_patrimonial.png') }}"  width="150%">
+							</a>
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
+							<a href="#" target="_blank">
+								<img src="{{url_for('static', filename='custom/images/logo_patrimonial.png') }}"  width="150%">
+							</a>
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
+							<a href="#" target="_blank">
+								<img src="{{url_for('static', filename='custom/images/logo_patrimonial.png') }}"  width="150%">
+							</a>
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
+							<a href="#" target="_blank">
+								<img src="{{url_for('static', filename='custom/images/logo_patrimonial.png') }}"  width="150%">
+							</a>
+						</div>
+						<div class="col-lg-1 col-md-1 col-sm-6 col-xs-6" style="margin:1%;"> 
+							<a href="#" target="_blank">
+								<img src="{{url_for('static', filename='custom/images/logo_patrimonial.png') }}"  width="150%">
+							</a>
+						</div>							
+					</div>
+				</div>
+			</div>
