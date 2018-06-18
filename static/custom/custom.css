@@ -1,2 +1,6 @@
 /* Insert your custom override CSS in this file */
  
+.affix {
+  position: fixed;
+  top:60px;
+}
