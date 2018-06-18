@@ -15,16 +15,16 @@ robots.txt
 venv/*
 
 
-static/custom/territoire.json
-static/custom/glossaire.json
-static/custom/custom.css
-static/custom/maps-custom.js
-static/custom/images/*
-static/custom/templates/presentation.html
-static/custom/templates/footer.html
-static/custom/templates/introduction.html
-static/custom/templates/credits.html
-static/custom/templates/mentions-legales.html
+#static/custom/territoire.json
+#static/custom/glossaire.json
+#static/custom/custom.css
+#static/custom/maps-custom.js
+#static/custom/images/*
+#static/custom/templates/presentation.html
+#static/custom/templates/footer.html
+#static/custom/templates/introduction.html
+#static/custom/templates/credits.html
+#static/custom/templates/mentions-legales.html
 
 data/ref/communes.dbf
 data/ref/communes.prj
