@@ -1,22 +1,28 @@
 			<div class="col-sm-12">
 				<div class="panel panel-default">
 					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 textIntroduction">
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textIntroduction">
 							<h1>
-								Bienvenue sur l'atlas de la faune et de la flore du {{configuration.STRUCTURE}}
+								Bienvenue sur le portail de visualisation des données faune et flore des {{configuration.STRUCTURE}}
 							</h1>
 							<p>
-								Le Parc national des Ecrins met à votre disposition l'ensemble des espèces sauvages observées par ses agents depuis sa création en 1973. Chaque nouvelle observation alimente en temps réel les fiches de chaque espèce que vous consultez, dans une volonté de partage et d'enrichissement des connaissances sur la biodiversité alpine.
+								Le réseau des naturalistes des Pays de la Loire, avec le soutien de la Région et de la DREAL des Pays de la Loire, met à votre disposition l'ensemble des espèces sauvages observées dans la région. Chaque nouvelle observation saisie dans les bases de données du réseau alimente en temps réel la cartographie et les fiches espèces que vous consultez, dans un but de partage, de prise en compte et d'enrichissement des connaissances sur la biodiversité.
 							</p>
 							<p>
-								Cet atlas vous présente des observations reéalisées dans le cadre de différents protocoles scientifiques. Il ne s'agit pas d'un inventaire exhaustif ni d'une répartition complète des espèces sur le territoire.
+								Cet atlas vous présente des observations réalisées dans le cadre de la mise en oeuvre de synthèses de différents protocoles scientifiques ou de façon plus opportuniste, et à l'apui des différents organismes impliqués sur l'étude et la conservation de la biodiversité en Pays de la Loire.
+							</p>
+							<p>
+								Il témoigne et reflète l'état actuel de la connaissance sur le statut et la répartition des espèces et ne prétend pas à l'exhaustivité. Seuls les conseils d'un expert vous permettra d'identifier si l'absence de donnée d'une espèce sur un territoire donnée est lié à un défaut de prospection ou à une absence avérée de l'espèce.
+							</p>
+							<p>
+								Pour les collectivités, cet atlas vous permet une première visualisation de la richesse naturaliste de votre territoire, qu'il convient d'approfondir grâce aux atlas territoriaux <i>[lien a venir]</i>.
 							</p>
 							<p>
 								<a href="{{url_for('main.get_staticpages', page='presentation') }}" class="btn btn-default">En savoir plus</a>
 							</p>
 						</div>
-						<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-							<img src="{{url_for('static', filename='custom/images/accueil-intro.jpg') }}" width="100%" alt="{{configuration.NOM_APPLICATION}}">
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+							<img src="{{url_for('static', filename='custom/images/Arion-rufus_O_Gargominy.jpg') }}" width="100%" alt="{{configuration.NOM_APPLICATION}}">
 						</div>
 					</div>
 				</div>

@@ -1,0 +1,201 @@
+<!-- Réalisée à partir de https://startbootstrap.com/template-overviews/one-page-wonder/ et http://getbootstrap.com/examples/carousel/ -->
+<!DOCTYPE html>
+<html>
+   <head>
+        <meta charset="utf-8" />
+        <title>Informations - données biodiversité | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+
+        <!-- Jquery -->
+        <script type=text/javascript src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
+		<script type=text/javascript src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/jquery-ui.css') }}" />
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}"></link>
+        <script type=text/javascript src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
+
+        <!-- Atlas -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/static_pages.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}" />
+
+   </head>
+   <body  data-spy="scroll" data-target="#sommaire">
+    {% include 'templates/navbar.html' %}
+
+		<div id="sideBar">
+			{% include 'templates/sideBar.html' %}
+		</div>
+		<div class="container-fluid" id="page">
+
+            <!-- Carousel
+            ================================================== -->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top: -15px; margin-bottom: 0px;">
+              <div class="carousel-inner" role="listbox">
+                <div class="item active" style="background-image: url({{url_for('static', filename='custom/images/cen_pdl_o_vannucci_rainette.jpg') }}) ; background-size: cover; background-position: center center;">
+                  <div class="container">
+                    <div class="carousel-caption">
+                      <h1>Besoin d'en savoir plus sur les données ?</h1>
+                      <p>Découvrez la faune et la flore des Pays de la Loire, comment avoir accès aux données biodiversité d'un territoire, porter à connaissance vos propres données et soliciter une expertise naturaliste</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /.carousel -->
+
+            <div class="container presentation">
+              <hr class="featurette-divider">
+
+                 <!-- Featurette 1 -->
+                 
+                  <div class="featurette" id="territoire">
+                    <img style="width:28%;" class="featurette-image img-circle img-responsive pull-left" src="{{url_for('static', filename='custom/images/amphibiens.png') }}">
+                    <h2 class="featurette-heading">Territoires<br/><span class="text-muted">Pression de prospection et liste d'espèces</span>
+                    </h2>
+                  <p class="lead">
+                    Les bases de données naturalistes des différentes structures rassemblent des informations collectées dans le cadre de projets avec des financements publics, ainsi que des données issues d'observations par un ensemble de bénévoles. Ces bases de données sont moissonnées par ce portail de visualistion des données de biodiversité des Pays de la Loire.
+                  </p>    
+                  <p class="lead">
+                    <br>Grâce aux "fiches communes", découvez toute la richesse biologique d'un territoire : zones prospectées, observations et liste d'espèces ! Découvrez également les "fiches espèces" et leurs synthèses taxon par taxon !
+                  </p>
+
+                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                    <div class="thumbnail stat-thumbnail">
+                      <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}"> 
+                      <h4 class="text-center"> Rechercher une commune</h4>
+                      <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
+                              <div class="form-group has-feedback">
+                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="Rechercher une commune" >
+                                  <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                <input id="hiddenInputCommunesStat" type="hidden" name="insee">
+                              </div>          
+                      </form>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                    <div class="thumbnail stat-thumbnail">
+                    <span class="glyphicon glyphicon-leaf" style="font-size:40px"></span>
+                      <h4 class="text-center"> Rechercher une espèce</h4>
+                      <form method="POST" id="searchFormTaxonsStat" class="navbar-form" role="search">
+                                    <div class="form-group has-feedback">
+                            <input id="searchTaxonsStat" type="text" class="form-control" placeholder="Rechercher une espèce &nbsp; &nbsp; &nbsp;" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
+                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                            <input id="hiddenInputTaxonStat" type="hidden" name="cd_ref">
+                        </div>       
+                      </form>
+                    </div>
+                  </div>
+                  
+                </div>
+
+              <hr class="featurette-divider">
+
+              <!-- Featurette 2 -->
+
+                <div class="featurette" id="alertes">
+                    <img style="width:28%;" class="featurette-image img-circle img-responsive pull-right" src="{{url_for('static', filename='custom/images/carabiques_rouge_cercle.png') }}">
+                    <h2 class="featurette-heading">Couches d'alertes<br/><span class="text-muted">Des synthèses territoriales</span>
+                    </h2>
+                  <p class="lead">
+                   Les couches d'alertes vous permettent de localiser rapidement les secteurs présentant de forts enjeux en matière de biodiversité (faune et flore remarquables, faune et flore protégées...)
+                  </p>
+                  <p class="lead">
+                   Accéder aux couches d'alertes en région Pays de la Loire : [lien SINP Pays de la Loire/alerte]
+                  </p>
+                </div>
+                             
+              <hr class="featurette-divider">
+            
+            <!-- Featurette 3 -->
+
+              <div class="featurette" id="data">
+                  <img style="width:28%;" class="featurette-image img-circle img-responsive pull-left" src="{{url_for('static', filename='custom/images/phytosocio_vegetation.png') }}">
+                  <h2 class="featurette-heading">Données<br/><span class="text-muted">Les mobiliser</span>
+                  </h2>
+                  <p class="lead">
+                  Si vous avez des données de biodiversité sur un territoire et que vous souhaitez les porter à connaissance, n'hésitez pas à la transmettre au SINP (Système d'Information sur la Nature et les Paysages) des Pays de la Loire : [lien SINP Pays de la Loire/import]
+                  </p>
+                  <p class="lead">
+                  Le SINP des Pays de la Loire vous permet également de demander la transmission -gratuitement et librement- de données faune et flore. Pour faire une demande de transmission de données: [lien SINP Pays de la Loire/export]
+                  </p>
+              </div>
+              
+              <hr class="featurette-divider">
+
+            <!-- Featurette 4 -->
+
+              <div class="featurette" id="accompagnement">
+                  <img style="width:28%;" class="featurette-image img-circle img-responsive pull-right" src="{{url_for('static', filename='custom/images/structure_vegetation.png') }}">
+                  <h2 class="featurette-heading">Accompagnement<br/><span class="text-muted">L'expertise naturaliste</span>
+                  </h2>
+                  <p class="lead">
+                  Un projet en lien avec la biodiversité ? Un diagnostic écologique à réaliser dans le cadre d'un PLU ? Les experts du réseau naturaliste des Pays de la Loire sont là pour vous accompagner dans l'analyse et la compréhension des données de biodiversité de votre territoire :
+                  <ul>
+                      <li class="lead"><a href="http://www.cbnbrest.fr" target="_blank">Conservatoire Botanique National de Brest</a><br/></li>
+                      <li class="lead"><a href="http://cenpaysdelaloire.fr/" target="_blank">Conservatoire d'espaces naturels des Pays de la Loire</a><br/></li>
+                      <li class="lead"><a href="http://www.gretia.org/" target="_blank">Groupe d'étude des invertébrés du Massif armoricain</a><br/></li>
+                      <li class="lead"><a href="http://paysdelaloire.lpo.fr/" target="_blank">Coordination LPO des Pays de la Loire</a><br/></li>
+                      <li class="lead"><a href="http://urcpie-paysdelaloire.org/" target="_blank">Union Régionale des CPIE des Pays de la Loire</a><br/></li>
+                    </ul>
+                  </p>
+                  <p class="lead">
+                  Les naturalistes des Pays de la Loire recueillent des données sur la faune et la flore depuis des dizaines d'années. Celles-ci sont utilisées pour mieux connaître le statut des espèces, l'évolution des populations, appréhender les changements globaux, caractériser la biodiversité d'un territoire, etc. Car agir intelligemment et efficacement pour la sauvegarde de ce patrimoine naturel requiert de le connaître et le comprendre.
+                  </p>
+                  <p class="lead">
+                    <i>
+                   Les naturalistes de terrain s'investissent pour améliorer la connaissance de la faune et de la flore. Cependant, les données visualisables sur cette plateforme reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elle ne pourraient en aucun cas être considérées comme exhaustives. Certaines données sont collectées dans le cadre de protocoles scientifiques et d'autres au fil de l'eau ! 
+                    </i>
+                  </p>
+                </div>
+
+              <hr class="featurette-divider">
+
+              <!-- Featurette 5 -->
+
+                <div class="featurette" id="participez">
+                    <img style="width:28%;" class="featurette-image img-circle img-responsive pull-left" src="{{url_for('static', filename='custom/images/avifaune.png') }}">
+                  <h2 class="featurette-heading">Participez !<br/><span class="text-muted">Devenez acteur de la connaissance</span>
+                  </h2>
+                  <p class="lead">
+                    Chacun peut, s'il le souhaite, devenir contributeur en transmettant ses observations de plantes, insectes, mammifères, oiseaux ou encore reptiles sur différentes plateformes naturalistes.
+                  </p>
+                  <ul>
+                    <li>  <p class="lead">
+                      Contributions à la connaissance des invertébrés sur tout le territoire du Massif armoricain et de ces marges avec le Groupe d'Etude des Invertébrés armoricains : <a href="http://gretia.org/index.php/connaissances/root/vos-donnees-naturalistes" target="_blank">données naturalistes au GRETIA</a>
+                    </p></li> 
+                    <li>  <p class="lead">
+                      La base données des Centres Permanents d'Initiatives pour l'Environnement ligériens : <a href="http://base.urcpie-paysdelaloire.org/" target="_blank">base des CPIE</a>
+                    </p></li>
+                    <li><p class="lead">
+                     Les sites participatifs sur les observations de la faune des Ligues pour la Protection des Oiseaux : <a href="http://www.faune-anjou.org/" target="_blank">faune anjou</a>, <a href="http://www.faune-loire-atlantique.org/" target="_blank">faune loire-atlantique</a>, <a href="http://www.faune-maine.org/" target="_blank">faune maine</a> et <a href="http://www.faune-vendee.org/" target="_blank">faune vendée</a>
+                    </p></li>
+                    <li>  <p class="lead">
+                      La base de données du Conservatoire d'espaces naturels des Pays de la Loire : <a href="http://80.82.234.83/sicen/Sources/Vues/vAuthent.php?appli=SicenCenpdl" target="_blank">SICEN</a>
+                    </p></li>
+                    <li>  <p class="lead">
+                      Spécifiquement pour la flore, un atlas en ligne pour le territoire d'agréement du CBN de Brest accueille également les contributions : <a href="http://www.cbnbrest.fr/ecalluna/" target="_blank">eCalluna</a>
+                    </p></li>
+                  </ul>
+                </div>
+               
+              <hr class="featurette-divider">
+           
+              <!-- /END THE FEATURETTES -->
+            
+            </div>   
+        </div>
+		
+		{% if configuration.AFFICHAGE_FOOTER %}
+			{% include 'static/custom/templates/footer.html' %}
+		{% endif %}
+        
+        <script type="text/javascript">
+        var communesSearch = {{communesSearch|tojson}},
+            configuration = {{configuration|tojson}};
+        </script>
+
+        <script src="{{url_for('static', filename='main.js') }}"></script>
+
+   </body> 
+</html>
