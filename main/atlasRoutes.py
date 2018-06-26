@@ -152,11 +152,13 @@ def ficheEspece(cd_ref):
         connection, cd_ref, config.ATTR_DESC, config.ATTR_COMMENTAIRE,
         config.ATTR_MILIEU, config.ATTR_CHOROLOGIE
     )
+    orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
 
     configuration = base_configuration.copy()
     configuration.update({
         'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
+        'AFFICHAGE_ORGAS_OBS_FICHEESP': config.AFFICHAGE_ORGAS_OBS_FICHEESP,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION,
         'GLOSSAIRE': config.GLOSSAIRE,
@@ -187,6 +189,7 @@ def ficheEspece(cd_ref):
         videoAudio=videoAudio,
         articles=articles,
         taxonDescription=taxonDescription,
+        orgas=orgas,
         observers=observers,
         configuration=configuration
     )
@@ -208,7 +211,7 @@ def ficheCommune(insee):
         observations = vmObservationsRepository.lastObservationsCommune(
             connection, config.NB_LAST_OBS, insee
         )
-
+    orgas = vmObservationsRepository.getOrgasCommunes(connection, insee)
     observers = vmObservationsRepository.getObserversCommunes(
         connection, insee
     )
@@ -216,6 +219,7 @@ def ficheCommune(insee):
     configuration = base_configuration.copy()
     configuration.update({
         'NB_LAST_OBS': config.NB_LAST_OBS,
+        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
         'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
         'MAP': config.MAP,
         'MYTYPE': 1,
@@ -232,6 +236,7 @@ def ficheCommune(insee):
         referenciel=commune,
         communesSearch=communesSearch,
         observations=observations,
+        orgas=orgas,
         observers=observers,
         configuration=configuration
     )
@@ -246,6 +251,7 @@ def ficheRangTaxonomie(cd_ref):
     referenciel = vmTaxrefRepository.getInfoFromCd_ref(session, cd_ref)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
+    orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
 
     connection.close()
@@ -254,6 +260,7 @@ def ficheRangTaxonomie(cd_ref):
     configuration = base_configuration.copy()
     configuration.update({
         'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
+        'AFFICHAGE_ORGAS_OBS_FICHETAXO': config.AFFICHAGE_ORGAS_OBS_FICHETAXO,
         'MYTYPE': 0,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION,
@@ -265,6 +272,7 @@ def ficheRangTaxonomie(cd_ref):
         referenciel=referenciel,
         communesSearch=communesSearch,
         taxonomyHierarchy=taxonomyHierarchy,
+        orgas=orgas,
         observers=observers,
         configuration=configuration
     )
@@ -278,6 +286,7 @@ def ficheGroupe(groupe):
     groups = vmTaxonsRepository.getAllINPNgroup(connection)
     listTaxons = vmTaxonsRepository.getTaxonsGroup(connection, groupe)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    orgas = vmObservationsRepository.getGroupeOrgas(connection, groupe)
     observers = vmObservationsRepository.getGroupeObservers(connection, groupe)
 
     session.close()
@@ -286,6 +295,7 @@ def ficheGroupe(groupe):
     configuration = base_configuration.copy()
     configuration.update({
         'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
+        'AFFICHAGE_ORGAS_OBS_FICHEGROUPE': config.AFFICHAGE_ORGAS_OBS_FICHEGROUPE,
         'MYTYPE': 0,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
@@ -297,6 +307,7 @@ def ficheGroupe(groupe):
         communesSearch=communesSearch,
         referenciel=groupe,
         groups=groups,
+        orgas=orgas,
         observers=observers,
         configuration=configuration
     )
