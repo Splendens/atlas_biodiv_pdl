@@ -12,7 +12,7 @@ if [ "$(id -u)" == "0" ]; then
 fi
 
 echo "Stopping application..."
-sudo -s supervisorctl stop atlas
+sudo -s supervisorctl stop atlaspdl
 
 echo "Creating and activating Virtual env..."
 virtualenv $venv_dir
@@ -32,8 +32,8 @@ sudo sed -i "s/database_connection = .*$/database_connection = \"postgresql:\/\/
 
 echo "Launching application..."
 DIR=$(readlink -e "${0%/*}")
-sudo -s cp  atlas-service.conf /etc/supervisor/conf.d/
-sudo -s sed -i "s%APP_PATH%${DIR}%" /etc/supervisor/conf.d/atlas-service.conf
+sudo -s cp  atlaspdl-service.conf /etc/supervisor/conf.d/
+sudo -s sed -i "s%APP_PATH%${DIR}%" /etc/supervisor/conf.d/atlaspdl-service.conf
 
 sudo -s supervisorctl reread
 sudo -s supervisorctl reload
