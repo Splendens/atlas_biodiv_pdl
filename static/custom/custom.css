@@ -4,3 +4,11 @@
   position: fixed;
   top:60px;
 }
+
+/* Taille des popup */
+
+
+.leaflet-popup-content {
+  max-height:300px;
+  overflow-y:scroll;
+}
