@@ -441,3 +441,106 @@ BEGIN
     RETURN 1;
 END
 $$ LANGUAGE plpgsql;
+
+
+
+
+
+/*******************************************/
+/****** Atlas par mailles communales *******/
+/*******************************************/
+
+/* Communes simplifiées */
+CREATE TABLE atlas.l_communes_simpli200 AS
+with poly as (
+        select insee, (st_dump(the_geom)).* 
+        from atlas.l_communes
+) select d.insee, baz.geom 
+ from ( 
+        select (st_dump(st_polygonize(distinct geom))).geom as geom
+        from (
+                select (st_dump(st_simplifyPreserveTopology(st_linemerge(st_union(geom)), 200))).geom as geom
+                from (
+                        select st_exteriorRing((st_dumpRings(geom)).geom) as geom
+                        from poly
+                ) as foo
+        ) as bar
+) as baz,
+poly d
+where st_intersects(d.geom, baz.geom)
+and st_area(st_intersection(d.geom, baz.geom))/st_area(baz.geom) > 0.5;
+
+ALTER TABLE atlas.l_communes_simpli200  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.l_communes_simpli200 TO geonatuser;
+GRANT SELECT ON TABLE atlas.l_communes_simpli200 TO geonatatlas;
+
+
+CREATE INDEX sidx_l_communes_simpli200 ON atlas.l_communes_simpli200 USING gist (geom);
+
+/* VM observations par commune */
+
+-- Materialized View: atlas.vm_observations_mailles
+
+-- DROP MATERIALIZED VIEW atlas.vm_observations_mailles;
+
+CREATE MATERIALIZED VIEW atlas.vm_observations_communes AS 
+ SELECT obs.cd_ref,
+    obs.id_observation,
+    c.insee,
+    c.the_geom,
+    c.geojson_maille
+   FROM atlas.vm_observations obs
+     JOIN atlas.l_communes_simpli200 c ON c.insee = o.insee
+WITH DATA;
+
+ALTER TABLE atlas.vm_observations_communes OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_observations_communes TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_observations_communes TO geonatatlas;
+
+-- Index: atlas.index_gist_atlas_vm_observations_communes_geom
+
+-- DROP INDEX atlas.index_gist_atlas_vm_observations_communes_geom;
+
+CREATE INDEX index_gist_atlas_vm_observations_communes_geom
+  ON atlas.vm_observations_communes
+  USING gist
+  (the_geom);
+
+-- Index: atlas.vm_observations_mailles_cd_ref_idx
+
+-- DROP INDEX atlas.vm_observations_mailles_cd_ref_idx;
+
+CREATE INDEX vm_observations_communes_cd_ref_idx
+  ON atlas.vm_observations_communes
+  USING btree
+  (cd_ref);
+
+-- Index: atlas.vm_observations_communes_geojson_maille_idx
+
+-- DROP INDEX atlas.vm_observations_communes_geojson_maille_idx;
+
+CREATE INDEX vm_observations_communes_geojson_maille_idx
+  ON atlas.vm_observations_communes
+  USING btree
+  (geojson_maille COLLATE pg_catalog."default");
+
+-- Index: atlas.vm_observations_communes_id_maille_idx
+
+-- DROP INDEX atlas.vm_observations_communes_id_maille_idx;
+
+CREATE INDEX vm_observations_communes_id_maille_idx
+  ON atlas.vm_observations_communes
+  USING btree
+  (id_maille);
+
+-- Index: atlas.vm_observations_communes_id_observation_idx
+
+-- DROP INDEX atlas.vm_observations_communes_id_observation_idx;
+
+CREATE UNIQUE INDEX vm_observations_communes_id_observation_idx
+  ON atlas.vm_observations_communes
+  USING btree
+  (id_observation);
+
+
+
