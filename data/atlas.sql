@@ -478,19 +478,25 @@ GRANT SELECT ON TABLE atlas.l_communes_simpli200 TO geonatatlas;
 CREATE INDEX sidx_l_communes_simpli200 ON atlas.l_communes_simpli200 USING gist (geom);
 
 /* VM observations par commune */
+ALTER TABLE  atlas.l_communes_simpli400 ADD COLUMN geojson_commune text
 
--- Materialized View: atlas.vm_observations_mailles
 
--- DROP MATERIALIZED VIEW atlas.vm_observations_mailles;
+UPDATE  atlas.l_communes_simpli400 a SET geojson_commune = ST_AsGeoJSON(st_transform(a.geom, 4326))
+
+
+-- Materialized View: atlas.vm_observations_communes
+
+-- DROP MATERIALIZED VIEW atlas.vm_observations_communes;
+
 
 CREATE MATERIALIZED VIEW atlas.vm_observations_communes AS 
  SELECT obs.cd_ref,
     obs.id_observation,
     c.insee,
-    c.the_geom,
-    c.geojson_maille
+    c.geom,
+    c.geojson_commune
    FROM atlas.vm_observations obs
-     JOIN atlas.l_communes_simpli200 c ON c.insee = o.insee
+     LEFT JOIN atlas.l_communes_simpli400 c ON c.insee = obs.insee
 WITH DATA;
 
 ALTER TABLE atlas.vm_observations_communes OWNER TO geonatuser;
@@ -504,34 +510,34 @@ GRANT SELECT ON TABLE atlas.vm_observations_communes TO geonatatlas;
 CREATE INDEX index_gist_atlas_vm_observations_communes_geom
   ON atlas.vm_observations_communes
   USING gist
-  (the_geom);
+  (geom);
 
--- Index: atlas.vm_observations_mailles_cd_ref_idx
+-- Index: atlas.vm_observations_communes_cd_ref_idx
 
--- DROP INDEX atlas.vm_observations_mailles_cd_ref_idx;
+-- DROP INDEX atlas.vm_observations_communes_cd_ref_idx;
 
 CREATE INDEX vm_observations_communes_cd_ref_idx
   ON atlas.vm_observations_communes
   USING btree
   (cd_ref);
 
--- Index: atlas.vm_observations_communes_geojson_maille_idx
+-- Index: atlas.vm_observations_communes_geojson_commune_idx
 
--- DROP INDEX atlas.vm_observations_communes_geojson_maille_idx;
+-- DROP INDEX atlas.vm_observations_communes_geojson_commune_idx;
 
-CREATE INDEX vm_observations_communes_geojson_maille_idx
+CREATE INDEX vm_observations_communes_geojson_commune_idx
   ON atlas.vm_observations_communes
   USING btree
-  (geojson_maille COLLATE pg_catalog."default");
+  (geojson_commune COLLATE pg_catalog."default");
 
--- Index: atlas.vm_observations_communes_id_maille_idx
+-- Index: atlas.vm_observations_communes_insee_idx
 
--- DROP INDEX atlas.vm_observations_communes_id_maille_idx;
+-- DROP INDEX atlas.vm_observations_communes_insee_idx;
 
-CREATE INDEX vm_observations_communes_id_maille_idx
+CREATE INDEX vm_observations_communes_insee_idx
   ON atlas.vm_observations_communes
   USING btree
-  (id_maille);
+  (insee);
 
 -- Index: atlas.vm_observations_communes_id_observation_idx
 
