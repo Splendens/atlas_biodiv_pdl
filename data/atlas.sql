@@ -480,8 +480,34 @@ CREATE INDEX sidx_l_communes_simpli200 ON atlas.l_communes_simpli200 USING gist 
 /* VM observations par commune */
 ALTER TABLE  atlas.l_communes_simpli400 ADD COLUMN geojson_commune text
 
-
 UPDATE  atlas.l_communes_simpli400 a SET geojson_commune = ST_AsGeoJSON(st_transform(a.geom, 4326))
+
+
+
+
+
+
+CREATE TABLE atlas.l_communes_simpli AS
+  SELECT
+    insee,
+    (st_union(geom)) as the_geom
+
+  FROM atlas.l_communes_simpli400
+  GROUP BY insee
+WITH DATA;
+
+
+ALTER TABLE atlas.l_communes_simpli  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.l_communes_simpli TO geonatuser;
+GRANT SELECT ON TABLE atlas.l_communes_simpli TO geonatatlas;
+
+
+/* VM observations par commune */
+ALTER TABLE  atlas.l_communes_simpli ADD COLUMN geojson_commune text;
+
+UPDATE  atlas.l_communes_simpli a SET geojson_commune = ST_AsGeoJSON(st_transform(a.the_geom, 4326));
+
+
 
 
 -- Materialized View: atlas.vm_observations_communes
@@ -493,15 +519,16 @@ CREATE MATERIALIZED VIEW atlas.vm_observations_communes AS
  SELECT obs.cd_ref,
     obs.id_observation,
     c.insee,
-    c.geom,
+    c.the_geom,
     c.geojson_commune
    FROM atlas.vm_observations obs
-     LEFT JOIN atlas.l_communes_simpli400 c ON c.insee = obs.insee
+     LEFT JOIN atlas.l_communes_simpli c ON c.insee = obs.insee
 WITH DATA;
 
 ALTER TABLE atlas.vm_observations_communes OWNER TO geonatuser;
 GRANT ALL ON TABLE atlas.vm_observations_communes TO geonatuser;
 GRANT SELECT ON TABLE atlas.vm_observations_communes TO geonatatlas;
+
 
 -- Index: atlas.index_gist_atlas_vm_observations_communes_geom
 
@@ -510,7 +537,7 @@ GRANT SELECT ON TABLE atlas.vm_observations_communes TO geonatatlas;
 CREATE INDEX index_gist_atlas_vm_observations_communes_geom
   ON atlas.vm_observations_communes
   USING gist
-  (geom);
+  (the_geom);
 
 -- Index: atlas.vm_observations_communes_cd_ref_idx
 
@@ -525,10 +552,10 @@ CREATE INDEX vm_observations_communes_cd_ref_idx
 
 -- DROP INDEX atlas.vm_observations_communes_geojson_commune_idx;
 
-CREATE INDEX vm_observations_communes_geojson_commune_idx
+/*CREATE INDEX vm_observations_communes_geojson_commune_idx
   ON atlas.vm_observations_communes
   USING btree
-  (geojson_commune COLLATE pg_catalog."default");
+  (geojson_commune COLLATE pg_catalog."default");*/
 
 -- Index: atlas.vm_observations_communes_insee_idx
 
