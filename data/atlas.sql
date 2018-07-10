@@ -522,7 +522,7 @@ CREATE MATERIALIZED VIEW atlas.vm_observations_communes AS
     c.the_geom,
     c.geojson_commune
    FROM atlas.vm_observations obs
-     LEFT JOIN atlas.l_communes_simpli c ON c.insee = obs.insee
+     JOIN atlas.l_communes_simpli c ON c.insee = obs.insee
 WITH DATA;
 
 ALTER TABLE atlas.vm_observations_communes OWNER TO geonatuser;
