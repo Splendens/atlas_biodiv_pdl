@@ -85,7 +85,8 @@ def lastObservationsCommune(connection, mylimit, insee):
             COALESCE(split_part(tax.nom_vern, ',', 1) || ' | ', '')
                 || tax.lb_nom as taxon
     FROM atlas.vm_observations o
-    JOIN atlas.vm_communes c ON ST_Intersects(o.the_geom_point, c.the_geom)
+    #JOIN atlas.vm_communes c ON ST_Intersects(o.the_geom_point, c.the_geom)
+    JOIN atlas.vm_communes c ON obs.insee = c.insee
     JOIN atlas.vm_taxons tax ON  o.cd_ref = tax.cd_ref
     LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme
     WHERE c.insee = :thisInsee

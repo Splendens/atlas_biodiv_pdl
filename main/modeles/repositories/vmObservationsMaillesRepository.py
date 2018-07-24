@@ -130,7 +130,8 @@ def getObservationsTaxonCommuneMaille(connection, insee, cd_ref):
             a.nom_organisme AS orgaobs
         FROM atlas.vm_observations o
         JOIN atlas.vm_communes c
-        ON ST_INTERSECTS(o.the_geom_point, c.the_geom)
+        --ON ST_INTERSECTS(o.the_geom_point, c.the_geom)
+        ON obs.insee = c.insee
         JOIN atlas.t_mailles_territoire t
         ON ST_INTERSECTS(t.the_geom, o.the_geom_point)
         LEFT JOIN atlas.vm_organismes a 
