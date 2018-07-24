@@ -89,7 +89,7 @@ def lastObservationsCommuneMaille(connection, mylimit, insee):
         FROM atlas.vm_observations obs
         JOIN atlas.vm_communes c
         --ON ST_Intersects(obs.the_geom_point, c.the_geom)
-        ON obs.insee = c.insee)
+        ON obs.insee = c.insee
         JOIN atlas.vm_taxons t
         ON  obs.cd_ref = t.cd_ref
         WHERE c.insee = :thisInsee
