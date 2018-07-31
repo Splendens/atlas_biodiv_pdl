@@ -8,8 +8,6 @@
 #sudo apt-get -y install jq
 
 
-
-
 #SETTINGS
 DBTAXHUB=mydbtaxo
 DBATLAS=mydbatlas

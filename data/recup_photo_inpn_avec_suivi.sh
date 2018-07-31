@@ -7,8 +7,6 @@
 #sudo apt-get -y upgrade
 #sudo apt-get -y install jq
 
-
-
 ################################################################################
 # REMARQUE#
 #il faut une table pg pour le suivi des ajout de média
