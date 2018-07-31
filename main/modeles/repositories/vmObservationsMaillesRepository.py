@@ -88,7 +88,7 @@ def lastObservationsCommuneMaille(connection, mylimit, insee):
             t.nom_vern, obs.the_geom_point as l_geom
         FROM atlas.vm_observations obs
         JOIN atlas.vm_communes c
-        --ON ST_Intersects(obs.the_geom_point, c.the_geom)
+        /*ON ST_Intersects(obs.the_geom_point, c.the_geom)*/
         ON obs.insee = c.insee
         JOIN atlas.vm_taxons t
         ON  obs.cd_ref = t.cd_ref
@@ -128,15 +128,21 @@ def getObservationsTaxonCommuneMaille(connection, insee, cd_ref):
             o.cd_ref, t.id_maille, t.geojson_maille,
             extract(YEAR FROM o.dateobs) as annee,
             a.nom_organisme AS orgaobs
+        
         FROM atlas.vm_observations o
+        
         JOIN atlas.vm_communes c
-        --ON ST_INTERSECTS(o.the_geom_point, c.the_geom)
-        ON obs.insee = c.insee
+        /*ON ST_INTERSECTS(o.the_geom_point, c.the_geom)*/
+        ON o.insee = c.insee
+        
         JOIN atlas.t_mailles_territoire t
         ON ST_INTERSECTS(t.the_geom, o.the_geom_point)
+        
         LEFT JOIN atlas.vm_organismes a 
         ON a.id_organisme = o.id_organisme
+        
         WHERE o.cd_ref = :thiscdref AND c.insee = :thisInsee
+        
         ORDER BY id_maille
     """
     observations = connection.execute(
