@@ -7,9 +7,6 @@ var legend = L.control({position: 'bottomright'});
 htmlLegend = "<i style='border: solid "+configuration.MAP.BORDERS_WEIGHT+"px "+configuration.MAP.BORDERS_COLOR+";'> &nbsp; &nbsp; &nbsp;</i> Limite des "+ configuration.STRUCTURE;
 generateLegende(htmlLegend);
 
-// Layer display on window ready
-
-/*GLOBAL VARIABLE*/
 
 // Current observation Layer: leaflet layer type
 var currentLayer; 
@@ -20,7 +17,7 @@ var myGeoJson;
 var compteurLegend = 0; // compteur pour ne pas rajouter la légende à chaque fois
 
 $.ajax({
-  url: configuration.URL_APPLICATION+'/api/observationsMaille/'+cd_ref, 
+  url: configuration.URL_APPLICATION+'/api/observationsMailleCommunale/'+cd_ref, 
   dataType: "json",
   beforeSend: function(){
     $('#loadingGif').attr('src', configuration.URL_APPLICATION+'/static/images/loading.svg')
@@ -29,7 +26,7 @@ $.ajax({
     $('#loadingGif').hide();
 
     // affichage des mailles
-    displayMailleLayerFicheEspece(observations, taxonYearMin, YEARMAX);
+    displayMailleCommunaleLayerFicheEspece(observations, taxonYearMin, YEARMAX);
 
       //display nb observations
   $("#nbObsLateral").html("<b>"+observations.length+" </b> </br> Observations" );
@@ -53,7 +50,7 @@ $.ajax({
           yearMin = years[0];
           yearMax = years[1];
           map.removeLayer(currentLayer);
-          displayMailleLayerFicheEspece(observations, yearMin, yearMax)
+          displayMailleCommunaleLayerFicheEspece(observations, yearMin, yearMax)
 
 
         nbObs=0;

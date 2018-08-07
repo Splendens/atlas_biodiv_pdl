@@ -6,7 +6,7 @@ from werkzeug.wrappers import Response
 from . import utils
 from modeles.repositories import (
     vmSearchTaxonRepository, vmObservationsRepository,
-    vmObservationsMaillesRepository, vmMedias
+    vmObservationsMaillesRepository, vmObservationsMaillesRepository, vmObservationsMaillesCommunalesRepository, vmMedias
 )
 from configuration import config
 
@@ -36,6 +36,14 @@ def getObservationsMailleAndPointAPI(cd_ref):
 def getObservationsMailleAPI(cd_ref):
     connection = utils.engine.connect()
     observations = vmObservationsMaillesRepository.getObservationsMaillesChilds(connection, cd_ref)
+    connection.close()
+    return Response(json.dumps(observations), mimetype='application/json')
+
+
+@api.route('/observationsMailleCommunale/<int:cd_ref>', methods=['GET'])
+def getObservationsMailleCommunaleAPI(cd_ref):
+    connection = utils.engine.connect()
+    observations = vmObservationsMaillesCommunalesRepository.getObservationsMaillesCommunalesChilds(connection, cd_ref)
     connection.close()
     return Response(json.dumps(observations), mimetype='application/json')
 

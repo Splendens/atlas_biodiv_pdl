@@ -1,7 +1,11 @@
-
 var map = generateMap();
 generateSliderOnMap();
 var legend = L.control({position: 'bottomright'});
+
+// Legende
+
+htmlLegend = "<i style='border: solid "+configuration.MAP.BORDERS_WEIGHT+"px "+configuration.MAP.BORDERS_COLOR+";'> &nbsp; &nbsp; &nbsp;</i> Limite des "+ configuration.STRUCTURE;
+generateLegende(htmlLegend);
 
 // Layer display on window ready
 
@@ -13,8 +17,7 @@ var currentLayer;
 // Current observation geoJson:  type object
 var myGeoJson;
 
-var compteurLegend = 0; // counter to not put the legend each time
-
+//var compteurLegend = 0; // counter to not put the legend each time
 
 $.ajax({
   url: configuration.URL_APPLICATION+'/api/observationsMailleAndPoint/'+cd_ref, 
@@ -29,7 +32,7 @@ $.ajax({
       //display nb observations
 
     var mailleBoolean = false;
-    if (observations.maille.length > 500) {
+    if (observations.maille.length > 10) {
        displayMailleLayerFicheEspece(observations.maille, taxonYearMin, YEARMAX);
        mailleBoolean = true;
     }
@@ -63,13 +66,12 @@ $.ajax({
 
 
             // ZoomEvent: change maille to point
-            var legendblock = $("div.info");
             var activeMode = "Maille";
             map.on("zoomend", function(){
             if (activeMode != "Point" && map.getZoom() >= configuration.ZOOM_LEVEL_POINT ){
+              var legendblock = $("div.info");
               map.removeLayer(currentLayer);
               legendblock.attr("hidden", "true");
-
 
                 years = mySlider.getValue();
                 yearMin = years[0];
@@ -80,6 +82,7 @@ $.ajax({
             }
             if (activeMode != "Maille" && map.getZoom() <= configuration.ZOOM_LEVEL_POINT -1 ){
               // display legend
+              var legendblock = $("div.info");
               map.removeLayer(currentLayer);
 
               legendblock.removeAttr( "hidden" );
@@ -115,11 +118,4 @@ $.ajax({
     }
 
 })
-
-
-// Legende
-
-htmlLegend = "<i style='border: solid "+configuration.MAP.BORDERS_WEIGHT+"px "+configuration.MAP.BORDERS_COLOR+";'> &nbsp; &nbsp; &nbsp;</i> Limite du "+ configuration.STRUCTURE;
-
-generateLegende(htmlLegend);
 
