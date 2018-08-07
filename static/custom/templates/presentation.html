@@ -72,7 +72,7 @@
                   <div class="container">
                     <div class="carousel-caption">
                       <h1>Des centaines de photographies</h1>
-                      <p>Prises par les naturalistes des Pays de la Loire au quotidien</p>
+                      <p>Pour découvrir la richesse de la biodiversité des Pays de la Loire</p>
                       <p><a class="btn btn-lg btn-default" href="{{url_for('main.photos')}}" role="button">Visitez la galerie</a></p>
                     </div>
                   </div>
@@ -113,7 +113,7 @@
                     Les naturalistes des Pays de la Loire recueillent des données sur la faune et la flore depuis des dizaines d'années, au gré de leurs observations de terrain. Celles-ci sont utilisées pour mieux connaître le statut de conservation des espèces, étudier  l'évolution des populations, appréhender les changements globaux, caractériser la biodiversité d'un territoire, etc... Cette connaissance est aussi indispensable pour engager des actions de conservation des espèces et de gestion des milieux et sites naturels.
                   </p>
                   <p class="lead">
-                    Chaque jour, les naturalistes font de nouvelles observations d’espèces sur le terrain qu’ils saisissent dans les bases de données des différents organismes partenaures. Les données issues de ces observations sont affichées en temps réel sur Biodiv’Pays de la Loire. Vous pouvez ainsi suivre l'état des connaissances naturalistes en  Pays de la Loire.
+                    Chaque jour, les naturalistes font de nouvelles observations d’espèces sur le terrain qu’ils saisissent dans les bases de données des différents organismes partenaires. Les données issues de ces observations sont affichées "en temps réel" sur Biodiv’Pays de la Loire. Vous pouvez ainsi suivre l'état des connaissances naturalistes en  Pays de la Loire.
                   </p>
                   <p class="lead">
                     Cet atlas vous est proposé dans le cadre de la mise en oeuvre du <a href="http://www.naturefrance.fr/" target="_bank">Système d'Infomation sur la Nature et les Paysages (SINP)</a> en lien avec l'<a href="https://inpn.mnhn.fr/accueil/index" target="_bank">Inventaire National du Patrimoine Naturel (INPN)</a>.
@@ -149,19 +149,19 @@
                   <span id="fonctionnalites" style="position:absolute; top:-200px;"></span>
                   <img class="img-circle" src="{{url_for('static', filename='custom/images/ile_neuve_macriere_2015_CEN_PdL.jpg') }}" alt="Generic placeholder image" width="140" height="140">
                   <h2>Fiches "espèces"</h2>
-                  <p>Retrouvez la fiche descriptive de chaque espèce avec carte des observations, phénologie, ainsi que des descriptions, photos, vidéos, enregistrements audios et liens complémentaires.</p>
+                  <p>Retrouvez la fiche descriptive de chaque espèce avec carte des observations, phénologie, ainsi que des descriptions, photos, liens complémentaires...</p>
                   <p><a class="btn btn-default" href="./espece/65740" role="button">Exemple &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                   <img class="img-circle" src="{{url_for('static', filename='custom/images/commune_Fresnay_CEN_PdL.jpg') }}" alt="Generic placeholder image" width="140" height="140">
                   <h2>Fiches "Communes"</h2>
-                  <p>Découvrez les espèces observées sur chaque Commune des Pays de la Loire et affichez les observations sur la carte de la Commune.</p>
+                  <p>Découvrez les espèces observées sur chaque Commune des Pays de la Loire.</p>
                   <p><a class="btn btn-default" href="./commune/44109" role="button">Exemple &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                   <img class="img-circle" src="{{url_for('static', filename='custom/images/Fritillaria_meleagris_CEN_PdL.jpg') }}" alt="Generic placeholder image" width="140" height="140">
                   <h2>Galerie "photos"</h2>
-                  <p>Découvrez des photographies des différentes espèces, réalisées principalement par les naturalistes des Pays de la Loire lors de leurs excursions sur le terrain.</p>
+                  <p>Découvrez des photographies des différentes espèces, issues principalement de l'INPN.</p>
                   <p><a class="btn btn-default" href="{{url_for('main.photos')}}" role="button">Parcourir &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
               </div><!-- /.row -->
@@ -174,15 +174,15 @@
                       <div class="row faq">
                         <div class="col-lg-4">
                           <h3>Informations sur les données</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='infodatabiodiv') }}" role="button">En savoir plus ! &raquo;</a></p>
+                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='donnees') }}" role="button">En savoir plus ! &raquo;</a></p>
                         </div><!-- /.col-lg-4 -->
                         <div class="col-lg-4">
                           <h3>Partenaires du portail et du SINP</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='partenaires') }}" role="button">Voir les partenaires &raquo;</a></p>
+                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='acteurs') }}" role="button">Voir les partenaires &raquo;</a></p>
                         </div><!-- /.col-lg-4 -->
                         <div class="col-lg-4">
                           <h3>Plus d'outils autour du SINP ?</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='annuaireoutils') }}" role="button">Consulter l'annuaire &raquo;</a></p>
+                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='outils') }}" role="button">Consulter l'annuaire &raquo;</a></p>
                         </div><!-- /.col-lg-4 -->
                       </div><!-- /.row -->
               
@@ -195,7 +195,7 @@
                 <div class="col-md-12">
                   <span id="reseaux" style="position:absolute; top:-200px;"></span>
                     <img class="featurette-image img-circle img-responsive pull-left" src="{{url_for('static', filename='custom/images/reseau_naturaliste_CEN_PdL.jpeg') }}">
-                    <h2 class="featurette-heading">Le réseau des naturalistes<br/><span class="text-muted">Les organismes de suivi, d'étude et de conservation de la biodiversité... et vous !</span>
+                    <h2 class="featurette-heading">Le réseau des naturalistes<br/><span class="text-muted">Les organismes de suivi, d'étude et de conservation de la biodiversité, et vous !</span>
                     </h2>
                   <p class="lead">
                     Les bases de données naturalistes des différents organismes partenaires (LPO, GRETIA, CPIE, URCPIE, CEN…) rassemblent des informations collectées dans le cadre de projets avec des financements publics ou privés, ainsi que des données issues d'observations par un ensemble de bénévoles.
