@@ -483,7 +483,7 @@ ALTER TABLE  atlas.l_communes_simpli400 ADD COLUMN geojson_commune text
 UPDATE  atlas.l_communes_simpli400 a SET geojson_commune = ST_AsGeoJSON(st_transform(a.geom, 4326))
 
 
-
+ ogr2ogr -f "GeoJSON" -t_srs "EPSG:4326" ./static/custom/territoire.json $limit_shp
 
 
 
