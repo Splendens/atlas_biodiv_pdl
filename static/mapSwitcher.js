@@ -23,10 +23,8 @@ var compteurLegend = 0; // counter to not put the legend each time
 var $loader = $('#loadingGif').attr('src', configuration.URL_APPLICATION+'/static/images/loading.svg');
 
 
-
 //display une première couche sur la carte avec switcher: mailles carrées pour 3 et 6, points pour 5 et 7
-if(configuration.AFFICHAGE_ATLAS == 3 || configuration.AFFICHAGE_ATLAS == 6){
-
+if(configuration.AFFICHAGE_ATLAS_MAILLE_CARREE){
       $.ajax({
         url: configuration.URL_APPLICATION+'/api/observationsMaille/'+cd_ref, 
         dataType: "json",
@@ -40,9 +38,7 @@ if(configuration.AFFICHAGE_ATLAS == 3 || configuration.AFFICHAGE_ATLAS == 6){
       
             //display nb observations
         $("#nbObsLateral").html("<b>"+observations.length+" </b> </br> Observations" );
-      
-      
-      
+
           // pointer on first and last obs
           $('.pointer').css('cursor', 'pointer');
           //display nb observations
@@ -128,106 +124,7 @@ if(configuration.AFFICHAGE_ATLAS == 3 || configuration.AFFICHAGE_ATLAS == 6){
       });
 
 }else{
-      $.ajax({
-          url: configuration.URL_APPLICATION+'/api/observationsMailleAndPoint/'+cd_ref, 
-          dataType: "json",
-          beforeSend: function(){
-            $('#loadingGif').attr("src", configuration.URL_APPLICATION+'/static/images/loading.svg')
-          }
-
-          }).done(function(observations) {
-            $('#loadingGif').hide();
-
-              //display nb observations
-
-            var mailleBoolean = false;
-            if (observations.maille.length > 10) {
-               displayMailleLayerFicheEspece(observations.maille, taxonYearMin, YEARMAX);
-               mailleBoolean = true;
-            }
-            else {
-              displayMarkerLayerFicheEspece(observations.point, taxonYearMin, YEARMAX);
-            }
-            
-            if (mailleBoolean){
-              // Slider event
-                  mySlider.on("change",function(){
-                      years = mySlider.getValue();
-                      yearMin = years[0];
-                      yearMax = years[1];
-
-
-                      map.removeLayer(currentLayer);
-                      if(map.getZoom() >= configuration.ZOOM_LEVEL_POINT){
-                        displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
-                      }else{
-                        displayMailleLayerFicheEspece(observations.maille, yearMin, yearMax)
-                      }
-
-                      nbObs=0;
-                      myGeoJson.features.forEach(function(l){
-                        nbObs += l.properties.nb_observations
-                      })
-
-                      $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-
-                     });
-
-
-                    // ZoomEvent: change maille to point
-                    var activeMode = "Maille";
-                    map.on("zoomend", function(){
-                    if (activeMode != "Point" && map.getZoom() >= configuration.ZOOM_LEVEL_POINT ){
-                      var legendblock = $("div.info");
-                      map.removeLayer(currentLayer);
-                      legendblock.attr("hidden", "true");
-
-
-                        years = mySlider.getValue();
-                        yearMin = years[0];
-                        yearMax = years[1];
-
-                      displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
-                      activeMode = "Point";
-                    }
-                    if (activeMode != "Maille" && map.getZoom() <= configuration.ZOOM_LEVEL_POINT -1 ){
-                      // display legend
-                      var legendblock = $("div.info");
-                      map.removeLayer(currentLayer);
-
-                      legendblock.removeAttr( "hidden" );
-
-                        years = mySlider.getValue();
-                        yearMin = years[0];
-                        yearMax = years[1];
-                      displayMailleLayerFicheEspece(observations.maille, yearMin, yearMax);
-                      activeMode = "Maille"
-                    }
-
-                    });
-
-            // if not display Maille
-            }else {
-                    // Slider event
-                    mySlider.on("change",function(){
-                        years = mySlider.getValue();
-                        yearMin = years[0];
-                        yearMax = years[1];
-
-
-                        map.removeLayer(currentLayer);
-                        displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
-                        nbObs=0;
-                        myGeoJson.features.forEach(function(l){
-                          nbObs += l.properties.nb_observations
-                        })
-
-                        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-                       });
-
-            }
-
-        })
+     
 
 
 
@@ -261,11 +158,18 @@ function generateSwitcherOnMap(){
         $(switcherCommContainer).attr("data-placement", "bottom");
         $(switcherCommContainer).attr("data-toggle", "tooltip");
         $(switcherCommContainer).attr("data-original-title", "Atlas par mailles communales");
+        $(switcherCommContainer).attr("id", "AtlasComm");
         $(switcherCommContainer).css("margin-right", "50px"); 
 
 
         switcherCommContainer.onclick = function(){
               map.removeLayer(currentLayer);
+              if (!$(switcherCommContainer).hasClass('active')) {
+                $('#AtlasComm').addClass('active');
+                $('#AtlasMaille').removeClass('active');
+                $('#AtlasPoint').removeClass('active');
+              }
+
               $.ajax({
                 url: configuration.URL_APPLICATION+'/api/observationsMailleCommunale/'+cd_ref, 
                 dataType: "json",
@@ -279,8 +183,6 @@ function generateSwitcherOnMap(){
               
                   //display nb observations
                   $("#nbObsLateral").html("<b>"+observations.length+" </b> </br> Observations" );
-              
-              
               
                   // pointer on first and last obs
                   $('.pointer').css('cursor', 'pointer');
@@ -396,12 +298,18 @@ function generateSwitcherOnMap(){
         $(switcherMailleContainer).attr("data-placement", "bottom");
         $(switcherMailleContainer).attr("data-toggle", "tooltip");
         $(switcherMailleContainer).attr("data-original-title", "Atlas par mailles régulières 5x5km");
+        $(switcherMailleContainer).attr("id", "AtlasMaille");
         $(switcherMailleContainer).css("margin-right", "50px"); 
 
 
         switcherMailleContainer.onclick = function(){
-              map.removeLayer(currentLayer);
 
+              if (!$(switcherMailleContainer).hasClass('active')) {
+                $('#AtlasMaille').addClass('active');
+                $('#AtlasComm').removeClass('active');
+                $('#AtlasPoint').removeClass('active');
+              }
+              map.removeLayer(currentLayer);
               $.ajax({
                 url: configuration.URL_APPLICATION+'/api/observationsMaille/'+cd_ref, 
                 dataType: "json",
@@ -415,7 +323,6 @@ function generateSwitcherOnMap(){
               
                   //display nb observations
                   $("#nbObsLateral").html("<b>"+observations.length+" </b> </br> Observations" );
-              
                             
                   // pointer on first and last obs
                   $('.pointer').css('cursor', 'pointer');
@@ -534,6 +441,7 @@ function generateSwitcherOnMap(){
         $(switcherPointContainer).attr("data-placement", "bottom");
         $(switcherPointContainer).attr("data-toggle", "tooltip");
         $(switcherPointContainer).attr("data-original-title", "Localisation précise des observations");
+        $(switcherPointContainer).attr("id", "AtlasPoint");
         $(switcherPointContainer).css("margin-right", "50px"); 
 
 
@@ -542,108 +450,127 @@ function generateSwitcherOnMap(){
               var legendblock = $("div.info");
               legendblock.attr("hidden", "true");
 
-              $.ajax({
-                url: configuration.URL_APPLICATION+'/api/observationsMailleAndPoint/'+cd_ref, 
-                dataType: "json",
-                beforeSend: function(){
-                   $loader.show();        }
-                }).done(function(observations) {
-                    $loader.hide();
-              
-                    //display nb observations
-                    if(map.getZoom() >= configuration.ZOOM_LEVEL_POINT && observations.maille.length > 10){
-                          mailleBoolean = true;
-                          displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
-                    }else{
-                          displayMailleLayerFicheEspece(observations.maille, yearMin, yearMax)
-                    }
-              
-                                  
-                  if (mailleBoolean){
-                    // Slider event
-                        mySlider.on("change",function(){
-                            years = mySlider.getValue();
-                            yearMin = years[0];
-                            yearMax = years[1];
-              
-              
-                            map.removeLayer(currentLayer);
-                            if(map.getZoom() >= configuration.ZOOM_LEVEL_POINT){
-                              displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
-                            }else{
-                              displayMailleLayerFicheEspece(observations.maille, yearMin, yearMax)
-                            }
-              
-                            nbObs=0;
-                            myGeoJson.features.forEach(function(l){
-                              nbObs += l.properties.nb_observations
-                            })
-              
-                            $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-              
-                           });
-              
-              
-                          // ZoomEvent: change maille to point
-                          var activeMode = "Maille";
-                          map.on("zoomend", function(){
-                          if (activeMode != "Point" && map.getZoom() >= configuration.ZOOM_LEVEL_POINT ){
-                            var legendblock = $("div.info");
-                            map.removeLayer(currentLayer);
-                            legendblock.attr("hidden", "true");
-              
-              
-                              years = mySlider.getValue();
-                              yearMin = years[0];
-                              yearMax = years[1];
-              
-                            displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
-                            activeMode = "Point";
-                          }
-                          if (activeMode != "Maille" && map.getZoom() <= configuration.ZOOM_LEVEL_POINT -1 ){
-                            // display legend
-                            var legendblock = $("div.info");
-                            map.removeLayer(currentLayer);
-              
-                            legendblock.removeAttr( "hidden" );
-              
-                              years = mySlider.getValue();
-                              yearMin = years[0];
-                              yearMax = years[1];
-                            displayMailleLayerFicheEspece(observations.maille, yearMin, yearMax);
-                            activeMode = "Maille"
-                          }
-              
-                          });
-              
-                  // if not display Maille
-                  }else {
-                          // Slider event
-                          mySlider.on("change",function(){
-                              years = mySlider.getValue();
-                              yearMin = years[0];
-                              yearMax = years[1];
-              
-              
-                              map.removeLayer(currentLayer);
-                              displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
-                              nbObs=0;
-                              myGeoJson.features.forEach(function(l){
-                                nbObs += l.properties.nb_observations
-                              })
-              
-                              $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-                             });
-              
-                  }
-              
-              });
+              if (!$(switcherPointContainer).hasClass('active')) {
+                $('#AtlasPoint').addClass('active');  
+                $('#AtlasMaille').removeClass('active');
+                $('#AtlasComm').removeClass('active');
+              }
 
+         $.ajax({
+          url: configuration.URL_APPLICATION+'/api/observationsMailleAndPoint/'+cd_ref, 
+          dataType: "json",
+          beforeSend: function(){
+            $('#loadingGif').attr("src", configuration.URL_APPLICATION+'/static/images/loading.svg')
+          }
+
+          }).done(function(observations) {
+            $('#loadingGif').hide();
+
+            //display nb observations
+            var mailleBoolean = false;
+            if (map.getZoom() < configuration.ZOOM_LEVEL_POINT && observations.maille.length > 1 && $('#AtlasPoint').hasClass('active')) {
+               displayMailleLayerFicheEspece(observations.maille, taxonYearMin, YEARMAX);
+               mailleBoolean = true;
+            }
+            else {
+                  if($('#AtlasPoint').hasClass('active')){
+                        displayMarkerLayerFicheEspece(observations.point, taxonYearMin, YEARMAX);
+                  }
+            }
+
+           
+              if (mailleBoolean){
+                // Slider event
+                    mySlider.on("change",function(){
+                        years = mySlider.getValue();
+                        yearMin = years[0];
+                        yearMax = years[1];
+
+
+                        map.removeLayer(currentLayer);
+                        if(map.getZoom() >= configuration.ZOOM_LEVEL_POINT && $('#AtlasPoint').hasClass('active')){
+                          displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
+                        }else{
+                          if($('#AtlasPoint').hasClass('active')){
+                              displayMailleLayerFicheEspece(observations.maille, yearMin, yearMax)
+                          }
+                        }
+
+                        nbObs=0;
+                        myGeoJson.features.forEach(function(l){
+                          nbObs += l.properties.nb_observations
+                        })
+
+                        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
+
+                       });
+
+
+                      // ZoomEvent: change maille to point
+
+                      var activeMode = "Maille";                
+
+                      map.on("zoomend", function(){
+                      if (activeMode != "Point" && map.getZoom() >= configuration.ZOOM_LEVEL_POINT && $('#AtlasPoint').hasClass('active')){
+
+                        var legendblock = $("div.info");
+                        map.removeLayer(currentLayer);
+                        legendblock.attr("hidden", "true");
+
+
+                          years = mySlider.getValue();
+                          yearMin = years[0];
+                          yearMax = years[1];
+
+                        displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
+                        activeMode = "Point";
+                      }
+
+                      if (activeMode != "Maille" && map.getZoom() <= configuration.ZOOM_LEVEL_POINT -1  && $('#AtlasPoint').hasClass('active')){
+                        // display legend
+                        var legendblock = $("div.info");
+                        map.removeLayer(currentLayer);
+
+                        legendblock.removeAttr( "hidden" );
+
+                          years = mySlider.getValue();
+                          yearMin = years[0];
+                          yearMax = years[1];
+                        displayMailleLayerFicheEspece(observations.maille, yearMin, yearMax);
+                        activeMode = "Maille"
+                      }
+
+                      });
+
+
+              // if not display Maille
+              }else {
+                  if($('#AtlasPoint').hasClass('active')){
+                      // Slider event
+                      mySlider.on("change",function(){
+                          years = mySlider.getValue();
+                          yearMin = years[0];
+                          yearMax = years[1];
+
+
+                          map.removeLayer(currentLayer);
+                          displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
+                          nbObs=0;
+                          myGeoJson.features.forEach(function(l){
+                            nbObs += l.properties.nb_observations
+                          })
+
+                          $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
+                         });
+                  }
+
+              }
+
+        })//ajax done
 
 
 
         }
-
         return switcherPointContainer;
       }
 
@@ -651,24 +578,16 @@ function generateSwitcherOnMap(){
   });
 
 
-  if(configuration.AFFICHAGE_ATLAS == 3 || configuration.AFFICHAGE_ATLAS == 5 || configuration.AFFICHAGE_ATLAS == 6){
-          if(configuration.AFFICHAGE_ATLAS == 3){
-               map.addControl(new SwitcherMailleControl());
-               map.addControl(new SwitcherPointControl());
-          }else{
-               if(configuration.AFFICHAGE_ATLAS == 5){
-                  map.addControl(new SwitcherCommControl());
-                  map.addControl(new SwitcherPointControl());
-                  
-                }else{
-                  map.addControl(new SwitcherCommControl());
-                  map.addControl(new SwitcherMailleControl());
-                }
-          }
-  }else{
-          map.addControl(new SwitcherCommControl());
-          map.addControl(new SwitcherMailleControl());
-          map.addControl(new SwitcherPointControl());
+
+
+  if(configuration.AFFICHAGE_ATLAS_MAILLE_COMMUNALE){
+    map.addControl(new SwitcherCommControl());
+  }
+  if(configuration.AFFICHAGE_ATLAS_MAILLE_CARREE){
+    map.addControl(new SwitcherMailleControl());
+  }
+  if(configuration.AFFICHAGE_ATLAS_POINT){
+    map.addControl(new SwitcherPointControl());
   }
 
 

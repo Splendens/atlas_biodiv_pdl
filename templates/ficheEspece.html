@@ -573,14 +573,16 @@
 
     <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
     <script src="{{url_for('static', filename='main.js') }}"></script>
-    {% if configuration.AFFICHAGE_ATLAS == 2 %}
+    {% if configuration.AFFICHAGE_SWITCHER == 1 and configuration.AFFICHAGE_ATLAS_POINT %}
+        <script src="{{url_for('static', filename='mapPoint.js') }}"></script>
+    {% elif configuration.AFFICHAGE_SWITCHER == 1 and configuration.AFFICHAGE_ATLAS_MAILLE_CARREE %}
         <script src="{{url_for('static', filename='mapMailles.js') }}"></script>
-    {% elif configuration.AFFICHAGE_ATLAS  == 4 %}
+    {% elif configuration.AFFICHAGE_SWITCHER == 1 and configuration.AFFICHAGE_ATLAS_MAILLE_COMMUNALE %}
         <script src="{{url_for('static', filename='mapMaillesCommunales.js') }}"></script>
-    {% elif configuration.AFFICHAGE_ATLAS  in [3, 5, 6, 7] %}
+    {% elif configuration.AFFICHAGE_SWITCHER  > 1 %}
         <script src="{{url_for('static', filename='mapSwitcher.js') }}"></script>
     {% else %}
-        <script src="{{url_for('static', filename='mapPoint.js') }}"></script>
+
     {% endif %}
 
 
