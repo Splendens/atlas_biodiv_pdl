@@ -61,20 +61,17 @@ MAP = {
 }
 
 
-# Affichage du type d'atlas sans switcher (1 : points, 2 : mailles carées ou 4 : mailles communales) et/ou du switcher (3, 5, 6 ou 7)
-    # 1 : Points 
-    # 2 : Mailles carrées 
-    # 3 : Points + Mailles carrées 
-    # 4 : Mailles communales 
-    # 5 : Points + Mailles communales 
-    # 6 : Mailles carrées + Mailles communales
-    # 7 : Points + Mailles carrées + Mailles communales
-AFFICHAGE_ATLAS = 6
+# Affichage du type d'atlas (si un seul TRUE => pas de switcher ; si plusieurs en TRUE => switcher sur fiche espèce)
+#ATTENTION : il faut au moins un True ! Si toutes les valeurs sont False, aucune carte ne sera affichée
+AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE = False
+AFFICHAGE_ATLAS_MAILLE_COMMUNALE = True
+AFFICHAGE_ATLAS_MAILLE_CARREE = True
+AFFICHAGE_ATLAS_POINT = True
+AFFICHAGE_SWITCHER = AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE + AFFICHAGE_ATLAS_MAILLE_COMMUNALE + AFFICHAGE_ATLAS_MAILLE_CARREE + AFFICHAGE_ATLAS_POINT
 
 # Affichage des observations par maille ou point sur la page d'accueil et sur les fiches communes
-# True = maille / False = point
+# True = maille carrée / False = point
 AFFICHAGE_MAILLE = True
-
 # Niveau de zoom à partir duquel on passe à l'affichage en point (si AFFICHAGE_ATLAS = 1)
 ZOOM_LEVEL_POINT = 10
 
