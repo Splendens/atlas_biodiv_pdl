@@ -59,35 +59,35 @@ function generateMap() {
         position: 'bottomleft' 
       },
 
-      onAdd: function (map) {
-        currentTileMap = "topo";
+      onAdd: function (map) { 
+        currentTileMap = "earth"; 
         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
      
         container.style.backgroundColor = 'white';
-        container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)";
+        container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_topo_map.PNG)";
         container.style.width = '50px';
         container.style.height = '50px';
         container.style.border = 'solid white 1px';
         container.style.cursor = 'pointer';
         $(container).attr("data-placement", "right");
         $(container).attr("data-toggle", "tooltip");
-        $(container).attr("data-original-title", "Photos aérienne");
+        $(container).attr("data-original-title", "Plan");
 
 
         container.onclick = function(){
-          if(currentTileMap == "topo"){
-          container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_topo_map.PNG)";
-          $(container).attr("data-original-title", "Plan");
+          if(currentTileMap == "earth"){ 
+          container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)"; 
+          $(container).attr("data-original-title", "Photos aérienne");
           map.removeLayer(firstMapTile);
           orthoMap.addTo(map);
-          currentTileMap = "earth";
+          currentTileMap = "topo";
           }
           else{
-          container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)";
-          $(container).attr("data-original-title", "Photos aérienne");
+          container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_topo_map.PNG)";
+          $(container).attr("data-original-title", "Plan");
           map.removeLayer(orthoMap);
           firstMapTile.addTo(map);
-          currentTileMap = "topo";
+          currentTileMap = "earth"; 
           }
         }
         return container;
