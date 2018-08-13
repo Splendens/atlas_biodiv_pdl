@@ -577,3 +577,857 @@ CREATE UNIQUE INDEX vm_observations_communes_id_observation_idx
 
 
 
+
+
+
+
+
+/**************************************/
+/****** STATISTIQUES POUR ATLAS *******/
+/**************************************/
+
+
+
+/* stats nb obs par structure pour chaque cd_ref */
+
+
+-- Materialized View: atlas.vm_stats_orga_taxon
+-- DROP MATERIALIZED VIEW atlas.vm_stats_orga_taxon;
+
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_orga_taxon AS 
+ WITH 
+        _03 AS /*CEN Pays de la Loire*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 3
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _04 AS /*PNR Normandie Maine*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 4
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _05 AS /*GRETIA*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 5
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _06 AS /*CBN de Brest*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 6
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _09 AS /*DREAL Pays de la Loire*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 9
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _70 AS /*URCPIE*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 70
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _80 AS /*Coordi. LPO*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 80
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _81 AS /*LPO Anjou*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 81
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _82 AS /*LPO Loire-Atlantique*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 82
+          GROUP BY vm_observations.cd_ref
+        ),
+        _83 AS /*LPO Vendée*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 83
+          GROUP BY vm_observations.cd_ref
+        ), 
+        _84 AS /*LPO Sarthe*/
+        (
+         SELECT vm_observations.cd_ref,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 84
+          GROUP BY vm_observations.cd_ref
+        )
+ SELECT DISTINCT o.cd_ref,
+    COALESCE(a.nb::integer, 0) AS _03,
+    COALESCE(b.nb::integer, 0) AS _04,
+    COALESCE(c.nb::integer, 0) AS _05,
+    COALESCE(d.nb::integer, 0) AS _06,
+    COALESCE(e.nb::integer, 0) AS _09,
+    COALESCE(f.nb::integer, 0) AS _70,
+    COALESCE(g.nb::integer, 0) AS _80,
+    COALESCE(h.nb::integer, 0) AS _81,
+    COALESCE(i.nb::integer, 0) AS _82,
+    COALESCE(j.nb::integer, 0) AS _83,
+    COALESCE(k.nb::integer, 0) AS _84
+   FROM atlas.vm_observations o
+     LEFT JOIN _03 a ON a.cd_ref = o.cd_ref /*CEN Pays de la Loire*/
+     LEFT JOIN _04 b ON b.cd_ref = o.cd_ref /*PNR Normandie Maine*/
+     LEFT JOIN _05 c ON c.cd_ref = o.cd_ref /*GRETIA*/
+     LEFT JOIN _06 d ON d.cd_ref = o.cd_ref /*CBN de Brest*/
+     LEFT JOIN _09 e ON e.cd_ref = o.cd_ref /*DREAL Pays de la Loire*/
+     LEFT JOIN _70 f ON f.cd_ref = o.cd_ref /*URCPIE*/
+     LEFT JOIN _80 g ON g.cd_ref = o.cd_ref /*Coordi. LPO*/
+     LEFT JOIN _81 h ON h.cd_ref = o.cd_ref /*LPO Anjou*/
+     LEFT JOIN _82 i ON i.cd_ref = o.cd_ref /*LPO Loire-Atlantique*/
+     LEFT JOIN _83 j ON j.cd_ref = o.cd_ref /*LPO Vendée*/
+     LEFT JOIN _84 k ON k.cd_ref = o.cd_ref /*LPO Sarthe*/
+  WHERE o.cd_ref IS NOT NULL
+  ORDER BY o.cd_ref
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_orga_taxon
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_orga_taxon TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_orga_taxon TO geonatatlas;
+
+-- Index: atlas.vm_stats_orga_taxon_cd_ref_idx
+
+-- DROP INDEX atlas.vm_stats_orga_taxon_cd_ref_idx;
+
+CREATE UNIQUE INDEX vm_stats_orga_taxon_cd_ref_idx
+  ON atlas.vm_stats_orga_taxon
+  USING btree (cd_ref);
+
+
+
+
+
+
+/* stats nb obs par structure pour chaque commune */
+
+
+-- Materialized View: atlas.vm_stats_orga_comm
+-- DROP MATERIALIZED VIEW atlas.vm_stats_orga_comm;
+
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS 
+ WITH 
+        _03 AS /*CEN Pays de la Loire*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 3
+          GROUP BY vm_observations.insee
+        ), 
+        _04 AS /*PNR Normandie Maine*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 4
+          GROUP BY vm_observations.insee
+        ), 
+        _05 AS /*GRETIA*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 5
+          GROUP BY vm_observations.insee
+        ), 
+        _06 AS /*CBN de Brest*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 6
+          GROUP BY vm_observations.insee
+        ), 
+        _09 AS /*DREAL Pays de la Loire*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 9
+          GROUP BY vm_observations.insee
+        ), 
+        _70 AS /*URCPIE*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 70
+          GROUP BY vm_observations.insee
+        ), 
+        _80 AS /*Coordi. LPO*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 80
+          GROUP BY vm_observations.insee
+        ), 
+        _81 AS /*LPO Anjou*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 81
+          GROUP BY vm_observations.insee
+        ), 
+        _82 AS /*LPO Loire-Atlantique*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 82
+          GROUP BY vm_observations.insee
+        ),
+        _83 AS /*LPO Vendée*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 83
+          GROUP BY vm_observations.insee
+        ), 
+        _84 AS /*LPO Sarthe*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 84
+          GROUP BY vm_observations.insee
+        )
+ SELECT DISTINCT o.insee,
+    COALESCE(a.nb::integer, 0) AS _03,
+    COALESCE(b.nb::integer, 0) AS _04,
+    COALESCE(c.nb::integer, 0) AS _05,
+    COALESCE(d.nb::integer, 0) AS _06,
+    COALESCE(e.nb::integer, 0) AS _09,
+    COALESCE(f.nb::integer, 0) AS _70,
+    COALESCE(g.nb::integer, 0) AS _80,
+    COALESCE(h.nb::integer, 0) AS _81,
+    COALESCE(i.nb::integer, 0) AS _82,
+    COALESCE(j.nb::integer, 0) AS _83,
+    COALESCE(k.nb::integer, 0) AS _84
+   FROM atlas.vm_observations o
+     LEFT JOIN _03 a ON a.insee = o.insee /*CEN Pays de la Loire*/
+     LEFT JOIN _04 b ON b.insee = o.insee /*PNR Normandie Maine*/
+     LEFT JOIN _05 c ON c.insee = o.insee /*GRETIA*/
+     LEFT JOIN _06 d ON d.insee = o.insee /*CBN de Brest*/
+     LEFT JOIN _09 e ON e.insee = o.insee /*DREAL Pays de la Loire*/
+     LEFT JOIN _70 f ON f.insee = o.insee /*URCPIE*/
+     LEFT JOIN _80 g ON g.insee = o.insee /*Coordi. LPO*/
+     LEFT JOIN _81 h ON h.insee = o.insee /*LPO Anjou*/
+     LEFT JOIN _82 i ON i.insee = o.insee /*LPO Loire-Atlantique*/
+     LEFT JOIN _83 j ON j.insee = o.insee /*LPO Vendée*/
+     LEFT JOIN _84 k ON k.insee = o.insee /*LPO Sarthe*/
+  WHERE o.insee IS NOT NULL
+  ORDER BY o.insee
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_orga_comm
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_orga_comm TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_orga_comm TO geonatatlas;
+
+-- Index: atlas.vm_stats_orga_comm_insee_idx
+
+-- DROP INDEX atlas.vm_stats_orga_comm_insee_idx;
+
+CREATE UNIQUE INDEX vm_stats_orga_comm_insee_idx
+  ON atlas.vm_stats_orga_comm
+  USING btree (insee);
+
+
+
+
+
+
+/* stats nb obs par structure pour chaque departement */
+
+
+-- Materialized View: atlas.vm_stats_orga_dpt
+-- DROP MATERIALIZED VIEW atlas.vm_stats_orga_dpt;
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_orga_dpt AS 
+
+ SELECT DISTINCT left(insee,2) AS num_dpt,
+    SUM(_03) AS _03, /*CEN Pays de la Loire*/
+    SUM(_04) AS _04, /*PNR Normandie Maine*/
+    SUM(_05) AS _05, /*GRETIA*/
+    SUM(_06) AS _06, /*CBN de Brest*/
+    SUM(_09) AS _09, /*DREAL Pays de la Loire*/
+    SUM(_70) AS _70, /*URCPIE*/
+    SUM(_80) AS _80, /*Coordi. LPO*/
+    SUM(_81) AS _81, /*LPO Anjou*/
+    SUM(_82) AS _82, /*LPO Loire-Atlantique*/
+    SUM(_83) AS _83, /*LPO Vendée*/
+    SUM(_84) AS _84 /*LPO Sarthe*/
+
+   FROM atlas.vm_stats_orga_comm
+ 
+  GROUP BY num_dpt
+  ORDER BY num_dpt
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_orga_dpt
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_orga_dpt TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_orga_dpt TO geonatatlas;
+
+-- Index: atlas.vm_stats_orga_dpt_idx
+
+-- DROP INDEX atlas.vm_stats_orga_dpt_idx;
+
+CREATE UNIQUE INDEX vm_stats_orga_dpt_idx
+  ON atlas.vm_stats_orga_dpt
+  USING btree (num_dpt);
+
+
+
+
+
+/* stats nb obs par structure pour la région */
+
+
+-- Materialized View: atlas.vm_stats_orga_pdl
+-- DROP MATERIALIZED VIEW atlas.vm_stats_orga_pdl;
+
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_orga_pdl AS 
+
+ SELECT 'Pays de la Loire'::text AS nom_region,
+    SUM(_03) AS _03, /*CEN Pays de la Loire*/
+    SUM(_04) AS _04, /*PNR Normandie Maine*/
+    SUM(_05) AS _05, /*GRETIA*/
+    SUM(_06) AS _06, /*CBN de Brest*/
+    SUM(_09) AS _09, /*DREAL Pays de la Loire*/
+    SUM(_70) AS _70, /*URCPIE*/
+    SUM(_80) AS _80, /*Coordi. LPO*/
+    SUM(_81) AS _81, /*LPO Anjou*/
+    SUM(_82) AS _82, /*LPO Loire-Atlantique*/
+    SUM(_83) AS _83, /*LPO Vendée*/
+    SUM(_84) AS _84  /*LPO Sarthe*/
+
+   FROM atlas.vm_stats_orga_dpt
+
+   WHERE num_dpt = '44'
+        OR num_dpt = '49'
+        OR num_dpt = '53'
+        OR num_dpt = '72'
+        OR num_dpt = '85'
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_orga_pdl
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_orga_pdl TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_orga_pdl TO geonatatlas;
+
+
+
+
+
+
+
+
+
+/* stats nb obs par group2_inpn pour chaque commune */
+
+-- Materialized View: atlas.vm_stats_group2inpn_comm
+-- DROP MATERIALIZED VIEW atlas.vm_stats_group2inpn_comm;
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_group2inpn_comm AS 
+ WITH cd_ref AS (
+         SELECT vm_taxref.cd_ref, vm_taxref.group2_inpn
+         FROM atlas.vm_taxref 
+         WHERE vm_taxref.cd_ref = vm_taxref.cd_nom 
+         ),
+        Acanthocephales AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Acanthocéphales'
+          GROUP BY s.insee
+        ), 
+        Algues_brunes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+           LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Algues brunes'
+          GROUP BY s.insee
+        ), 
+        Algues_rouges AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Algues rouges'
+          GROUP BY s.insee
+        ), 
+        Algues_vertes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Algues vertes'
+          GROUP BY s.insee
+        ), 
+        Amphibiens AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Amphibiens'
+          GROUP BY s.insee
+        ), 
+        Angiospermes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Angiospermes'
+          GROUP BY s.insee
+        ), 
+        Annelides AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Annélides'
+          GROUP BY s.insee
+        ), 
+        Arachnides AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Arachnides'
+          GROUP BY s.insee
+        ), 
+        Ascidies AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Ascidies'
+          GROUP BY s.insee
+        ), 
+        Autres AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Autres'
+          GROUP BY s.insee
+        ), 
+        Bivalves AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Bivalves'
+          GROUP BY s.insee
+        ), 
+        Cephalopodes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Céphalopodes'
+          GROUP BY s.insee
+        ), 
+        Crustaces AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Crustacés'
+          GROUP BY s.insee
+        ), 
+        Diatomees AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Diatomées'
+          GROUP BY s.insee
+        ), 
+        Entognathes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Entognathes'
+          GROUP BY s.insee
+        ), 
+        Fougeres AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Fougères'
+          GROUP BY s.insee
+        ), 
+        Gasteropodes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Gastéropodes'
+          GROUP BY s.insee
+        ), 
+        Gymnospermes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Gymnospermes'
+          GROUP BY s.insee
+        ), 
+        Hepatiques_Anthocerotes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Hépatiques et Anthocérotes'
+          GROUP BY s.insee
+        ), 
+        Hydrozoaires AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Hydrozoaires'
+          GROUP BY s.insee
+        ), 
+        Insectes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Insectes'
+          GROUP BY s.insee
+        ), 
+        Lichens AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Lichens'
+          GROUP BY s.insee
+        ), 
+        Mammiferes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Mammifères'
+          GROUP BY s.insee
+        ), 
+        Mousses AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Mousses'
+          GROUP BY s.insee
+        ), 
+        Myriapodes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Myriapodes'
+          GROUP BY s.insee
+        ), 
+        Nematodes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Nématodes'
+          GROUP BY s.insee
+        ), 
+        Nemertes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Némertes'
+          GROUP BY s.insee
+        ), 
+        Octocoralliaires AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Octocoralliaires'
+          GROUP BY s.insee
+        ), 
+        Oiseaux AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Oiseaux'
+          GROUP BY s.insee
+        ), 
+        Plathelminthes AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Plathelminthes'
+          GROUP BY s.insee
+        ), 
+        Poissons AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Poissons'
+          GROUP BY s.insee
+        ), 
+        Pycnogonides AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Pycnogonides'
+          GROUP BY s.insee
+        ), 
+        Reptiles AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Reptiles'
+          GROUP BY s.insee
+        ), 
+        Scleractiniaires AS (
+         SELECT s.insee, count(*) AS nb
+         FROM atlas.vm_observations s
+            LEFT JOIN cd_ref tx ON tx.cd_ref = s.cd_ref
+         WHERE tx.group2_inpn = 'Scléractiniaires'
+          GROUP BY s.insee
+        )
+ SELECT DISTINCT o.insee,
+    COALESCE(a.nb::integer, 0) AS Acanthocephales,
+    COALESCE(b.nb::integer, 0) AS Algues_brunes,
+    COALESCE(c.nb::integer, 0) AS Algues_rouges,
+    COALESCE(d.nb::integer, 0) AS Algues_vertes,
+    COALESCE(e.nb::integer, 0) AS Amphibiens,
+    COALESCE(f.nb::integer, 0) AS Angiospermes,
+    COALESCE(g.nb::integer, 0) AS Annelides,
+    COALESCE(h.nb::integer, 0) AS Arachnides,
+    COALESCE(i.nb::integer, 0) AS Ascidies,
+    COALESCE(j.nb::integer, 0) AS Autres,
+    COALESCE(k.nb::integer, 0) AS Bivalves,
+    COALESCE(l.nb::integer, 0) AS Cephalopodes,
+    COALESCE(m.nb::integer, 0) AS Crustaces,
+    COALESCE(n.nb::integer, 0) AS Diatomees,
+    COALESCE(p.nb::integer, 0) AS Entognathes,
+    COALESCE(q.nb::integer, 0) AS Fougeres,
+    COALESCE(r.nb::integer, 0) AS Gasteropodes,
+    COALESCE(s.nb::integer, 0) AS Gymnospermes,
+    COALESCE(t.nb::integer, 0) AS Hepatiques_Anthocerotes,
+    COALESCE(u.nb::integer, 0) AS Hydrozoaires,
+    COALESCE(v.nb::integer, 0) AS Insectes,
+    COALESCE(w.nb::integer, 0) AS Lichens,
+    COALESCE(x.nb::integer, 0) AS Mammiferes,
+    COALESCE(y.nb::integer, 0) AS Mousses,
+    COALESCE(z.nb::integer, 0) AS Myriapodes,
+    COALESCE(ab.nb::integer, 0) AS Nematodes,
+    COALESCE(ac.nb::integer, 0) AS Nemertes,
+    COALESCE(ad.nb::integer, 0) AS Octocoralliaires,
+    COALESCE(ae.nb::integer, 0) AS Oiseaux,
+    COALESCE(af.nb::integer, 0) AS Plathelminthes,
+    COALESCE(ag.nb::integer, 0) AS Poissons,
+    COALESCE(ah.nb::integer, 0) AS Pycnogonides,
+    COALESCE(ai.nb::integer, 0) AS Reptiles,
+    COALESCE(aj.nb::integer, 0) AS Scleractiniaires
+
+    FROM atlas.vm_observations o
+
+     LEFT JOIN Acanthocephales a ON a.insee = o.insee
+     LEFT JOIN Algues_brunes b ON b.insee = o.insee
+     LEFT JOIN Algues_rouges c ON c.insee = o.insee
+     LEFT JOIN Algues_vertes d ON d.insee = o.insee
+     LEFT JOIN Amphibiens e ON e.insee = o.insee
+     LEFT JOIN Angiospermes f ON f.insee = o.insee
+     LEFT JOIN Annelides g ON g.insee = o.insee
+     LEFT JOIN Arachnides h ON h.insee = o.insee
+     LEFT JOIN Ascidies i ON i.insee = o.insee
+     LEFT JOIN Autres j ON j.insee = o.insee
+     LEFT JOIN Bivalves k ON k.insee = o.insee
+     LEFT JOIN Cephalopodes l ON l.insee = o.insee
+     LEFT JOIN Crustaces m ON m.insee = o.insee
+     LEFT JOIN Diatomees n ON n.insee = o.insee
+     LEFT JOIN Entognathes p ON p.insee = o.insee
+     LEFT JOIN Fougeres q ON q.insee = o.insee
+     LEFT JOIN Gasteropodes r ON r.insee = o.insee
+     LEFT JOIN Gymnospermes s ON s.insee = o.insee
+     LEFT JOIN Hepatiques_Anthocerotes t ON t.insee = o.insee
+     LEFT JOIN Hydrozoaires u ON u.insee = o.insee
+     LEFT JOIN Insectes v ON v.insee = o.insee
+     LEFT JOIN Lichens w ON w.insee = o.insee
+     LEFT JOIN Mammiferes x ON x.insee = o.insee
+     LEFT JOIN Mousses y ON y.insee = o.insee
+     LEFT JOIN Myriapodes z ON z.insee = o.insee
+     LEFT JOIN Nematodes ab ON ab.insee = o.insee
+     LEFT JOIN Nemertes ac ON ac.insee = o.insee
+     LEFT JOIN Octocoralliaires ad ON ad.insee = o.insee
+     LEFT JOIN Oiseaux ae ON ae.insee = o.insee
+     LEFT JOIN Plathelminthes af ON af.insee = o.insee
+     LEFT JOIN Poissons ag ON ag.insee = o.insee
+     LEFT JOIN Pycnogonides ah ON ah.insee = o.insee
+     LEFT JOIN Reptiles ai ON ai.insee = o.insee
+     LEFT JOIN Scleractiniaires aj ON aj.insee = o.insee
+
+  WHERE o.insee IS NOT NULL
+  ORDER BY o.insee
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_group2inpn_comm
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_group2inpn_comm TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_group2inpn_comm TO geonatatlas;
+
+-- Index: atlas.vm_stats_group2inpn_comm_insee_idx
+
+-- DROP INDEX atlas.vm_stats_group2inpn_comm_insee_idx;
+
+CREATE UNIQUE INDEX vm_stats_group2inpn_comm_insee_idx
+  ON atlas.vm_stats_group2inpn_comm
+  USING btree (insee);
+
+
+
+
+
+/* stats nb obs par group2_inpn pour chaque departement */
+
+-- Materialized View: atlas.vm_stats_group2inpn_dpt
+-- DROP MATERIALIZED VIEW atlas.vm_stats_group2inpn_dpt;
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_group2inpn_dpt AS 
+
+ SELECT DISTINCT left(insee,2) AS num_dpt,
+    SUM(Acanthocephales) AS Acanthocephales, 
+    SUM(Algues_brunes) AS Algues_brunes, 
+    SUM(Algues_rouges) AS Algues_rouges,
+    SUM(Algues_vertes) AS Algues_vertes,
+    SUM(Amphibiens) AS Amphibiens,
+    SUM(Angiospermes) AS Angiospermes,
+    SUM(Annelides) AS Annelides, 
+    SUM(Arachnides) AS Arachnides,
+    SUM(Ascidies) AS Ascidies,
+    SUM(Autres) AS Autres, 
+    SUM(Bivalves) AS Bivalves,
+    SUM(Cephalopodes) AS Cephalopodes, 
+    SUM(Crustaces) AS Crustaces,
+    SUM(Diatomees) AS Diatomees,
+    SUM(Entognathes) AS Entognathes, 
+    SUM(Fougeres) AS Fougeres,
+    SUM(Gasteropodes) AS Gasteropodes, 
+    SUM(Gymnospermes) AS Gymnospermes,
+    SUM(Hepatiques_Anthocerotes) AS Hepatiques_Anthocerotes,
+    SUM(Hydrozoaires) AS Hydrozoaires, 
+    SUM(Insectes) AS Insectes,
+    SUM(Lichens) AS Lichens, 
+    SUM(Mammiferes) AS Mammiferes,
+    SUM(Mousses) AS Mousses,
+    SUM(Myriapodes) AS Myriapodes, 
+    SUM(Nematodes) AS Nematodes, 
+    SUM(Nemertes) AS Nemertes,
+    SUM(Octocoralliaires) AS Octocoralliaires,
+    SUM(Oiseaux) AS Oiseaux, 
+    SUM(Plathelminthes) AS Plathelminthes, 
+    SUM(Poissons) AS Poissons,
+    SUM(Pycnogonides) AS Pycnogonides,
+    SUM(Reptiles) AS Reptiles, 
+    SUM(Scleractiniaires) AS Scleractiniaires 
+
+   FROM atlas.vm_stats_group2inpn_comm
+ 
+  GROUP BY num_dpt
+  ORDER BY num_dpt
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_group2inpn_dpt
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_group2inpn_dpt TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_group2inpn_dpt TO geonatatlas;
+
+-- Index: atlas.vm_stats_group2inpn_dpt_idx
+
+-- DROP INDEX atlas.vm_stats_group2inpn_dpt_idx;
+
+CREATE UNIQUE INDEX vm_stats_group2inpn_dpt_idx
+  ON atlas.vm_stats_group2inpn_dpt
+  USING btree (num_dpt);
+
+
+
+
+
+/* stats nb obs par group2_inpn pour la région */
+
+-- Materialized View: atlas.vm_stats_group2inpn_pdl
+-- DROP MATERIALIZED VIEW atlas.vm_stats_group2inpn_pdl;
+
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_group2inpn_pdl AS 
+
+ SELECT 'Pays de la Loire'::text AS nom_region,
+    SUM(Acanthocephales) AS Acanthocephales, 
+    SUM(Algues_brunes) AS Algues_brunes, 
+    SUM(Algues_rouges) AS Algues_rouges,
+    SUM(Algues_vertes) AS Algues_vertes,
+    SUM(Amphibiens) AS Amphibiens,
+    SUM(Angiospermes) AS Angiospermes,
+    SUM(Annelides) AS Annelides, 
+    SUM(Arachnides) AS Arachnides,
+    SUM(Ascidies) AS Ascidies,
+    SUM(Autres) AS Autres, 
+    SUM(Bivalves) AS Bivalves,
+    SUM(Cephalopodes) AS Cephalopodes, 
+    SUM(Crustaces) AS Crustaces,
+    SUM(Diatomees) AS Diatomees,
+    SUM(Entognathes) AS Entognathes, 
+    SUM(Fougeres) AS Fougeres,
+    SUM(Gasteropodes) AS Gasteropodes, 
+    SUM(Gymnospermes) AS Gymnospermes,
+    SUM(Hepatiques_Anthocerotes) AS Hepatiques_Anthocerotes,
+    SUM(Hydrozoaires) AS Hydrozoaires, 
+    SUM(Insectes) AS Insectes,
+    SUM(Lichens) AS Lichens, 
+    SUM(Mammiferes) AS Mammiferes,
+    SUM(Mousses) AS Mousses,
+    SUM(Myriapodes) AS Myriapodes, 
+    SUM(Nematodes) AS Nematodes, 
+    SUM(Nemertes) AS Nemertes,
+    SUM(Octocoralliaires) AS Octocoralliaires,
+    SUM(Oiseaux) AS Oiseaux, 
+    SUM(Plathelminthes) AS Plathelminthes, 
+    SUM(Poissons) AS Poissons,
+    SUM(Pycnogonides) AS Pycnogonides,
+    SUM(Reptiles) AS Reptiles, 
+    SUM(Scleractiniaires) AS Scleractiniaires 
+
+   FROM atlas.vm_stats_group2inpn_dpt
+
+   WHERE num_dpt = '44' OR num_dpt = '49' OR num_dpt = '53' OR num_dpt = '72' OR num_dpt = '85'
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_group2inpn_pdl
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_group2inpn_pdl TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_group2inpn_pdl TO geonatatlas;
+
+
+
