@@ -24,6 +24,13 @@ function generateMap() {
       weight: configuration.MAP.BORDERS_WEIGHT
     }
 
+    // Style of territory departement on map
+    territoryDptStyle = {
+      fill: false,
+      color: configuration.MAP.BORDERS_DPT_COLOR,
+      weight: configuration.MAP.BORDERS_DPT_WEIGHT
+    }
+
      // Add limits of the territory to the map
      $(document).ready(function()
           {
@@ -34,6 +41,15 @@ function generateMap() {
               });
           });
 
+     // Add limits of the territory departement to the map
+     $(document).ready(function()
+          {
+              $.getJSON(url_limit_dpt_territory, function(json) {
+                  L.geoJson(json, {
+                    style: territoryDptStyle
+                  }).addTo(map);
+              });
+          });
 
      // 'Google-like' baseLayer controler
 

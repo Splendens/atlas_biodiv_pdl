@@ -561,6 +561,7 @@
             var listeTaxonsSearch = {{listeTaxonsSearch|tojson}};
             var communesSearch = {{communesSearch|tojson}};
             var configuration = {{configuration|tojson}};
+            var url_limit_dpt_territory = "{{url_for('static', filename='custom/dpt_pdl_simpli.json') }}";
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
             var taxonYearMin = {{taxon.taxonSearch.yearmin}};
             var cd_ref = {{taxon.taxonSearch.cd_ref}};

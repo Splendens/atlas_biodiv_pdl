@@ -104,6 +104,7 @@
             var configuration = {{configuration|tojson}};
             var observations = {{observations|tojson}};
             var communeGeoJson = {{referenciel.communeGeoJson|tojson}};
+            var url_limit_dpt_territory = "{{url_for('static', filename='custom/dpt_pdl_simpli.json') }}";
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
             //calcul du nb de colonnes pour le fonctionnement de dataTables.js
             var nbColumn = 7;
