@@ -1,9 +1,9 @@
 
-// alti graph
+// statsorgataxon graph
 Morris.Bar({
-            element:"altiChart",
+            element:"statsorgataxonChart",
             data : dataset,
-            xkey: "altitude",
+            xkey: "orgas",
             ykeys : ["value"],
             labels: ['Observation(s)'],
             xLabelAngle: 45,
@@ -27,7 +27,7 @@ svgbis=d3.selectAll("svg");
             .attr("fill", "#888888")
             .attr("font-size", "10px")
             .style("text-anchor", "end")
-            .text("Altitude(m)");
+            .text("");
 
 
 var phenologyChart =  Morris.Bar({

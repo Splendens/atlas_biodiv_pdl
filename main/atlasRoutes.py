@@ -5,7 +5,7 @@ from flask import render_template, redirect, abort
 from configuration import config
 from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository,
-    vmMoisRepository, vmTaxrefRepository,
+    vmMoisRepository, vmTaxrefRepository, vmStatsOrgaTaxonRepository,
     vmCommunesRepository, vmObservationsMaillesRepository, vmMedias,
     vmCorTaxonAttribut, vmTaxonsMostView
 )
@@ -127,7 +127,7 @@ def ficheEspece(cd_ref):
 
     cd_ref = int(cd_ref)
     taxon = vmTaxrefRepository.searchEspece(connection, cd_ref)
-    altitudes = vmAltitudesRepository.getAltitudesChilds(connection, cd_ref)
+    statsorgataxon = vmStatsOrgaTaxonRepository.getStatsOrgaTaxonChilds(connection, cd_ref)
     months = vmMoisRepository.getMonthlyObservationsChilds(connection, cd_ref)
     synonyme = vmTaxrefRepository.getSynonymy(connection, cd_ref)
     communes = vmCommunesRepository.getCommunesObservationsChilds(
@@ -183,7 +183,7 @@ def ficheEspece(cd_ref):
         listeTaxonsSearch=[],
         observations=[],
         cd_ref=cd_ref,
-        altitudes=altitudes,
+        statsorgataxon=statsorgataxon,
         months=months,
         synonyme=synonyme,
         communes=communes,

@@ -539,8 +539,8 @@
             {% endif %}
 
             <div class="panel panel-default" id="graphBloc">
-                <h3 class="text-center">Observations par classes d'altitudes</h3>
-                <div id="altiChart"></div>
+                <h3 class="text-center">Provenance des observations</h3>
+                <div id="statsorgataxonChart"></div>
                 <h3 class="text-center">Observations mensuelles</h3>
                 <div id="phenologyChart"></div>
             </div>
@@ -554,7 +554,7 @@
 
 
     <script>
-            var dataset = {{altitudes|tojson}};
+            var dataset = {{statsorgataxon|tojson}};
             var months = {{months|tojson}};
             var observationsPoint = [];
             var observationsMaille = [];

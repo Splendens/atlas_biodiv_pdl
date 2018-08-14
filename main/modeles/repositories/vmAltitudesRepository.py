@@ -4,6 +4,7 @@
 from sqlalchemy.sql import text
 
 
+
 def getAltitudesChilds(connection, cd_ref):
     # construction du select  de la requete a partir des cles de la table
     sql = """
