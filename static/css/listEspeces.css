@@ -13,7 +13,8 @@
 }
 
 #map {
-	height: 600px;
+    height: 750px;
+    margin: 1%;
 }
 
 #clear {
@@ -139,4 +140,16 @@ tbody tr.current{
 	height: 80px;
 	border-radius: 6px;
 
+}
+
+#listTaxonsCommune #myTable_wrapper div.row:nth-of-type(2) {
+	margin-right: 0.1%;
+	max-height: 650px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#statCom {
+	padding-right: 2%;
+	padding-left: 2%;
 }

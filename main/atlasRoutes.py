@@ -4,9 +4,10 @@
 from flask import render_template, redirect, abort
 from configuration import config
 from modeles.repositories import (
-    vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository,
+    vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, 
     vmMoisRepository, vmTaxrefRepository, vmStatsOrgaTaxonRepository,
     vmCommunesRepository, vmObservationsMaillesRepository, vmMedias,
+    vmStatsOrgaCommRepository, vmStatsGroup2inpnCommRepository,
     vmCorTaxonAttribut, vmTaxonsMostView
 )
 from . import utils
@@ -206,7 +207,10 @@ def ficheCommune(insee):
     connection = utils.engine.connect()
 
     listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
+    nbObsComm = vmTaxonsRepository.getNbTaxonsCommunes(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
+    statsorgacomm = vmStatsOrgaCommRepository.getStatsOrgaCommChilds(connection, insee)
+    statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     if config.AFFICHAGE_MAILLE:
         observations = vmObservationsMaillesRepository.lastObservationsCommuneMaille(
@@ -238,7 +242,10 @@ def ficheCommune(insee):
     return render_template(
         'templates/ficheCommune.html',
         listTaxons=listTaxons,
+        nbObsComm=nbObsComm,
         referenciel=commune,
+        statsorgacomm=statsorgacomm,
+        statsgroup2inpncomm=statsgroup2inpncomm,
         communesSearch=communesSearch,
         observations=observations,
         orgas=orgas,
