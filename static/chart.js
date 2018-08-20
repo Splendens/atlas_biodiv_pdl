@@ -5,7 +5,10 @@ Morris.Bar({
             data : dataset,
             xkey: "orgas",
             ykeys : ["value"],
-            labels: ['Observation(s)'],
+            labels: ['Observation(s) '],
+            yLabelFormat: function (y) {
+                return y + " %";
+            },
             xLabelAngle: 45,
             hideHover: 'auto',
             resize: true,

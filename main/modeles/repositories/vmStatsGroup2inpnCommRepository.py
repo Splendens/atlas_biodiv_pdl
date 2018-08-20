@@ -5,7 +5,7 @@ from sqlalchemy.sql import text
 
 
 def getStatsGroup2inpnCommChilds(connection, insee):
-    sql = """
+      sql = """
         WITH somme AS ( 
             
         SELECT          
@@ -122,42 +122,112 @@ def getStatsGroup2inpnCommChilds(connection, insee):
             FROM somme
         """.encode('UTF-8')
 
-    mesGroup = connection.execute(text(sql), thisinsee=insee)
-    for inter in mesGroup:
-        return [
-            {'label': "Acanthocéphales", 'value': inter.acanthocephales},
-            {'label': "Algues brunes", 'value': inter.algues_brunes},
-            {'label': "Algues rouges", 'value': inter.algues_rouges},
-            {'label': "Algues vertes", 'value': inter.algues_vertes},
-            {'label': "Amphibiens", 'value': inter.amphibiens},
-            {'label': "Angiospermes", 'value': inter.angiospermes},
-            {'label': "Annélides", 'value': inter.annelides},
-            {'label': "Arachnides", 'value': inter.arachnides},
-            {'label': "Ascidies", 'value': inter.ascidies},
-            {'label': "Autres", 'value': inter.autres},
-            {'label': "Bivalves", 'value': inter.bivalves},
-            {'label': "Céphalopodes", 'value': inter.cephalopodes},
-            {'label': "Crustacés", 'value': inter.crustaces},
-            {'label': "Diatomées", 'value': inter.diatomees},
-            {'label': "Entognathes", 'value': inter.entognathes},
-            {'label': "Fougères", 'value': inter.fougeres},
-            {'label': "Gastéropodes", 'value': inter.gasteropodes},
-            {'label': "Gymnospermes", 'value': inter.gymnospermes},
-            {'label': "Hépatiques et Anthocérotes", 'value': inter.hepatiques_anthocerotes},
-            {'label': "Hydrozoaires", 'value': inter.hydrozoaires},
-            {'label': "Insectes", 'value': inter.insectes},
-            {'label': "Lichens", 'value': inter.lichens},
-            {'label': "Mammifères", 'value': inter.mammiferes},
-            {'label': "Mousses", 'value': inter.mousses},
-            {'label': "Myriapodes", 'value': inter.myriapodes},
-            {'label': "Nématodes", 'value': inter.nematodes},
-            {'label': "Némertes", 'value': inter.nemertes},
-            {'label': "Octocoralliaires", 'value': inter.octocoralliaires},
-            {'label': "Oiseaux", 'value': inter.oiseaux},
-            {'label': "Plathelminthes", 'value': inter.plathelminthes},
-            {'label': "Poissons", 'value': inter.poissons},
-            {'label': "Pycnogonides", 'value': inter.pycnogonides},
-            {'label': "Reptiles", 'value': inter.reptiles},
-            {'label': "Scléractiniaires", 'value': inter.scleractiniaires}
-        ]
+      mesGroup = connection.execute(text(sql), thisinsee=insee)
+      grouplist = []
+      for inter in mesGroup:
+            if inter.acanthocephales != 0:
+                  grouplist.append({'label': "Acanthocéphales", 'value': inter.acanthocephales},)
+
+            if inter.algues_brunes != 0:
+                  grouplist.append({'label': "Algues brunes", 'value': inter.algues_brunes},)
+
+            if inter.algues_rouges != 0:
+                  grouplist.append({'label': "Algues rouges", 'value': inter.algues_rouges},)
+                  
+            if inter.algues_vertes != 0:
+                  grouplist.append({'label': "Algues vertes", 'value': inter.algues_vertes},)
+
+            if inter.amphibiens != 0:
+                  grouplist.append({'label': "Amphibiens", 'value': inter.amphibiens},)
+                  
+            if inter.angiospermes != 0:
+                  grouplist.append({'label': "Angiospermes", 'value': inter.angiospermes},)    
+                  
+            if inter.annelides != 0:
+                  grouplist.append({'label': "Annélides", 'value': inter.annelides},)
+                  
+            if inter.arachnides != 0:
+                  grouplist.append({'label': "Arachnides", 'value': inter.arachnides},)
+                  
+            if inter.ascidies != 0:
+                  grouplist.append({'label': "Ascidies", 'value': inter.ascidies},)
+                  
+            if inter.autres != 0:
+                  grouplist.append({'label': "Autres", 'value': inter.autres},)
+                  
+            if inter.bivalves != 0:
+                  grouplist.append({'label': "Bivalves", 'value': inter.bivalves},)
+                  
+            if inter.cephalopodes != 0:
+                  grouplist.append({'label': "Céphalopodes", 'value': inter.cephalopodes},)
+                  
+            if inter.crustaces != 0:
+                  grouplist.append({'label': "Crustacés", 'value': inter.crustaces},)
+                  
+            if inter.diatomees != 0:
+                  grouplist.append({'label': "Diatomées", 'value': inter.diatomees},)
+                  
+            if inter.entognathes != 0:
+                  grouplist.append({'label': "Entognathes", 'value': inter.entognathes},)
+                  
+            if inter.fougeres != 0:
+                  grouplist.append({'label': "Fougères", 'value': inter.fougeres},)
+                  
+            if inter.gasteropodes != 0:
+                  grouplist.append({'label': "Gastéropodes", 'value': inter.gasteropodes},)
+                  
+            if inter.gymnospermes != 0:
+                  grouplist.append({'label': "Gymnospermes", 'value': inter.gymnospermes},)
+                  
+            if inter.hepatiques_anthocerotes != 0:
+                  grouplist.append({'label': "Hépatiques et Anthocérotes", 'value': inter.hepatiques_anthocerotes},)
+                  
+            if inter.hydrozoaires != 0:
+                  grouplist.append({'label': "Hydrozoaires", 'value': inter.hydrozoaires},)
+                  
+            if inter.insectes != 0:
+                  grouplist.append({'label': "Insectes", 'value': inter.insectes},)
+                  
+            if inter.lichens != 0:
+                  grouplist.append({'label': "Lichens", 'value': inter.lichens},)
+                  
+            if inter.mammiferes != 0:
+                  grouplist.append({'label': "Mammifères", 'value': inter.mammiferes},)
+                  
+            if inter.mousses != 0:
+                  grouplist.append({'label': "Mousses", 'value': inter.mousses},)
+                  
+            if inter.myriapodes != 0:
+                  grouplist.append({'label': "Myriapodes", 'value': inter.myriapodes},)
+                  
+            if inter.nematodes != 0:
+                  grouplist.append({'label': "Nématodes", 'value': inter.nematodes},)
+                  
+            if inter.nemertes != 0:
+                  grouplist.append({'label': "Némertes", 'value': inter.nemertes},)
+                  
+            if inter.octocoralliaires != 0:
+                  grouplist.append({'label': "Octocoralliaires", 'value': inter.octocoralliaires},)
+                  
+            if inter.oiseaux != 0:
+                  grouplist.append({'label': "Oiseaux", 'value': inter.oiseaux},)
+                  
+            if inter.plathelminthes != 0:
+                  grouplist.append({'label': "Plathelminthes", 'value': inter.plathelminthes},)
+                  
+            if inter.poissons != 0:
+                  grouplist.append({'label': "Poissons", 'value': inter.poissons},)
+                  
+            if inter.pycnogonides != 0:
+                  grouplist.append({'label': "Pycnogonides", 'value': inter.pycnogonides},)
+                  
+            if inter.reptiles != 0:
+                  grouplist.append({'label': "Reptiles", 'value': inter.reptiles},)
+                  
+            if inter.scleractiniaires != 0:
+                  grouplist.append({'label': "Scléractiniaires", 'value': inter.scleractiniaires},)     
+
+      return grouplist
+
+
 
