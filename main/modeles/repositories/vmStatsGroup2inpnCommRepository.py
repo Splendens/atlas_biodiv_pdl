@@ -6,226 +6,150 @@ from sqlalchemy.sql import text
 
 def getStatsGroup2inpnCommChilds(connection, insee):
       sql = """
-        WITH somme AS ( 
-            
-        SELECT          
-             acanthocephales, 
-             algues_brunes, 
-             algues_rouges,
-             algues_vertes,
-             amphibiens,
-             angiospermes,
-             annelides, 
-             arachnides,
-             ascidies,
-             autres, 
-             bivalves,
-             cephalopodes, 
-             crustaces,
-             diatomees,
-             entognathes, 
-             fougeres,
-             gasteropodes, 
-             gymnospermes,
-             hepatiques_anthocerotes,
-             hydrozoaires, 
-             insectes,
-             lichens, 
-             mammiferes,
-             mousses,
-             myriapodes, 
-             nematodes, 
-             nemertes,
-             octocoralliaires,
-             oiseaux, 
-             plathelminthes, 
-             poissons,
-             pycnogonides,
-             reptiles, 
-             scleractiniaires,
-             (acanthocephales+ 
-             algues_brunes+ 
-             algues_rouges+
-             algues_vertes+
-             amphibiens+
-             angiospermes+
-             annelides+ 
-             arachnides+
-             ascidies+
-             autres+ 
-             bivalves+
-             cephalopodes+ 
-             crustaces+
-             diatomees+
-             entognathes+ 
-             fougeres+
-             gasteropodes+ 
-             gymnospermes+
-             hepatiques_anthocerotes+
-             hydrozoaires+ 
-             insectes+
-             lichens+ 
-             mammiferes+
-             mousses+
-             myriapodes+ 
-             nematodes+ 
-             nemertes+
-             octocoralliaires+
-             oiseaux+ 
-             plathelminthes+ 
-             poissons+
-             pycnogonides+
-             reptiles+ 
-             scleractiniaires)::integer AS total
-
-        FROM atlas.vm_stats_group2inpn_comm group2inpn
-        WHERE group2inpn.insee = :thisinsee
-
-        )
-
          SELECT   
-            (acanthocephales*100/total) AS acanthocephales, 
-            (algues_brunes*100/total) AS algues_brunes, 
-            (algues_rouges*100/total) AS algues_rouges,
-            (algues_vertes*100/total) AS algues_vertes,
-            (amphibiens*100/total) AS amphibiens,
-            (angiospermes*100/total) AS angiospermes,
-            (annelides*100/total) AS annelides, 
-            (arachnides*100/total) AS arachnides,
-            (ascidies*100/total) AS ascidies,
-            (autres*100/total) AS autres, 
-            (bivalves*100/total) AS bivalves,
-            (cephalopodes*100/total) AS cephalopodes, 
-            (crustaces*100/total) AS crustaces,
-            (diatomees*100/total) AS diatomees,
-            (entognathes*100/total) AS entognathes, 
-            (fougeres*100/total) AS fougeres,
-            (gasteropodes*100/total) AS gasteropodes, 
-            (gymnospermes*100/total) AS gymnospermes,
-            (hepatiques_anthocerotes*100/total) AS hepatiques_anthocerotes,
-            (hydrozoaires*100/total) AS hydrozoaires, 
-            (insectes*100/total) AS insectes,
-            (lichens*100/total) AS lichens, 
-            (mammiferes*100/total) AS mammiferes,
-            (mousses*100/total) AS mousses,
-            (myriapodes*100/total) AS myriapodes, 
-            (nematodes*100/total) AS nematodes, 
-            (nemertes*100/total) AS nemertes,
-            (octocoralliaires*100/total) AS octocoralliaires,
-            (oiseaux*100/total) AS oiseaux, 
-            (plathelminthes*100/total) AS plathelminthes, 
-            (poissons*100/total) AS poissons,
-            (pycnogonides*100/total) AS pycnogonides,
-            (reptiles*100/total) AS reptiles, 
-            (scleractiniaires*100/total) AS scleractiniaires
+            acanthocephales, 
+            algues_brunes, 
+            algues_rouges,
+            algues_vertes,
+            amphibiens,
+            angiospermes,
+            annelides, 
+            arachnides,
+            ascidies,
+            autres, 
+            bivalves,
+            cephalopodes, 
+            crustaces,
+            diatomees,
+            entognathes, 
+            fougeres,
+            gasteropodes, 
+            gymnospermes,
+            hepatiques_anthocerotes,
+            hydrozoaires, 
+            insectes,
+            lichens, 
+            mammiferes,
+            mousses,
+            myriapodes, 
+            nematodes, 
+            nemertes,
+            octocoralliaires,
+            oiseaux, 
+            plathelminthes, 
+            poissons,
+            pycnogonides,
+            reptiles, 
+            scleractiniaires
 
-            FROM somme
+            FROM atlas.vm_stats_group2inpn_comm group2inpn
+            WHERE group2inpn.insee = :thisinsee
         """.encode('UTF-8')
 
       mesGroup = connection.execute(text(sql), thisinsee=insee)
       grouplist = []
       for inter in mesGroup:
             if inter.acanthocephales != 0:
-                  grouplist.append({'label': "Acanthocéphales", 'value': inter.acanthocephales},)
+                  grouplist.append({'label': "Acanthocéphales", 'y': inter.acanthocephales},)
 
             if inter.algues_brunes != 0:
-                  grouplist.append({'label': "Algues brunes", 'value': inter.algues_brunes},)
+                  grouplist.append({'label': "Algues brunes", 'y': inter.algues_brunes},)
 
             if inter.algues_rouges != 0:
-                  grouplist.append({'label': "Algues rouges", 'value': inter.algues_rouges},)
+                  grouplist.append({'label': "Algues rouges", 'y': inter.algues_rouges},)
                   
             if inter.algues_vertes != 0:
-                  grouplist.append({'label': "Algues vertes", 'value': inter.algues_vertes},)
+                  grouplist.append({'label': "Algues vertes", 'y': inter.algues_vertes},)
 
             if inter.amphibiens != 0:
-                  grouplist.append({'label': "Amphibiens", 'value': inter.amphibiens},)
+                  grouplist.append({'label': "Amphibiens", 'y': inter.amphibiens},)
                   
             if inter.angiospermes != 0:
-                  grouplist.append({'label': "Angiospermes", 'value': inter.angiospermes},)    
+                  grouplist.append({'label': "Angiospermes", 'y': inter.angiospermes},)    
                   
             if inter.annelides != 0:
-                  grouplist.append({'label': "Annélides", 'value': inter.annelides},)
+                  grouplist.append({'label': "Annélides", 'y': inter.annelides},)
                   
             if inter.arachnides != 0:
-                  grouplist.append({'label': "Arachnides", 'value': inter.arachnides},)
+                  grouplist.append({'label': "Arachnides", 'y': inter.arachnides},)
                   
             if inter.ascidies != 0:
-                  grouplist.append({'label': "Ascidies", 'value': inter.ascidies},)
+                  grouplist.append({'label': "Ascidies", 'y': inter.ascidies},)
                   
             if inter.autres != 0:
-                  grouplist.append({'label': "Autres", 'value': inter.autres},)
+                  grouplist.append({'label': "Autres", 'y': inter.autres},)
                   
             if inter.bivalves != 0:
-                  grouplist.append({'label': "Bivalves", 'value': inter.bivalves},)
+                  grouplist.append({'label': "Bivalves", 'y': inter.bivalves},)
                   
             if inter.cephalopodes != 0:
-                  grouplist.append({'label': "Céphalopodes", 'value': inter.cephalopodes},)
+                  grouplist.append({'label': "Céphalopodes", 'y': inter.cephalopodes},)
                   
             if inter.crustaces != 0:
-                  grouplist.append({'label': "Crustacés", 'value': inter.crustaces},)
+                  grouplist.append({'label': "Crustacés", 'y': inter.crustaces},)
                   
             if inter.diatomees != 0:
-                  grouplist.append({'label': "Diatomées", 'value': inter.diatomees},)
+                  grouplist.append({'label': "Diatomées", 'y': inter.diatomees},)
                   
             if inter.entognathes != 0:
-                  grouplist.append({'label': "Entognathes", 'value': inter.entognathes},)
+                  grouplist.append({'label': "Entognathes", 'y': inter.entognathes},)
                   
             if inter.fougeres != 0:
-                  grouplist.append({'label': "Fougères", 'value': inter.fougeres},)
+                  grouplist.append({'label': "Fougères", 'y': inter.fougeres},)
                   
             if inter.gasteropodes != 0:
-                  grouplist.append({'label': "Gastéropodes", 'value': inter.gasteropodes},)
+                  grouplist.append({'label': "Gastéropodes", 'y': inter.gasteropodes},)
                   
             if inter.gymnospermes != 0:
-                  grouplist.append({'label': "Gymnospermes", 'value': inter.gymnospermes},)
+                  grouplist.append({'label': "Gymnospermes", 'y': inter.gymnospermes},)
                   
             if inter.hepatiques_anthocerotes != 0:
-                  grouplist.append({'label': "Hépatiques et Anthocérotes", 'value': inter.hepatiques_anthocerotes},)
+                  grouplist.append({'label': "Hépatiques et Anthocérotes", 'y': inter.hepatiques_anthocerotes},)
                   
             if inter.hydrozoaires != 0:
-                  grouplist.append({'label': "Hydrozoaires", 'value': inter.hydrozoaires},)
+                  grouplist.append({'label': "Hydrozoaires", 'y': inter.hydrozoaires},)
                   
             if inter.insectes != 0:
-                  grouplist.append({'label': "Insectes", 'value': inter.insectes},)
+                  grouplist.append({'label': "Insectes", 'y': inter.insectes},)
                   
             if inter.lichens != 0:
-                  grouplist.append({'label': "Lichens", 'value': inter.lichens},)
+                  grouplist.append({'label': "Lichens", 'y': inter.lichens},)
                   
             if inter.mammiferes != 0:
-                  grouplist.append({'label': "Mammifères", 'value': inter.mammiferes},)
+                  grouplist.append({'label': "Mammifères", 'y': inter.mammiferes},)
                   
             if inter.mousses != 0:
-                  grouplist.append({'label': "Mousses", 'value': inter.mousses},)
+                  grouplist.append({'label': "Mousses", 'y': inter.mousses},)
                   
             if inter.myriapodes != 0:
-                  grouplist.append({'label': "Myriapodes", 'value': inter.myriapodes},)
+                  grouplist.append({'label': "Myriapodes", 'y': inter.myriapodes},)
                   
             if inter.nematodes != 0:
-                  grouplist.append({'label': "Nématodes", 'value': inter.nematodes},)
+                  grouplist.append({'label': "Nématodes", 'y': inter.nematodes},)
                   
             if inter.nemertes != 0:
-                  grouplist.append({'label': "Némertes", 'value': inter.nemertes},)
+                  grouplist.append({'label': "Némertes", 'y': inter.nemertes},)
                   
             if inter.octocoralliaires != 0:
-                  grouplist.append({'label': "Octocoralliaires", 'value': inter.octocoralliaires},)
+                  grouplist.append({'label': "Octocoralliaires", 'y': inter.octocoralliaires},)
                   
             if inter.oiseaux != 0:
-                  grouplist.append({'label': "Oiseaux", 'value': inter.oiseaux},)
+                  grouplist.append({'label': "Oiseaux", 'y': inter.oiseaux},)
                   
             if inter.plathelminthes != 0:
-                  grouplist.append({'label': "Plathelminthes", 'value': inter.plathelminthes},)
+                  grouplist.append({'label': "Plathelminthes", 'y': inter.plathelminthes},)
                   
             if inter.poissons != 0:
-                  grouplist.append({'label': "Poissons", 'value': inter.poissons},)
+                  grouplist.append({'label': "Poissons", 'y': inter.poissons},)
                   
             if inter.pycnogonides != 0:
-                  grouplist.append({'label': "Pycnogonides", 'value': inter.pycnogonides},)
+                  grouplist.append({'label': "Pycnogonides", 'y': inter.pycnogonides},)
                   
             if inter.reptiles != 0:
-                  grouplist.append({'label': "Reptiles", 'value': inter.reptiles},)
+                  grouplist.append({'label': "Reptiles", 'y': inter.reptiles},)
                   
             if inter.scleractiniaires != 0:
-                  grouplist.append({'label': "Scléractiniaires", 'value': inter.scleractiniaires},)     
+                  grouplist.append({'label': "Scléractiniaires", 'y': inter.scleractiniaires},)     
 
       return grouplist
 

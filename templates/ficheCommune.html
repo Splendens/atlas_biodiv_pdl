@@ -2,7 +2,7 @@
 <html>
    <head>
         <meta charset="utf-8" />
-        <title>Commune de {{referenciel.communeName}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+        <title>Commune de {{referenciel.communeName}} | {{configuration.NOM_APPLICATION}}</title>
 
         <!-- Jquery -->
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
@@ -18,13 +18,19 @@
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.css') }}" />
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.Default.css') }}" />
 
+
+
+        <!-- Highcharts -->
+        <script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
+        <script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script>
+
         <!-- D3 -->
-        <script src="{{url_for('static', filename='lib/d3/d3.min.js') }}"></script>
+        <!--script src="{{url_for('static', filename='lib/d3/d3.min.js') }}"></script-->
         <!-- MorrisJs -->
-        <script src="{{url_for('static', filename='lib/morrisJs/morris.min.js') }}"></script>
-        <link rel="stylesheet" href="{{url_for('static', filename='lib/morrisJs/morris.css') }}" />
+        <!--script src="{{url_for('static', filename='lib/morrisJs/morris.min.js') }}"></script-->
+        <!--link rel="stylesheet" href="{{url_for('static', filename='lib/morrisJs/morris.css') }}" /-->
         <!-- RaphaelJs -->
-        <script src="{{url_for('static', filename='lib/raphaelJs/raphael.min.js') }}"></script>
+        <!--script src="{{url_for('static', filename='lib/raphaelJs/raphael.min.js') }}"></script-->
 
         <!-- DataTable -->
         <!--<script type="text/javascript" src="{{url_for('static', filename='lib/dataTable/datatables.min.js') }}"></script>
@@ -56,9 +62,9 @@
         </div>
         <div class="container-fluid" id="page">
             
-            <div class="col-xs-12">
-                 <div class="panel panel-default" id="parent">
-                    <div class="row">
+            <div class="row rowMargin">
+                <div class="col-xs-12">
+                    <div class="panel panel-default" id="parent">
                         <h3><b>Commune de {{referenciel.communeName}}</b></h3>
                         <ul id="stat">
                             <li>
@@ -83,80 +89,70 @@
             </div>
 
 
-            <div class="col-sm-5">
-                <!--div class="panel panel-default" id="otherInformationsPanel">
-                    <div class="row" id="otherInformations">
-                      <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> 
-                            {{ 'Observateurs' if observers|length > 1 else 'Observateur' }}</a>
-                        </li>
-                        <li> 
-                            <a data-toggle="tab" href="#structures"> <b>{{orgas|length}} </b> 
-                            {{ 'Structures' if orgas|length > 1 else 'Structure' }}</a>
-                        </li>
-                      </ul>
-                        <div class="tab-content" style="width:100%;">
-                            <div id="observateurs" class="tab-pane fade in active">
-                                {% for o in observers %}
-                                    {{o }}
-                                    {% if  not loop.last %}
-                                    -
-                                    {% endif %}
-                                {% endfor %}
+
+
+            <!--div class="row rowMargin">
+                <div class="col-xs-12">
+                    <div class="panel panel-default" id="statCom">
+
+                        <div class="row" id="otherInformations">
+                         
+                          <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#observations"> <b>{{nbObsComm}} </b> 
+                                {{ 'Observations' if nbObsComm > 1 else 'Observationss' }}</a>
+                            </li>
+                            <li> 
+                                <a data-toggle="tab" href="#structures"> <b>{{orgas|length}} </b> 
+                                {{ 'Structures' if orgas|length > 1 else 'Structure' }}</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> 
+                                {{ 'Observateurs' if observers|length > 1 else 'Observateur' }}</a>
+                            </li>
+                          </ul>
+
+                            
+                            <div class="tab-content" style="width:100%;">
+                                
+                                <div id="observations" class="tab-pane fade in active">
+                                    <div class="col-xs-offset-2 col-xs-4 text-center" id="group2inpnGraph"></div>
+                                    <div class="col-xs-offset-2 col-xs-4 text-center" id="taxongroup2inpnGraph"></div>
+                                </div>
+
+                                <div id="structures" class="tab-pane fade">
+                                    <div id="statsorgacommGraph"></div>
+                                    <br>
+                                    <h3>{{ 'Structures' if orgas|length > 1 else 'Structure' }} à l'origine des données : </h3>
+                                    {% for s in orgas %}
+                                        {{s.orga_obs}}
+                                        {% if  not loop.last %}
+                                        -
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
+                                <div id="observateurs" class="tab-pane fade">
+                                    {% for o in observers %}
+                                        {{o }}
+                                        {% if  not loop.last %}
+                                        -
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
                             </div>
-                            <div id="structures" class="tab-pane fade">
-                                {% for s in orgas %}
-                                    {{s.orga_obs}}
-                                    {% if  not loop.last %}
-                                    -
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
+
+
                         </div>
+
                     </div>
-                </div-->
 
-                <div class="panel panel-default" id="blocInfos">
-
-                  <!-- Twpo columns of text  -->
-                  <div class="row faq">
-                    <h2 class="text-center">Besoin d'informations<br/>complémentaires ?</h2>
-                    <div class="col-lg-offset-2 col-lg-8 text-center">
-                        <h3>Informations sur les données</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='donnees') }}" role="button">En savoir plus ! &raquo;</a></p>
-                        </div><!-- /.col-lg-4 -->
-                        <div class="col-lg-offset-2 col-lg-8 text-center">
-                          <h3>Partenaires du portail et du SINP</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='acteurs') }}" role="button">Voir les partenaires &raquo;</a></p>
-                        </div><!-- /.col-lg-4 -->
-                        <div class="col-lg-offset-2 col-lg-8 text-center">
-                          <h3>Plus d'outils autour du SINP</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='outils') }}" role="button">Consulter l'annuaire &raquo;</a></p>
-                        </div><!-- /.col-lg-4 -->
-                  </div><!-- /.row -->
                 </div>
+   
+         </div-->
+
            
-
-            </div>
-
-
-            <div class="col-sm-7">
-                <div class="panel panel-default" id="statCom">
-                    <div class="row" id="statCom">
-                        <h2 class="text-center">Quelques chiffres sur le territoire</h2>
-                            <div class="col-sm-6 text-center">
-                                <h3 class="text-center">Répartition des observations selon leur provenance</h3>
-                                <div id="statsorgacommChart"></div>
-                            </div>
-                            <div class="col-sm-6 text-center">
-                                <h3 class="text-center">Répartition des observations par groupe taxonomique</h3>
-                                <div id="group2inpnChart"></div>
-                            </div>
-                    </div>
-                </div>
-            </div>
-
 
 
             <div class="row rowMargin" id="clear">
@@ -180,6 +176,47 @@
             </div>
 
 
+            <div class="row rowMargin">
+                <div class="col-xs-12">
+                    <div class="panel panel-default" id="blocInfos">
+                        <h2 class="text-center">Le territoire en quelques chiffres</h2>
+
+                          <div class="row rowMargin">
+                            <div class="col-xs-6 text-center" id="group2inpnGraph"></div>
+                            <div class="col-xs-6 text-center" id="taxongroup2inpnGraph"></div>
+                          </div>
+                          <div class="row rowMargin">
+                            <div class="text-center" id="statsorgacommGraph"></div>
+                          </div>
+                    </div>
+               
+                </div>
+            </div><!-- /.row -->
+
+
+            <div class="row rowMargin">
+                <div class="col-xs-12">
+                    <div class="panel panel-default" id="blocInfos">
+                      <!-- Twpo columns of text  -->
+                          <div class="row rowMargin">
+                                <div class="col-xs-4 text-center">
+                                <h3>Informations sur les données</h3>
+                                  <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='donnees') }}" role="button">En savoir plus ! &raquo;</a></p>
+                                </div><!-- /.col-lg-4 -->
+                                <div class="col-xs-4 text-center">
+                                  <h3>Partenaires du portail et du SINP</h3>
+                                  <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='acteurs') }}" role="button">Voir les partenaires &raquo;</a></p>
+                                </div><!-- /.col-lg-4 -->
+                                <div class="col-xs-4 text-center">
+                                  <h3>Plus d'outils autour du SINP</h3>
+                                  <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='outils') }}" role="button">Consulter l'annuaire &raquo;</a></p>
+                                </div><!-- /.col-lg-4 -->
+                          </div>
+                    </div>
+               
+                </div>
+            </div><!-- /.row -->
+
         </div>
 
 
@@ -191,6 +228,7 @@
         <script type="text/javascript">
             var statsorgacomm = {{statsorgacomm|tojson}};
             var statsgroup2inpncomm = {{statsgroup2inpncomm|tojson}};
+            var statstaxongroup2inpncomm = {{statstaxongroup2inpncomm|tojson}};
             var communesSearch = {{communesSearch|tojson}};
             var configuration = {{configuration|tojson}};
             var observations = {{observations|tojson}};

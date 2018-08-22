@@ -6,7 +6,7 @@ from configuration import config
 from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, 
     vmMoisRepository, vmTaxrefRepository, vmStatsOrgaTaxonRepository,
-    vmCommunesRepository, vmObservationsMaillesRepository, vmMedias,
+    vmCommunesRepository, vmObservationsMaillesRepository, vmMedias, vmStatsTaxonGroup2inpnCommRepository,
     vmStatsOrgaCommRepository, vmStatsGroup2inpnCommRepository,
     vmCorTaxonAttribut, vmTaxonsMostView
 )
@@ -211,6 +211,7 @@ def ficheCommune(insee):
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
     statsorgacomm = vmStatsOrgaCommRepository.getStatsOrgaCommChilds(connection, insee)
     statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
+    statstaxongroup2inpncomm = vmStatsTaxonGroup2inpnCommRepository.getStatsTaxonGroup2inpnCommChilds(connection, insee)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     if config.AFFICHAGE_MAILLE:
         observations = vmObservationsMaillesRepository.lastObservationsCommuneMaille(
@@ -246,6 +247,7 @@ def ficheCommune(insee):
         referenciel=commune,
         statsorgacomm=statsorgacomm,
         statsgroup2inpncomm=statsgroup2inpncomm,
+        statstaxongroup2inpncomm=statstaxongroup2inpncomm,
         communesSearch=communesSearch,
         observations=observations,
         orgas=orgas,

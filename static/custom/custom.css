@@ -7,8 +7,47 @@
 
 /* Taille des popup */
 
-
 .leaflet-popup-content {
   max-height:300px;
   overflow-y:scroll;
+}
+
+
+/* Stats territoire*/
+
+#group2inpnGraph {
+  max-width: 750px;
+  margin: 1% auto;
+  height:  750px;
+}
+
+#taxongroup2inpnGraph {
+  max-width: 750px;
+  margin: 1% auto;
+  height:  750px;
+}
+
+#statsorgacommGraph {
+  max-width: 650px;
+  margin: 1% auto;
+  height:  550px;
+}
+
+
+/* Stats fiche espece */
+
+#monthsGraph  {
+  margin: auto;
+  height: 400px;
+  margin: 0 auto;
+}
+
+#statsorgataxonGraph {
+  margin: auto;
+  height: 400px;
+  margin: 0 auto;
+}
+
+rect {
+    fill: #fff0;
 }

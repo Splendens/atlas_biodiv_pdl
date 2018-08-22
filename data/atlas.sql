@@ -1431,3 +1431,855 @@ GRANT SELECT ON TABLE atlas.vm_stats_group2inpn_pdl TO geonatatlas;
 
 
 
+
+
+
+
+/* stats nb d'especes differentes par group2_inpn pour chaque commune */
+
+-- Materialized View: atlas.vm_stats_espece_group2inpn_comm
+-- DROP MATERIALIZED VIEW atlas.vm_stats_espece_group2inpn_comm;
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_espece_group2inpn_comm AS 
+ 
+
+ WITH cd_ref AS (
+         SELECT vm_taxref.cd_ref, vm_taxref.group2_inpn
+         FROM atlas.vm_taxref 
+         WHERE vm_taxref.cd_ref = vm_taxref.cd_nom 
+         ),
+
+        somme_a AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Acanthocéphales'
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Acanthocephales AS (
+            select count(*) as nb,
+            insee
+            from somme_a
+            group by insee
+        ), 
+     
+        somme_b AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Algues brunes'
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Algues_brunes AS (
+            select count(*) as nb,
+            insee
+            from somme_b
+            group by insee
+        ), 
+
+        somme_c AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Algues rouges'
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Algues_rouges AS (
+            select count(*) as nb,
+            insee
+            from somme_c
+            group by insee
+        ), 
+
+        somme_d AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Algues vertes'
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Algues_vertes AS (
+            select count(*) as nb,
+            insee
+            from somme_d
+            group by insee
+        ), 
+
+       somme_e AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Amphibiens'
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Amphibiens AS (
+            select count(*) as nb,
+            insee
+            from somme_e
+            group by insee
+        ), 
+
+        somme_f AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Angiospermes'
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Angiospermes AS (
+            select count(*) as nb,
+            insee
+            from somme_f
+            group by insee
+        ), 
+
+        somme_g AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Annélides'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Annelides AS (
+            select count(*) as nb,
+            insee
+            from somme_g
+            group by insee
+        ),
+
+        somme_h AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Arachnides'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Arachnides AS (
+            select count(*) as nb,
+            insee
+            from somme_h
+            group by insee
+        ),
+
+        somme_i AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Ascidies'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Ascidies AS (
+            select count(*) as nb,
+            insee
+            from somme_i
+            group by insee
+        ),
+
+        somme_j AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Autres'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Autres AS (
+            select count(*) as nb,
+            insee
+            from somme_j
+            group by insee
+        ),
+
+        somme_k AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Bivalves'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Bivalves AS (
+            select count(*) as nb,
+            insee
+            from somme_k
+            group by insee
+        ),
+
+        somme_l AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Céphalopodes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Cephalopodes AS (
+            select count(*) as nb,
+            insee
+            from somme_l
+            group by insee
+        ),
+
+        somme_m AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Crustacés'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Crustaces AS (
+            select count(*) as nb,
+            insee
+            from somme_m
+            group by insee
+        ),
+
+        somme_n AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Diatomées'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Diatomees AS (
+            select count(*) as nb,
+            insee
+            from somme_n
+            group by insee
+        ),
+
+        somme_p AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Entognathes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Entognathes AS (
+            select count(*) as nb,
+            insee
+            from somme_p
+            group by insee
+        ),
+
+        somme_q AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Fougères'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Fougeres AS (
+            select count(*) as nb,
+            insee
+            from somme_q
+            group by insee
+        ),
+
+        somme_r AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Gastéropodes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Gasteropodes AS (
+            select count(*) as nb,
+            insee
+            from somme_r
+            group by insee
+        ),
+
+        somme_s AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Gymnospermes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Gymnospermes AS (
+            select count(*) as nb,
+            insee
+            from somme_s
+            group by insee
+        ),
+
+        somme_t AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Hépatiques et Anthocérotes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Hepatiques_Anthocerotes AS (
+            select count(*) as nb,
+            insee
+            from somme_t
+            group by insee
+        ),
+
+        somme_u AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Hydrozoaires'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Hydrozoaires AS (
+            select count(*) as nb,
+            insee
+            from somme_u
+            group by insee
+        ),
+
+        somme_v AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Insectes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Insectes AS (
+            select count(*) as nb,
+            insee
+            from somme_v
+            group by insee
+        ),
+
+        somme_w AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Lichens'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Lichens AS (
+            select count(*) as nb,
+            insee
+            from somme_w
+            group by insee
+        ),
+
+        somme_x AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Mammifères'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Mammiferes AS (
+            select count(*) as nb,
+            insee
+            from somme_x
+            group by insee
+        ),
+
+        somme_y AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Mousses'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Mousses AS (
+            select count(*) as nb,
+            insee
+            from somme_y
+            group by insee
+        ),
+
+        somme_z AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Myriapodes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Myriapodes AS (
+            select count(*) as nb,
+            insee
+            from somme_z
+            group by insee
+        ),
+
+        somme_ab AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Nématodes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Nematodes AS (
+            select count(*) as nb,
+            insee
+            from somme_ab
+            group by insee
+        ),
+
+        somme_ac AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Némertes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Nemertes AS (
+            select count(*) as nb,
+            insee
+            from somme_ac
+            group by insee
+        ),
+
+        somme_ad AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Octocoralliaires'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Octocoralliaires AS (
+            select count(*) as nb,
+            insee
+            from somme_ad
+            group by insee
+        ),
+
+        somme_ae AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Oiseaux'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Oiseaux AS (
+            select count(*) as nb,
+            insee
+            from somme_ae
+            group by insee
+        ),
+
+        somme_af AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Plathelminthes'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Plathelminthes AS (
+            select count(*) as nb,
+            insee
+            from somme_af
+            group by insee
+        ),
+
+        somme_ag AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Poissons'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Poissons AS (
+            select count(*) as nb,
+            insee
+            from somme_ag
+            group by insee
+        ),
+
+        somme_ah AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Pycnogonides'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Pycnogonides AS (
+            select count(*) as nb,
+            insee
+            from somme_ah
+            group by insee
+        ),
+
+        somme_ai AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Reptiles'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Reptiles AS (
+            select count(*) as nb,
+            insee
+            from somme_ai
+            group by insee
+        ),
+
+        somme_aj AS (
+         SELECT DISTINCT
+            o.cd_ref,
+            o.insee,
+            COUNT(o.cd_ref) AS nb, 
+            t.group2_inpn
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        AND t.group2_inpn = 'Scléractiniaires'        
+        GROUP BY o.cd_ref, o.insee, t.group2_inpn
+        ),
+        Scleractiniaires AS (
+            select count(*) as nb,
+            insee
+            from somme_aj
+            group by insee
+        )
+
+
+
+ SELECT DISTINCT o.insee,
+    COALESCE(a.nb::integer, 0) AS Acanthocephales,
+    COALESCE(b.nb::integer, 0) AS Algues_brunes,
+    COALESCE(c.nb::integer, 0) AS Algues_rouges,
+    COALESCE(d.nb::integer, 0) AS Algues_vertes,
+    COALESCE(e.nb::integer, 0) AS Amphibiens,
+    COALESCE(f.nb::integer, 0) AS Angiospermes,
+    COALESCE(g.nb::integer, 0) AS Annelides,
+    COALESCE(h.nb::integer, 0) AS Arachnides,
+    COALESCE(i.nb::integer, 0) AS Ascidies,
+    COALESCE(j.nb::integer, 0) AS Autres,
+    COALESCE(k.nb::integer, 0) AS Bivalves,
+    COALESCE(l.nb::integer, 0) AS Cephalopodes,
+    COALESCE(m.nb::integer, 0) AS Crustaces,
+    COALESCE(n.nb::integer, 0) AS Diatomees,
+    COALESCE(p.nb::integer, 0) AS Entognathes,
+    COALESCE(q.nb::integer, 0) AS Fougeres,
+    COALESCE(r.nb::integer, 0) AS Gasteropodes,
+    COALESCE(s.nb::integer, 0) AS Gymnospermes,
+    COALESCE(t.nb::integer, 0) AS Hepatiques_Anthocerotes,
+    COALESCE(u.nb::integer, 0) AS Hydrozoaires,
+    COALESCE(v.nb::integer, 0) AS Insectes,
+    COALESCE(w.nb::integer, 0) AS Lichens,
+    COALESCE(x.nb::integer, 0) AS Mammiferes,
+    COALESCE(y.nb::integer, 0) AS Mousses,
+    COALESCE(z.nb::integer, 0) AS Myriapodes,
+    COALESCE(ab.nb::integer, 0) AS Nematodes,
+    COALESCE(ac.nb::integer, 0) AS Nemertes,
+    COALESCE(ad.nb::integer, 0) AS Octocoralliaires,
+    COALESCE(ae.nb::integer, 0) AS Oiseaux,
+    COALESCE(af.nb::integer, 0) AS Plathelminthes,
+    COALESCE(ag.nb::integer, 0) AS Poissons,
+    COALESCE(ah.nb::integer, 0) AS Pycnogonides,
+    COALESCE(ai.nb::integer, 0) AS Reptiles,
+    COALESCE(aj.nb::integer, 0) AS Scleractiniaires
+
+    FROM atlas.vm_observations o
+
+     LEFT JOIN Acanthocephales a ON a.insee = o.insee
+     LEFT JOIN Algues_brunes b ON b.insee = o.insee
+     LEFT JOIN Algues_rouges c ON c.insee = o.insee
+     LEFT JOIN Algues_vertes d ON d.insee = o.insee
+     LEFT JOIN Amphibiens e ON e.insee = o.insee
+     LEFT JOIN Angiospermes f ON f.insee = o.insee
+     LEFT JOIN Annelides g ON g.insee = o.insee
+     LEFT JOIN Arachnides h ON h.insee = o.insee
+     LEFT JOIN Ascidies i ON i.insee = o.insee
+     LEFT JOIN Autres j ON j.insee = o.insee
+     LEFT JOIN Bivalves k ON k.insee = o.insee
+     LEFT JOIN Cephalopodes l ON l.insee = o.insee
+     LEFT JOIN Crustaces m ON m.insee = o.insee
+     LEFT JOIN Diatomees n ON n.insee = o.insee
+     LEFT JOIN Entognathes p ON p.insee = o.insee
+     LEFT JOIN Fougeres q ON q.insee = o.insee
+     LEFT JOIN Gasteropodes r ON r.insee = o.insee
+     LEFT JOIN Gymnospermes s ON s.insee = o.insee
+     LEFT JOIN Hepatiques_Anthocerotes t ON t.insee = o.insee
+     LEFT JOIN Hydrozoaires u ON u.insee = o.insee
+     LEFT JOIN Insectes v ON v.insee = o.insee
+     LEFT JOIN Lichens w ON w.insee = o.insee
+     LEFT JOIN Mammiferes x ON x.insee = o.insee
+     LEFT JOIN Mousses y ON y.insee = o.insee
+     LEFT JOIN Myriapodes z ON z.insee = o.insee
+     LEFT JOIN Nematodes ab ON ab.insee = o.insee
+     LEFT JOIN Nemertes ac ON ac.insee = o.insee
+     LEFT JOIN Octocoralliaires ad ON ad.insee = o.insee
+     LEFT JOIN Oiseaux ae ON ae.insee = o.insee
+     LEFT JOIN Plathelminthes af ON af.insee = o.insee
+     LEFT JOIN Poissons ag ON ag.insee = o.insee
+     LEFT JOIN Pycnogonides ah ON ah.insee = o.insee
+     LEFT JOIN Reptiles ai ON ai.insee = o.insee
+     LEFT JOIN Scleractiniaires aj ON aj.insee = o.insee
+
+
+  WHERE o.insee IS NOT NULL
+  ORDER BY o.insee
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_espece_group2inpn_comm
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_espece_group2inpn_comm TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_espece_group2inpn_comm TO geonatatlas;
+
+-- Index: atlas.vm_stats_espece_group2inpn_comm_insee_idx
+
+-- DROP INDEX atlas.vm_stats_espece_group2inpn_comm_insee_idx;
+
+CREATE UNIQUE INDEX vm_stats_espece_group2inpn_comm_insee_idx
+  ON atlas.vm_stats_espece_group2inpn_comm
+  USING btree (insee);
+
+
+
+
+
+/* stats nb obs par group2_inpn pour chaque departement */
+
+-- Materialized View: atlas.vm_stats_espece_group2inpn_dpt
+-- DROP MATERIALIZED VIEW atlas.vm_stats_espece_group2inpn_dpt;
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_espece_group2inpn_dpt AS 
+
+ SELECT DISTINCT left(insee,2) AS num_dpt,
+    SUM(Acanthocephales) AS Acanthocephales, 
+    SUM(Algues_brunes) AS Algues_brunes, 
+    SUM(Algues_rouges) AS Algues_rouges,
+    SUM(Algues_vertes) AS Algues_vertes,
+    SUM(Amphibiens) AS Amphibiens,
+    SUM(Angiospermes) AS Angiospermes,
+    SUM(Annelides) AS Annelides, 
+    SUM(Arachnides) AS Arachnides,
+    SUM(Ascidies) AS Ascidies,
+    SUM(Autres) AS Autres, 
+    SUM(Bivalves) AS Bivalves,
+    SUM(Cephalopodes) AS Cephalopodes, 
+    SUM(Crustaces) AS Crustaces,
+    SUM(Diatomees) AS Diatomees,
+    SUM(Entognathes) AS Entognathes, 
+    SUM(Fougeres) AS Fougeres,
+    SUM(Gasteropodes) AS Gasteropodes, 
+    SUM(Gymnospermes) AS Gymnospermes,
+    SUM(Hepatiques_Anthocerotes) AS Hepatiques_Anthocerotes,
+    SUM(Hydrozoaires) AS Hydrozoaires, 
+    SUM(Insectes) AS Insectes,
+    SUM(Lichens) AS Lichens, 
+    SUM(Mammiferes) AS Mammiferes,
+    SUM(Mousses) AS Mousses,
+    SUM(Myriapodes) AS Myriapodes, 
+    SUM(Nematodes) AS Nematodes, 
+    SUM(Nemertes) AS Nemertes,
+    SUM(Octocoralliaires) AS Octocoralliaires,
+    SUM(Oiseaux) AS Oiseaux, 
+    SUM(Plathelminthes) AS Plathelminthes, 
+    SUM(Poissons) AS Poissons,
+    SUM(Pycnogonides) AS Pycnogonides,
+    SUM(Reptiles) AS Reptiles, 
+    SUM(Scleractiniaires) AS Scleractiniaires 
+
+   FROM atlas.vm_stats_espece_group2inpn_comm
+ 
+  GROUP BY num_dpt
+  ORDER BY num_dpt
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_espece_group2inpn_dpt
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_espece_group2inpn_dpt TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_espece_group2inpn_dpt TO geonatatlas;
+
+-- Index: atlas.vm_stats_espece_group2inpn_dpt_idx
+
+-- DROP INDEX atlas.vm_stats_espece_group2inpn_dpt_idx;
+
+CREATE UNIQUE INDEX vm_stats_espece_group2inpn_dpt_idx
+  ON atlas.vm_stats_espece_group2inpn_dpt
+  USING btree (num_dpt);
+
+
+
+
+
+/* stats nb obs par group2_inpn pour la région */
+
+-- Materialized View: atlas.vm_stats_espece_group2inpn_pdl
+-- DROP MATERIALIZED VIEW atlas.vm_stats_espece_group2inpn_pdl;
+
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_espece_group2inpn_pdl AS 
+
+ SELECT 'Pays de la Loire'::text AS nom_region,
+    SUM(Acanthocephales) AS Acanthocephales, 
+    SUM(Algues_brunes) AS Algues_brunes, 
+    SUM(Algues_rouges) AS Algues_rouges,
+    SUM(Algues_vertes) AS Algues_vertes,
+    SUM(Amphibiens) AS Amphibiens,
+    SUM(Angiospermes) AS Angiospermes,
+    SUM(Annelides) AS Annelides, 
+    SUM(Arachnides) AS Arachnides,
+    SUM(Ascidies) AS Ascidies,
+    SUM(Autres) AS Autres, 
+    SUM(Bivalves) AS Bivalves,
+    SUM(Cephalopodes) AS Cephalopodes, 
+    SUM(Crustaces) AS Crustaces,
+    SUM(Diatomees) AS Diatomees,
+    SUM(Entognathes) AS Entognathes, 
+    SUM(Fougeres) AS Fougeres,
+    SUM(Gasteropodes) AS Gasteropodes, 
+    SUM(Gymnospermes) AS Gymnospermes,
+    SUM(Hepatiques_Anthocerotes) AS Hepatiques_Anthocerotes,
+    SUM(Hydrozoaires) AS Hydrozoaires, 
+    SUM(Insectes) AS Insectes,
+    SUM(Lichens) AS Lichens, 
+    SUM(Mammiferes) AS Mammiferes,
+    SUM(Mousses) AS Mousses,
+    SUM(Myriapodes) AS Myriapodes, 
+    SUM(Nematodes) AS Nematodes, 
+    SUM(Nemertes) AS Nemertes,
+    SUM(Octocoralliaires) AS Octocoralliaires,
+    SUM(Oiseaux) AS Oiseaux, 
+    SUM(Plathelminthes) AS Plathelminthes, 
+    SUM(Poissons) AS Poissons,
+    SUM(Pycnogonides) AS Pycnogonides,
+    SUM(Reptiles) AS Reptiles, 
+    SUM(Scleractiniaires) AS Scleractiniaires 
+
+   FROM atlas.vm_stats_group2inpn_dpt
+
+   WHERE num_dpt = '44' OR num_dpt = '49' OR num_dpt = '53' OR num_dpt = '72' OR num_dpt = '85'
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_espece_group2inpn_pdl
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_espece_group2inpn_pdl TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_espece_group2inpn_pdl TO geonatatlas;
+
+
+
