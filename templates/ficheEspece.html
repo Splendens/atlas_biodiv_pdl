@@ -265,6 +265,16 @@
                 </div>
             </div>
 
+            <div class="panel panel-default">
+                <div class="row">
+                    <div class="col-sm-12">
+                     <p class="text-center" style="color:#b1b1b1;padding: 10px 40px 2px 40px;">Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. <a href="{{url_for('main.get_staticpages', page='presentation') }}" style="color:#7785ce;">En savoir plus</a></p>
+                    </div>
+                </div>
+            </div>
+
+
+
             <div class="panel panel-default" id="otherInformationsPanel">
                 <div class="row" id="otherInformations">
                           <ul class="nav nav-tabs">
@@ -422,17 +432,40 @@
 					<strong>Informations sur l'espèce</strong>
 				</h4>
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#description">Description</a></li>
+                    <li class="active"><a data-toggle="tab" href="#chorologie">Répartition</a></li>
+                    <li><a data-toggle="tab" href="#description">Description</a></li>
                     {% if taxonDescription.commentaire != None %}
                     <li><a data-toggle="tab" href="#commentaire">En savoir plus</a></li>
                     {% endif %}
                     <li><a data-toggle="tab" href="#milieu">Milieu</a></li>
-                    <li><a data-toggle="tab" href="#chorologie">Répartition</a></li>
                     <li><a data-toggle="tab" href="#synonymes">Synonymes</a></li>
                 </ul>
 
                 <div class="tab-content">
-                        <div id="description" class="tab-pane fade in active">
+
+
+                        <div id="chorologie" class="tab-pane fade in active">
+
+                            <div class="panel-body">
+                           
+                             <h4 class="text-center">Carte de répartition actuelle en France métropolitaine</h4>
+                                                                       
+                                <object data="https://inpn.mnhn.fr/cartosvg/couchegeo/repartition/atlas/{{taxon.taxonSearch.cd_ref}}/fr_light_l93,fr_light_mer_l93,fr_lit_l93" type="image/svg+xml" width="90%" height="90%">
+                                    <param name="src" value="/cartosvg/couchegeo/repartition/atlas/{{taxon.taxonSearch.cd_ref}}/fr_light_l93,fr_light_mer_l93,fr_lit_l93">
+                                    <param name="type" value="image/svg+xml">
+                                    <param name="pluginspage" value="http://www.adobe.com/svg/viewer/install/">
+                                </object>
+                                <p class="small text-justify" style="color:#b1b1b1;">Cartographie issue de l'<a href="https://inpn.mnhn.fr/accueil/index" style="color:#7785ce;">INPN</a> - Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elles ne peuvent en aucun cas être considérées comme exhaustives.</p>
+
+                                <!--{% if taxonDescription.chorologie == None %}
+                                    Non renseignée pour le moment
+                                {% else %}
+                                    {{taxonDescription.chorologie}}
+                                {% endif %}-->
+                         </div>
+                        </div>
+
+                        <div id="description" class="tab-pane fade">
                                {% if taxonDescription.description == None %}
                                 Non renseignée pour le moment
                                 {% else %}
@@ -451,13 +484,7 @@
                                 {{taxonDescription.milieu}}
                                 {% endif %}
                         </div>
-                        <div id="chorologie" class="tab-pane fade">
-                                {% if taxonDescription.chorologie == None %}
-                                    Non renseignée pour le moment
-                                {% else %}
-                                    {{taxonDescription.chorologie}}
-                                {% endif %}
-                        </div>
+                        
                         <div id="synonymes" class="tab-pane fade">
                             {% if synonyme | length == 1 %}
                                 Aucun synonyme pour ce taxon
