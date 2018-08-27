@@ -59,6 +59,7 @@ Highcharts.chart('statsorgacommGraph', {
       allowPointSelect: true,
       cursor: 'pointer',
       colors: pieColors,
+      borderColor: "#7094db",
       /*
        style: {
           color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
@@ -67,6 +68,8 @@ Highcharts.chart('statsorgacommGraph', {
       showInLegend: false,
       
       dataLabels: {
+        allowOverlap: true,
+        connectorColor: "#7094db",
         enabled: true,
         format: '<b>{point.label}</b><br>{point.percentage:.1f} %',
         /*distance: 10,*/
@@ -74,7 +77,8 @@ Highcharts.chart('statsorgacommGraph', {
           property: 'percentage',
           operator: '>',
           value: 0
-        }
+        },
+        style : { "color": "#333333", "fontSize": "11px" }
       }
 
     }
@@ -108,7 +112,7 @@ Highcharts.chart('group2inpnGraph', {
     enabled: false
   },
   title: {
-    text: "Répartition des données d'observations<br> par groupe taxonomique",
+    text: "Répartition des données<br> par groupe taxonomique",
     style : { "color": "#333333", "fontSize": "22px" }
   },
 
@@ -123,6 +127,7 @@ Highcharts.chart('group2inpnGraph', {
       allowPointSelect: true,
       cursor: 'pointer',
       colors: pieColors,
+      borderColor: "#7094db",
       /*
        style: {
           color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
@@ -131,14 +136,17 @@ Highcharts.chart('group2inpnGraph', {
       showInLegend: false,
       
       dataLabels: {
+        allowOverlap: true,
+        connectorColor: "#7094db",
         enabled: true,
         format: '<b>{point.label}</b><br>{point.percentage:.1f} %',
+        style : { "color": "#333333", "fontSize": "11px" },
         /*distance: 10,*/
-        /*filter: {
+        filter: {
           property: 'percentage',
           operator: '>',
           value: 0
-        }*/
+        }
       }
 
     }
@@ -186,6 +194,7 @@ Highcharts.chart('taxongroup2inpnGraph', {
       allowPointSelect: true,
       cursor: 'pointer',
       colors: pieColors,
+      borderColor: "#7094db",
       /*
        style: {
           color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
@@ -194,14 +203,17 @@ Highcharts.chart('taxongroup2inpnGraph', {
       showInLegend: false,
       
       dataLabels: {
+        allowOverlap: true,
+        connectorColor: "#7094db",
         enabled: true,
         format: '<b>{point.label}</b><br>{point.percentage:.1f} %',
+        style : { "color": "#333333", "fontSize": "11px" },
         /*distance: 10,*/
-        /*filter: {
+        filter: {
           property: 'percentage',
           operator: '>',
           value: 0
-        }*/
+        }
       }
 
     }

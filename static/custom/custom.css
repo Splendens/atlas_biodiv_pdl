@@ -16,21 +16,21 @@
 /* Stats territoire*/
 
 #group2inpnGraph {
-  max-width: 750px;
+  max-width: 650px;
   margin: 1% auto;
-  height:  750px;
+  height: 500px;
 }
 
 #taxongroup2inpnGraph {
-  max-width: 750px;
+  max-width: 650px;
   margin: 1% auto;
-  height:  750px;
+  height: 500px;
 }
 
 #statsorgacommGraph {
   max-width: 650px;
   margin: 1% auto;
-  height:  550px;
+  height: 500px;
 }
 
 
