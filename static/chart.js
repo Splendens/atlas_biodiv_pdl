@@ -1,57 +1,99 @@
+/* PROVENANCE DES DONNEES */
 
-Highcharts.chart('monthsGraph', {
-  chart: {
-    zoomType: 'x'
-  },
-  title: {
-    text: 'USD to EUR exchange rate over time'
-  },
-  subtitle: {
-    text: document.ontouchstart === undefined ?
-        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-  },
-  xAxis: {
-    type: 'datetime'
-  },
-  yAxis: {
-    title: {
-      text: 'Exchange rate'
+
+// Radialize the colors
+Highcharts.setOptions({
+  colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+    return {
+      radialGradient: {
+        cx: 0.5,
+        cy: 0.3,
+        r: 0.7
+      },
+      stops: [
+        [0, color],
+        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+      ]
+    };
+  })
+});
+
+
+var pieColors = (function () {
+    var colors = [],
+        base = Highcharts.getOptions().colors[0],
+        i;
+
+    for (i = 0; i < 10; i += 1) {
+        // Start out with a darkened base color (negative brighten), and end
+        // up with a much brighter color
+        colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
     }
+    return colors;
+}());
+
+
+
+// Build the chart
+Highcharts.chart('statsorgataxonChart', {
+  chart: {
+    plotBackgroundColor: null,
+    plotBorderWidth: null,
+    plotShadow: false,
+    type: 'pie'
   },
-  legend: {
+  credits: {
     enabled: false
   },
+  title: {
+    text: "Répartition des données selon <br>la base de données de provenance",
+    style : { "color": "#333333", "fontSize": "22px" }
+  },
+
+  tooltip: {
+    headerFormat: '',
+    pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
+    valueSuffix: ' donnée(s) <br>({point.percentage:.1f}%)'
+  },
+
   plotOptions: {
-    area: {
-      fillColor: {
-        linearGradient: {
-          x1: 0,
-          y1: 0,
-          x2: 0,
-          y2: 1
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      colors: pieColors,
+      borderColor: "#7094db",
+      /*
+       style: {
+          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
         },
-        stops: [
-          [0, Highcharts.getOptions().colors[0]],
-          [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-        ]
-      },
-      marker: {
-        radius: 2
-      },
-      lineWidth: 1,
-      states: {
-        hover: {
-          lineWidth: 1
-        }
-      },
-      threshold: null
+        */
+      showInLegend: false,
+      
+      dataLabels: {
+        allowOverlap: true,
+        connectorColor: "#7094db",
+        enabled: true,
+        format: '<b>{point.label}</b><br>{point.percentage:.1f} %',
+        /*distance: 10,*/
+        filter: {
+          property: 'percentage',
+          operator: '>',
+          value: 0
+        },
+        style : { "color": "#333333", "fontSize": "11px" }
+      }
+
     }
   },
 
   series: [{
-    type: 'area',
-    name: 'USD to EUR',
-    data: data
+   data : statsorgataxon,
+   innerSize: '30%',                
+   //showInLegend:true,
+   dataLabels: {
+       enabled: true,
+       padding: 0
+   }
   }]
 });
 
@@ -59,88 +101,52 @@ Highcharts.chart('monthsGraph', {
 
 
 
+/* PHENOLOGIE */
 
-/*
-// statsorgataxon graph
-Morris.Bar({
-            element:"statsorgataxonChart",
-            data : dataset,
-            xkey: "orgas",
-            ykeys : ["value"],
-            labels: ['Observation(s) '],
-            yLabelFormat: function (y) {
-                return y + " %";
+Highcharts.chart('phenologyChart', {
+    chart: {
+        type: 'line'
+    },
+    credits: {
+      enabled: false
+    },
+    title: {
+      text: "Observations mensuelles",
+      style : { "color": "#333333", "fontSize": "22px" }
+    },
+    subtitle: {
+      text: "Phénologie de l'espèce",
+      style : { "color": "#333333", "fontSize": "15px" }
+    },
+    legend: {
+      enabled: false
+    },
+    xAxis: {
+      labels: {
+        rotation: -45,
+        style: {
+          fontSize: '13px',
+          fontFamily: 'Verdana, sans-serif'
+        }
+      },
+        categories: ['Janv.', 'Fév.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.']
+    },
+    yAxis: {
+        title: {
+            text: 'Nombre de données'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
             },
-            xLabelAngle: 45,
-            hideHover: 'auto',
-            resize: true,
-            axes: true,
-            gridIntegers: true
-       });
-
-
-
-svgbis=d3.selectAll("svg");
-
-        svgbis.append("g")
-        .append("text")
-            .attr("y", "90%")
-            .attr("x", "100%")
-            .attr("dy", ".71em")
-            .attr("fill", "#888888")
-            .attr("font-size", "10px")
-            .style("text-anchor", "end")
-            .text("");
-
-
-var phenologyChart =  Morris.Bar({
-                        element:"phenologyChart",
-                        data : months,
-                        xkey: "mois",
-                        ykeys : ["value"],
-                        labels: ['Observation(s)'],
-                        xLabelAngle: 60,
-                        hideHover: 'auto',
-                        resize: true,
-                        axes: true,
-                    });
-svgContainer = d3.selectAll("svg");
-    svgContainer.append("g")
-        .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", '0%')
-            .attr('x', '-15%')
-            .attr("dy", ".71em")
-            .attr("fill", "#888888")
-            .attr("font-size", "10px")
-            .style("text-anchor", "end")
-            .text("Observations");
-
-
-
-rect = d3.selectAll("rect");
-
-            rect.on("mouseover", function(d) {
-             d3.select(this).classed("highlight", true);
-             d3.select(this).select("text").style("visibility", "visible");
-
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'données',
+        data: months
+    }]
 });
 
-            rect.on("mouseout", function() {
-    d3.select(this).classed("highlight", false);
-
-});
-
-svgContainer = d3.selectAll("svg");
-    svgContainer.append("g")
-        .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", '0%')
-            .attr('x', '-15%')
-            .attr("dy", ".71em")
-            .attr("fill", "#888888")
-            .attr("font-size", "10px")
-            .style("text-anchor", "end")
-            .text("Observations");
-
-*/
