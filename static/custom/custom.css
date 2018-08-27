@@ -51,3 +51,10 @@
 rect {
     fill: #fff0;
 }
+
+
+/* légende maille carto */
+
+.legend {
+  margin-bottom: 50% !important;
+}
