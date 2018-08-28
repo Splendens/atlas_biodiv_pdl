@@ -494,13 +494,10 @@ function onEachFeatureMaillePressionProspectionCommune(feature, layer){
    popupContent ="<b>Nombre d'observation(s): </b>" + feature.properties.nb_observations;
 
     // verifie si on doit afficher les organismes ou non
-    if(configuration.AFFICHAGE_ORGAS_OBS_FICHEESP){      
+    if(configuration.AFFICHAGE_ORGAS_OBS_FICHECOMM){      
       popupContent=popupContent+"</br> <b> Structure(s): </b>" + feature.properties.orga_obs + " ";
     }
-    // verifie si on doit afficher les organismes ou non
-    if(configuration.AFFICHAGE_ORGAS_OBS_FICHECOMM){      
-      popupContent=popupContent+"</br> <b> Structure: </b>" + feature.properties.orga_obs + " ";
-    }
+
     popupContent=popupContent+"</br> <b> Dernière observation: </b>" + feature.properties.last_observation + " ";
 
     layer.bindPopup(popupContent)
