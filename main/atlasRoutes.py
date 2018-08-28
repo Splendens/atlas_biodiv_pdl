@@ -205,9 +205,9 @@ def ficheEspece(cd_ref):
 def ficheCommune(insee):
     session = utils.loadSession()
     connection = utils.engine.connect()
-
     listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
-    nbObsComm = vmTaxonsRepository.getNbTaxonsCommunes(connection, insee)
+    infosCommune = vmCommunesRepository.infosCommune(connection, insee)
+    nb_obs = vmCommunesRepository.getNbTaxonsCommunes(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
     statsorgacomm = vmStatsOrgaCommRepository.getStatsOrgaCommChilds(connection, insee)
     statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
@@ -233,6 +233,7 @@ def ficheCommune(insee):
         'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
         'MAP': config.MAP,
         'MYTYPE': 1,
+        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -242,8 +243,10 @@ def ficheCommune(insee):
 
     return render_template(
         'templates/ficheCommune.html',
+        insee=insee,
         listTaxons=listTaxons,
-        nbObsComm=nbObsComm,
+        infosCommune=infosCommune,
+        nb_obs=nb_obs,
         referenciel=commune,
         statsorgacomm=statsorgacomm,
         statsgroup2inpncomm=statsgroup2inpncomm,

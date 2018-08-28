@@ -36,6 +36,35 @@ def getObservationsMaillesChilds(connection, cd_ref):
     return tabObs
 
 
+def pressionProspectionCommune(connection, insee):
+    sql = """SELECT
+            obs.id_maille,
+            obs.geojson_maille,
+            a.nom_organisme AS orgaobs, 
+            o.dateobs,
+            extract(YEAR FROM o.dateobs) as annee
+        FROM atlas.vm_observations_mailles obs
+        JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+        WHERE o.insee = :thisInsee
+        ORDER BY id_maille"""
+    observations = connection.execute(text(sql), thisInsee=insee)
+    tabObs = list()
+    for o in observations:
+        temp = {
+            'id_maille': o.id_maille,
+            'nb_observations': 1,
+            'annee': o.annee,
+            'dateobs': str(o.dateobs),
+            'orga_obs': o.orgaobs,
+            'geojson_maille': ast.literal_eval(o.geojson_maille)
+        }
+        tabObs.append(temp)
+    return tabObs
+
+
+
+
 # last observation for index.html
 def lastObservationsMailles(connection, mylimit, idPhoto):
     sql = """
@@ -80,6 +109,8 @@ def lastObservationsMailles(connection, mylimit, idPhoto):
     return obsList
 
 
+
+
 def lastObservationsCommuneMaille(connection, mylimit, insee):
     sql = """
     WITH last_obs AS (
@@ -119,6 +150,9 @@ def lastObservationsCommuneMaille(connection, mylimit, insee):
         }
         obsList.append(temp)
     return obsList
+
+
+
 
 
 # Use for API

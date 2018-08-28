@@ -56,6 +56,15 @@ def getObservationsPointAPI(cd_ref):
     return Response(json.dumps(observations), mimetype='application/json')
 
 
+@api.route('/pressionProspectionCommune/<insee>', methods=['GET'])
+def getpressionProspectionCommuneAPI(insee):
+    connection = utils.engine.connect()
+    observations = vmObservationsMaillesRepository.pressionProspectionCommune(connection, insee)
+    connection.close()
+    return Response(json.dumps(observations), mimetype='application/json')
+
+
+
 @api.route('/observations/<insee>/<int:cd_ref>', methods=['GET'])
 def getObservationsCommuneTaxonAPI(insee, cd_ref):
     connection = utils.engine.connect()

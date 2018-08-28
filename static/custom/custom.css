@@ -58,3 +58,18 @@ rect {
 .legend {
   margin-bottom: 50% !important;
 }
+
+
+
+/* taille du tabTaxons */
+
+table.dataTable {
+  width: 100% !important;
+}
+@media (min-width: 767px) {
+  div.dataTables_wrapper div.dataTables_paginate {
+      width: 200%;
+      margin-top: 5%;
+      margin-left: -100%;
+  }
+}

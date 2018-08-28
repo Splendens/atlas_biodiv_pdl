@@ -43,8 +43,10 @@
         <!-- Bootstrap -->
         <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}"></link>
         <script type="text/javascript" src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
-
-       <!-- Atlas -->
+        <!-- Bootstrap slider -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}" />
+        <script src="{{url_for('static', filename='lib/node_modules/bootstrap-slider/dist/bootstrap-slider.min.js') }}"></script>
+        <!-- Atlas -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}"/>       
         <link rel="stylesheet" href="{{url_for('static', filename='css/ficheEspece.css') }}" />
@@ -69,12 +71,22 @@
                         <ul id="stat">
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 30px;"></span><br/>
-                                <b>{{nbObsComm}}</b><br/>{{ 'Observations' if nbObsComm > 1 else 'Observation' }}
+                                <b>{{nb_obs}}</b><br/>{{ 'Observations' if nb_obs > 1 else 'Observation' }}
                             </li>
                             <li>
                                 <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
                                 <b>{{listTaxons.taxons|length}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
                             </li>
+                            <li>
+                                <span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span>
+                                <br/><b>Première observation</b><br/>{{infosCommune.communeYearSearch.yearmin|int}}
+                            </li>
+                            <li>
+                                <span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span>
+                                <br/><b>Dernière observation</b><br/>{{infosCommune.communeYearSearch.yearmax|int}}
+                            </li>
+
+
                             <li>
                                 <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
                                 <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
@@ -166,7 +178,7 @@
             <div class="row rowMargin" id="clear">
                 <div class="col-xs-12" id="ObsCommunes"> 
                     <div class="panel panel-default" >
-                        <div class="panel-heading"><h3> {{nbObsComm}} observations sur la commune : <i>{{referenciel.communeName}}</i></h3></div>
+                        <div class="panel-heading"><h3> {{nb_obs}} observations sur la commune de <i>{{referenciel.communeName}}</i></h3></div>
                         <div class="row" id="mapRow">
                             <!-- CARTE des dernières observations -->
                             <div id="blocMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -243,14 +255,23 @@
             var communesSearch = {{communesSearch|tojson}};
             var configuration = {{configuration|tojson}};
             var observations = {{observations|tojson}};
+
+            var taxonYearMin = {{infosCommune.communeYearSearch.yearmin}};
+            var YEARMAX = {{infosCommune.communeYearSearch.yearmax}};
+            var nb_obs = {{nb_obs}};
+
             var communeGeoJson = {{referenciel.communeGeoJson|tojson}};
+            var insee = {{insee}};
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
             var url_limit_dpt_territory = "{{url_for('static', filename='custom/dpt_pdl_simpli.json') }}";
 
             //calcul du nb de colonnes pour le fonctionnement de dataTables.js
-            var nbColumn = 7;
-            {% if configuration.PATRIMONIALITE %} nbColumn = nbColumn+1;{% endif %}
-            {% if configuration.PROTECTION %} nbColumn = nbColumn+1;{% endif %}
+            var nbColumn = 6;
+            {% if not configuration.PRESSION_PROSPECTION %}
+                {% if configuration.MYTYPE == 1 %} nbColumn = nbColumn+1;{% endif %}
+            {% endif %}
+            /*{% if configuration.PATRIMONIALITE %} nbColumn = nbColumn+1;{% endif %}
+            {% if configuration.PROTECTION %} nbColumn = nbColumn+1;{% endif %}*/
             var noSordedColumns=[nbColumn-2,nbColumn-1]; //var for dataTables js lib
             var defaultSortedColumn=nbColumn-4; //var for dataTables js lib
         </script>

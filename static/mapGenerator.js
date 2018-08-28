@@ -442,6 +442,89 @@ function displayMarkerLayerFicheEspece(observationsPoint, yearMin, yearMax){
 // ***************Fonction lastObservations: mapHome et mapCommune*****************
 
 
+/* *** Maille pression de prospection *** */
+
+
+// Display Maille Communale layer
+
+
+
+// Geojson Maille Communale
+function generateGeojsonMaillePressionProspectionCommune(observations, yearMin, yearMax) {
+
+  var i=0;
+  myGeoJson = {'type': 'FeatureCollection',
+             'features' : []
+          }
+  tabProperties =[]
+  while (i<observations.length){
+    if(observations[i].annee >= yearMin && observations[i].annee <= yearMax ) {
+      geometry = observations[i].geojson_maille;
+      idMaille = observations[i].id_maille;
+      properties = {id_maille : idMaille, nom_com : observations[i].nom_com, nb_observations : 1, orga_obs: observations[i].orga_obs, last_observation: observations[i].annee, tabDateobs: [new Date(observations[i].dateobs)]};
+      var j = i+1;
+      while (j<observations.length && observations[j].id_maille <= idMaille){
+        if(observations[j].annee >= yearMin && observations[j].annee <= yearMax ){
+          properties.nb_observations +=  observations[j].nb_observations;
+          properties.tabDateobs.push(new Date(observations[i].dateobs));
+        }
+        if (observations[j].annee >=  properties.last_observation){
+          properties.last_observation = observations[j].annee
+        }
+        if (observations[j].orga_obs != properties.orga_obs) {
+          properties.orga_obs += (' <br/> ' + observations[j].orga_obs)
+        }
+        j = j+1
+      }
+      myGeoJson.features.push({
+          'type' : 'Feature',
+          'properties' : properties,
+          'geometry' : geometry   
+      })
+      // on avance jusqu' à j 
+      i = j  ;
+    }
+    else {
+      i = i+1;
+    }
+  }
+
+  return myGeoJson
+}
+
+
+// Popup Maille Communale
+function onEachFeatureMaillePressionProspectionCommune(feature, layer){
+
+   popupContent ="<b>Nombre d'observation(s): </b>" + feature.properties.nb_observations;
+
+    // verifie si on doit afficher les organismes ou non
+    if(configuration.AFFICHAGE_ORGAS_OBS_FICHEESP){      
+      popupContent=popupContent+"</br> <b> Structure(s): </b>" + feature.properties.orga_obs + " ";
+    }
+
+    popupContent=popupContent+"</br> <b> Dernière observation: </b>" + feature.properties.last_observation + " ";
+
+    layer.bindPopup(popupContent)
+}
+
+
+function displayMaillePressionProspectionCommuneLayer(observationsMaille, yearMin, yearMax){
+  myGeoJson = generateGeojsonMaillePressionProspectionCommune(observationsMaille, yearMin, yearMax);
+  currentLayer = L.geoJson(myGeoJson, {
+      onEachFeature : onEachFeatureMaillePressionProspectionCommune,
+      style: styleMaille,
+  });
+  currentLayer.addTo(map);
+
+  // ajout de la légende
+  generateLegendMaille();
+}
+
+
+
+
+
   /* *** Point ****/
 
 function onEachFeaturePointLastObs(feature, layer){
@@ -542,6 +625,12 @@ function displayMarkerLayerPointCommune(observationsPoint){
     currentLayer.addLayer(newLayer);
     map.addLayer(currentLayer);
 }
+
+
+
+
+
+
 
 //  ** MAILLE ***
 

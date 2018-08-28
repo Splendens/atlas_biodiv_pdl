@@ -46,24 +46,8 @@ def getTaxonsCommunes(connection, insee):
         }
         taxonCommunesList.append(temp)
         nbObsTotal = nbObsTotal + r.nb_obs
-    return {'taxons': taxonCommunesList}
+    return {'taxons': taxonCommunesList, 'nbObsTotal': nbObsTotal}
 
-
-def getNbTaxonsCommunes(connection, insee):
-    sql = """
-        SELECT COUNT(o.id_observation) AS nb_obs
-        FROM atlas.vm_observations o
-        WHERE o.insee = :thisInsee
-    """
-    req = connection.execute(text(sql), thisInsee=insee)
-    nbTaxonCommunesList = list()
-    for r in req:
-        temp = {
-            'nb_obs': r.nb_obs
-        }
-        nbTaxonCommunesList.append(temp)
-        nbObsComm = r.nb_obs
-    return nbObsComm
 
 
 def getTaxonsChildsList(connection, cd_ref):

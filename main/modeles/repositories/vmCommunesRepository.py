@@ -53,3 +53,51 @@ def getCommunesObservationsChilds(connection, cd_ref):
         temp = {'insee': r.insee, 'commune_maj': r.commune_maj}
         listCommunes.append(temp)
     return listCommunes
+
+
+
+def getNbTaxonsCommunes(connection, insee):
+    sql = """
+        SELECT COUNT(o.id_observation) AS nb_obs
+        FROM atlas.vm_observations o
+        WHERE o.insee = :thisInsee
+    """
+    req = connection.execute(text(sql), thisInsee=insee)
+    nbTaxonCommunesList = list()
+    for r in req:
+        temp = {
+            'nb_obs': r.nb_obs
+        }
+        nbTaxonCommunesList.append(temp)
+        nb_obs = r.nb_obs
+    return nb_obs    
+
+
+
+def infosCommune(connection, insee):
+    """
+        recherche les infos sur la commune
+    """
+    sql = """
+       WITH all_obs AS (
+        SELECT
+            extract(YEAR FROM o.dateobs) as annee
+        FROM atlas.vm_observations o
+        WHERE o.insee = :thisInsee
+    )
+    SELECT  
+            min(annee) AS yearmin,
+            max(annee) AS yearmax
+    FROM all_obs
+    """
+    req = connection.execute(text(sql), thisInsee=insee)
+    communeYearSearch = dict()
+    for r in req:
+        communeYearSearch = {
+            'yearmin': r.yearmin,
+            'yearmax': r.yearmax
+        }
+    return {
+        'communeYearSearch': communeYearSearch
+    }
+
