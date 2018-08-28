@@ -9,7 +9,15 @@ def getStatsOrgaTaxonChilds(connection, cd_ref):
     sql = """
 
         
-    SELECT _03, _05, _06, _70, _81, _82, _83, _84
+    SELECT 
+        SUM(_03) AS _03, 
+        SUM(_05) AS _05, 
+        SUM(_06) AS _06, 
+        SUM(_70) AS _70, 
+        SUM(_81) AS _81, 
+        SUM(_82) AS _82, 
+        SUM(_83) AS _83, 
+        SUM(_84) AS _84
 
     FROM atlas.vm_stats_orga_taxon orgas
     

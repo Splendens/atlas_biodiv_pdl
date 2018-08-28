@@ -155,7 +155,7 @@ Highcharts.chart('phenologyChart', {
     },
 
     series: [{
-        name: 'données',
+        name: 'donnée(s)',
         data: months,
         type: 'spline',
 
