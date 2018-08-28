@@ -26,7 +26,7 @@
 DBTAXHUB=mydbtaxo
 DBATLAS=mydbatlas
 TABLESYNTHESE=syntheseff
-SOURCE="INPN service TaxRef MNHN"
+SOURCE="INPN"
 IDTYPE=2
 MYUSER="mon user"
 CHEMIN_MEDIA_TAXHUB="/home/${MYUSER}/taxhub/static/medias/"

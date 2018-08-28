@@ -34,7 +34,9 @@ def getFirstPhoto(connection, cd_ref, id):
             'path': utils.findPath(r),
             'title': deleteNone(r.titre),
             'author': deleteNone(r.auteur),
-            'id_media': r.id_media
+            'id_media': r.id_media,
+            'source' : r.source,
+            'licence' : r.licence
         }
 
 
@@ -57,7 +59,10 @@ def getPhotoCarousel(connection, cd_ref, id):
             'path': utils.findPath(r),
             'title': deleteNone(r.titre),
             'author': deleteNone(r.auteur),
-            'id_media': r.id_media
+            'id_media': r.id_media,
+            'source' : r.source,
+            'licence' : r.licence
+
         })
     return tabURL
 
@@ -138,7 +143,7 @@ def getLinks_and_articles(connection, cd_ref, id3, id4):
 def getPhotosGallery(connection, id1, id2):
     sql = """
         SELECT m.url, m.chemin, t.nom_vern, t.lb_nom, t.nb_obs,
-            m.cd_ref, m.auteur, m.titre, m.id_media
+            m.cd_ref, m.auteur, m.titre, m.id_media, m.source, m.licence
         FROM atlas.vm_medias m
         JOIN atlas.vm_taxons t ON t.cd_ref = m.cd_ref
         WHERE m.id_type IN (:thisID1, :thisID2)
@@ -159,7 +164,9 @@ def getPhotosGallery(connection, id1, id2):
             'author': r.auteur,
             'title': r.titre,
             'nb_obs': r.nb_obs,
-            'id_media': r.id_media
+            'id_media': r.id_media,
+            'source' : r.source,
+            'licence' : r.licence
         }
         tabPhotos.append(temp)
     return tabPhotos
@@ -168,7 +175,7 @@ def getPhotosGallery(connection, id1, id2):
 def getPhotosGalleryByGroup(connection, id1, id2, INPNgroup):
     sql = """
         SELECT m.url, m.chemin, t.nom_vern, t.lb_nom, m.cd_ref,
-            m.auteur, m.titre, t.nb_obs, m.id_media
+            m.auteur, m.titre, t.nb_obs, m.id_media, m.source, m.licence
         FROM atlas.vm_medias m
         JOIN atlas.vm_taxons t ON t.cd_ref = m.cd_ref
         WHERE m.id_type IN  (:thisID1, :thisID2) AND t.group2_inpn = :thisGroup
@@ -190,7 +197,9 @@ def getPhotosGalleryByGroup(connection, id1, id2, INPNgroup):
             'author': r.auteur,
             'title': r.titre,
             'nb_obs': r.nb_obs,
-            'id_media': r.id_media
+            'id_media': r.id_media,
+            'source' : r.source,
+            'licence' : r.licence
         }
         tabPhotos.append(temp)
     return tabPhotos

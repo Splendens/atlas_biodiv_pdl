@@ -86,9 +86,14 @@
                             {% endif %}
                               <img id="mainImg" src="{{img_path}}"
                                 style="width:100%;" alt="{{firstPhoto.title}} &copy; {{firstPhoto.author|striptags}}">
-                                <p class="imgDescription main">{{firstPhoto.title}} &copy; {{firstPhoto.author|striptags}}</p>
+                                <p class="imgDescription main">{{firstPhoto.title}} &copy; {{firstPhoto.author|striptags}}
+                                    
+                                    {% if firstPhoto.source != None or  firstPhoto.licence != None %}<br/>({% if firstPhoto.source != None %} {{firstPhoto.source}} {% endif %}{% if firstPhoto.licence != None %}{{firstPhoto.licence}} {% endif %}){% endif %}
+
+                                </p>
                             </a>
                         </div>
+
 
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="taxonIdentity">
@@ -410,7 +415,9 @@
                                 <a href="{{photo.path}}" data-lightbox="imageSet" data-title="{{photo.title}} &copy; {{photo.author}}" >
                                   <div class="slider-size" style="background-image: url({{img_path}})" alt="{{photo.title}} &copy; {{photo.author|striptags}}">
                                       <div class="carousel-caption">
-                                        {{photo.title}} &copy; {{photo.author|striptags}}
+                                        {{photo.title}} &copy; {{photo.author|striptags}} 
+
+                                        {% if photo.source != None or  photo.licence != None %}<br/>({% if photo.source != None %} {{photo.source}} {% endif %} {% if photo.licence != None %}{{photo.licence}} {% endif %}){% endif %}
                                       </div>
                                   </div>
                                 </a>
