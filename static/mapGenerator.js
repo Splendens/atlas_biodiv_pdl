@@ -445,11 +445,6 @@ function displayMarkerLayerFicheEspece(observationsPoint, yearMin, yearMax){
 /* *** Maille pression de prospection *** */
 
 
-// Display Maille Communale layer
-
-
-
-// Geojson Maille Communale
 function generateGeojsonMaillePressionProspectionCommune(observations, yearMin, yearMax) {
 
   var i=0;
@@ -502,7 +497,10 @@ function onEachFeatureMaillePressionProspectionCommune(feature, layer){
     if(configuration.AFFICHAGE_ORGAS_OBS_FICHEESP){      
       popupContent=popupContent+"</br> <b> Structure(s): </b>" + feature.properties.orga_obs + " ";
     }
-
+    // verifie si on doit afficher les organismes ou non
+    if(configuration.AFFICHAGE_ORGAS_OBS_FICHECOMM){      
+      popupContent=popupContent+"</br> <b> Structure: </b>" + feature.properties.orga_obs + " ";
+    }
     popupContent=popupContent+"</br> <b> Dernière observation: </b>" + feature.properties.last_observation + " ";
 
     layer.bindPopup(popupContent)
