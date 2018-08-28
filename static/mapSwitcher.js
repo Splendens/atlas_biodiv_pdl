@@ -5,7 +5,9 @@ var legend = L.control({position: 'bottomright'});
 
 // Legende
 
-htmlLegend = "<i style='border: solid "+configuration.MAP.BORDERS_WEIGHT+"px "+configuration.MAP.BORDERS_COLOR+";'> &nbsp; &nbsp; &nbsp;</i> Limite des "+ configuration.STRUCTURE;
+htmlLegend = "<i style='border: solid "+configuration.MAP.BORDERS_WEIGHT+"px "+configuration.MAP.BORDERS_COLOR+";'> &nbsp; &nbsp; &nbsp;</i> Limite des "+ configuration.STRUCTURE+"<br> <br>"+
+            "<i style='border: solid "+configuration.MAP.BORDERS_DPT_WEIGHT+"px "+configuration.MAP.BORDERS_DPT_COLOR+";'> &nbsp; &nbsp; &nbsp;</i> Limites départementales";
+
 generateLegende(htmlLegend);
 
 // Layer display on window ready
