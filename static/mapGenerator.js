@@ -168,13 +168,13 @@ function onEachFeatureMailleCommunale(feature, layer){
 
 // Style maille
 function getColor(d) {
-    return d > 100 ? '#800026' :
-           d > 50  ? '#BD0026' :
-           d > 20  ? '#E31A1C' :
-           d > 10  ? '#FC4E2A' :
-           d > 5   ? '#FD8D3C' :
-           d > 2   ? '#FEB24C' :
-           d > 1   ? '#FED976' :
+    return d > 10000 ? '#800026' :
+           d > 5000  ? '#BD0026' :
+           d > 1000  ? '#E31A1C' :
+           d > 500   ? '#FC4E2A' :
+           d > 100   ? '#FD8D3C' :
+           d > 50    ? '#FEB24C' :
+           d > 10    ? '#FED976' :
                       '#FFEDA0';
 }
 
@@ -192,7 +192,7 @@ function generateLegendMaille(){
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, 1, 2, 5, 10, 20, 50, 100],
+            grades = [1, 10, 50, 100, 500, 1000, 5000, 10000],
             labels = ["<strong> Nombre <br> d'observations </strong> <br>"];
 
         // loop through our density intervals and generate a label with a colored square for each interval
