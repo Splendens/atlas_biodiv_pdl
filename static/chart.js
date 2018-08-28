@@ -136,17 +136,29 @@ Highcharts.chart('phenologyChart', {
             text: 'Nombre de données'
         }
     },
+
     plotOptions: {
-        line: {
+        spline: {
             dataLabels: {
                 enabled: true
             },
-            enableMouseTracking: false
+            lineWidth: 4,
+            states: {
+                hover: {
+                    lineWidth: 5
+                }
+            },
+            marker: {
+                enabled: false
+            }
         }
     },
+
     series: [{
         name: 'données',
-        data: months
+        data: months,
+        type: 'spline',
+
     }]
 });
 
