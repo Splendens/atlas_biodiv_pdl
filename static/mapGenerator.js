@@ -120,7 +120,7 @@ function onEachFeaturePoint(feature, layer){
 
     // verifie si on doit afficher les organismes ou non
     if(configuration.AFFICHAGE_ORGAS_OBS_FICHEESP){      
-      popupContent=popupContent+"</br> <b> Structure: </b>" + feature.properties.orga_obs + " ";
+      popupContent=popupContent+"</br> <b> Provenance: </b>" + feature.properties.orga_obs + " ";
     }
 
    // verifie si le champs effectif est rempli
@@ -138,7 +138,7 @@ function onEachFeatureMaille(feature, layer){
 
     // verifie si on doit afficher les organismes ou non
     if(configuration.AFFICHAGE_ORGAS_OBS_FICHEESP){      
-      popupContent=popupContent+"</br> <b> Structure(s): </b>" + feature.properties.orga_obs + " ";
+      popupContent=popupContent+"</br> <b> Provenance: </b>" + feature.properties.orga_obs + " ";
     }
 
     popupContent=popupContent+"</br> <b> Dernière observation: </b>" + feature.properties.last_observation + " ";
@@ -149,6 +149,7 @@ function onEachFeatureMaille(feature, layer){
 
 // Popup Maille Communale
 function onEachFeatureMailleCommunale(feature, layer){
+  /*<a href = "{{url_for('main.ficheCommune', insee = com.insee)}}">  + feature.properties.id_maille */
 
    popupContent="<b>Commune: </b>" + feature.properties.nom_com + " ";
 
@@ -156,7 +157,7 @@ function onEachFeatureMailleCommunale(feature, layer){
 
     // verifie si on doit afficher les organismes ou non
     if(configuration.AFFICHAGE_ORGAS_OBS_FICHEESP){      
-      popupContent=popupContent+"</br> <b> Structure(s): </b>" + feature.properties.orga_obs + " ";
+      popupContent=popupContent+"</br> <b> Provenance: </b>" + feature.properties.orga_obs + " ";
     }
 
     popupContent=popupContent+"</br> <b> Dernière observation: </b>" + feature.properties.last_observation + " ";
@@ -495,7 +496,7 @@ function onEachFeatureMaillePressionProspectionCommune(feature, layer){
 
     // verifie si on doit afficher les organismes ou non
     if(configuration.AFFICHAGE_ORGAS_OBS_FICHECOMM){      
-      popupContent=popupContent+"</br> <b> Structure(s): </b>" + feature.properties.orga_obs + " ";
+      popupContent=popupContent+"</br> <b> Provenance: </b>" + feature.properties.orga_obs + " ";
     }
 
     popupContent=popupContent+"</br> <b> Dernière observation: </b>" + feature.properties.last_observation + " ";
@@ -535,7 +536,7 @@ function onEachFeaturePointLastObs(feature, layer){
 
     // verifie si on doit afficher les organismes ou non
     if(configuration.AFFICHAGE_ORGAS_OBS_FICHECOMM){      
-      popupContent = popupContent + "</br> <b> Structure(s): </b>" + feature.properties.orga_obs + " ";
+      popupContent = popupContent + "</br> <b> Provenance: </b>" + feature.properties.orga_obs + " ";
     }
  
     layer.bindPopup(popupContent + "</br> <a href='"+ configuration.URL_APPLICATION+"/espece/"+feature.properties.cd_ref+"'> Fiche espèce </a>")

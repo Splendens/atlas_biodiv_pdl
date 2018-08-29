@@ -73,7 +73,7 @@ Highcharts.chart('statsorgataxonChart', {
         allowOverlap: true,
         connectorColor: "#7094db",
         enabled: true,
-        format: '<b>{point.label}</b><br>{point.percentage:.1f} %',
+        format: '<b>{point.label}</b><br><b>{point.y} donnée(s)</b><br>{point.percentage:.1f} %',
         /*distance: 10,*/
         filter: {
           property: 'percentage',

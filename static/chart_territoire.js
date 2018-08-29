@@ -71,7 +71,7 @@ Highcharts.chart('statsorgacommGraph', {
         allowOverlap: true,
         connectorColor: "#7094db",
         enabled: true,
-        format: '<b>{point.label}</b><br>{point.percentage:.1f} %',
+        format: '<b>{point.label}</b><br><b>{point.y} donnée(s)</b><br>{point.percentage:.1f} %',
         /*distance: 10,*/
         filter: {
           property: 'percentage',
@@ -112,7 +112,7 @@ Highcharts.chart('group2inpnGraph', {
     enabled: false
   },
   title: {
-    text: "Répartition des données<br> par groupe taxonomique",
+    text: "Répartition du nombre de données<br> par groupe taxonomique",
     style : { "color": "#333333", "fontSize": "22px" }
   },
 
@@ -139,7 +139,7 @@ Highcharts.chart('group2inpnGraph', {
         allowOverlap: true,
         connectorColor: "#7094db",
         enabled: true,
-        format: '<b>{point.label}</b><br>{point.percentage:.1f} %',
+        format: '<b>{point.label}</b><br><b>{point.y} donnée(s)</b><br>{point.percentage:.1f} %',
         style : { "color": "#333333", "fontSize": "11px" },
         /*distance: 10,*/
         filter: {
@@ -206,7 +206,7 @@ Highcharts.chart('taxongroup2inpnGraph', {
         allowOverlap: true,
         connectorColor: "#7094db",
         enabled: true,
-        format: '<b>{point.label}</b><br>{point.percentage:.1f} %',
+        format: '<b>{point.label}</b><br><b>{point.y} espèce(s)</b><br>{point.percentage:.1f} %',
         style : { "color": "#333333", "fontSize": "11px" },
         /*distance: 10,*/
         filter: {

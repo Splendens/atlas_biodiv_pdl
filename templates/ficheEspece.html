@@ -144,11 +144,6 @@
                             {% endfor %}
                         </div>
 
-                        <div id="inpnLink">
-                            <a href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank">
-                                <img width="130px" src="{{url_for('static', filename='images/logo_inpn.png') }}"  data-toggle="tooltip" data-original-title="Consultez la fiche espèce sur l'INPN" data-placement="right">
-                             </a>
-                        </div>
 
                         {% if taxon.listTaxonsChild|length > 0 %}
                            <!-- Button trigger modal -->
@@ -243,6 +238,35 @@
                                     {% endfor %}
                             </div> -->
                         {% endif %}
+
+
+                            <div id="synonymes" class="tab-pane fade  in active">
+                                <br/>
+                                <h4>Synonymie</h4>
+                                {% if synonyme | length == 1 %}
+                                    Aucun synonyme pour ce taxon
+                                {% else %}
+                                    {% for syn in synonyme %}
+                                        {% if not syn.lb_nom == taxon.taxonSearch.lb_nom %}
+                                        {{ syn.nom_complet_html | safe}}
+                                        {% endif %}
+                                        {% if ( (not loop.last) and (not syn.lb_nom == taxon.taxonSearch.lb_nom) ) %}
+                                        |
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div id="inpnLink">
+                                <a class="btn btn-default" href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank" role="button">
+                                    
+                                    <img width="130px" src="{{url_for('static', filename='images/logo_inpn.png') }}"  data-toggle="tooltip" data-original-title="Consultez la fiche espèce sur l'INPN" data-placement="right">
+                                    
+                                    <!--br/> <br/><p>Consultez la fiche espèce sur l'INPN &raquo;</p-->
+                                 </a>
+                            </div>
+
+
 						</div>
 					</div>
                 </div>
@@ -438,7 +462,7 @@
 
 
 
-            <div class="panel panel-default" id="blocInfos">
+            <!--div class="panel panel-default" id="blocInfos">
 
                 <h4>
                     <strong>Informations sur l'espèce</strong>
@@ -502,7 +526,7 @@
 
 
                 </div>
-            </div>
+            </div-->
 
             {% if (videoAudio.video | length > 0 ) or (videoAudio.audio | length > 0) %}
             <div class="panel panel-default" style="padding: 10px;">

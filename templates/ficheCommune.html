@@ -101,6 +101,26 @@
 
 
 
+
+            <div class="row rowMargin" id="clear">
+                <div class="col-xs-12" id="ObsCommunes"> 
+                    <div class="panel panel-default" >
+                        <div class="panel-heading"><h3> {{nb_obs}} observations sur la commune de <i>{{referenciel.communeName}}</i></h3></div>
+                        <div class="row" id="mapRow">
+                            <!-- CARTE des dernières observations -->
+                            <div id="blocMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div id="map"></div>
+                            </div>
+                            <!-- LISTE des dernières observations -->
+                            <div id="listMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
+                                 <div id="listTaxonsCommune" class="panel panel-default">
+                                    {% include 'templates/tabTaxons.html' %}
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>           
+            </div>
             <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="statCom">
@@ -154,45 +174,16 @@
                                                 -
                                                 {% endif %}
                                             {% endfor %}
-                                        </div>
+                                    </div>
 
-                                    </div>                                    
-                                    
-
+                                </div>                                    
                             </div>
-
-
                         </div>
 
                     </div>
 
                 </div>
-   
          </div>
-
-
-
-
-            <div class="row rowMargin" id="clear">
-                <div class="col-xs-12" id="ObsCommunes"> 
-                    <div class="panel panel-default" >
-                        <div class="panel-heading"><h3> {{nb_obs}} observations sur la commune de <i>{{referenciel.communeName}}</i></h3></div>
-                        <div class="row" id="mapRow">
-                            <!-- CARTE des dernières observations -->
-                            <div id="blocMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div id="map"></div>
-                            </div>
-                            <!-- LISTE des dernières observations -->
-                            <div id="listMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
-                                 <div id="listTaxonsCommune" class="panel panel-default">
-                                    {% include 'templates/tabTaxons.html' %}
-                                </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>           
-            </div>
-
 
 
             <!--div class="row rowMargin">

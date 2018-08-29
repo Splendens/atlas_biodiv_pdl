@@ -142,7 +142,7 @@ function generateSwitcherOnMap(){
     var SwitcherCommControl = L.Control.extend({
 
       options: {
-        position: 'topright' 
+        position: 'topleft' 
         //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
       },
 
@@ -157,7 +157,7 @@ function generateSwitcherOnMap(){
         switcherCommContainer.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/icons8-carte-26.png)";
         switcherCommContainer.style.backgroundRepeat = 'no-repeat';
         switcherCommContainer.style.backgroundPosition = 'center';
-        $(switcherCommContainer).attr("data-placement", "bottom");
+        $(switcherCommContainer).attr("data-placement", "right");
         $(switcherCommContainer).attr("data-toggle", "tooltip");
         $(switcherCommContainer).attr("data-original-title", "Atlas par mailles communales");
         $(switcherCommContainer).attr("id", "AtlasComm");
@@ -282,7 +282,7 @@ function generateSwitcherOnMap(){
     var SwitcherMailleControl = L.Control.extend({
 
       options: {
-        position: 'topright' 
+        position: 'topleft' 
         //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
       },
 
@@ -297,7 +297,7 @@ function generateSwitcherOnMap(){
         switcherMailleContainer.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/icons8-grille-26.png)";
         switcherMailleContainer.style.backgroundRepeat = 'no-repeat';
         switcherMailleContainer.style.backgroundPosition = 'center';
-        $(switcherMailleContainer).attr("data-placement", "bottom");
+        $(switcherMailleContainer).attr("data-placement", "right");
         $(switcherMailleContainer).attr("data-toggle", "tooltip");
         $(switcherMailleContainer).attr("data-original-title", "Atlas par mailles régulières 5x5km");
         $(switcherMailleContainer).attr("id", "AtlasMaille");
@@ -426,7 +426,7 @@ function generateSwitcherOnMap(){
    var SwitcherPointControl = L.Control.extend({
 
       options: {
-        position: 'topright' 
+        position: 'topleft' 
         //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
       },
 
@@ -440,7 +440,7 @@ function generateSwitcherOnMap(){
         switcherPointContainer.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/icons8-marqueur-26.png)";
         switcherPointContainer.style.backgroundRepeat = 'no-repeat';
         switcherPointContainer.style.backgroundPosition = 'center';
-        $(switcherPointContainer).attr("data-placement", "bottom");
+        $(switcherPointContainer).attr("data-placement", "right");
         $(switcherPointContainer).attr("data-toggle", "tooltip");
         $(switcherPointContainer).attr("data-original-title", "Localisation précise des observations");
         $(switcherPointContainer).attr("id", "AtlasPoint");
