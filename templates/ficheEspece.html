@@ -240,22 +240,7 @@
                         {% endif %}
 
 
-                            <div id="synonymes" class="tab-pane fade  in active">
-                                <br/>
-                                <h4>Synonymie</h4>
-                                {% if synonyme | length == 1 %}
-                                    Aucun synonyme pour ce taxon
-                                {% else %}
-                                    {% for syn in synonyme %}
-                                        {% if not syn.lb_nom == taxon.taxonSearch.lb_nom %}
-                                        {{ syn.nom_complet_html | safe}}
-                                        {% endif %}
-                                        {% if ( (not loop.last) and (not syn.lb_nom == taxon.taxonSearch.lb_nom) ) %}
-                                        |
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
+
 
                             <div id="inpnLink">
                                 <a class="btn btn-default" href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank" role="button">
@@ -461,6 +446,23 @@
             {% endif %}
 
 
+            <div class="panel panel-default" id="blocInfos">
+                <div id="synonymes">
+                    <h4>Synonymie</h4>
+                    {% if synonyme | length == 1 %}
+                        Aucun synonyme pour ce taxon
+                    {% else %}
+                        {% for syn in synonyme %}
+                            {% if not syn.lb_nom == taxon.taxonSearch.lb_nom %}
+                            {{ syn.nom_complet_html | safe}}
+                            {% endif %}
+                            {% if ( (not loop.last) and (not syn.lb_nom == taxon.taxonSearch.lb_nom) ) %}
+                            |
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
 
             <!--div class="panel panel-default" id="blocInfos">
 
