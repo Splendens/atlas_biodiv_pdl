@@ -93,7 +93,7 @@
                             </li>
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="font-size:30px;margin:5%;"></br>
-                                <b>{{orgas|length}}</b><br/>{{ 'Structures' if orgas|length > 1 else 'Structure' }}
+                                <b>{{orgas|length}}</b><br/>{{ 'Bases de données' if orgas|length > 1 else 'Base de données' }}
                             </li>
                         </ul>
                     </div>
@@ -139,7 +139,7 @@
 
                                     <div class="col-xs-offset-2 col-xs-5 text-center">
 
-                                        <h4>{{ 'Structures' if orgas|length > 1 else 'Structure' }} à l'origine des données : </h4>
+                                        <h4>{{ 'Bases de données' if orgas|length > 1 else 'Base de données' }} à l'origine des données : </h4>
                                         {% for s in orgas %}
                                             {{s.orga_obs}}
                                             {% if  not loop.last %}

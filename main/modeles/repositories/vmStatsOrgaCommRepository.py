@@ -18,13 +18,13 @@ def getStatsOrgaCommChilds(connection, insee):
     mesOrgas = connection.execute(text(sql), thisinsee=insee)
     for inter in mesOrgas:
         return [
-            {'label': "CBN de Brest", 'y': inter._06},
-            {'label': "CEN Pays de la Loire", 'y': inter._03},
+            {'label': "Calluna (CBNB)", 'y': inter._06},
+            {'label': "SICEN (CEN)", 'y': inter._03},
             {'label': "GRETIA", 'y': inter._05},
             {'label': "URCPIE", 'y': inter._70},
-            {'label': "Faune Anjou", 'y': inter._81},
-            {'label': "Faune Loire-Atlantique", 'y': inter._82},
-            {'label': "Faune Vendée", 'y': inter._83},
-            {'label': "Faune Maine", 'y': inter._84}
+            {'label': "Faune Anjou (LPO49)", 'y': inter._81},
+            {'label': "Faune Loire-Atlantique (LPO44, BV, GNLA)", 'y': inter._82},
+            {'label': "Faune Vendée (LPO85)", 'y': inter._83},
+            {'label': "Faune Maine (LPO72, MNE)", 'y': inter._84}
         ]
 
