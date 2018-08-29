@@ -85,15 +85,13 @@
                                 <span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span>
                                 <br/><b>Dernière observation</b><br/>{{infosCommune.communeYearSearch.yearmax|int}}
                             </li>
-
-
-                            <li>
-                                <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
-                                <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
-                            </li>
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="font-size:30px;margin:5%;"></br>
                                 <b>{{orgas|length}}</b><br/>{{ 'Bases de données' if orgas|length > 1 else 'Base de données' }}
+                            </li>
+                            <li>
+                                <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
+                                <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
                             </li>
                         </ul>
                     </div>
