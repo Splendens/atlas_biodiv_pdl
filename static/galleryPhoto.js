@@ -37,7 +37,7 @@ function generateHtmlPhoto(photos, taxhub_url){
 			onePhoto = "\
 				<div class='col-lg-3 col-md-4 col-sm-6 col-xs-12 thumbnail-col photo-espece '> \
 				  <div class='zoom-wrapper' > \
-				 		<a href='"+photo.path+"' data-lightbox='imageSet' data-title='"+photo.title+" &copy; "+photo.author+" <br/>( "+photo.source+" "+photo.licence+" )' cdRef='"+photo.cd_ref+"'>\
+				 		<a href='"+photo.path+"' data-lightbox='imageSet' data-title='"+photo.title+" &copy; "+photo.author+" ( "+photo.source+" "+photo.licence+" )' cdRef='"+photo.cd_ref+"'>\
 						<div class='img-custom-medias' style='background-image:url("+photo_url+")' alt='"+photo.name+"'> </div> \
 						<div class='stat-medias-hovereffet'> \
 					  <h2 class='overlay-obs'>"+photo.name+" </br> </br>"+photo.nb_obs+" observations </h2>  \
