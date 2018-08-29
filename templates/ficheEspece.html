@@ -290,8 +290,8 @@
                                 {% if configuration.AFFICHAGE_ORGAS_OBS_FICHEESP %}
                                 <li><img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="width"><br/><b>{{orgas|length}}</b><br/>{{ 'bases de données' if orgas|length > 1 else 'base de données' }}</li>
                                 {% endif %}
-                            <li id="firstObs" class="pointer"><span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span><br/><b>Première observation</b><br/>{{taxon.taxonSearch.yearmin|int}}</li>
-                            <li id="lastObs" class="pointer"><span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span><br/><b>Dernière observation</b><br/>{{taxon.taxonSearch.yearmax|int}}</li>
+                            <li><span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span><br/><b>Première observation</b><br/>{{taxon.taxonSearch.yearmin|int}}</li>
+                            <li><span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span><br/><b>Dernière observation</b><br/>{{taxon.taxonSearch.yearmax|int}}</li>
 
                         </ul>
                     </div>

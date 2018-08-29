@@ -148,7 +148,7 @@ if (configuration.PRESSION_PROSPECTION){
 
 	    $('#lastObs').click(function(){
 	      var firstObsLayer;
-	      var year = new Date('1800-01-01');
+	      var year = new Date('1500-01-01');
 
 
 	          var layer = (currentLayer._layers);
