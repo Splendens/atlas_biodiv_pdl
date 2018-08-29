@@ -964,6 +964,261 @@ GRANT SELECT ON TABLE atlas.vm_stats_orga_pdl TO geonatatlas;
 
 
 
+
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+/* stats nb TAXON par BD pour chaque commune */
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+
+
+
+-- Materialized View: atlas.vm_stats_orga_comm
+-- DROP MATERIALIZED VIEW atlas.vm_stats_orga_comm;
+
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS 
+ WITH 
+        _03 AS /*CEN Pays de la Loire*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 3
+          GROUP BY vm_observations.insee
+        ), 
+        _04 AS /*PNR Normandie Maine*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 4
+          GROUP BY vm_observations.insee
+        ), 
+        _05 AS /*GRETIA*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 5
+          GROUP BY vm_observations.insee
+        ), 
+        _06 AS /*CBN de Brest*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 6
+          GROUP BY vm_observations.insee
+        ), 
+        _09 AS /*DREAL Pays de la Loire*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 9
+          GROUP BY vm_observations.insee
+        ), 
+        _70 AS /*URCPIE*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 70
+          GROUP BY vm_observations.insee
+        ), 
+        _80 AS /*Coordi. LPO*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 80
+          GROUP BY vm_observations.insee
+        ), 
+        _81 AS /*LPO Anjou*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 81
+          GROUP BY vm_observations.insee
+        ), 
+        _82 AS /*LPO Loire-Atlantique*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 82
+          GROUP BY vm_observations.insee
+        ),
+        _83 AS /*LPO Vendée*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 83
+          GROUP BY vm_observations.insee
+        ), 
+        _84 AS /*LPO Sarthe*/
+        (
+         SELECT vm_observations.insee,
+            count(*) AS nb
+           FROM atlas.vm_observations
+          WHERE vm_observations.id_organisme = 84
+          GROUP BY vm_observations.insee
+        )
+ SELECT DISTINCT o.insee,
+    COALESCE(a.nb::integer, 0) AS _03,
+    COALESCE(b.nb::integer, 0) AS _04,
+    COALESCE(c.nb::integer, 0) AS _05,
+    COALESCE(d.nb::integer, 0) AS _06,
+    COALESCE(e.nb::integer, 0) AS _09,
+    COALESCE(f.nb::integer, 0) AS _70,
+    COALESCE(g.nb::integer, 0) AS _80,
+    COALESCE(h.nb::integer, 0) AS _81,
+    COALESCE(i.nb::integer, 0) AS _82,
+    COALESCE(j.nb::integer, 0) AS _83,
+    COALESCE(k.nb::integer, 0) AS _84
+   FROM atlas.vm_observations o
+     LEFT JOIN _03 a ON a.insee = o.insee /*CEN Pays de la Loire*/
+     LEFT JOIN _04 b ON b.insee = o.insee /*PNR Normandie Maine*/
+     LEFT JOIN _05 c ON c.insee = o.insee /*GRETIA*/
+     LEFT JOIN _06 d ON d.insee = o.insee /*CBN de Brest*/
+     LEFT JOIN _09 e ON e.insee = o.insee /*DREAL Pays de la Loire*/
+     LEFT JOIN _70 f ON f.insee = o.insee /*URCPIE*/
+     LEFT JOIN _80 g ON g.insee = o.insee /*Coordi. LPO*/
+     LEFT JOIN _81 h ON h.insee = o.insee /*LPO Anjou*/
+     LEFT JOIN _82 i ON i.insee = o.insee /*LPO Loire-Atlantique*/
+     LEFT JOIN _83 j ON j.insee = o.insee /*LPO Vendée*/
+     LEFT JOIN _84 k ON k.insee = o.insee /*LPO Sarthe*/
+  WHERE o.insee IS NOT NULL
+  ORDER BY o.insee
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_orga_comm
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_orga_comm TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_orga_comm TO geonatatlas;
+
+-- Index: atlas.vm_stats_orga_comm_insee_idx
+
+-- DROP INDEX atlas.vm_stats_orga_comm_insee_idx;
+
+CREATE UNIQUE INDEX vm_stats_orga_comm_insee_idx
+  ON atlas.vm_stats_orga_comm
+  USING btree (insee);
+
+
+
+
+
+/* stats nb TAXONJ par BD pour chaque departement */
+
+
+-- Materialized View: atlas.vm_stats_orga_dpt
+-- DROP MATERIALIZED VIEW atlas.vm_stats_orga_dpt;
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_orga_dpt AS 
+
+ SELECT DISTINCT left(insee,2) AS num_dpt,
+    SUM(_03) AS _03, /*CEN Pays de la Loire*/
+    SUM(_04) AS _04, /*PNR Normandie Maine*/
+    SUM(_05) AS _05, /*GRETIA*/
+    SUM(_06) AS _06, /*CBN de Brest*/
+    SUM(_09) AS _09, /*DREAL Pays de la Loire*/
+    SUM(_70) AS _70, /*URCPIE*/
+    SUM(_80) AS _80, /*Coordi. LPO*/
+    SUM(_81) AS _81, /*LPO Anjou*/
+    SUM(_82) AS _82, /*LPO Loire-Atlantique*/
+    SUM(_83) AS _83, /*LPO Vendée*/
+    SUM(_84) AS _84 /*LPO Sarthe*/
+
+   FROM atlas.vm_stats_orga_comm
+ 
+  GROUP BY num_dpt
+  ORDER BY num_dpt
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_orga_dpt
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_orga_dpt TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_orga_dpt TO geonatatlas;
+
+-- Index: atlas.vm_stats_orga_dpt_idx
+
+-- DROP INDEX atlas.vm_stats_orga_dpt_idx;
+
+CREATE UNIQUE INDEX vm_stats_orga_dpt_idx
+  ON atlas.vm_stats_orga_dpt
+  USING btree (num_dpt);
+
+
+
+
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+/* stats nb TAXON par BD pour la région */
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+
+
+-- Materialized View: atlas.vm_stats_orga_pdl
+-- DROP MATERIALIZED VIEW atlas.vm_stats_orga_pdl;
+
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_orga_pdl AS 
+
+ SELECT 'Pays de la Loire'::text AS nom_region,
+    SUM(_03) AS _03, /*CEN Pays de la Loire*/
+    SUM(_04) AS _04, /*PNR Normandie Maine*/
+    SUM(_05) AS _05, /*GRETIA*/
+    SUM(_06) AS _06, /*CBN de Brest*/
+    SUM(_09) AS _09, /*DREAL Pays de la Loire*/
+    SUM(_70) AS _70, /*URCPIE*/
+    SUM(_80) AS _80, /*Coordi. LPO*/
+    SUM(_81) AS _81, /*LPO Anjou*/
+    SUM(_82) AS _82, /*LPO Loire-Atlantique*/
+    SUM(_83) AS _83, /*LPO Vendée*/
+    SUM(_84) AS _84  /*LPO Sarthe*/
+
+   FROM atlas.vm_stats_orga_dpt
+
+   WHERE num_dpt = '44'
+        OR num_dpt = '49'
+        OR num_dpt = '53'
+        OR num_dpt = '72'
+        OR num_dpt = '85'
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_orga_pdl
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_orga_pdl TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_orga_pdl TO geonatatlas;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* stats nb obs par group2_inpn pour chaque commune */
 
 -- Materialized View: atlas.vm_stats_group2inpn_comm
