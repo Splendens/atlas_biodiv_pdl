@@ -151,7 +151,7 @@ function onEachFeatureMaille(feature, layer){
 function onEachFeatureMailleCommunale(feature, layer){
   /*<a href = "{{url_for('main.ficheCommune', insee = com.insee)}}">  + feature.properties.id_maille */
 
-   popupContent="<b>Commune: </b>" + feature.properties.nom_com + " ";
+   popupContent="<b>Commune: </b><a href = '" + configuration.URL_APPLICATION + "/commune/" + feature.properties.id_maille +"'>"  + feature.properties.nom_com + "</a> ";
 
    popupContent =popupContent+"</br><b>Nombre d'observation(s): </b>" + feature.properties.nb_observations;
 
