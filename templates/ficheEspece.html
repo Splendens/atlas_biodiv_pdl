@@ -379,7 +379,7 @@
                             {% if configuration.AFFICHAGE_ORGAS_OBS_FICHEESP %}
                             <div id="structures" class="tab-pane fade">
                                 {% for s in orgas %}
-                                    {{s.orga_obs }}
+                                    {{s.orga_obs|safe }}
                                     {% if  not loop.last %}
                                     -
                                     {% endif %}
