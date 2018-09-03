@@ -44,14 +44,14 @@ Highcharts.chart('statsorgacommGraph', {
     enabled: false
   },
   title: {
-    text: "Répartition des données selon <br>la base de données de provenance",
+    text: "Répartition du nombre d'espèces <br>selon la base de données de provenance",
     style : { "color": "#333333", "fontSize": "22px" }
   },
 
   tooltip: {
     headerFormat: '',
     pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
-    valueSuffix: ' donnée(s) <br>({point.percentage:.1f}%)'
+    valueSuffix: ' espèce(s) <br>({point.percentage:.1f}%)'
   },
 
   plotOptions: {
@@ -71,7 +71,7 @@ Highcharts.chart('statsorgacommGraph', {
         allowOverlap: true,
         connectorColor: "#7094db",
         enabled: true,
-        format: '<b>{point.label}</b><br><b>{point.y} donnée(s)</b><br>{point.percentage:.1f} %',
+        format: '<b>{point.label}</b><br><b>{point.y} espèce(s)</b><br>{point.percentage:.1f} %',
         /*distance: 10,*/
         filter: {
           property: 'percentage',

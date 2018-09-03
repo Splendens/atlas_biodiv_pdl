@@ -159,7 +159,7 @@
 
                                         <h4>{{ 'Bases de données' if orgas|length > 1 else 'Base de données' }} à l'origine des données : </h4>
                                         {% for s in orgas %}
-                                            {{s.orga_obs}}
+                                            {{s.orga_obs|safe}}
                                             {% if  not loop.last %}
                                             -
                                             {% endif %}

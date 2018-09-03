@@ -986,103 +986,125 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
         _03 AS /*CEN Pays de la Loire*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 3
           GROUP BY vm_observations.insee
         ), 
         _04 AS /*PNR Normandie Maine*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 4
           GROUP BY vm_observations.insee
         ), 
         _05 AS /*GRETIA*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 5
           GROUP BY vm_observations.insee
         ), 
         _06 AS /*CBN de Brest*/
         (
-         SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+          SELECT vm_observations.insee,
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 6
           GROUP BY vm_observations.insee
         ), 
         _09 AS /*DREAL Pays de la Loire*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 9
           GROUP BY vm_observations.insee
         ), 
         _70 AS /*URCPIE*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 70
           GROUP BY vm_observations.insee
         ), 
         _80 AS /*Coordi. LPO*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 80
           GROUP BY vm_observations.insee
         ), 
         _81 AS /*LPO Anjou*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 81
           GROUP BY vm_observations.insee
         ), 
         _82 AS /*LPO Loire-Atlantique*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 82
           GROUP BY vm_observations.insee
         ),
         _83 AS /*LPO Vendée*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 83
           GROUP BY vm_observations.insee
         ), 
         _84 AS /*LPO Sarthe*/
         (
          SELECT vm_observations.insee,
-            count(*) AS nb
-           FROM atlas.vm_observations
+            count(*) AS nbobs,
+            count(distinct vm_observations.cd_ref) AS nbtaxon
+          FROM atlas.vm_observations
           WHERE vm_observations.id_organisme = 84
           GROUP BY vm_observations.insee
         )
  SELECT DISTINCT o.insee,
-    COALESCE(a.nb::integer, 0) AS _03,
-    COALESCE(b.nb::integer, 0) AS _04,
-    COALESCE(c.nb::integer, 0) AS _05,
-    COALESCE(d.nb::integer, 0) AS _06,
-    COALESCE(e.nb::integer, 0) AS _09,
-    COALESCE(f.nb::integer, 0) AS _70,
-    COALESCE(g.nb::integer, 0) AS _80,
-    COALESCE(h.nb::integer, 0) AS _81,
-    COALESCE(i.nb::integer, 0) AS _82,
-    COALESCE(j.nb::integer, 0) AS _83,
-    COALESCE(k.nb::integer, 0) AS _84
+    COALESCE(a.nbobs::integer, 0) AS _03nbobs,
+    COALESCE(a.nbtaxon::integer, 0) AS _03nbtaxon,
+    COALESCE(b.nbobs::integer, 0) AS _04nbobs,
+    COALESCE(b.nbtaxon::integer, 0) AS _04nbtaxon,
+    COALESCE(c.nbobs::integer, 0) AS _05nbobs,
+    COALESCE(c.nbtaxon::integer, 0) AS _05nbtaxon,
+    COALESCE(d.nbobs::integer, 0) AS _06nbobs,
+    COALESCE(d.nbtaxon::integer, 0) AS _06nbtaxon,
+    COALESCE(e.nbobs::integer, 0) AS _09nbobs,
+    COALESCE(e.nbtaxon::integer, 0) AS _09nbtaxon,
+    COALESCE(f.nbobs::integer, 0) AS _70nbobs,
+    COALESCE(f.nbtaxon::integer, 0) AS _70nbtaxon,
+    COALESCE(g.nbobs::integer, 0) AS _80nbobs,
+    COALESCE(g.nbtaxon::integer, 0) AS _80nbtaxon,
+    COALESCE(h.nbobs::integer, 0) AS _81nbobs,
+    COALESCE(h.nbtaxon::integer, 0) AS _81nbtaxon,
+    COALESCE(i.nbobs::integer, 0) AS _82nbobs,
+    COALESCE(i.nbtaxon::integer, 0) AS _82nbtaxon,
+    COALESCE(j.nbobs::integer, 0) AS _83nbobs,
+    COALESCE(j.nbtaxon::integer, 0) AS _83nbtaxon,
+    COALESCE(k.nbobs::integer, 0) AS _84nbobs,
+    COALESCE(k.nbtaxon::integer, 0) AS _84nbtaxon
    FROM atlas.vm_observations o
      LEFT JOIN _03 a ON a.insee = o.insee /*CEN Pays de la Loire*/
      LEFT JOIN _04 b ON b.insee = o.insee /*PNR Normandie Maine*/
@@ -1125,17 +1147,28 @@ CREATE UNIQUE INDEX vm_stats_orga_comm_insee_idx
 CREATE MATERIALIZED VIEW atlas.vm_stats_orga_dpt AS 
 
  SELECT DISTINCT left(insee,2) AS num_dpt,
-    SUM(_03) AS _03, /*CEN Pays de la Loire*/
-    SUM(_04) AS _04, /*PNR Normandie Maine*/
-    SUM(_05) AS _05, /*GRETIA*/
-    SUM(_06) AS _06, /*CBN de Brest*/
-    SUM(_09) AS _09, /*DREAL Pays de la Loire*/
-    SUM(_70) AS _70, /*URCPIE*/
-    SUM(_80) AS _80, /*Coordi. LPO*/
-    SUM(_81) AS _81, /*LPO Anjou*/
-    SUM(_82) AS _82, /*LPO Loire-Atlantique*/
-    SUM(_83) AS _83, /*LPO Vendée*/
-    SUM(_84) AS _84 /*LPO Sarthe*/
+    SUM(_03nbobs) AS _03nbobs, /*CEN Pays de la Loire*/
+    SUM(_03nbtaxon) AS _03nbtaxon, /*CEN Pays de la Loire*/
+    SUM(_04nbobs) AS _04nbobs, /*PNR Normandie Maine*/
+    SUM(_04nbtaxon) AS _04nbtaxon, /*PNR Normandie Maine*/
+    SUM(_05nbobs) AS _05nbobs, /*GRETIA*/
+    SUM(_05nbtaxon) AS _05nbtaxon, /*GRETIA*/
+    SUM(_06nbobs) AS _06nbobs, /*CBN de Brest*/
+    SUM(_06nbtaxon) AS _06nbtaxon, /*CBN de Brest*/
+    SUM(_09nbobs) AS _09nbobs, /*DREAL Pays de la Loire*/
+    SUM(_09nbtaxon) AS _09nbtaxon, /*DREAL Pays de la Loire*/
+    SUM(_70nbobs) AS _70nbobs, /*URCPIE*/
+    SUM(_70nbtaxon) AS _70nbtaxon, /*URCPIE*/
+    SUM(_80nbobs) AS _80nbobs, /*Coordi. LPO*/
+    SUM(_80nbtaxon) AS _80nbtaxon, /*Coordi. LPO*/
+    SUM(_81nbobs) AS _81nbobs, /*LPO Anjou*/
+    SUM(_81nbtaxon) AS _81nbtaxon, /*LPO Anjou*/
+    SUM(_82nbobs) AS _82nbobs, /*LPO Loire-Atlantique*/
+    SUM(_82nbtaxon) AS _82nbtaxon, /*LPO Loire-Atlantique*/
+    SUM(_83nbobs) AS _83nbobs, /*LPO Vendée*/
+    SUM(_83nbtaxon) AS _83nbtaxon, /*LPO Vendée*/
+    SUM(_84nbobs) AS _84nbobs, /*LPO Sarthe*/
+    SUM(_84nbtaxon) AS _84nbtaxon /*LPO Sarthe*/
 
    FROM atlas.vm_stats_orga_comm
  
@@ -1178,17 +1211,28 @@ CREATE UNIQUE INDEX vm_stats_orga_dpt_idx
 CREATE MATERIALIZED VIEW atlas.vm_stats_orga_pdl AS 
 
  SELECT 'Pays de la Loire'::text AS nom_region,
-    SUM(_03) AS _03, /*CEN Pays de la Loire*/
-    SUM(_04) AS _04, /*PNR Normandie Maine*/
-    SUM(_05) AS _05, /*GRETIA*/
-    SUM(_06) AS _06, /*CBN de Brest*/
-    SUM(_09) AS _09, /*DREAL Pays de la Loire*/
-    SUM(_70) AS _70, /*URCPIE*/
-    SUM(_80) AS _80, /*Coordi. LPO*/
-    SUM(_81) AS _81, /*LPO Anjou*/
-    SUM(_82) AS _82, /*LPO Loire-Atlantique*/
-    SUM(_83) AS _83, /*LPO Vendée*/
-    SUM(_84) AS _84  /*LPO Sarthe*/
+    SUM(_03nbobs) AS _03nbobs, /*CEN Pays de la Loire*/
+    SUM(_03nbtaxon) AS _03nbtaxon, /*CEN Pays de la Loire*/
+    SUM(_04nbobs) AS _04nbobs, /*PNR Normandie Maine*/
+    SUM(_04nbtaxon) AS _04nbtaxon, /*PNR Normandie Maine*/
+    SUM(_05nbobs) AS _05nbobs, /*GRETIA*/
+    SUM(_05nbtaxon) AS _05nbtaxon, /*GRETIA*/
+    SUM(_06nbobs) AS _06nbobs, /*CBN de Brest*/
+    SUM(_06nbtaxon) AS _06nbtaxon, /*CBN de Brest*/
+    SUM(_09nbobs) AS _09nbobs, /*DREAL Pays de la Loire*/
+    SUM(_09nbtaxon) AS _09nbtaxon, /*DREAL Pays de la Loire*/
+    SUM(_70nbobs) AS _70nbobs, /*URCPIE*/
+    SUM(_70nbtaxon) AS _70nbtaxon, /*URCPIE*/
+    SUM(_80nbobs) AS _80nbobs, /*Coordi. LPO*/
+    SUM(_80nbtaxon) AS _80nbtaxon, /*Coordi. LPO*/
+    SUM(_81nbobs) AS _81nbobs, /*LPO Anjou*/
+    SUM(_81nbtaxon) AS _81nbtaxon, /*LPO Anjou*/
+    SUM(_82nbobs) AS _82nbobs, /*LPO Loire-Atlantique*/
+    SUM(_82nbtaxon) AS _82nbtaxon, /*LPO Loire-Atlantique*/
+    SUM(_83nbobs) AS _83nbobs, /*LPO Vendée*/
+    SUM(_83nbtaxon) AS _83nbtaxon, /*LPO Vendée*/
+    SUM(_84nbobs) AS _84nbobs,  /*LPO Sarthe*/
+    SUM(_84nbtaxon) AS _84nbtaxon  /*LPO Sarthe*/
 
    FROM atlas.vm_stats_orga_dpt
 
