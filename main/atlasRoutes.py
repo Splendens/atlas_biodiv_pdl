@@ -232,7 +232,7 @@ def ficheCommune(insee):
         'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
         'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
         'MAP': config.MAP,
-        'MYTYPE': 1,
+        'MYTYPE': 0,
         'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION

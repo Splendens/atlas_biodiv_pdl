@@ -103,9 +103,14 @@
 
 
                 <td>
+                {% if not configuration.PRESSION_PROSPECTION %}
                     <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}">
                         <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Consulter la fiche espèce" data-placement="left"> </span>
                     </a>
+                {% else %}
+                        <span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Consulter la fiche espèce" data-placement="left"> </span>
+
+                {% endif %}
                 </td>
             </tr>
         {% endfor %}
