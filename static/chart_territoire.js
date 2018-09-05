@@ -43,7 +43,7 @@ Highcharts.chart('statsorgacommGraph', {
     },
 
     title: {
-      text: "Pourcentage d'espèces sur le territoire<br>par base de données",
+      text: "Nombre d'espèces sur le territoire<br>par base de données",
       style : { "color": "#333333", "fontSize": "22px" }
     },
     yAxis: {
