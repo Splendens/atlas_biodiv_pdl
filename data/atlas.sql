@@ -989,6 +989,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 3
           GROUP BY vm_observations.insee
         ), 
@@ -998,6 +999,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 4
           GROUP BY vm_observations.insee
         ), 
@@ -1007,6 +1009,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 5
           GROUP BY vm_observations.insee
         ), 
@@ -1016,6 +1019,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 6
           GROUP BY vm_observations.insee
         ), 
@@ -1025,6 +1029,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 9
           GROUP BY vm_observations.insee
         ), 
@@ -1034,6 +1039,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 70
           GROUP BY vm_observations.insee
         ), 
@@ -1043,6 +1049,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 80
           GROUP BY vm_observations.insee
         ), 
@@ -1052,6 +1059,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 81
           GROUP BY vm_observations.insee
         ), 
@@ -1061,6 +1069,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 82
           GROUP BY vm_observations.insee
         ),
@@ -1070,6 +1079,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 83
           GROUP BY vm_observations.insee
         ), 
@@ -1079,6 +1089,7 @@ CREATE MATERIALIZED VIEW atlas.vm_stats_orga_comm AS
             count(*) AS nbobs,
             count(distinct vm_observations.cd_ref) AS nbtaxon
           FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
           WHERE vm_observations.id_organisme = 84
           GROUP BY vm_observations.insee
         )
