@@ -3,7 +3,7 @@
 <html>
    <head>
         <meta charset="utf-8" />
-        <title>Présentation de l'atlas | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+        <title>Présentation de l'atlas | {{configuration.NOM_APPLICATION}}</title>
 
         <!-- Jquery -->
         <script type=text/javascript src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
@@ -46,7 +46,7 @@
                     <div class="carousel-caption">
                       <h1>Atlas de la faune vertébrée et invertébrée</h1>
                       <p>Parcourez les fiches espèces et découvrez la faune des Pays de la Loire</p>
-					  <p><a class="btn btn-lg btn-default" href="#faune" role="button">En savoir plus</a></p>
+					           <p><a class="btn btn-lg btn-default" href="#faune" role="button">En savoir plus</a></p>
                     </div>
                   </div>
                 </div>
@@ -101,21 +101,21 @@
               </ul>
             </nav>
 
-            <div class="container presentation">
+            <div class="container presentation text-justify">
               <div class="col-lg-8">
                   <!-- Texte de présentation général -->
                   <span id="general" style="position:absolute; top:-125px;"></span>
                   <h2>Biodiv'Pays de la Loire, l'atlas numérique de la flore et de la faune des Pays de la Loire</h2>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Biodiv'Pays de la Loire met à votre disposition les données rassemblées et validées par la Ligue pour la protection des oiseaux (LPO), le Conservatoire d'espaces naturels des Pays de la Loire (CEN), le Conservatoire botanique national de Brest (CBNB), le Groupe d'étude des invertébrés armoricains (GRETIA), les Centres permanents d'initiatives pour l'environnement (CPIE)...
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Les naturalistes et les scientifiques des Pays de la Loire recueillent des données sur la faune et la flore depuis des dizaines d'années, au gré de leurs études et de leurs observations de terrain. Celles-ci sont utilisées pour mieux connaître le statut de conservation des espèces, étudier l'évolution des populations, appréhender les changements globaux, caractériser la biodiversité d'un territoire, etc... Cette connaissance est aussi indispensable pour engager des actions de conservation des espèces et de gestion des milieux et sites naturels.
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Chaque jour, les naturalistes font de nouvelles observations d’espèces sur le terrain qu’ils saisissent dans les bases de données des différents organismes partenaires. Des observations anciennes sont également saisies grâce au recueil de données bibliographiques ou muséologiques. Les données issues de toutes ces observations sont affichées "en temps réel" sur Biodiv’Pays de la Loire. Vous pouvez ainsi suivre l'état des connaissances naturalistes en  Pays de la Loire.
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Cet atlas vous est proposé dans le cadre de la mise en oeuvre du <a href="http://www.naturefrance.fr/" target="_bank">Système d'Infomation sur la Nature et les Paysages (SINP)</a> en lien avec l'<a href="https://inpn.mnhn.fr/accueil/index" target="_bank">Inventaire National du Patrimoine Naturel (INPN)</a>.
                   </p>
 
@@ -124,10 +124,10 @@
                 <p>
                     <img src="{{url_for('static', filename='custom/images/stage_malaco_CEN_PdL_GRETIA_MNHN.jpg') }}"  width="100%">
                 </p>
-                <p>
+                <p class="text-justify">
                   Atelier « Malacologie continentale » les 14 et 15 septembre 2017 à La Flèche (72). Cet atelier a été organisé par le CEN Pays de la Loire, le GRETIA, et le Museum national d’histoire naturelle avec le soutien de la Région des Pays de la Loire et de la DREAL.
                 </p>
-                <p>
+                <p class="text-justify">
                    Ce stage s'inscrit dans un programme d'action visant à développer les connaissances sur la répartition des espèces de ce groupe à l’échelle régionale. Ces actions sont notamment conduites en lien avec la dynamique d’un inventaire national « mollusques continentaux » coordonné nationalement par le Muséum national d'histoire naturelle (MNHN).
                 </p>
                 <p>
@@ -195,23 +195,23 @@
                 <div class="col-md-12">
                   <span id="reseaux" style="position:absolute; top:-200px;"></span>
                     <img class="featurette-image img-circle img-responsive pull-left" src="{{url_for('static', filename='custom/images/reseau_naturaliste_CEN_PdL.jpeg') }}">
-                    <h2 class="featurette-heading">Le réseau des naturalistes<br/><span class="text-muted">Les organismes de suivi, d'étude et de conservation de la biodiversité, et vous !</span>
+                    <h2 class="featurette-heading text-center">Le réseau des naturalistes<br/><span class="text-muted">Les organismes de suivi, d'étude et de conservation de la biodiversité...<br> et vous !</span>
                     </h2>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Les bases de données naturalistes des différents organismes partenaires (LPO, GRETIA, CPIE, URCPIE, CEN…) rassemblent des informations collectées dans le cadre de projets avec des financements publics ou privés, ainsi que des données issues d'observations par un ensemble de bénévoles.
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Les naturalistes de terrain s'investissent pour améliorer la connaissance de la faune et de la flore. Cependant, les données visualisables sur cette plateforme reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. Certaines données sont collectées dans le cadre de protocoles scientifiques et d'autres au fil de l'eau !
                     <br>
                   </p>
-                  <p class="lead">
+                  <!--p class="lead text-justify">
                   <i>
                     « L'absence de données ne veut pas forcément dire que les espèces ne sont pas présentes, il peut également s'agir d'un défaut de prospection dans une zone géographique. Inversement, un grand nombre de données sur une espèce ne veut pas dire qu'il s'agit de l'espèce la plus présente, elle a peut-être fait l'objet d'un suivi particulier, augmentant de fait le nombre d'observations. Seuls les experts naturalistes seront à même de répondre à ce genre de questions et à faire une analyse écologique fine. »
                     </i>
-                  </p>
-                  <p class="lead">
+                  </p-->
+                  <!--p class="lead text-justify">
                     - xxxx xxxxx, chargé de mission - écologue au xxxxxxxxx
-                  </p>
+                  </p-->
                 </div>
               </div>
 
@@ -219,11 +219,11 @@
               
               <div class="row featurette">
                 <div class="col-md-12">
-                  <h2 class="featurette-heading">Réseaux d'observateurs<br/><span class="text-muted">Faisceaux de connaissances</span></h2>
-                  <p class="lead">
+                  <h2 class="featurette-heading text-center">Réseaux d'observateurs<br/><span class="text-muted">Faisceaux de connaissances</span></h2>
+                  <p class="lead text-justify">
                     Les Pays de la Loire ont la chance de compter sur un vaste réseau de collecte de données naturalistes. Cela contribue ainsi à enrichir des bases de données thématiques mises à disposition tant des spécialistes que du public.
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Selon les sites internet, il est possible de CONSULTER les informations, de TÉLÉCHARGER des synthèses voire de PARTICIPER aux observations.
                   </p>
                   <p class="lead">
@@ -233,12 +233,10 @@
                   <p class="lead">
                     <a href="https://inpn.mnhn.fr" target="_blank">Inventaire National du Patrimoine Naturel (INPN)</a>
                   </p>
-                  <p class="lead">
-                    Sur le site consacré à l'INPN (Muséum national d'histoire naturelle), on retrouve plus de XXXXXXX données sur la faune et la flore des Pays de la Loire parmi les 30 millions collectées sur l'ensemble du territoire national et agglomérées dans cet inventaire national.
-                    <br/>
-                    Le Muséum national utilise ces informations pour réaliser des synthèses aux échelles nationales et internationales. 
-                    <br/>
-                    Cette démarche permet d'inscrire les enjeux environnementaux dans les politiques nationales et européennes.
+                  <p class="lead text-justify">
+                    Sur le site consacré à l'INPN (Muséum national d'histoire naturelle), on retrouve des données sur la faune et la flore des Pays de la Loire parmi les 30 millions collectées sur l'ensemble du territoire national et agglomérées dans cet inventaire national.
+                    <br>
+                    Le Muséum national utilise ces informations pour réaliser des synthèses aux échelles nationales et internationales. Cette démarche permet d'inscrire les enjeux environnementaux dans les politiques nationales et européennes.
                   </p>
                   <br/>
                   <br/>
@@ -266,7 +264,7 @@
                   <p class="lead">
                     <b> Des outils pour participer ! </b>
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Chacun peut, s'il le souhaite, devenir contributeur en transmettant ses observations de plantes, insectes, mammifères, oiseaux ou encore reptiles sur différentes plateformes naturalistes.
                   </p>
                   <ul>
@@ -300,22 +298,22 @@
                 <div class="col-md-12">
                   <span id="faune" style="position:absolute; top:-200px;"></span>
                     <img class="featurette-image img-circle img-responsive pull-right" src="{{url_for('static', filename='custom/images/Lycaena_dispar_CEN_PdL.jpg') }}">
-                    <h2 class="featurette-heading">Faune sauvage<br/><span class="text-muted">Grandes et petites bêtes</span>
+                    <h2 class="featurette-heading text-center">Faune sauvage<br/><span class="text-muted">Grandes et petites bêtes</span>
                     </h2>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Mises à part quelques apparitions d'espèces nouvelles toujours possibles, la faune vertébrée (Mammifères, Oiseaux, Reptiles, Amphibiens, Poissons) des Pays de la Loire est aujourd'hui assez bien connue : espèces présentes, distribution régionale, statut de conservation etc…
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                    Il n'en va pas de même pour les invertébrés. Il s'agit de ces étranges petites bêtes que sont les insectes, les escargots, les millepattes ou encore les araignées et écrevisses... Une quantité d'espèces aussi impressionnante que pleine de promesses scientifiques ! Le niveau de connaissance sur les invertébrés en Pays de la Loire est variable selon les groupes taxonomiques : si les Odonates (Libellules et Demoiselles), les Rhopalocères (Papillons de jour) ou Orthoptères (Criquets, Grillons, Sauterelles) commencent à être bien connus en Pays de la Loire, ce n’est pas le cas de très nombreux autres groupes pour lesquels la détermination des espèces est souvent affaire de spécialiste. 
                   </p>
-                  <p class="lead">
+                  <!--p class="lead text-justify">
                   <i>
                    « La plateforme de visualisation est un porté à connaissance des observations naturalistes sur tout le territoire des Pays de la Loire. C'est une première ! Ceci est un premier pas vers le partage des données et une vraie prise en compte de la biodiversité dans les différents projets d'aménagement ainsi que la reconnaissance de l'expertise du réseau. »
                     </i>
                   </p>
                   <p class="lead">
                     - xxx xxxx chargé de missions - entomologiste au GRETIA
-                  </p>
+                  </p-->
                  <!-- <p class="lead">
                     Pour en savoir plus : <a href="http://www.ecrins-parcnational.fr/thematique/faune-sauvage" target="_blank">http://www.ecrins-parcnational.fr/thematique/faune-sauvage</a>.
                   </p> -->
@@ -329,24 +327,24 @@
                 <div class="col-md-12">
                   <span id="flore" style="position:absolute; top:-200px;"></span>
                   <img class="featurette-image img-circle img-responsive pull-left" src="{{url_for('static', filename='custom/images/Anemone_pulsatilla_CEN_PdL.jpg') }}">
-                  <h2 class="featurette-heading">Flore sauvage<br/><span class="text-muted">Richesse foisonnante</span>
+                  <h2 class="featurette-heading text-center">Flore sauvage<br/><span class="text-muted">Richesse foisonnante</span>
                   </h2>
                   <p class="lead">
 
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Si l'inventaire du monde végétal se poursuit dans la région, le réseau naturaliste assure également le suivi d'espèces emblématiques comme la Fritillaire pintade et la Tulipe sauvage. 
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Certaines plantes sont des héritières de pratiques agricoles anciennes, alors que d'autres sont des rudérales pleinement intégrées dans nos environnements urbains !
                   </p>
-                  <p class="lead">
+                  <!--p class="lead text-justify">
                     <i>
                     « XXXXX <br/> XXXXX <br/> Une superbe citation sur les suivis flore <br/> XXXXX <br/> XXXXXXX »
                     </i>
                   </p>
                   <p class="lead">
                     - xxx xxxxxx, botaniste au CBN de Brest
-                  </p>
+                  </p-->
                  <!-- <p class="lead">
                     Pour en savoir plus : <a href="" target="_blank">http://www.ecrins-parcnational.fr/thematique/flore</a>.
                   </p> -->
@@ -359,23 +357,23 @@
                 <div class="col-md-12">
                   <span id="scientifique" style="position:absolute; top:-200px;"></span>
                   <img class="featurette-image img-circle img-responsive pull-right" src="{{url_for('static', filename='custom/images/obs_malaco_CEN_PdL_GRETIA_MNHN.jpg') }}">
-                  <h2 class="featurette-heading">Une perspective scientifique<br/><span class="text-muted">Pour la connaissance et la protection</span>
+                  <h2 class="featurette-heading text-center">Une perspective scientifique<br/><span class="text-muted">Pour la connaissance et la protection</span>
                   </h2>
                   <p class="lead">
                     La préservation des espèces, des habitats et des ressources naturelles s'appuie sur le recueil d'observations, l'acquisition de connaissances et la recherche scientifique.
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     <i>
                     Quelles espèces fréquentent les Pays de la Loire, comment interagissent-elles ? Comment évoluent leurs populations ? Ou encore quelles sont les conséquences des activités humaines du territoire sur ces espèces ? C'est pour répondre à ce type de questions que différents protocoles d'acquisition de connaissances ou de suivi sont mis en œuvre. Un grand nombre des observations brutes liées à ces protocoles sont synthétisées dans cet atlas.
                     </i>
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     La richesse de la faune et de la flore des Pays de la Loire tient à la diversité des influences climatiques et microclimatiques, géologiques, biogéographiques et aux différents modelés liés aux pratiques humaines.
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Pour conserver ce patrimoine naturel d'exception, il convient de bien le connaître. Les différents programmes d'inventaire, de suivis ou d'études engagés sur le territoire poursuivent tous cet objectif. 
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Pour en savoir plus, voir les actions du réseau naturaliste en termes de faune et de flore présentées sur les sites des différentes structures : <br/>
                     <ul>
                       <li class="lead"><a href="http://www.cbnbrest.fr" target="_blank">Conservatoire botanique national de Brest</a><br/></li>
@@ -394,33 +392,33 @@
               <div class="row featurette">
                 <div class="col-md-12">
                   <span id="opensource" style="position:absolute; top:-180px;"></span>
-                  <h2 class="featurette-heading">GeoNature-atlas<br/><span class="text-muted">Dans la constellation de l'opensource</span></h2>
-                  <p class="lead">
+                  <h2 class="featurette-heading text-center">GeoNature-atlas<br/><span class="text-muted">Dans la constellation de l'opensource</span></h2>
+                  <p class="lead text-justify">
                     Biodiv'Pays de la Loire utilise l'outil <a href="https://github.com/PnEcrins/GeoNature-atlas" target="_blank">GeoNature-atlas</a> développé par le Parc national des Écrins et publié sous licence libre. Il est ainsi transférable librement à d'autres structures qui souhaitent partager leurs observations naturalistes en se basant sur les référentiels nationaux de l'INPN.
                   </p>
         				  <p class="lead">
         					<span class="glyphicon glyphicon-download"></span> <i>Téléchargez la <a href="https://github.com/PnEcrins/GeoNature-atlas/raw/master/docs/2016-09-GeoNature-atlas-PRESENTATION.pdf">fiche de présentation de GeoNature-atlas</a> pour en savoir plus.</a></i>
         				  </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     Il fait partie d'un ensemble d'outils développé par le Parc national et ses partenaires, pour pouvoir saisir, gérer et traiter les données des différents protocoles (<a href="http://geonature.fr" target="_blank">http://geonature.fr</a>).
                   </p>
                   <!--p class="lead">
                     <img src="http://geonature.fr/img/schema-geonature-01.png" width="80%">
-                  </p-->
-                  <p class="lead">
+                  </p--> 
+                  <p class="lead text-justify">
                     <i>
                     « Nos outils sont pensés, dès le départ, pour pouvoir être déployés par d’autres structures dans des contextes différents. 
                     Pour cela, l’accent est mis sur des développements génériques et sur la publication de l’outil sous licence libre pour en faciliter l’utilisation par d’autres ».
                     </i>
-                  </p>
-                  <p class="lead">
+                  </p> 
+                  <p class="lead text-justify">
                     - Camille Monchicourt, responsable du système d’informations au Parc national des Ecrins
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     En effet le Parc national des Ecrins a entrepris depuis une dizaine d'années, de migrer son système d'informations vers des outils open source. <br/>
                     Les logiciels libres (dont le code source est ouvert, accessible et modifiable par qui le souhaite) permettent une plus grande modularité et interopérabilité des outils et des données, en plus de faciliter la mutualisation et de réduire les coûts liés aux licences. 
                   </p>
-                  <p class="lead">
+                  <p class="lead text-justify">
                     <i>* Un logiciel Opensource est un programme informatique dont le code source est distribué sous une licence dite « libre », permettant à quiconque de lire, modifier ou redistribuer ce logiciel.</i>
                   </p>
                 </div>
