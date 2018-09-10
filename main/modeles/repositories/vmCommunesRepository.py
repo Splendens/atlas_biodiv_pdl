@@ -56,23 +56,6 @@ def getCommunesObservationsChilds(connection, cd_ref):
 
 
 
-def getNbTaxonsCommunes(connection, insee):
-    sql = """
-        SELECT COUNT(o.id_observation) AS nb_obs
-        FROM atlas.vm_observations o
-        WHERE o.insee = :thisInsee
-    """
-    req = connection.execute(text(sql), thisInsee=insee)
-    nbTaxonCommunesList = list()
-    for r in req:
-        temp = {
-            'nb_obs': r.nb_obs
-        }
-        nbTaxonCommunesList.append(temp)
-        nb_obs = r.nb_obs
-    return nb_obs    
-
-
 
 def infosCommune(connection, insee):
     """

@@ -32,8 +32,85 @@ var pieColors = (function () {
 
 
 
-// Build the chart
+// Histogramme du nombre d'espèces par organismes/BD moissonnée
 Highcharts.chart('statsorgacommGraph', {
+    chart: {
+        type: 'column'
+    },
+
+    credits: {
+      enabled: false
+    },
+
+    title: {
+      text: "Nombre d'espèces sur le territoire<br>par base de données",
+      style : { "color": "#333333", "fontSize": "22px" }
+    },
+    yAxis: {
+        title: {
+            text: "Nombre d'espèces"
+        }
+    },
+    xAxis: {
+        categories: [
+        '<b>Calluna</b><br>(CBN de Brest)', 
+        '<b>SICEN</b><br>(CEN Pays de la Loire)', 
+        '<b>GRETIA</b>', 
+        '<b>URCPIE</b>', 
+        '<b>Faune Anjou</b><br>(LPO49)', 
+        '<b>Faune Loire-Atlantique</b><br>(LPO44, BV, GNLA)', 
+        '<b>Faune Vendée</b><br>(LPO85)', 
+        '<b>Faune Maine</b><br>(LPO72, MNE)'
+        ],
+
+        labels: {
+          rotation: -45,
+          style: {
+              fontSize: '13px',
+              fontFamily: 'Verdana, sans-serif'
+          }
+        }
+    },
+
+    legend: {
+        enabled: false
+    },
+
+    tooltip: {
+        pointFormat: "<b>{point.y:.0f} espèce(s)</b>"
+    },
+
+    plotOptions: {
+      column: {
+        color: "#8ac3e5",
+        borderColor: "#7094db"
+      },
+      series: {
+        minPointLength: 5
+      }
+    },
+
+    series: [{
+        name: 'label',
+        data: statsorgacomm,
+        dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: "#333333",
+            align: 'right',
+            format: '{point.y:.0f}',
+            y: 20, // 10 pixels down from the top
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    }]
+});
+
+
+// PieChart Répartition du nombre d'espèces par organismes/BD moissonnée
+/*Highcharts.chart('statsorgacommGraph', {
   chart: {
     plotBackgroundColor: null,
     plotBorderWidth: null,
@@ -60,11 +137,9 @@ Highcharts.chart('statsorgacommGraph', {
       cursor: 'pointer',
       colors: pieColors,
       borderColor: "#7094db",
-      /*
-       style: {
-          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-        },
-        */
+      
+      // style: { color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black' },
+        
       showInLegend: false,
       
       dataLabels: {
@@ -72,7 +147,7 @@ Highcharts.chart('statsorgacommGraph', {
         connectorColor: "#7094db",
         enabled: true,
         format: '<b>{point.label}</b><br><b>{point.y} espèce(s)</b><br>{point.percentage:.1f} %',
-        /*distance: 10,*/
+        //distance: 10,
         filter: {
           property: 'percentage',
           operator: '>',
@@ -94,13 +169,13 @@ Highcharts.chart('statsorgacommGraph', {
    }
   }]
 });
+*/
 
 
 
 
 
-
-// Build the chart
+// PieChart répartition du nombre de données par groupe taxonomique
 Highcharts.chart('group2inpnGraph', {
   chart: {
     plotBackgroundColor: null,
@@ -119,7 +194,7 @@ Highcharts.chart('group2inpnGraph', {
   tooltip: {
     headerFormat: '',
     pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
-    valueSuffix: ' donnée(s) <br>({point.percentage:.1f}%)'
+    valueSuffix: ' donnée(s) <br>({point.percentage:.2f}%)'
   },
 
   plotOptions: {
@@ -139,7 +214,7 @@ Highcharts.chart('group2inpnGraph', {
         allowOverlap: true,
         connectorColor: "#7094db",
         enabled: true,
-        format: '<b>{point.label}</b><br><b>{point.y} donnée(s)</b><br>{point.percentage:.1f} %',
+        format: '<b>{point.label}</b><br><b>{point.y} donnée(s)</b><br>{point.percentage:.2f} %',
         style : { "color": "#333333", "fontSize": "11px" },
         /*distance: 10,*/
         filter: {
@@ -167,7 +242,7 @@ Highcharts.chart('group2inpnGraph', {
 
 
 
-// Build the chart
+// PieChart du répartition du nombre d'espèces par groupe taxonomique
 Highcharts.chart('taxongroup2inpnGraph', {
   chart: {
     plotBackgroundColor: null,
@@ -186,7 +261,7 @@ Highcharts.chart('taxongroup2inpnGraph', {
   tooltip: {
     headerFormat: '',
     pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
-    valueSuffix: ' espèce(s) <br>({point.percentage:.1f}%)'
+    valueSuffix: ' espèce(s) <br>({point.percentage:.2f}%)'
   },
 
   plotOptions: {
@@ -206,7 +281,7 @@ Highcharts.chart('taxongroup2inpnGraph', {
         allowOverlap: true,
         connectorColor: "#7094db",
         enabled: true,
-        format: '<b>{point.label}</b><br><b>{point.y} espèce(s)</b><br>{point.percentage:.1f} %',
+        format: '<b>{point.label}</b><br><b>{point.y} espèce(s)</b><br>{point.percentage:.2f} %',
         style : { "color": "#333333", "fontSize": "11px" },
         /*distance: 10,*/
         filter: {

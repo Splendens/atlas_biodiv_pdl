@@ -207,7 +207,6 @@ def ficheCommune(insee):
     connection = utils.engine.connect()
     listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
     infosCommune = vmCommunesRepository.infosCommune(connection, insee)
-    nb_obs = vmCommunesRepository.getNbTaxonsCommunes(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
     statsorgacomm = vmStatsOrgaCommRepository.getStatsOrgaCommChilds(connection, insee)
     statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
@@ -246,7 +245,6 @@ def ficheCommune(insee):
         insee=insee,
         listTaxons=listTaxons,
         infosCommune=infosCommune,
-        nb_obs=nb_obs,
         referenciel=commune,
         statsorgacomm=statsorgacomm,
         statsgroup2inpncomm=statsgroup2inpncomm,

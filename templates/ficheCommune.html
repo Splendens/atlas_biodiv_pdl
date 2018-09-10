@@ -71,7 +71,7 @@
                         <ul id="stat">
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 30px;"></span><br/>
-                                <b>{{nb_obs}}</b><br/>{{ 'Observations' if nb_obs > 1 else 'Observation' }}
+                                <b>{{listTaxons.nbObsTotal}}</b><br/>{{ 'Observations' if listTaxons.nbObsTotal > 1 else 'Observation' }}
                             </li>
                             <li>
                                 <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
@@ -105,7 +105,7 @@
             <div class="row rowMargin" id="clear">
                 <div class="col-xs-12" id="ObsCommunes"> 
                     <div class="panel panel-default" >
-                        <div class="panel-heading"><h3> {{nb_obs}} observations sur la commune de <i>{{referenciel.communeName}}</i></h3></div>
+                        <div class="panel-heading"><h3> {{listTaxons.nbObsTotal}} observations sur la commune de <i>{{referenciel.communeName}}</i></h3></div>
                         <div class="row" id="mapRow">
                             <!-- CARTE des dernières observations -->
                             <div id="blocMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -151,29 +151,32 @@
                                 </div>
 
                                 <div id="provenance" class="tab-pane fade">
-                                    <div class="col-xs-5 text-center">
+                                    <div class="col-xs-12 text-center">
                                         <div id="statsorgacommGraph"></div>
                                     </div>
 
-                                    <div class="col-xs-offset-2 col-xs-5 text-center">
+                                    <div class="col-xs-12 text-center">
+                                        <div class="col-xs-4 text-center">
 
-                                        <h4>{{ 'Bases de données' if orgas|length > 1 else 'Base de données' }} à l'origine des données : </h4>
-                                        {% for s in orgas %}
-                                            {{s.orga_obs|safe}}
-                                            {% if  not loop.last %}
-                                            -
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        <br/><br/><br/>
-
-                                        <h4>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }} à l'origine des données : </h4>
-                                            {% for o in observers %}
-                                                {{o }}
+                                            <h4><b>{{ 'Bases de données' if orgas|length > 1 else 'Base de données' }} à l'origine des données : </b></h4>
+                                            {% for s in orgas %}
+                                                {{s.orga_obs|safe}}
                                                 {% if  not loop.last %}
                                                 -
                                                 {% endif %}
                                             {% endfor %}
+                                        </div>
+
+    
+                                        <div class="col-xs-offset-1 col-xs-7 text-center">
+                                            <h4><b>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }} à l'origine des données : </b></h4>
+                                                {% for o in observers %}
+                                                    {{o }}
+                                                    {% if  not loop.last %}
+                                                    -
+                                                    {% endif %}
+                                                {% endfor %}
+                                        </div>
                                     </div>
 
                                 </div>                                    
@@ -244,11 +247,9 @@
             var communesSearch = {{communesSearch|tojson}};
             var configuration = {{configuration|tojson}};
             var observations = {{observations|tojson}};
-
+            var nb_obs = {{listTaxons.nbObsTotal}};
             var taxonYearMin = {{infosCommune.communeYearSearch.yearmin}};
             var YEARMAX = {{infosCommune.communeYearSearch.yearmax}};
-            var nb_obs = {{nb_obs}};
-
             var communeGeoJson = {{referenciel.communeGeoJson|tojson}};
             var insee = {{insee}};
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
