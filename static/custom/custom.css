@@ -3,6 +3,7 @@
 .affix {
   position: fixed;
   top:60px;
+  height: 55px;
 }
 
 /* Taille des popup */
