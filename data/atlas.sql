@@ -21,8 +21,10 @@ CREATE MATERIALIZED VIEW atlas.vm_organismes AS
  SELECT o.id_organisme,
     o.nom_organisme
    FROM synthese.bib_organismes o;
-create unique index on atlas.vm_organismes (id_organisme);
 
+CREATE UNIQUE INDEX vm_organismes_idx
+  ON atlas.vm_organismes
+  USING btree  (id_organisme);
 
 
 --Toutes les observations
@@ -958,6 +960,12 @@ GRANT SELECT ON TABLE atlas.vm_stats_orga_pdl TO geonatatlas;
 
 
 
+CREATE UNIQUE INDEX vm_stats_orga_pdl_idx
+  ON atlas.vm_stats_orga_pdl
+  USING btree
+  (nom_region COLLATE pg_catalog."default");
+
+
 
 
 
@@ -1740,6 +1748,10 @@ GRANT ALL ON TABLE atlas.vm_stats_group2inpn_pdl TO geonatuser;
 GRANT SELECT ON TABLE atlas.vm_stats_group2inpn_pdl TO geonatatlas;
 
 
+CREATE UNIQUE INDEX vm_stats_group2inpn_pdl_idx
+  ON atlas.vm_stats_group2inpn_pdl
+  USING btree
+  (nom_region COLLATE pg_catalog."default");
 
 
 
@@ -2591,5 +2603,9 @@ ALTER TABLE atlas.vm_stats_espece_group2inpn_pdl
 GRANT ALL ON TABLE atlas.vm_stats_espece_group2inpn_pdl TO geonatuser;
 GRANT SELECT ON TABLE atlas.vm_stats_espece_group2inpn_pdl TO geonatatlas;
 
+CREATE UNIQUE INDEX vm_stats_espece_group2inpn_pdl_idx
+  ON atlas.vm_stats_espece_group2inpn_pdl
+  USING btree
+  (nom_region COLLATE pg_catalog."default");
 
 
