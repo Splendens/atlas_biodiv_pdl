@@ -283,15 +283,6 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="row">
-                    <div class="col-sm-12">
-                     <p class="text-center" style="color:#b1b1b1;padding: 10px 40px 2px 40px;">Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. <a href="{{url_for('main.get_staticpages', page='donnees') }}" style="color:#7785ce;">En savoir plus</a></p>
-                    </div>
-                </div>
-            </div>
-
-
 
             <div class="panel panel-default" id="otherInformationsPanel">
                 <div class="row" id="otherInformations">
@@ -306,6 +297,7 @@
                                 {% if configuration.AFFICHAGE_ORGAS_OBS_FICHEESP %}
                             <li><a data-toggle="tab" href="#structures"> <b>{{orgas|length}} </b>{{ 'bases de données' if orgas|length > 1 else 'base de données' }}</a></li>
                                 {% endif %}
+                            <li><a data-toggle="tab" href="#avertissements"><span class="glyphicon glyphicon-info-sign"> </span>&nbsp;&nbsp;<b>information</b></a></li>
                           </ul>
 
                         <div class="tab-content" style="width:100%;">
@@ -386,6 +378,15 @@
                                 {% endfor %}
                             </div>
                             {% endif %}
+
+                            <div id="avertissements" class="tab-pane fade">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p class="alert alert-warning text-justify">Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à augmenter au fil du temps. <a href="{{url_for('main.get_staticpages', page='donnees') }}" style="color:#7785ce;">En savoir plus</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                 </div>
@@ -613,7 +614,7 @@
                                         <param name="type" value="image/svg+xml">
                                         <param name="pluginspage" value="http://www.adobe.com/svg/viewer/install/">
                                     </object>
-                                    <p class="small text-justify" style="color:#b1b1b1;">Cartographie issue de l'<a href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank" style="color:#7785ce;">INPN</a> - Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elles ne peuvent en aucun cas être considérées comme exhaustives.</p>
+                                    <p class="small text-justify" style="color:#b1b1b1;">Cartographie issue de l'<a href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank" style="color:#7785ce;">INPN</a> - Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes au niveau national : elles ne peuvent en aucun cas être considérées comme exhaustives.</p>
 
                              </div>
                         </div>
