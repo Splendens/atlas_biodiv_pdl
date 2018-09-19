@@ -45,7 +45,7 @@ $.ajax({
   }).done(function(list) {
       $('[loading="true"]').css("background-image", "none")
       $('[loading="true"]').prop("disabled", false);
-      $('[loading="true"]').attr('placeholder', "Rechercher une espèce...")
+      $('[loading="true"]').attr('placeholder', "Une espèce ?")
 
 
     $( "#searchTaxons" ).focus(function() {

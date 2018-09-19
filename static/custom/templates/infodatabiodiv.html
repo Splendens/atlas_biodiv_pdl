@@ -60,13 +60,13 @@
                     <br>Grâce aux "fiches communes", découvez toute la richesse biologique d'un territoire : zones prospectées, observations et liste d'espèces ! Découvrez également les "fiches espèces" et leurs synthèses taxon par taxon !
                   </p>
 
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" style="text-align: center;">
                     <div class="thumbnail stat-thumbnail">
-                      <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}"> 
+                    <span class="glyphicon glyphicon-home" style="font-size:40px"></span>
                       <h4 class="text-center"> Rechercher une commune</h4>
                       <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
                               <div class="form-group has-feedback">
-                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="Rechercher une commune..." >
+                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="Une commune ?" >
                                   <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                 <input id="hiddenInputCommunesStat" type="hidden" name="insee">
                               </div>          
@@ -74,13 +74,13 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" style="text-align: center;">
                     <div class="thumbnail stat-thumbnail">
                       <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}"> 
-                      <h4 class="text-center"> Rechercher un territoire</h4>
+                      <h4 class="text-center"> Rechercher un EPCI</h4>
                       <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
                               <div class="form-group has-feedback">
-                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="EPCI, département..." >
+                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="Une intercommunalité ?" >
                                   <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                 <input id="hiddenInputCommunesStat" type="hidden" name="insee">
                               </div>          
@@ -88,13 +88,27 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" style="text-align: center;">
+                    <div class="thumbnail stat-thumbnail">
+                      <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}"> 
+                      <h4 class="text-center"> Rechercher un département</h4>
+                      <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
+                              <div class="form-group has-feedback">
+                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="Un département ?" >
+                                  <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                <input id="hiddenInputCommunesStat" type="hidden" name="insee">
+                              </div>          
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-object" style="text-align: center;">
                     <div class="thumbnail stat-thumbnail">
                     <span class="glyphicon glyphicon-leaf" style="font-size:40px"></span>
                       <h4 class="text-center"> Rechercher une espèce</h4>
                       <form method="POST" id="searchFormTaxonsStat" class="navbar-form" role="search">
                                     <div class="form-group has-feedback">
-                            <input id="searchTaxonsStat" type="text" class="form-control" placeholder="Rechercher une espèce... &nbsp; &nbsp; &nbsp;" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
+                            <input id="searchTaxonsStat" type="text" class="form-control" placeholder="Une espèce ? &nbsp; &nbsp; &nbsp;" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
                             <i class="glyphicon glyphicon-search form-control-feedback"></i>
                             <input id="hiddenInputTaxonStat" type="hidden" name="cd_ref">
                         </div>       
