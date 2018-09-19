@@ -29,7 +29,15 @@
 
       <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormCommunes' action=""  class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
-					<input id="searchCommunes" type="text" class="form-control" placeholder="Rechercher une commune" >
+					<input id="searchCommunes" type="text" class="form-control" placeholder="Rechercher une commune..." >
+					<span class="glyphicon glyphicon-search form-control-feedback"></span>
+				</div>
+			  <input id="hiddenInputCommunes" type="hidden" name="insee">
+      </form>
+
+      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormCommunes' action=""  class="navbar-form navbar-left" role="search">
+				<div class="form-group has-feedback">
+					<input id="searchCommunes" type="text" class="form-control" placeholder="EPCI, département..." >
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 			  <input id="hiddenInputCommunes" type="hidden" name="insee">
