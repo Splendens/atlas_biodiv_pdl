@@ -35,15 +35,15 @@
 			    <input id="hiddenInputCommunes" type="hidden" name="insee">
 	      </form>
 
-	      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormEpci' action=""  class="navbar-form navbar-left" role="search">
+	      <form method="POST" onsubmit="completeAction('#searchFormEpci', hiddenInputEpci)" id='searchFormEpci' action=""  class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
 					<input id="searchEpci" type="text" style="width: 170px;" class="form-control" placeholder="Un EPCI ?" >
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
-			    <input id="hiddenInputCommunes" type="hidden" name="nom_epci_simple">
+			    <input id="hiddenInputEpci" type="hidden" name="nom_epci_simple">
 	      </form>
 
-	      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormDepartement' action="" class="navbar-form navbar-left" role="search">
+	      <form method="POST" onsubmit="completeAction('#searchFormDepartement', hiddenInputDepartement)" id='searchFormDepartement' action="" class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
 					<input id="searchDepartement" type="text" style="width: 170px;" class="form-control" placeholder="Un département ?" >
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>

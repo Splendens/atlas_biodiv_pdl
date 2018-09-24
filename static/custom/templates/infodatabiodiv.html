@@ -60,55 +60,55 @@
                     <br>Grâce aux "fiches communes", découvez toute la richesse biologique d'un territoire : zones prospectées, observations et liste d'espèces ! Découvrez également les "fiches espèces" et leurs synthèses taxon par taxon !
                   </p>
 
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" style="text-align: center;">
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
                     <div class="thumbnail stat-thumbnail">
-                    <span class="glyphicon glyphicon-home" style="font-size:40px"></span>
-                      <h4 class="text-center"> Rechercher une commune</h4>
+                    <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}">
+                      <h3 class="text-center"> Rechercher une commune</h3>
                       <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
-                              <div class="form-group has-feedback">
-                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="Une commune ?" >
-                                  <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                <input id="hiddenInputCommunesStat" type="hidden" name="insee">
-                              </div>          
+                          <div class="form-group has-feedback">
+                              <input id="searchCommunesStat" type="text" style="width: 100%;" class="form-control" placeholder="Une commune ?" >
+                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                            <input id="hiddenInputCommunesStat" type="hidden" name="insee">
+                          </div>          
                       </form>
                     </div>
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" style="text-align: center;">
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
                     <div class="thumbnail stat-thumbnail">
-                      <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}"> 
-                      <h4 class="text-center"> Rechercher un EPCI</h4>
-                      <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
-                              <div class="form-group has-feedback">
-                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="Une intercommunalité ?" >
-                                  <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                <input id="hiddenInputCommunesStat" type="hidden" name="insee">
-                              </div>          
+                      <span class="glyphicon glyphicon-flag" style="font-size:40px"></span> 
+                      <h3 class="text-center"> Rechercher une intercommunalité</h3>
+                      <form method="POST" onsubmit="completeAction('#searchFormEpciStat', hiddenInputEpciStat)" id='searchFormEpciStat' action=""  class="navbar-form" role="search">
+                          <div class="form-group has-feedback">
+                              <input id="searchEpciStat" type="text" style="width: 100%;" class="form-control" placeholder="Un EPCI ?" >
+                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                            <input id="hiddenInputEpciStat" type="hidden" name="insee">
+                          </div>          
                       </form>
                     </div>
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6" style="text-align: center;">
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
                     <div class="thumbnail stat-thumbnail">
-                      <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}"> 
-                      <h4 class="text-center"> Rechercher un département</h4>
-                      <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
-                              <div class="form-group has-feedback">
-                                  <input id="searchCommunesStat" type="text" class="form-control" placeholder="Un département ?" >
-                                  <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                <input id="hiddenInputCommunesStat" type="hidden" name="insee">
-                              </div>          
+                      <span class="glyphicon glyphicon-tower" style="font-size:40px"></span>
+                      <h3 class="text-center"> Rechercher un département</h3>
+                      <form method="POST" onsubmit="completeAction('#searchFormDepartementStat', hiddenInputDepartementStat)" id='searchFormDepartementStat' action=""  class="navbar-form" role="search">
+                          <div class="form-group has-feedback">
+                              <input id="searchDepartementStat" type="text" style="width: 100%;" class="form-control" placeholder="Un département ?" >
+                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                            <input id="hiddenInputDepartementStat" type="hidden" name="insee">
+                          </div>          
                       </form>
                     </div>
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-object" style="text-align: center;">
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 stat-object" style="text-align: center;">
                     <div class="thumbnail stat-thumbnail">
                     <span class="glyphicon glyphicon-leaf" style="font-size:40px"></span>
-                      <h4 class="text-center"> Rechercher une espèce</h4>
+                      <h3 class="text-center"> Rechercher une espèce </h3>
                       <form method="POST" id="searchFormTaxonsStat" class="navbar-form" role="search">
-                                    <div class="form-group has-feedback">
-                            <input id="searchTaxonsStat" type="text" class="form-control" placeholder="Une espèce ? &nbsp; &nbsp; &nbsp;" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
+                          <div class="form-group has-feedback">
+                            <input id="searchTaxonsStat" type="text" style="width: 100%;" class="form-control" placeholder="Une espèce ? &nbsp; &nbsp; &nbsp;" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
                             <i class="glyphicon glyphicon-search form-control-feedback"></i>
                             <input id="hiddenInputTaxonStat" type="hidden" name="cd_ref">
                         </div>       
@@ -130,7 +130,7 @@
                    Les couches d'alertes vous permettent de localiser rapidement les secteurs présentant de forts enjeux en matière de biodiversité (faune et flore remarquables, faune et flore protégées...)
                   </p>
                   <p class="lead text-justify">
-                   Accéder aux couches d'alertes en région Pays de la Loire : [lien SINP Pays de la Loire/alerte]
+                   Accéder aux couches d'alertes en région Pays de la Loire : <i>[lien à venir]</i>
                   </p>
                 </div>
                              
@@ -143,10 +143,10 @@
                   <h2 class="featurette-heading">Données<br/><span class="text-muted">Les mobiliser</span>
                   </h2>
                   <p class="lead text-justify">
-                  Si vous avez des données de biodiversité sur un territoire et que vous souhaitez les porter à connaissance, n'hésitez pas à la transmettre au SINP (Système d'Information sur la Nature et les Paysages) des Pays de la Loire : [lien SINP Pays de la Loire/import]
+                  Si vous avez des données de biodiversité sur un territoire et que vous souhaitez les porter à connaissance, n'hésitez pas à la transmettre au SINP (Système d'Information sur la Nature et les Paysages) des Pays de la Loire : <i>[lien à venir]</i>
                   </p>
                   <p class="lead text-justify">
-                  Le SINP des Pays de la Loire vous permet également de demander la transmission -gratuitement et librement- de données faune et flore. Pour faire une demande de transmission de données: [lien SINP Pays de la Loire/export]
+                  Le SINP des Pays de la Loire vous permet également de demander la transmission -gratuitement et librement- de données faune et flore. Pour faire une demande de transmission de données: <i>[lien à venir]</i>
                   </p>
               </div>
               
