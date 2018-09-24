@@ -87,7 +87,7 @@
                             </li>
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="font-size:30px;margin:5%;"></br>
-                                <b>{{orgas|length}}</b><br/>{{ 'Bases de données' if orgas|length > 1 else 'Base de données' }}
+                                <b>{{orgas|length}}</b><br/>{{ 'Sources' if orgas|length > 1 else 'Source' }}
                             </li>
                             <li>
                                 <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
@@ -158,7 +158,7 @@
                                     <div class="col-xs-12 text-center">
                                         <div class="col-xs-4 text-center">
 
-                                            <h4><b>{{ 'Bases de données' if orgas|length > 1 else 'Base de données' }} à l'origine des données : </b></h4>
+                                            <h4><b>{{ 'Sources' if orgas|length > 1 else 'Source' }} à l'origine des données : </b></h4>
                                             {% for s in orgas %}
                                                 {{s.orga_obs|safe}}
                                                 {% if  not loop.last %}
