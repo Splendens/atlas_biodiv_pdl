@@ -5,8 +5,9 @@ from flask import json, Blueprint
 from werkzeug.wrappers import Response
 from . import utils
 from modeles.repositories import (
-    vmSearchTaxonRepository, vmObservationsRepository,
-    vmObservationsMaillesRepository, vmObservationsMaillesRepository, vmObservationsMaillesCommunalesRepository, vmMedias
+    vmSearchTaxonRepository, vmObservationsRepository, vmCommunesRepository,
+    vmObservationsMaillesRepository, vmObservationsMaillesRepository, 
+    vmObservationsMaillesCommunalesRepository, vmMedias
 )
 from configuration import config
 

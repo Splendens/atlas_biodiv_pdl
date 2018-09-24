@@ -54,53 +54,11 @@
                     <h2 class="featurette-heading">Territoires<br/><span class="text-muted">Pression de prospection et liste d'espèces</span>
                     </h2>
                   <p class="lead text-justify">
-                    Les bases de données naturalistes des différentes structures rassemblent des informations collectées dans le cadre de projets avec des financements publics, ainsi que des données issues d'observations par un ensemble de bénévoles. Ces bases de données sont moissonnées par ce portail de visualistion des données de biodiversité des Pays de la Loire.
+                    Les bases de données naturalistes des différentes structures rassemblent des informations collectées dans le cadre de projets avec des financements publics, ainsi que des données issues d'observations par un ensemble de bénévoles. Ces bases de données sont moissonnées par ce portail de visualisation des données de biodiversité des Pays de la Loire.
                   </p>    
                   <p class="lead text-justify">
-                    <br>Grâce aux "fiches communes", découvez toute la richesse biologique d'un territoire : zones prospectées, observations et liste d'espèces ! Découvrez également les "fiches espèces" et leurs synthèses taxon par taxon !
+                    <br>Grâce aux "fiches communes", "fiches intercommunalités" (EPCI) et "fiches départements" découvez toute la richesse biologique d'un territoire : zones prospectées, observations et liste d'espèces. Découvrez également les "fiches espèces" et leurs synthèses taxon par taxon.
                   </p>
-
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
-                    <div class="thumbnail stat-thumbnail">
-                    <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}">
-                      <h3 class="text-center"> Rechercher une commune</h3>
-                      <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
-                          <div class="form-group has-feedback">
-                              <input id="searchCommunesStat" type="text" style="width: 100%;" class="form-control" placeholder="Une commune ?" >
-                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                            <input id="hiddenInputCommunesStat" type="hidden" name="insee">
-                          </div>          
-                      </form>
-                    </div>
-                  </div>
-
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
-                    <div class="thumbnail stat-thumbnail">
-                      <span class="glyphicon glyphicon-flag" style="font-size:40px"></span> 
-                      <h3 class="text-center"> Rechercher une intercommunalité</h3>
-                      <form method="POST" onsubmit="completeAction('#searchFormEpciStat', hiddenInputEpciStat)" id='searchFormEpciStat' action=""  class="navbar-form" role="search">
-                          <div class="form-group has-feedback">
-                              <input id="searchEpciStat" type="text" style="width: 100%;" class="form-control" placeholder="Un EPCI ?" >
-                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                            <input id="hiddenInputEpciStat" type="hidden" name="insee">
-                          </div>          
-                      </form>
-                    </div>
-                  </div>
-
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
-                    <div class="thumbnail stat-thumbnail">
-                      <span class="glyphicon glyphicon-tower" style="font-size:40px"></span>
-                      <h3 class="text-center"> Rechercher un département</h3>
-                      <form method="POST" onsubmit="completeAction('#searchFormDepartementStat', hiddenInputDepartementStat)" id='searchFormDepartementStat' action=""  class="navbar-form" role="search">
-                          <div class="form-group has-feedback">
-                              <input id="searchDepartementStat" type="text" style="width: 100%;" class="form-control" placeholder="Un département ?" >
-                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                            <input id="hiddenInputDepartementStat" type="hidden" name="insee">
-                          </div>          
-                      </form>
-                    </div>
-                  </div>
 
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 stat-object" style="text-align: center;">
                     <div class="thumbnail stat-thumbnail">
@@ -115,7 +73,49 @@
                       </form>
                     </div>
                   </div>
-                                
+
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
+                    <div class="thumbnail stat-thumbnail">
+                    <img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}">
+                      <h3 class="text-center"> Rechercher une commune</h3>
+                      <form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
+                        <div class="form-group has-feedback">
+                            <input id="searchCommunesStat" type="text" style="width: 100%;" class="form-control" placeholder="Une commune ?" >
+                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                          <input id="hiddenInputCommunesStat" type="hidden" name="insee">
+                        </div>          
+                       </form>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
+                    <div class="thumbnail stat-thumbnail">
+                      <span class="glyphicon glyphicon-flag" style="font-size:40px"></span> 
+                      <h3 class="text-center"> Rechercher une intercommunalité</h3>
+                      <form method="POST" onsubmit="completeAction('#searchFormEpciStat', hiddenInputEpciStat)" id='searchFormEpciStat' action=""  class="navbar-form" role="search">
+                          <div class="form-group has-feedback">
+                              <input id="searchEpciStat" type="text" style="width: 100%;" class="form-control" placeholder="Un EPCI ?" >
+                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                            <input id="hiddenInputEpciStat" type="hidden" name="nom_epci_simple">
+                          </div>          
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="text-align: center;">
+                    <div class="thumbnail stat-thumbnail">
+                      <span class="glyphicon glyphicon-tower" style="font-size:40px"></span>
+                      <h3 class="text-center"> Rechercher un département</h3>
+                      <form method="POST" onsubmit="completeAction('#searchFormDepartementStat', hiddenInputDepartementStat)" id='searchFormDepartementStat' action=""  class="navbar-form" role="search">
+                          <div class="form-group has-feedback">
+                              <input id="searchDepartementStat" type="text" style="width: 100%;" class="form-control" placeholder="Un département ?" >
+                              <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                            <input id="hiddenInputDepartementStat" type="hidden" name="num_dpt">
+                          </div>          
+                      </form>
+                    </div>
+                  </div>
+            
                 </div>
 
               <hr class="featurette-divider">
@@ -220,8 +220,10 @@
 		{% endif %}
         
         <script type="text/javascript">
-        var communesSearch = {{communesSearch|tojson}},
-            configuration = {{configuration|tojson}};
+            var communesSearch = {{communesSearch|tojson}};
+            var epciSearch = {{epciSearch|tojson}};
+            var departementSearch = {{departementSearch|tojson}};
+            var configuration = {{configuration|tojson}};
         </script>
 
         <script src="{{url_for('static', filename='main.js') }}"></script>

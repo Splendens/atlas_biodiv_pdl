@@ -6,7 +6,8 @@ from configuration import config
 from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, 
     vmMoisRepository, vmTaxrefRepository, vmStatsOrgaTaxonRepository,
-    vmCommunesRepository, vmObservationsMaillesRepository, vmMedias, vmStatsTaxonGroup2inpnCommRepository,
+    vmCommunesRepository, vmEpciRepository, vmDepartementRepository,
+    vmObservationsMaillesRepository, vmMedias, vmStatsTaxonGroup2inpnCommRepository,
     vmStatsOrgaCommRepository, vmStatsGroup2inpnCommRepository,
     vmCorTaxonAttribut, vmTaxonsMostView
 )
@@ -81,6 +82,8 @@ def index():
         )
 
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
     mostViewTaxon = vmTaxonsMostView.mostViewTaxon(connection)
     stat = vmObservationsRepository.statIndex(connection)
     customStat = vmObservationsRepository.genericStat(
@@ -113,6 +116,8 @@ def index():
         'templates/index.html',
         observations=observations,
         communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
         mostViewTaxon=mostViewTaxon,
         stat=stat,
         customStat=customStat,
@@ -135,6 +140,8 @@ def ficheEspece(cd_ref):
         connection, cd_ref
     )
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
     taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
     firstPhoto = vmMedias.getFirstPhoto(
         connection, cd_ref, config.ATTR_MAIN_PHOTO
@@ -189,6 +196,8 @@ def ficheEspece(cd_ref):
         synonyme=synonyme,
         communes=communes,
         communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
         taxonomyHierarchy=taxonomyHierarchy,
         firstPhoto=firstPhoto,
         photoCarousel=photoCarousel,
@@ -212,6 +221,8 @@ def ficheCommune(insee):
     statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
     statstaxongroup2inpncomm = vmStatsTaxonGroup2inpnCommRepository.getStatsTaxonGroup2inpnCommChilds(connection, insee)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
     if config.AFFICHAGE_MAILLE:
         observations = vmObservationsMaillesRepository.lastObservationsCommuneMaille(
             connection, config.NB_LAST_OBS, insee
@@ -250,6 +261,8 @@ def ficheCommune(insee):
         statsgroup2inpncomm=statsgroup2inpncomm,
         statstaxongroup2inpncomm=statstaxongroup2inpncomm,
         communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
         observations=observations,
         orgas=orgas,
         observers=observers,
@@ -265,6 +278,8 @@ def ficheRangTaxonomie(cd_ref):
     listTaxons = vmTaxonsRepository.getTaxonsChildsList(connection, cd_ref)
     referenciel = vmTaxrefRepository.getInfoFromCd_ref(session, cd_ref)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
     taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
     orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
@@ -286,6 +301,8 @@ def ficheRangTaxonomie(cd_ref):
         listTaxons=listTaxons,
         referenciel=referenciel,
         communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
         taxonomyHierarchy=taxonomyHierarchy,
         orgas=orgas,
         observers=observers,
@@ -301,6 +318,8 @@ def ficheGroupe(groupe):
     groups = vmTaxonsRepository.getAllINPNgroup(connection)
     listTaxons = vmTaxonsRepository.getTaxonsGroup(connection, groupe)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
     orgas = vmObservationsRepository.getGroupeOrgas(connection, groupe)
     observers = vmObservationsRepository.getGroupeObservers(connection, groupe)
 
@@ -320,6 +339,8 @@ def ficheGroupe(groupe):
         'templates/ficheGroupe.html',
         listTaxons=listTaxons,
         communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
         referenciel=groupe,
         groups=groups,
         orgas=orgas,
@@ -335,6 +356,8 @@ def photos():
 
     groups = vmTaxonsRepository.getINPNgroupPhotos(connection)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
     configuration = base_configuration
 
     session.close()
@@ -342,6 +365,8 @@ def photos():
     return render_template(
         'templates/galeriePhotos.html',
         communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
         groups=groups,
         configuration=configuration
     )
@@ -354,10 +379,14 @@ def get_staticpages(page):
         abort(404)
     static_page = config.STATIC_PAGES[page]
     communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
     configuration = base_configuration
     session.close()
     return render_template(
         static_page['template'],
         communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
         configuration=configuration
     )

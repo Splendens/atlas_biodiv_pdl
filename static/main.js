@@ -8,6 +8,8 @@ $(document).ready(function() {
   });
 });
 
+
+
 autocompleteSearch = function(list, inputID, urlDestination, nbProposal){
     $(inputID).autocomplete({
         source: function (request, response) {
@@ -21,8 +23,15 @@ autocompleteSearch = function(list, inputID, urlDestination, nbProposal){
               var url = ui.item.value;
               if (urlDestination == "espece"){
                   location.href = configuration.URL_APPLICATION+"/espece/"+url;
-              } else {
+              } 
+              if (urlDestination == "commune") {
                   location.href = configuration.URL_APPLICATION+"/commune/"+url;
+              }
+              if (urlDestination == "epci") {
+                  location.href = configuration.URL_APPLICATION+"/epci/"+url;
+              }
+              if (urlDestination == "departement") {
+                  location.href = configuration.URL_APPLICATION+"/departement/"+url;
               }
               
           return false;
@@ -36,6 +45,22 @@ autocompleteSearch = function(list, inputID, urlDestination, nbProposal){
     });
     $( "#searchCommunesStat" ).focus(function() {
        autocompleteSearch(communesSearch, "#searchCommunesStat", "commune", 10);
+    });
+
+
+    $( "#searchEpci" ).focus(function() {
+      autocompleteSearch(epciSearch, "#searchEpci", "epci", 20)
+    });
+    $( "#searchEpciStat" ).focus(function() {
+       autocompleteSearch(epciSearch, "#searchEpciStat", "epci", 10);
+    });
+
+
+    $( "#searchDepartement" ).focus(function() {
+      autocompleteSearch(departementSearch, "#searchDepartement", "departement", 20)
+    });
+    $( "#searchDepartementStat" ).focus(function() {
+       autocompleteSearch(departementSearch, "#searchDepartementStat", "departement", 10);
     });
 
 
@@ -58,6 +83,7 @@ $.ajax({
     });
 
 });
+
 
 // child list display
 var childList = $('#childList');

@@ -3,13 +3,12 @@
 
 import ast
 from ..entities.vmCommunes import VmCommunes
-from ..entities.vmEpci import VmEpci
 from sqlalchemy import distinct
 from sqlalchemy.sql import text
 
 
 def getAllCommunes(session):
-    req = session.query(distinct(VmCommunes.insee), VmCommunes.commune_maj).all()
+    req = session.query(distinct(VmCommunes.commune_maj), VmCommunes.insee).all()
     communeList = list()
     for r in req:
         temp = {'label': r[0], 'value': r[1]}

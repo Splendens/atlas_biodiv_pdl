@@ -169,13 +169,13 @@
                   <img class="img-circle img-responsive" style="margin:auto;" src="{{url_for('static', filename='custom/images/commune_Fresnay_CEN_PdL.jpg') }}" alt="image illustrative des fiches territoires" width="140" height="140">
                   <h3>Fiches "EPCI"</h3>
                   <p>Découvrez les espèces observées sur chaque intercommunalité des Pays de la Loire.</p>
-                  <p><a class="btn btn-default" href="./territoire/nantesmetropole" role="button">Exemple &raquo;</a></p>
+                  <p><a class="btn btn-default" href="./epci/nantesmetropole" role="button">Exemple &raquo;</a></p>
                 </div><!-- /.col-lg-3 -->
                 <div class="col-lg-4 col-lg-4 col-md-4 col-xs-6" style="text-align:center;">
                   <img class="img-circle img-responsive" style="margin:auto;" src="{{url_for('static', filename='custom/images/Confluent_Vienne-Loire.jpg') }}" alt="image illustrative des fiches territoires" width="140" height="140">
                   <h3>Fiches "départements"</h3>
                   <p>Découvrez les espèces observées sur chaque département des Pays de la Loire.</p>
-                  <p><a class="btn btn-default" href="./territoire/sarthe" role="button">Exemple &raquo;</a></p>
+                  <p><a class="btn btn-default" href="./departement/72" role="button">Exemple &raquo;</a></p>
                 </div><!-- /.col-lg-3 -->
               </div><!-- /.row -->
 
@@ -452,8 +452,10 @@
 		{% endif %}
         
         <script type="text/javascript">
-        var communesSearch = {{communesSearch|tojson}},
-            configuration = {{configuration|tojson}};
+            var communesSearch = {{communesSearch|tojson}}
+            , epciSearch = {{epciSearch|tojson}}
+            , departementSearch = {{departementSearch|tojson}}
+            , configuration = {{configuration|tojson}};
         </script>
 
         <script src="{{url_for('static', filename='main.js') }}"></script>

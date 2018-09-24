@@ -17,14 +17,15 @@
         <a class="navbar-brand titreAppli" href="{{url_for('main.index') }}">{{configuration.NOM_APPLICATION}}</a>
 	  </div>
 
+
 	  <!-- Collect the nav links, forms, and other content for toggling -->
-	  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	  <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
 		  <form method="POST" action="" id='searchFormTaxons' class="navbar-form navbar-left" role="search">
-			<div class="form-group has-feedback">
-			   <input id="searchTaxons" type="text" class="form-control" placeholder="Une espèce ? &nbsp; &nbsp; &nbsp;" loading="true" style="width: 170px; background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
-			   <span class="glyphicon glyphicon-search form-control-feedback"></span>
-			</div>
-			<input id="hiddenInputTaxons" type="hidden" name="cd_ref">
+				<div class="form-group has-feedback">
+				   <input id="searchTaxons" type="text" style="width: 170px;" class="form-control" placeholder="Une espèce ? &nbsp; &nbsp; &nbsp;" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
+				   <span class="glyphicon glyphicon-search form-control-feedback"></span>
+				</div>
+				<input id="hiddenInputTaxons" type="hidden" name="cd_ref">
 	      </form>
 
 	      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormCommunes' action=""  class="navbar-form navbar-left" role="search">
@@ -33,7 +34,7 @@
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 			    <input id="hiddenInputCommunes" type="hidden" name="insee">
-	      </form>
+	      </form>    
 
 	      <form method="POST" onsubmit="completeAction('#searchFormEpci', hiddenInputEpci)" id='searchFormEpci' action=""  class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
@@ -48,12 +49,13 @@
 					<input id="searchDepartement" type="text" style="width: 170px;" class="form-control" placeholder="Un département ?" >
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
-			   <input id="hiddenInputDepartement" type="hidden" name="nom_dpt_simple">
+			   <input id="hiddenInputDepartement" type="hidden" name="num_dpt">
 	      </form>
-
 	  </div>
 
   </div>
 </nav>
 <!-- Bandeau d'angle Démonstrateur-->
 <div class="corner-ribbon top-right sticky red shadow"><b>Démonstrateur</b></div>
+
+
