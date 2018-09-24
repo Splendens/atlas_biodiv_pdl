@@ -21,7 +21,7 @@
 	  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		  <form method="POST" action="" id='searchFormTaxons' class="navbar-form navbar-left" role="search">
 			<div class="form-group has-feedback">
-			   <input id="searchTaxons" type="text" class="form-control" placeholder="Une espèce ? &nbsp; &nbsp; &nbsp;" loading="true" style="width: 160px; background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
+			   <input id="searchTaxons" type="text" class="form-control" placeholder="Une espèce ? &nbsp; &nbsp; &nbsp;" loading="true" style="width: 170px; background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
 			   <span class="glyphicon glyphicon-search form-control-feedback"></span>
 			</div>
 			<input id="hiddenInputTaxons" type="hidden" name="cd_ref">
@@ -29,7 +29,7 @@
 
 	      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormCommunes' action=""  class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
-					<input id="searchCommunes" type="text" style="width: 160px;" class="form-control" placeholder="Une commune ?" >
+					<input id="searchCommunes" type="text" style="width: 170px;" class="form-control" placeholder="Une commune ?" >
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 			    <input id="hiddenInputCommunes" type="hidden" name="insee">
@@ -37,7 +37,7 @@
 
 	      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormEpci' action=""  class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
-					<input id="searchEpci" type="text" style="width: 160px;" class="form-control" placeholder="Un EPCI ?" >
+					<input id="searchEpci" type="text" style="width: 170px;" class="form-control" placeholder="Un EPCI ?" >
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 			    <input id="hiddenInputCommunes" type="hidden" name="nom_epci_simple">
@@ -45,7 +45,7 @@
 
 	      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormDepartement' action="" class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
-					<input id="searchDepartement" type="text" style="width: 160px;" class="form-control" placeholder="Un département ?" >
+					<input id="searchDepartement" type="text" style="width: 170px;" class="form-control" placeholder="Un département ?" >
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 			   <input id="hiddenInputDepartement" type="hidden" name="nom_dpt_simple">
