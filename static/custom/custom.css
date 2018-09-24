@@ -76,9 +76,13 @@ table.dataTable {
 }
 
 
+/* navbar de recherche */
 
-
-
+@media (max-width: 1150px) {
+#bs-example-navbar-collapse-1 {
+    display: none!important;
+  }  
+}
 
 /*************************************************/
 /*Bandeau de coin Démonstrateur*/
@@ -158,3 +162,5 @@ table.dataTable {
 .corner-ribbon.red{background: #e43;}
 .corner-ribbon.orange{background: #e82;}
 .corner-ribbon.yellow{background: #ec0;}
+
+
