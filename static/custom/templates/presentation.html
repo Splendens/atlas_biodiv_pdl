@@ -29,7 +29,6 @@
 		</div>
 		<div class="container-fluid" id="page">
 
-
             <!-- Carousel
             ================================================== -->
             <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top: -15px; margin-bottom: 0px;">
@@ -145,25 +144,39 @@
               
               <!-- Three columns of text below the carousel -->
               <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6 col-lg-6 col-md-6 col-xs-6" style="text-align:center;">
                   <span id="fonctionnalites" style="position:absolute; top:-200px;"></span>
-                  <img class="img-circle" src="{{url_for('static', filename='custom/images/ile_neuve_macriere_2015_CEN_PdL.jpg') }}" alt="Generic placeholder image" width="140" height="140">
-                  <h2>Fiches "espèces"</h2>
+                  <img class="img-circle img-responsive" style="margin:auto;" src="{{url_for('static', filename='custom/images/Lycaena_dispar_CEN_PdL.jpg') }}" alt="image illustrative des fiches espèces" width="140" height="140">
+                  <h3>Fiches "espèces"</h3>
                   <p>Retrouvez la fiche descriptive de chaque espèce avec carte des observations, phénologie, ainsi que des descriptions, photos, liens complémentaires...</p>
                   <p><a class="btn btn-default" href="./espece/65740" role="button">Exemple &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
-                <div class="col-lg-4">
-                  <img class="img-circle" src="{{url_for('static', filename='custom/images/commune_Fresnay_CEN_PdL.jpg') }}" alt="Generic placeholder image" width="140" height="140">
-                  <h2>Fiches "Communes"</h2>
-                  <p>Découvrez les espèces observées sur chaque Commune des Pays de la Loire.</p>
-                  <p><a class="btn btn-default" href="./commune/44109" role="button">Exemple &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
-                <div class="col-lg-4">
-                  <img class="img-circle" src="{{url_for('static', filename='custom/images/Fritillaria_meleagris_CEN_PdL.jpg') }}" alt="Generic placeholder image" width="140" height="140">
-                  <h2>Galerie "photos"</h2>
+                </div><!-- /.col-lg-3 -->
+                <div class="col-lg-6 col-lg-6 col-md-6 col-xs-6" style="text-align:center;">
+                  <img class="img-circle img-responsive" style="margin:auto;" src="{{url_for('static', filename='custom/images/Fritillaria_meleagris_CEN_PdL.jpg') }}" alt="image illustrative de la gallerie photos" width="140" height="140">
+                  <h3>Galerie "photos"</h3>
                   <p>Découvrez des photographies des différentes espèces, issues principalement de l'INPN.</p>
                   <p><a class="btn btn-default" href="{{url_for('main.photos')}}" role="button">Parcourir &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
+                </div><!-- /.col-lg-3 -->
+              </div>
+              <div class="row" style="margin-top: 5%;">
+                <div class="col-lg-4 col-lg-4 col-md-4 col-xs-6" style="text-align:center;">
+                  <img class="img-circle img-responsive" style="margin:auto;" src="{{url_for('static', filename='custom/images/cheminexploitation.jpg') }}" alt="image illustrative des fiches communes" width="140" height="140">
+                  <h3>Fiches "communes"</h3>
+                  <p>Découvrez les espèces observées sur chaque commune des Pays de la Loire.</p>
+                  <p><a class="btn btn-default" href="./commune/44109" role="button">Exemple &raquo;</a></p>
+                </div><!-- /.col-lg-3 -->
+                <div class="col-lg-4 col-lg-4 col-md-4 col-xs-6" style="text-align:center;">
+                  <img class="img-circle img-responsive" style="margin:auto;" src="{{url_for('static', filename='custom/images/commune_Fresnay_CEN_PdL.jpg') }}" alt="image illustrative des fiches territoires" width="140" height="140">
+                  <h3>Fiches "EPCI"</h3>
+                  <p>Découvrez les espèces observées sur chaque intercommunalité des Pays de la Loire.</p>
+                  <p><a class="btn btn-default" href="./territoire/nantesmetropole" role="button">Exemple &raquo;</a></p>
+                </div><!-- /.col-lg-3 -->
+                <div class="col-lg-4 col-lg-4 col-md-4 col-xs-6" style="text-align:center;">
+                  <img class="img-circle img-responsive" style="margin:auto;" src="{{url_for('static', filename='custom/images/Confluent_Vienne-Loire.jpg') }}" alt="image illustrative des fiches territoires" width="140" height="140">
+                  <h3>Fiches "départements"</h3>
+                  <p>Découvrez les espèces observées sur chaque département des Pays de la Loire.</p>
+                  <p><a class="btn btn-default" href="./territoire/sarthe" role="button">Exemple &raquo;</a></p>
+                </div><!-- /.col-lg-3 -->
               </div><!-- /.row -->
 
 
