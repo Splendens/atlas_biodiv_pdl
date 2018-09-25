@@ -53,20 +53,31 @@ def getTaxonsCommunes(connection, insee):
 # With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
 def getTaxonsEpci(connection, nom_epci_simple):
     sql = """
-        SELECT DISTINCT
-            o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
-            COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
-            t.group2_inpn, t.patrimonial, t.protection_stricte, o.insee,
-            m.url, m.chemin, m.id_media
-        FROM atlas.vm_observations o
-        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
-        JOIN atlas.l_communes_epci ec ON ec.insee = o.insee
-        JOIN atlas.vm_epci e ON ec.id = e.id
-        LEFT JOIN atlas.vm_medias m ON m.cd_ref=o.cd_ref AND m.id_type={}
-        WHERE e.nom_epci_simple = :thisNomEpciSimple
-        GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
-            t.patrimonial, t.protection_stricte, o.insee, m.url, m.chemin, m.id_media
-        ORDER BY nb_obs DESC
+        with taxonepci AS (
+            SELECT DISTINCT
+                        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
+                        COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
+                        t.group2_inpn, t.patrimonial, t.protection_stricte, o.insee,
+                        m.url, m.chemin, m.id_media
+                    FROM atlas.vm_observations o
+                    JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+                    JOIN atlas.l_communes_epci ec ON ec.insee = o.insee
+                    JOIN atlas.vm_epci e ON ec.id = e.id
+                    LEFT JOIN atlas.vm_medias m ON m.cd_ref=o.cd_ref AND id_type={}
+                    WHERE e.nom_epci_simple = :thisNomEpciSimple
+                    GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
+                        t.patrimonial, t.protection_stricte, o.insee, m.url, m.chemin, m.id_media
+                    ORDER BY o.cd_ref DESC
+            )
+        select DISTINCT
+                    cd_ref, max(last_obs) as last_obs,
+                    COUNT(nb_obs) AS nb_obs, nom_complet_html, nom_vern,
+                    group2_inpn, patrimonial, protection_stricte,
+                    url, chemin, id_media
+                     from taxonepci
+           GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
+                    patrimonial, protection_stricte, url, chemin, id_media
+        ORDER BY cd_ref DESC
     """.format(config.ATTR_MAIN_PHOTO)
     req = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
     taxonEpciList = list()
