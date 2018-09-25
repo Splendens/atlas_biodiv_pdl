@@ -4,7 +4,7 @@
 from sqlalchemy.sql import text
 
 
-def getStatsGroup2inpnCommChilds(connection, insee):
+def getStatsTaxonGroup2inpnEpciChilds(connection, nom_epci_simple):
       sql = """
          SELECT   
             acanthocephales, 
@@ -42,11 +42,11 @@ def getStatsGroup2inpnCommChilds(connection, insee):
             reptiles, 
             scleractiniaires
 
-            FROM atlas.vm_stats_group2inpn_comm group2inpn
-            WHERE group2inpn.insee = :thisinsee
+            FROM atlas.vm_stats_espece_group2inpn_epci group2inpn
+            WHERE group2inpn.nom_epci_simple = :thisNomEpciSimple
         """.encode('UTF-8')
 
-      mesGroup = connection.execute(text(sql), thisinsee=insee)
+      mesGroup = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
       grouplist = []
       for inter in mesGroup:
             if inter.acanthocephales != 0:
@@ -152,4 +152,7 @@ def getStatsGroup2inpnCommChilds(connection, insee):
                   grouplist.append({'label': "Scléractiniaires", 'y': inter.scleractiniaires},)     
 
       return grouplist
+
+
+
 

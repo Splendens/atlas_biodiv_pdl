@@ -1327,7 +1327,7 @@ CREATE UNIQUE INDEX vm_stats_orga_comm_insee_idx
 
 
 
-/* stats nb TAXONJ par BD pour chaque departement */
+/* stats nb TAXON par BD pour chaque departement */
 
 
 -- Materialized View: atlas.vm_stats_orga_dpt
@@ -1792,6 +1792,413 @@ CREATE UNIQUE INDEX vm_stats_group2inpn_comm_insee_idx
   USING btree (insee);
 
 
+
+/* stats nb obs par group2_inpn pour chaque EPCI */
+
+-- Materialized View: atlas.vm_stats_group2inpn_epci
+
+-- DROP MATERIALIZED VIEW atlas.vm_stats_group2inpn_epci;
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_group2inpn_epci AS 
+ WITH cd_ref AS (
+         SELECT vm_taxref.cd_ref,
+            vm_taxref.group2_inpn
+           FROM atlas.vm_taxref
+          WHERE vm_taxref.cd_ref = vm_taxref.cd_nom
+        ), acanthocephales AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Acanthocéphales'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), algues_brunes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Algues brunes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), algues_rouges AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Algues rouges'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), algues_vertes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Algues vertes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), amphibiens AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Amphibiens'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), angiospermes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Angiospermes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), annelides AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Annélides'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), arachnides AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Arachnides'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), ascidies AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Ascidies'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), autres AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Autres'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), bivalves AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Bivalves'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), cephalopodes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Céphalopodes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), crustaces AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Crustacés'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), diatomees AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Diatomées'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), entognathes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Entognathes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), fougeres AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Fougères'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), gasteropodes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Gastéropodes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), gymnospermes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Gymnospermes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), hepatiques_anthocerotes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Hépatiques et Anthocérotes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), hydrozoaires AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Hydrozoaires'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), insectes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Insectes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), lichens AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Lichens'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), mammiferes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Mammifères'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), mousses AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Mousses'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), myriapodes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Myriapodes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), nematodes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Nématodes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), nemertes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Némertes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), octocoralliaires AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Octocoralliaires'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), oiseaux AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Oiseaux'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), plathelminthes AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Plathelminthes'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), poissons AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Poissons'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), pycnogonides AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Pycnogonides'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), reptiles AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Reptiles'::text
+          GROUP BY vm_epci.nom_epci_simple
+        ), scleractiniaires AS (
+         SELECT vm_epci.nom_epci_simple,
+            count(*) AS nb
+           FROM atlas.vm_observations s_1
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = s_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+             LEFT JOIN cd_ref tx ON tx.cd_ref = s_1.cd_ref
+          WHERE tx.group2_inpn::text = 'Scléractiniaires'::text
+          GROUP BY vm_epci.nom_epci_simple
+        )
+ SELECT DISTINCT o.nom_epci_simple,
+    COALESCE(a.nb::integer, 0) AS acanthocephales,
+    COALESCE(b.nb::integer, 0) AS algues_brunes,
+    COALESCE(c.nb::integer, 0) AS algues_rouges,
+    COALESCE(d.nb::integer, 0) AS algues_vertes,
+    COALESCE(e.nb::integer, 0) AS amphibiens,
+    COALESCE(f.nb::integer, 0) AS angiospermes,
+    COALESCE(g.nb::integer, 0) AS annelides,
+    COALESCE(h.nb::integer, 0) AS arachnides,
+    COALESCE(i.nb::integer, 0) AS ascidies,
+    COALESCE(j.nb::integer, 0) AS autres,
+    COALESCE(k.nb::integer, 0) AS bivalves,
+    COALESCE(l.nb::integer, 0) AS cephalopodes,
+    COALESCE(m.nb::integer, 0) AS crustaces,
+    COALESCE(n.nb::integer, 0) AS diatomees,
+    COALESCE(p.nb::integer, 0) AS entognathes,
+    COALESCE(q.nb::integer, 0) AS fougeres,
+    COALESCE(r.nb::integer, 0) AS gasteropodes,
+    COALESCE(s.nb::integer, 0) AS gymnospermes,
+    COALESCE(t.nb::integer, 0) AS hepatiques_anthocerotes,
+    COALESCE(u.nb::integer, 0) AS hydrozoaires,
+    COALESCE(v.nb::integer, 0) AS insectes,
+    COALESCE(w.nb::integer, 0) AS lichens,
+    COALESCE(x.nb::integer, 0) AS mammiferes,
+    COALESCE(y.nb::integer, 0) AS mousses,
+    COALESCE(z.nb::integer, 0) AS myriapodes,
+    COALESCE(ab.nb::integer, 0) AS nematodes,
+    COALESCE(ac.nb::integer, 0) AS nemertes,
+    COALESCE(ad.nb::integer, 0) AS octocoralliaires,
+    COALESCE(ae.nb::integer, 0) AS oiseaux,
+    COALESCE(af.nb::integer, 0) AS plathelminthes,
+    COALESCE(ag.nb::integer, 0) AS poissons,
+    COALESCE(ah.nb::integer, 0) AS pycnogonides,
+    COALESCE(ai.nb::integer, 0) AS reptiles,
+    COALESCE(aj.nb::integer, 0) AS scleractiniaires
+   FROM atlas.vm_epci o
+     LEFT JOIN acanthocephales a ON a.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN algues_brunes b ON b.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN algues_rouges c ON c.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN algues_vertes d ON d.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN amphibiens e ON e.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN angiospermes f ON f.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN annelides g ON g.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN arachnides h ON h.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN ascidies i ON i.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN autres j ON j.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN bivalves k ON k.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN cephalopodes l ON l.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN crustaces m ON m.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN diatomees n ON n.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN entognathes p ON p.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN fougeres q ON q.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN gasteropodes r ON r.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN gymnospermes s ON s.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN hepatiques_anthocerotes t ON t.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN hydrozoaires u ON u.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN insectes v ON v.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN lichens w ON w.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN mammiferes x ON x.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN mousses y ON y.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN myriapodes z ON z.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN nematodes ab ON ab.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN nemertes ac ON ac.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN octocoralliaires ad ON ad.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN oiseaux ae ON ae.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN plathelminthes af ON af.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN poissons ag ON ag.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN pycnogonides ah ON ah.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN reptiles ai ON ai.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN scleractiniaires aj ON aj.nom_epci_simple = o.nom_epci_simple
+  WHERE o.nom_epci_simple IS NOT NULL
+  ORDER BY o.nom_epci_simple
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_group2inpn_epci
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_group2inpn_epci TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_group2inpn_epci TO geonatatlas;
+
+-- Index: atlas.vm_stats_group2inpn_epci_nom_epci_simple_idx
+
+-- DROP INDEX atlas.vm_stats_group2inpn_epci_nom_epci_simple_idx;
+
+CREATE UNIQUE INDEX vm_stats_group2inpn_epci_nom_epci_simple_idx
+  ON atlas.vm_stats_group2inpn_epci
+  USING btree
+  (nom_epci_simple COLLATE pg_catalog."default");
 
 
 
@@ -2648,6 +3055,618 @@ CREATE UNIQUE INDEX vm_stats_espece_group2inpn_comm_insee_idx
   USING btree (insee);
 
 
+/* stats nb obs par group2inpn pour chaque EPCI */
+
+
+
+-- Materialized View: atlas.vm_stats_espece_group2inpn_epci
+
+-- DROP MATERIALIZED VIEW atlas.vm_stats_espece_group2inpn_epci;
+
+CREATE MATERIALIZED VIEW atlas.vm_stats_espece_group2inpn_epci AS 
+ WITH cd_ref AS (
+         SELECT vm_taxref.cd_ref,
+            vm_taxref.group2_inpn
+           FROM atlas.vm_taxref
+          WHERE vm_taxref.cd_ref = vm_taxref.cd_nom
+        ), somme_a AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Acanthocéphales'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), acanthocephales AS (
+         SELECT count(*) AS nb,
+            somme_a.nom_epci_simple
+           FROM somme_a
+          GROUP BY somme_a.nom_epci_simple
+        ), somme_b AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Algues brunes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), algues_brunes AS (
+         SELECT count(*) AS nb,
+            somme_b.nom_epci_simple
+           FROM somme_b
+          GROUP BY somme_b.nom_epci_simple
+        ), somme_c AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Algues rouges'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), algues_rouges AS (
+         SELECT count(*) AS nb,
+            somme_c.nom_epci_simple
+           FROM somme_c
+          GROUP BY somme_c.nom_epci_simple
+        ), somme_d AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Algues vertes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), algues_vertes AS (
+         SELECT count(*) AS nb,
+            somme_d.nom_epci_simple
+           FROM somme_d
+          GROUP BY somme_d.nom_epci_simple
+        ), somme_e AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Amphibiens'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), amphibiens AS (
+         SELECT count(*) AS nb,
+            somme_e.nom_epci_simple
+           FROM somme_e
+          GROUP BY somme_e.nom_epci_simple
+        ), somme_f AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Angiospermes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), angiospermes AS (
+         SELECT count(*) AS nb,
+            somme_f.nom_epci_simple
+           FROM somme_f
+          GROUP BY somme_f.nom_epci_simple
+        ), somme_g AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Annélides'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), annelides AS (
+         SELECT count(*) AS nb,
+            somme_g.nom_epci_simple
+           FROM somme_g
+          GROUP BY somme_g.nom_epci_simple
+        ), somme_h AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Arachnides'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), arachnides AS (
+         SELECT count(*) AS nb,
+            somme_h.nom_epci_simple
+           FROM somme_h
+          GROUP BY somme_h.nom_epci_simple
+        ), somme_i AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Ascidies'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), ascidies AS (
+         SELECT count(*) AS nb,
+            somme_i.nom_epci_simple
+           FROM somme_i
+          GROUP BY somme_i.nom_epci_simple
+        ), somme_j AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Autres'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), autres AS (
+         SELECT count(*) AS nb,
+            somme_j.nom_epci_simple
+           FROM somme_j
+          GROUP BY somme_j.nom_epci_simple
+        ), somme_k AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Bivalves'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), bivalves AS (
+         SELECT count(*) AS nb,
+            somme_k.nom_epci_simple
+           FROM somme_k
+          GROUP BY somme_k.nom_epci_simple
+        ), somme_l AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Céphalopodes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), cephalopodes AS (
+         SELECT count(*) AS nb,
+            somme_l.nom_epci_simple
+           FROM somme_l
+          GROUP BY somme_l.nom_epci_simple
+        ), somme_m AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Crustacés'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), crustaces AS (
+         SELECT count(*) AS nb,
+            somme_m.nom_epci_simple
+           FROM somme_m
+          GROUP BY somme_m.nom_epci_simple
+        ), somme_n AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Diatomées'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), diatomees AS (
+         SELECT count(*) AS nb,
+            somme_n.nom_epci_simple
+           FROM somme_n
+          GROUP BY somme_n.nom_epci_simple
+        ), somme_p AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Entognathes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), entognathes AS (
+         SELECT count(*) AS nb,
+            somme_p.nom_epci_simple
+           FROM somme_p
+          GROUP BY somme_p.nom_epci_simple
+        ), somme_q AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Fougères'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), fougeres AS (
+         SELECT count(*) AS nb,
+            somme_q.nom_epci_simple
+           FROM somme_q
+          GROUP BY somme_q.nom_epci_simple
+        ), somme_r AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Gastéropodes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), gasteropodes AS (
+         SELECT count(*) AS nb,
+            somme_r.nom_epci_simple
+           FROM somme_r
+          GROUP BY somme_r.nom_epci_simple
+        ), somme_s AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Gymnospermes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), gymnospermes AS (
+         SELECT count(*) AS nb,
+            somme_s.nom_epci_simple
+           FROM somme_s
+          GROUP BY somme_s.nom_epci_simple
+        ), somme_t AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Hépatiques et Anthocérotes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), hepatiques_anthocerotes AS (
+         SELECT count(*) AS nb,
+            somme_t.nom_epci_simple
+           FROM somme_t
+          GROUP BY somme_t.nom_epci_simple
+        ), somme_u AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Hydrozoaires'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), hydrozoaires AS (
+         SELECT count(*) AS nb,
+            somme_u.nom_epci_simple
+           FROM somme_u
+          GROUP BY somme_u.nom_epci_simple
+        ), somme_v AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Insectes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), insectes AS (
+         SELECT count(*) AS nb,
+            somme_v.nom_epci_simple
+           FROM somme_v
+          GROUP BY somme_v.nom_epci_simple
+        ), somme_w AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Lichens'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), lichens AS (
+         SELECT count(*) AS nb,
+            somme_w.nom_epci_simple
+           FROM somme_w
+          GROUP BY somme_w.nom_epci_simple
+        ), somme_x AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Mammifères'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), mammiferes AS (
+         SELECT count(*) AS nb,
+            somme_x.nom_epci_simple
+           FROM somme_x
+          GROUP BY somme_x.nom_epci_simple
+        ), somme_y AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Mousses'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), mousses AS (
+         SELECT count(*) AS nb,
+            somme_y.nom_epci_simple
+           FROM somme_y
+          GROUP BY somme_y.nom_epci_simple
+        ), somme_z AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Myriapodes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), myriapodes AS (
+         SELECT count(*) AS nb,
+            somme_z.nom_epci_simple
+           FROM somme_z
+          GROUP BY somme_z.nom_epci_simple
+        ), somme_ab AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Nématodes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), nematodes AS (
+         SELECT count(*) AS nb,
+            somme_ab.nom_epci_simple
+           FROM somme_ab
+          GROUP BY somme_ab.nom_epci_simple
+        ), somme_ac AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Némertes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), nemertes AS (
+         SELECT count(*) AS nb,
+            somme_ac.nom_epci_simple
+           FROM somme_ac
+          GROUP BY somme_ac.nom_epci_simple
+        ), somme_ad AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Octocoralliaires'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), octocoralliaires AS (
+         SELECT count(*) AS nb,
+            somme_ad.nom_epci_simple
+           FROM somme_ad
+          GROUP BY somme_ad.nom_epci_simple
+        ), somme_ae AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Oiseaux'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), oiseaux AS (
+         SELECT count(*) AS nb,
+            somme_ae.nom_epci_simple
+           FROM somme_ae
+          GROUP BY somme_ae.nom_epci_simple
+        ), somme_af AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Plathelminthes'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), plathelminthes AS (
+         SELECT count(*) AS nb,
+            somme_af.nom_epci_simple
+           FROM somme_af
+          GROUP BY somme_af.nom_epci_simple
+        ), somme_ag AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Poissons'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), poissons AS (
+         SELECT count(*) AS nb,
+            somme_ag.nom_epci_simple
+           FROM somme_ag
+          GROUP BY somme_ag.nom_epci_simple
+        ), somme_ah AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Pycnogonides'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), pycnogonides AS (
+         SELECT count(*) AS nb,
+            somme_ah.nom_epci_simple
+           FROM somme_ah
+          GROUP BY somme_ah.nom_epci_simple
+        ), somme_ai AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Reptiles'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), reptiles AS (
+         SELECT count(*) AS nb,
+            somme_ai.nom_epci_simple
+           FROM somme_ai
+          GROUP BY somme_ai.nom_epci_simple
+        ), somme_aj AS (
+         SELECT DISTINCT o_1.cd_ref,
+            vm_epci.nom_epci_simple,
+            count(o_1.cd_ref) AS nb,
+            t_1.group2_inpn
+           FROM atlas.vm_observations o_1
+             JOIN atlas.vm_taxons t_1 ON t_1.cd_ref = o_1.cd_ref AND t_1.group2_inpn::text = 'Scléractiniaires'::text
+             JOIN atlas.l_communes_epci ON l_communes_epci.insee = o_1.insee
+             JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+          GROUP BY o_1.cd_ref, vm_epci.nom_epci_simple, t_1.group2_inpn
+        ), scleractiniaires AS (
+         SELECT count(*) AS nb,
+            somme_aj.nom_epci_simple
+           FROM somme_aj
+          GROUP BY somme_aj.nom_epci_simple
+        )
+ SELECT DISTINCT o.nom_epci_simple,
+    COALESCE(a.nb::integer, 0) AS acanthocephales,
+    COALESCE(b.nb::integer, 0) AS algues_brunes,
+    COALESCE(c.nb::integer, 0) AS algues_rouges,
+    COALESCE(d.nb::integer, 0) AS algues_vertes,
+    COALESCE(e.nb::integer, 0) AS amphibiens,
+    COALESCE(f.nb::integer, 0) AS angiospermes,
+    COALESCE(g.nb::integer, 0) AS annelides,
+    COALESCE(h.nb::integer, 0) AS arachnides,
+    COALESCE(i.nb::integer, 0) AS ascidies,
+    COALESCE(j.nb::integer, 0) AS autres,
+    COALESCE(k.nb::integer, 0) AS bivalves,
+    COALESCE(l.nb::integer, 0) AS cephalopodes,
+    COALESCE(m.nb::integer, 0) AS crustaces,
+    COALESCE(n.nb::integer, 0) AS diatomees,
+    COALESCE(p.nb::integer, 0) AS entognathes,
+    COALESCE(q.nb::integer, 0) AS fougeres,
+    COALESCE(r.nb::integer, 0) AS gasteropodes,
+    COALESCE(s.nb::integer, 0) AS gymnospermes,
+    COALESCE(t.nb::integer, 0) AS hepatiques_anthocerotes,
+    COALESCE(u.nb::integer, 0) AS hydrozoaires,
+    COALESCE(v.nb::integer, 0) AS insectes,
+    COALESCE(w.nb::integer, 0) AS lichens,
+    COALESCE(x.nb::integer, 0) AS mammiferes,
+    COALESCE(y.nb::integer, 0) AS mousses,
+    COALESCE(z.nb::integer, 0) AS myriapodes,
+    COALESCE(ab.nb::integer, 0) AS nematodes,
+    COALESCE(ac.nb::integer, 0) AS nemertes,
+    COALESCE(ad.nb::integer, 0) AS octocoralliaires,
+    COALESCE(ae.nb::integer, 0) AS oiseaux,
+    COALESCE(af.nb::integer, 0) AS plathelminthes,
+    COALESCE(ag.nb::integer, 0) AS poissons,
+    COALESCE(ah.nb::integer, 0) AS pycnogonides,
+    COALESCE(ai.nb::integer, 0) AS reptiles,
+    COALESCE(aj.nb::integer, 0) AS scleractiniaires
+   FROM atlas.vm_epci o
+     LEFT JOIN acanthocephales a ON a.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN algues_brunes b ON b.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN algues_rouges c ON c.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN algues_vertes d ON d.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN amphibiens e ON e.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN angiospermes f ON f.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN annelides g ON g.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN arachnides h ON h.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN ascidies i ON i.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN autres j ON j.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN bivalves k ON k.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN cephalopodes l ON l.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN crustaces m ON m.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN diatomees n ON n.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN entognathes p ON p.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN fougeres q ON q.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN gasteropodes r ON r.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN gymnospermes s ON s.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN hepatiques_anthocerotes t ON t.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN hydrozoaires u ON u.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN insectes v ON v.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN lichens w ON w.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN mammiferes x ON x.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN mousses y ON y.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN myriapodes z ON z.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN nematodes ab ON ab.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN nemertes ac ON ac.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN octocoralliaires ad ON ad.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN oiseaux ae ON ae.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN plathelminthes af ON af.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN poissons ag ON ag.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN pycnogonides ah ON ah.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN reptiles ai ON ai.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN scleractiniaires aj ON aj.nom_epci_simple = o.nom_epci_simple
+  WHERE o.nom_epci_simple IS NOT NULL
+  ORDER BY o.nom_epci_simple
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_espece_group2inpn_epci
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_espece_group2inpn_epci TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_espece_group2inpn_epci TO geonatatlas;
+
+-- Index: atlas.vm_stats_espece_group2inpn_epci_nom_epci_simple_idx
+
+-- DROP INDEX atlas.vm_stats_espece_group2inpn_epci_nom_epci_simple_idx;
+
+CREATE UNIQUE INDEX vm_stats_espece_group2inpn_epci_nom_epci_simple_idx
+  ON atlas.vm_stats_espece_group2inpn_epci
+  USING btree
+  (nom_epci_simple COLLATE pg_catalog."default");
 
 
 

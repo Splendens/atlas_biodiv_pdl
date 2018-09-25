@@ -5,10 +5,11 @@ from flask import render_template, redirect, abort
 from configuration import config
 from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, 
-    vmMoisRepository, vmTaxrefRepository, vmStatsOrgaTaxonRepository, vmStatsOrgaEpciRepository,
+    vmMoisRepository, vmTaxrefRepository, vmStatsOrgaTaxonRepository, 
     vmCommunesRepository, vmEpciRepository, vmDepartementRepository,
     vmObservationsMaillesRepository, vmMedias, 
-    vmStatsTaxonGroup2inpnCommRepository, vmStatsOrgaCommRepository, vmStatsGroup2inpnCommRepository,
+    vmStatsOrgaCommRepository, vmStatsGroup2inpnCommRepository, vmStatsTaxonGroup2inpnCommRepository, 
+    vmStatsOrgaEpciRepository, vmStatsGroup2inpnEpciRepository, vmStatsTaxonGroup2inpnEpciRepository,
     vmCorTaxonAttribut, vmTaxonsMostView
 )
 from . import utils
@@ -284,8 +285,8 @@ def ficheEpci(nom_epci_simple):
     communesEpci = vmEpciRepository.communesEpciChilds(connection, nom_epci_simple)
     epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
     statsorgaepci = vmStatsOrgaEpciRepository.getStatsOrgaEpciChilds(connection, nom_epci_simple)
-    statsgroup2inpnepci = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnEpciChilds(connection, nom_epci_simple)
-    statstaxongroup2inpnepci = vmStatsTaxonGroup2inpnCommRepository.getStatsTaxonGroup2inpnEpciChilds(connection, nom_epci_simple)
+    statsgroup2inpnepci = vmStatsGroup2inpnEpciRepository.getStatsGroup2inpnEpciChilds(connection, nom_epci_simple)
+    statstaxongroup2inpnepci = vmStatsTaxonGroup2inpnEpciRepository.getStatsTaxonGroup2inpnEpciChilds(connection, nom_epci_simple)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     epciSearch = vmEpciRepository.getAllEpci(session)
     departementSearch = vmDepartementRepository.getAllDepartement(session)
