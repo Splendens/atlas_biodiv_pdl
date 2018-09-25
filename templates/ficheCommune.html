@@ -93,6 +93,12 @@
                                 <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
                                 <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
                             </li>
+                            {% if  infosCommune.communeTerriSearch.epciName %}
+                            <li>
+                                <span class="glyphicon glyphicon-flag" style="font-size: 25px;"></span>
+                                <br/><b>EPCI</b><br/><a href = "{{url_for('main.ficheEpci', nom_epci_simple = infosCommune.communeTerriSearch.nom_epci_simple)}}">{{infosCommune.communeTerriSearch.epciName}}</a>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -124,7 +130,7 @@
             <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="statCom">
-                        <h2 class="text-center">Le territoire en quelques chiffres</h2>
+                        <h2 class="text-center">{{referenciel.communeName}} en quelques chiffres</h2>
 
 
                         <div class="row" id="otherInformations">
@@ -252,8 +258,9 @@
             var nb_obs = {{listTaxons.nbObsTotal}};
             var taxonYearMin = {{infosCommune.communeYearSearch.yearmin}};
             var YEARMAX = {{infosCommune.communeYearSearch.yearmax}};
+            var epciName = '{{infosCommune.communeTerriSearch.epciName}}';
             var communeGeoJson = {{referenciel.communeGeoJson|tojson}};
-            var insee = {{insee}};
+            var insee = '{{insee}}';
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
             var url_limit_dpt_territory = "{{url_for('static', filename='custom/dpt_pdl_simpli.json') }}";
 

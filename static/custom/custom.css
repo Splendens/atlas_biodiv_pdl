@@ -84,6 +84,14 @@ table.dataTable {
   }  
 }
 
+/* fiches EPCI */
+
+#btn-comm-childs{
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+
 /*************************************************/
 /*Bandeau de coin Démonstrateur*/
 /* Corner-Ribbon (bandeaux de coin)

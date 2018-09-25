@@ -90,8 +90,7 @@ def lastObservationsCommune(connection, mylimit, insee):
     JOIN atlas.vm_taxons tax ON  o.cd_ref = tax.cd_ref
     LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme
     WHERE c.insee = :thisInsee
-    ORDER BY o.dateobs DESC
-    LIMIT 100"""
+    ORDER BY o.dateobs DESC """
     observations = connection.execute(text(sql), thisInsee=insee)
     obsList = list()
     for o in observations:
@@ -213,7 +212,7 @@ def getObserversCommunes(connection, insee):
 
 
 def statIndex(connection):
-    result = {'nbTotalObs': None, 'nbTotalTaxons': None, 'town': None, 'photo': None}
+    result = {'nbTotalObs': None, 'nbTotalTaxons': None, 'town': None, 'epci': None, 'departement': None, 'photo': None}
 
     sql = "SELECT COUNT(*) AS count \
     FROM atlas.vm_observations "
@@ -226,6 +225,18 @@ def statIndex(connection):
     req = connection.execute(text(sql))
     for r in req:
         result['town'] = r.count
+
+    sql = "SELECT COUNT(*) AS count\
+    FROM atlas.vm_epci"
+    req = connection.execute(text(sql))
+    for r in req:
+        result['epci'] = r.count
+
+    sql = "SELECT COUNT(*) AS count\
+    FROM atlas.vm_departement"
+    req = connection.execute(text(sql))
+    for r in req:
+        result['departement'] = r.count
 
     sql = "SELECT COUNT(DISTINCT cd_ref) AS count \
     FROM atlas.vm_taxons"
@@ -305,12 +316,12 @@ def genericStatMedias(connection, tab):
 
 def getOrgasObservations(connection, cd_ref):
     sql = "select distinct(a.nom_organisme) AS orgaobs \
-    FROM  atlas.vm_observations o \
-    JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme \
-    WHERE cd_ref in ( \
-    SELECT * from atlas.find_all_taxons_childs(:thiscdref) \
-    )OR cd_ref = :thiscdref \
-    GROUP BY nom_organisme".encode('UTF-8')
+        FROM  atlas.vm_observations o \
+        JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme \
+        WHERE cd_ref in ( \
+        SELECT * from atlas.find_all_taxons_childs(:thiscdref) \
+        )OR cd_ref = :thiscdref \
+        GROUP BY nom_organisme".encode('UTF-8')
     req = connection.execute(text(sql), thiscdref = cd_ref)
     listOrgas = list()
     for r in req:
@@ -321,13 +332,70 @@ def getOrgasObservations(connection, cd_ref):
 
 def getOrgasCommunes(connection, insee):
     sql = "select distinct(a.nom_organisme) AS orgaobs \
-    FROM  atlas.vm_observations o \
-    JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme \
-    WHERE insee = :thisInsee  \
-    GROUP BY nom_organisme".encode('UTF-8')
+        FROM  atlas.vm_observations o \
+        JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme \
+        WHERE insee = :thisInsee  \
+        GROUP BY nom_organisme".encode('UTF-8')
     req = connection.execute(text(sql), thisInsee = insee)
     listOrgasCom = list()
     for r in req:
         temp = {'orga_obs': r.orgaobs}
         listOrgasCom.append(temp)
     return listOrgasCom
+
+
+
+
+def lastObservationsEpci(connection, mylimit, nom_epci_simple):
+    sql = """SELECT o.*,
+            a.nom_organisme AS orgaobs,
+            COALESCE(split_part(tax.nom_vern, ',', 1) || ' | ', '')
+                || tax.lb_nom as taxon
+        FROM atlas.vm_observations o
+        /*JOIN atlas.vm_communes c ON ST_Intersects(o.the_geom_point, c.the_geom)*/
+        JOIN atlas.vm_communes c ON o.insee = c.insee
+        JOIN atlas.vm_taxons tax ON  o.cd_ref = tax.cd_ref
+        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme
+        JOIN atlas.l_communes_epci ec ON ec.insee = o.insee
+        JOIN atlas.vm_epci e ON ec.id = e.id
+        WHERE e.nom_epci_simple = :thisNomEpciSimple
+        ORDER BY o.dateobs DESC """
+    observations = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
+    obsList = list()
+    for o in observations:
+        temp = dict(o)
+        temp.pop('the_geom_point', None)
+        temp['geojson_point'] = ast.literal_eval(o.geojson_point)
+        temp['dateobs'] = str(o.dateobs)
+        temp ['orga_obs'] = o.orgaobs
+        obsList.append(temp)
+    return obsList
+
+
+def getOrgasEpci(connection, nom_epci_simple):
+    sql = "select distinct(a.nom_organisme) AS orgaobs \
+        FROM  atlas.vm_observations o \
+        JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme \
+        JOIN atlas.l_communes_epci ec ON ec.insee = o.insee \
+        JOIN atlas.vm_epci e ON ec.id = e.id \
+        WHERE e.nom_epci_simple = :thisNomEpciSimple  \
+        GROUP BY nom_organisme".encode('UTF-8')
+    req = connection.execute(text(sql), thisNomEpciSimple = nom_epci_simple)
+    listOrgasCom = list()
+    for r in req:
+        temp = {'orga_obs': r.orgaobs}
+        listOrgasCom.append(temp)
+    return listOrgasCom
+
+
+
+def getObserversEpci(connection, nom_epci_simple):
+    sql = """
+        SELECT distinct observateurs
+        FROM atlas.vm_observations o
+        JOIN atlas.l_communes_epci ec ON ec.insee = o.insee 
+        JOIN atlas.vm_epci e ON ec.id = e.id 
+        WHERE e.nom_epci_simple =  :thisNomEpciSimple
+    """
+    req = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
+    return observersParser(req)

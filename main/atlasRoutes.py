@@ -7,8 +7,8 @@ from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, 
     vmMoisRepository, vmTaxrefRepository, vmStatsOrgaTaxonRepository,
     vmCommunesRepository, vmEpciRepository, vmDepartementRepository,
-    vmObservationsMaillesRepository, vmMedias, vmStatsTaxonGroup2inpnCommRepository,
-    vmStatsOrgaCommRepository, vmStatsGroup2inpnCommRepository,
+    vmObservationsMaillesRepository, vmMedias, 
+    vmStatsTaxonGroup2inpnCommRepository, vmStatsOrgaCommRepository, vmStatsGroup2inpnCommRepository,
     vmCorTaxonAttribut, vmTaxonsMostView
 )
 from . import utils
@@ -232,9 +232,7 @@ def ficheCommune(insee):
             connection, config.NB_LAST_OBS, insee
         )
     orgas = vmObservationsRepository.getOrgasCommunes(connection, insee)
-    observers = vmObservationsRepository.getObserversCommunes(
-        connection, insee
-    )
+    observers = vmObservationsRepository.getObserversCommunes(connection, insee)
 
     configuration = base_configuration.copy()
     configuration.update({
@@ -260,6 +258,66 @@ def ficheCommune(insee):
         statsorgacomm=statsorgacomm,
         statsgroup2inpncomm=statsgroup2inpncomm,
         statstaxongroup2inpncomm=statstaxongroup2inpncomm,
+        communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
+        observations=observations,
+        orgas=orgas,
+        observers=observers,
+        configuration=configuration
+    )
+
+
+@main.route('/epci/<nom_epci_simple>', methods=['GET', 'POST'])
+def ficheEpci(nom_epci_simple):
+    session = utils.loadSession()
+    connection = utils.engine.connect()
+    listTaxons = vmTaxonsRepository.getTaxonsEpci(connection, nom_epci_simple)
+    infosEpci = vmEpciRepository.infosEpci(connection, nom_epci_simple)
+    communesEpci = vmEpciRepository.communesEpciChilds(connection, nom_epci_simple)
+    epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
+    statsorgaepci = vmStatsOrgaCommRepository.getStatsOrgaEpciChilds(connection, nom_epci_simple)
+    statsgroup2inpnepci = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnEpciChilds(connection, nom_epci_simple)
+    statstaxongroup2inpnepci = vmStatsTaxonGroup2inpnCommRepository.getStatsTaxonGroup2inpnEpciChilds(connection, nom_epci_simple)
+    communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
+    if config.AFFICHAGE_MAILLE:
+        observations = vmObservationsMaillesRepository.lastObservationsEpciMaille(
+            connection, config.NB_LAST_OBS, nom_epci_simple
+        )
+    else:
+        observations = vmObservationsRepository.lastObservationsEpci(
+            connection, config.NB_LAST_OBS, nom_epci_simple
+        )
+    orgas = vmObservationsRepository.getOrgasEpci(connection, nom_epci_simple)
+    observers = vmObservationsRepository.getObserversEpci(connection, nom_epci_simple)
+
+    configuration = base_configuration.copy()
+    configuration.update({
+        'NB_LAST_OBS': config.NB_LAST_OBS,
+        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
+        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+        'MAP': config.MAP,
+        'MYTYPE': 0,
+        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'PATRIMONIALITE': config.PATRIMONIALITE,
+        'PROTECTION': config.PROTECTION
+    })
+
+    session.close()
+    connection.close()
+
+    return render_template(
+        'templates/ficheEpci.html',
+        nom_epci_simple=nom_epci_simple,
+        listTaxons=listTaxons,
+        infosEpci=infosEpci,
+        communesEpci=communesEpci,
+        referenciel=epci,
+        statsorgaepci=statsorgaepci,
+        statsgroup2inpnepci=statsgroup2inpnepci,
+        statstaxongroup2inpnepci=statstaxongroup2inpnepci,
         communesSearch=communesSearch,
         epciSearch=epciSearch,
         departementSearch=departementSearch,

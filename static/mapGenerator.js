@@ -151,7 +151,7 @@ function onEachFeatureMaille(feature, layer){
 function onEachFeatureMailleCommunale(feature, layer){
 
    popupContent="<b>Commune: </b><a href = '" + configuration.URL_APPLICATION + "/commune/" + feature.properties.id_maille +"'>"  + feature.properties.nom_com + "</a> ";
-
+     
    popupContent =popupContent+"</br><b>Nombre d'observation(s): </b>" + feature.properties.nb_observations;
 
     // verifie si on doit afficher les organismes ou non

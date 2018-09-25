@@ -60,7 +60,7 @@ def getEpciObservationsChilds(connection, cd_ref):
 
 
 
-def infosEpci(connection, insee):
+def infosEpci(connection, nom_epci_simple):
     """
         recherche les infos sur l'epci
     """
@@ -89,3 +89,30 @@ def infosEpci(connection, insee):
     return {
         'epciYearSearch': epciYearSearch
     }
+
+
+def communesEpciChilds(connection, nom_epci_simple):
+    """
+        recherche les communes de l'epci
+    """
+    sql = """  
+    SELECT c.commune_maj, c.insee
+    FROM atlas.vm_communes c  
+        JOIN atlas.l_communes_epci ec ON c.insee = ec.insee
+        JOIN atlas.vm_epci e ON ec.id = e.id
+    WHERE e.nom_epci_simple = :thisnomepcisimple
+    ORDER BY c.commune_maj
+    """
+    req = connection.execute(text(sql), thisnomepcisimple=nom_epci_simple)
+    communesEpciChilds = list()
+    for r in req:
+        temp = {
+            'commune_maj': r.commune_maj,
+            'insee': r.insee
+        }
+        communesEpciChilds.append(temp)
+    
+    return {
+        'communesEpciChilds': communesEpciChilds
+    }
+
