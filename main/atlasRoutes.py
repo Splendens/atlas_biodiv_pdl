@@ -42,6 +42,13 @@ def especeMedias(image):
 def communeMedias(image):
     return redirect(config.REMOTE_MEDIAS_URL+config.REMOTE_MEDIAS_PATH+image)
 
+@main.route(
+    '/epci/'+config.REMOTE_MEDIAS_PATH+'<image>',
+    methods=['GET', 'POST']
+)
+def epciMedias(image):
+    return redirect(config.REMOTE_MEDIAS_URL+config.REMOTE_MEDIAS_PATH+image)
+
 
 @main.route(
     '/liste/'+config.REMOTE_MEDIAS_PATH+'<image>',
