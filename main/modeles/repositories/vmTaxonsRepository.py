@@ -71,7 +71,7 @@ def getTaxonsEpci(connection, nom_epci_simple):
             )
         select DISTINCT
                     cd_ref, max(last_obs) as last_obs,
-                    COUNT(nb_obs) AS nb_obs, nom_complet_html, nom_vern,
+                    SUM(nb_obs) AS nb_obs, nom_complet_html, nom_vern,
                     group2_inpn, patrimonial, protection_stricte,
                     url, chemin, id_media
                      from taxonepci
