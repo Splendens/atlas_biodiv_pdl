@@ -4,7 +4,7 @@
 from sqlalchemy.sql import text
 
 
-def getStatsOrgaCommChilds(connection, insee):
+def getStatsOrgaEpciChilds(connection, nom_epci_simple):
     sql = """
        
     SELECT 
@@ -17,13 +17,13 @@ def getStatsOrgaCommChilds(connection, insee):
     _83nbobs, _83nbtaxon, 
     _84nbobs, _84nbtaxon 
 
-    FROM atlas.vm_stats_orga_comm orgas
+    FROM atlas.vm_stats_orga_epci orgas
 
-    WHERE orgas.insee = :thisinsee
+    WHERE orgas.nom_epci_simple = :thisNomEpciSimple
 
     """.encode('UTF-8')
 
-    mesOrgas = connection.execute(text(sql), thisinsee=insee)
+    mesOrgas = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
     for inter in mesOrgas:
         return [
             {'label': "Calluna (CBNB)", 'y': inter._06nbtaxon},

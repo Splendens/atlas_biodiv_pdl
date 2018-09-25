@@ -872,8 +872,178 @@ CREATE UNIQUE INDEX vm_stats_orga_comm_insee_idx
   USING btree (insee);
 
 
+/* stats nb obs par structure pour chaque EPCI */
 
 
+CREATE MATERIALIZED VIEW atlas.vm_stats_orga_epci AS 
+ WITH _03 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 3
+        GROUP BY vm_epci.nom_epci_simple
+        ), _04 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 4
+        GROUP BY vm_epci.nom_epci_simple
+        ), _05 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 5
+        GROUP BY vm_epci.nom_epci_simple
+        ), _06 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 6
+        GROUP BY vm_epci.nom_epci_simple
+        ), _09 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 9
+        GROUP BY vm_epci.nom_epci_simple
+        ), _70 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 70
+        GROUP BY vm_epci.nom_epci_simple
+        ), _80 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 80
+        GROUP BY vm_epci.nom_epci_simple
+        ), _81 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 81
+        GROUP BY vm_epci.nom_epci_simple
+        ), _82 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 82
+        GROUP BY vm_epci.nom_epci_simple
+        ), _83 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 83
+        GROUP BY vm_epci.nom_epci_simple
+        ), _84 AS (
+        SELECT vm_epci.nom_epci_simple,
+            count(*) AS nbobs,
+            count(DISTINCT vm_observations.cd_ref) AS nbtaxon
+        FROM atlas.vm_observations
+          JOIN atlas.vm_taxons ON vm_taxons.cd_ref = vm_observations.cd_ref
+          JOIN atlas.l_communes_epci ON l_communes_epci.insee = vm_observations.insee
+          JOIN atlas.vm_epci ON vm_epci.id = l_communes_epci.id
+        WHERE vm_observations.id_organisme = 84
+        GROUP BY vm_epci.nom_epci_simple
+        )
+ SELECT DISTINCT o.nom_epci_simple,
+    COALESCE(a.nbobs::integer, 0) AS _03nbobs,
+    COALESCE(a.nbtaxon::integer, 0) AS _03nbtaxon,
+    COALESCE(b.nbobs::integer, 0) AS _04nbobs,
+    COALESCE(b.nbtaxon::integer, 0) AS _04nbtaxon,
+    COALESCE(c.nbobs::integer, 0) AS _05nbobs,
+    COALESCE(c.nbtaxon::integer, 0) AS _05nbtaxon,
+    COALESCE(d.nbobs::integer, 0) AS _06nbobs,
+    COALESCE(d.nbtaxon::integer, 0) AS _06nbtaxon,
+    COALESCE(e.nbobs::integer, 0) AS _09nbobs,
+    COALESCE(e.nbtaxon::integer, 0) AS _09nbtaxon,
+    COALESCE(f.nbobs::integer, 0) AS _70nbobs,
+    COALESCE(f.nbtaxon::integer, 0) AS _70nbtaxon,
+    COALESCE(g.nbobs::integer, 0) AS _80nbobs,
+    COALESCE(g.nbtaxon::integer, 0) AS _80nbtaxon,
+    COALESCE(h.nbobs::integer, 0) AS _81nbobs,
+    COALESCE(h.nbtaxon::integer, 0) AS _81nbtaxon,
+    COALESCE(i.nbobs::integer, 0) AS _82nbobs,
+    COALESCE(i.nbtaxon::integer, 0) AS _82nbtaxon,
+    COALESCE(j.nbobs::integer, 0) AS _83nbobs,
+    COALESCE(j.nbtaxon::integer, 0) AS _83nbtaxon,
+    COALESCE(k.nbobs::integer, 0) AS _84nbobs,
+    COALESCE(k.nbtaxon::integer, 0) AS _84nbtaxon
+   FROM atlas.vm_epci o
+
+     LEFT JOIN _03 a ON a.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _04 b ON b.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _05 c ON c.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _06 d ON d.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _09 e ON e.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _70 f ON f.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _80 g ON g.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _81 h ON h.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _82 i ON i.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _83 j ON j.nom_epci_simple = o.nom_epci_simple
+     LEFT JOIN _84 k ON k.nom_epci_simple = o.nom_epci_simple
+  WHERE o.nom_epci_simple IS NOT NULL
+  ORDER BY o.nom_epci_simple
+
+
+limit 20
+
+WITH DATA;
+
+ALTER TABLE atlas.vm_stats_orga_epci
+  OWNER TO geonatuser;
+GRANT ALL ON TABLE atlas.vm_stats_orga_epci TO geonatuser;
+GRANT SELECT ON TABLE atlas.vm_stats_orga_epci TO geonatatlas;
+
+-- Index: atlas.vm_stats_orga_epci_insee_idx
+
+-- DROP INDEX atlas.vm_stats_orga_epci_insee_idx;
+
+CREATE UNIQUE INDEX vm_stats_orga_epci_nomsimple_idx
+  ON atlas.vm_stats_orga_epci
+  USING btree
+  (nom_epci_simple COLLATE pg_catalog."default");
 
 
 /* stats nb obs par structure pour chaque departement */
