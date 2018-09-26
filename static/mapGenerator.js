@@ -488,7 +488,50 @@ function generateGeojsonMaillePressionProspectionCommune(observations, yearMin, 
 }
 
 
-// Popup Maille Communale
+
+function generateGeojsonMaillePressionProspectionMailleCommunale(observations, yearMin, yearMax) {
+
+  var i=0;
+  myGeoJson = {'type': 'FeatureCollection',
+             'features' : []
+          }
+  tabProperties =[]
+  while (i<observations.length){
+    if(observations[i].annee >= yearMin && observations[i].annee <= yearMax ) {
+      geometry = observations[i].geojson_maille;
+      idMaille = observations[i].id_maille;
+      properties = {id_maille : idMaille, nom_com : observations[i].nom_com, nb_observations : 1, orga_obs: observations[i].orga_obs, last_observation: observations[i].annee, tabDateobs: [new Date(observations[i].dateobs)]};
+      var j = i+1;
+      while (j<observations.length && observations[j].id_maille <= idMaille){
+        if(observations[j].annee >= yearMin && observations[j].annee <= yearMax ){
+          properties.nb_observations +=  observations[j].nb_observations;
+          properties.tabDateobs.push(new Date(observations[i].dateobs));
+        }
+        if (observations[j].annee >=  properties.last_observation){
+          properties.last_observation = observations[j].annee
+        }
+        if (observations[j].orga_obs != properties.orga_obs) {
+          properties.orga_obs += (' <br/> ' + observations[j].orga_obs)
+        }
+        j = j+1
+      }
+      myGeoJson.features.push({
+          'type' : 'Feature',
+          'properties' : properties,
+          'geometry' : geometry   
+      })
+      // on avance jusqu' à j 
+      i = j  ;
+    }
+    else {
+      i = i+1;
+    }
+  }
+
+  return myGeoJson
+}
+
+// Popup pression prospection 
 function onEachFeatureMaillePressionProspectionCommune(feature, layer){
 
    popupContent ="<b>Nombre d'observation(s): </b>" + feature.properties.nb_observations;
@@ -503,6 +546,22 @@ function onEachFeatureMaillePressionProspectionCommune(feature, layer){
     layer.bindPopup(popupContent)
 }
 
+// Popup pression prospection  Maille Communale
+function onEachFeaturePressionProspectionMailleCommunale(feature, layer){
+
+   popupContent="<b>Commune: </b><a href = '" + configuration.URL_APPLICATION + "/commune/" + feature.properties.id_maille +"'>"  + feature.properties.nom_com + "</a> ";
+     
+   popupContent =popupContent+"</br><b>Nombre d'observation(s): </b>" + feature.properties.nb_observations;
+
+    // verifie si on doit afficher les organismes ou non
+    if(configuration.AFFICHAGE_ORGAS_OBS_FICHECOMM){      
+      popupContent=popupContent+"</br> <b> Provenance: </b>" + feature.properties.orga_obs + " ";
+    }
+
+    popupContent=popupContent+"</br> <b> Dernière observation: </b>" + feature.properties.last_observation + " ";
+
+    layer.bindPopup(popupContent)
+}
 
 function displayMaillePressionProspectionCommuneLayer(observationsMaille, yearMin, yearMax){
   myGeoJson = generateGeojsonMaillePressionProspectionCommune(observationsMaille, yearMin, yearMax);
@@ -516,6 +575,17 @@ function displayMaillePressionProspectionCommuneLayer(observationsMaille, yearMi
   generateLegendMaille();
 }
 
+function displayMaillePressionProspectionMailleCommunaleLayer(observationsMaille, yearMin, yearMax){
+  myGeoJson = generateGeojsonMaillePressionProspectionMailleCommunale(observationsMaille, yearMin, yearMax);
+  currentLayer = L.geoJson(myGeoJson, {
+      onEachFeature : onEachFeaturePressionProspectionMailleCommunale,
+      style: styleMaille,
+  });
+  currentLayer.addTo(map);
+
+  // ajout de la légende
+  generateLegendMaille();
+}
 
 
 

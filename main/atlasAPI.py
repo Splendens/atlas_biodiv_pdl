@@ -71,6 +71,13 @@ def getpressionProspectionEpciAPI(nom_epci_simple):
     connection.close()
     return Response(json.dumps(observations), mimetype='application/json')
 
+@api.route('/pressionProspectionEpciMaillesCommunales/<nom_epci_simple>', methods=['GET'])
+def getpressionProspectionEpciMaillesCommunalesAPI(nom_epci_simple):
+    connection = utils.engine.connect()
+    observations = vmObservationsMaillesCommunalesRepository.getpressionProspectionEpciMaillesCommunalesChilds(connection, nom_epci_simple)
+    connection.close()
+    return Response(json.dumps(observations), mimetype='application/json')
+
 @api.route('/pressionProspectionDpt/<num_dpt>', methods=['GET'])
 def getpressionProspectionDptAPI(num_dpt):
     connection = utils.engine.connect()
@@ -78,6 +85,12 @@ def getpressionProspectionDptAPI(num_dpt):
     connection.close()
     return Response(json.dumps(observations), mimetype='application/json')
 
+@api.route('/pressionProspectionDptMaillesCommunales/<num_dpt>', methods=['GET'])
+def getpressionProspectionDptMaillesCommunalesAPI(num_dpt):
+    connection = utils.engine.connect()
+    observations = vmObservationsMaillesCommunalesRepository.getpressionProspectionDptMaillesCommunalesChilds(connection, num_dpt)
+    connection.close()
+    return Response(json.dumps(observations), mimetype='application/json')
 
 @api.route('/observations/<insee>/<int:cd_ref>', methods=['GET'])
 def getObservationsCommuneTaxonAPI(insee, cd_ref):
