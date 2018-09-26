@@ -86,7 +86,8 @@ table.dataTable {
 
 /* fiches EPCI */
 
-#btn-comm-childs{
+#btn-comm-childs,
+#btn-epci-childs {
   margin-top: 20px;
   cursor: pointer;
 }

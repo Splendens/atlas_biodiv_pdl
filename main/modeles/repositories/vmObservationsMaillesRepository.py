@@ -199,6 +199,7 @@ def getObservationsTaxonCommuneMaille(connection, insee, cd_ref):
 
 
 
+
 def lastObservationsEpciMaille(connection, mylimit, nom_epci_simple):
     sql = """
     WITH last_obs AS (
@@ -257,6 +258,78 @@ def pressionProspectionEpci(connection, nom_epci_simple):
         WHERE e.nom_epci_simple = :thisNomEpciSimple
         ORDER BY id_maille"""
     observations = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
+    tabObs = list()
+    for o in observations:
+        temp = {
+            'id_maille': o.id_maille,
+            'nb_observations': 1,
+            'annee': o.annee,
+            'dateobs': str(o.dateobs),
+            'orga_obs': o.orgaobs,
+            'geojson_maille': ast.literal_eval(o.geojson_maille)
+        }
+        tabObs.append(temp)
+    return tabObs
+
+
+
+def lastObservationsDptMaille(connection, mylimit, num_dpt):
+    sql = """
+    WITH last_obs AS (
+        SELECT
+            obs.cd_ref, obs.dateobs, t.lb_nom,
+            t.nom_vern, obs.the_geom_point as l_geom
+        FROM atlas.vm_observations obs
+        JOIN atlas.vm_communes c
+        /*ON ST_Intersects(obs.the_geom_point, c.the_geom)*/
+        ON obs.insee = c.insee
+        JOIN atlas.vm_taxons t ON  obs.cd_ref = t.cd_ref
+        WHERE left(obs.insee,2)::int = :thisNumdpt
+        ORDER BY obs.dateobs DESC
+        LIMIT :thislimit
+    )
+    SELECT l.lb_nom, l.nom_vern, l.cd_ref, m.id_maille, m.geojson_maille
+    FROM atlas.t_mailles_territoire m
+    JOIN last_obs  l
+    ON st_intersects(l.l_geom, m.the_geom)
+    GROUP BY l.lb_nom, l.cd_ref, m.id_maille, l.nom_vern
+    """
+    observations = connection.execute(
+        text(sql), thisNumdpt=num_dpt, thislimit=mylimit
+    )
+    obsList = list()
+    for o in observations:
+        if o.nom_vern:
+            taxon = o.nom_vern + ' | ' + o.lb_nom
+        else:
+            taxon = o.lb_nom
+        temp = {
+            'cd_ref': o.cd_ref,
+            'taxon': taxon,
+            'geojson_maille': ast.literal_eval(o.geojson_maille),
+            'id_maille': o.id_maille
+        }
+        obsList.append(temp)
+    return obsList
+
+
+
+
+
+def pressionProspectionDpt(connection, num_dpt):
+    sql = """SELECT
+            obs.id_maille,
+            obs.geojson_maille,
+            a.nom_organisme AS orgaobs, 
+            o.dateobs,
+            extract(YEAR FROM o.dateobs) as annee
+        FROM atlas.vm_observations_mailles obs
+        JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+        WHERE left(o.insee,2)::int = :thisNumdpt
+        ORDER BY id_maille"""
+    observations = connection.execute(text(sql), thisNumdpt=num_dpt)
     tabObs = list()
     for o in observations:
         temp = {

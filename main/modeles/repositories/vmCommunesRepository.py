@@ -17,15 +17,21 @@ def getAllCommunes(session):
 
 
 def getCommuneFromInsee(connection, insee):
-    sql = "SELECT c.commune_maj, \
-           c.insee, \
-           c.commune_geojson \
+    sql = "SELECT      \
+                d.nom_dpt, \
+                d.num_dpt, \
+                c.commune_maj, \
+                c.insee, \
+                c.commune_geojson \
            FROM atlas.vm_communes c \
+           JOIN atlas.vm_departement d ON d.num_dpt = left(c.insee,2)::int \
            WHERE c.insee = :thisInsee"
     req = connection.execute(text(sql), thisInsee=insee)
     communeObj = dict()
     for r in req:
         communeObj = {
+            'dptName': r.nom_dpt,
+            'num_dpt': r.num_dpt,
             'communeName': r.commune_maj,
             'insee': str(r.insee),
             'communeGeoJson': ast.literal_eval(r.commune_geojson)
@@ -33,7 +39,6 @@ def getCommuneFromInsee(connection, insee):
     return communeObj
 
     return req[0].commune_maj
-
 
 def getCommunesObservationsChilds(connection, cd_ref):
     sql = """

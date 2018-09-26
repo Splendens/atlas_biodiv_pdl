@@ -95,7 +95,10 @@
                             </li>
                             <li>
                                 <span class="glyphicon glyphicon-home" style="font-size: 25px;"></span>
-                                <br/><a id="btn-comm-childs" data-toggle="modal" data-target="#myModal"><b>{{communesEpci.communesEpciChilds|length}}</b><br/>{{ 'Communes' if communesEpci.communesEpciChilds|length > 1 else 'Commune' }} dans l'EPCI</a> 
+                                <br/>
+                                <span data-toggle="tooltip" data-original-title="Voir la liste des communes" data-placement="bottom">
+                                    <a id="btn-comm-childs" data-toggle="modal" data-target="#myModal"><b>{{communesEpci.communesEpciChilds|length}}</b><br/>{{ 'Communes' if communesEpci.communesEpciChilds|length > 1 else 'Commune' }} dans l'EPCI</a>
+                                </span>
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -139,10 +142,12 @@
                                   </div>
                               </div>
 
-
-
-
-
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-tower" style="font-size: 25px;"></span></br>
+                                <a href = "{{url_for('main.ficheDepartement', num_dpt = epciDpt.num_dpt) }}">
+                                    <span data-toggle="tooltip" data-original-title="Consulter la fiche département" data-placement="bottom"><b>{{epciDpt.dptName}}</b><br/>({{epciDpt.num_dpt}})</span>
+                                </a>
                             </li>
 
                         </ul>

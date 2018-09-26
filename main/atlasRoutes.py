@@ -10,6 +10,7 @@ from modeles.repositories import (
     vmObservationsMaillesRepository, vmMedias, 
     vmStatsOrgaCommRepository, vmStatsGroup2inpnCommRepository, vmStatsTaxonGroup2inpnCommRepository, 
     vmStatsOrgaEpciRepository, vmStatsGroup2inpnEpciRepository, vmStatsTaxonGroup2inpnEpciRepository,
+    vmStatsOrgaDptRepository, vmStatsGroup2inpnDptRepository, vmStatsTaxonGroup2inpnDptRepository,
     vmCorTaxonAttribut, vmTaxonsMostView
 )
 from . import utils
@@ -48,6 +49,14 @@ def communeMedias(image):
     methods=['GET', 'POST']
 )
 def epciMedias(image):
+    return redirect(config.REMOTE_MEDIAS_URL+config.REMOTE_MEDIAS_PATH+image)
+
+
+@main.route(
+    '/departement/'+config.REMOTE_MEDIAS_PATH+'<image>',
+    methods=['GET', 'POST']
+)
+def departementMedias(image):
     return redirect(config.REMOTE_MEDIAS_URL+config.REMOTE_MEDIAS_PATH+image)
 
 
@@ -286,6 +295,7 @@ def ficheEpci(nom_epci_simple):
     infosEpci = vmEpciRepository.infosEpci(connection, nom_epci_simple)
     communesEpci = vmEpciRepository.communesEpciChilds(connection, nom_epci_simple)
     epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
+    epciDpt = vmEpciRepository.getDptFromNEpci(connection, nom_epci_simple)
     statsorgaepci = vmStatsOrgaEpciRepository.getStatsOrgaEpciChilds(connection, nom_epci_simple)
     statsgroup2inpnepci = vmStatsGroup2inpnEpciRepository.getStatsGroup2inpnEpciChilds(connection, nom_epci_simple)
     statstaxongroup2inpnepci = vmStatsTaxonGroup2inpnEpciRepository.getStatsTaxonGroup2inpnEpciChilds(connection, nom_epci_simple)
@@ -325,6 +335,7 @@ def ficheEpci(nom_epci_simple):
         infosEpci=infosEpci,
         communesEpci=communesEpci,
         referenciel=epci,
+        epciDpt=epciDpt,
         statsorgaepci=statsorgaepci,
         statsgroup2inpnepci=statsgroup2inpnepci,
         statstaxongroup2inpnepci=statstaxongroup2inpnepci,
@@ -336,6 +347,69 @@ def ficheEpci(nom_epci_simple):
         observers=observers,
         configuration=configuration
     )
+
+
+@main.route('/departement/<num_dpt>', methods=['GET', 'POST'])
+def ficheDepartement(num_dpt):
+    session = utils.loadSession()
+    connection = utils.engine.connect()
+    listTaxons = vmTaxonsRepository.getTaxonsDpt(connection, num_dpt)
+    infosDpt = vmDepartementRepository.infosDpt(connection, num_dpt)
+    communesDpt = vmDepartementRepository.communesDptChilds(connection, num_dpt)
+    epciDpt = vmDepartementRepository.epciDptChilds(connection, num_dpt)
+    dpt = vmDepartementRepository.getDepartementFromNumdpt(connection, num_dpt)
+    statsorgadpt = vmStatsOrgaDptRepository.getStatsOrgaDptChilds(connection, num_dpt)
+    statsgroup2inpndpt = vmStatsGroup2inpnDptRepository.getStatsGroup2inpnDptChilds(connection, num_dpt)
+    statstaxongroup2inpndpt = vmStatsTaxonGroup2inpnDptRepository.getStatsTaxonGroup2inpnDptChilds(connection, num_dpt)
+    communesSearch = vmCommunesRepository.getAllCommunes(session)
+    epciSearch = vmEpciRepository.getAllEpci(session)
+    departementSearch = vmDepartementRepository.getAllDepartement(session)
+    if config.AFFICHAGE_MAILLE:
+        observations = vmObservationsMaillesRepository.lastObservationsDptMaille(
+            connection, config.NB_LAST_OBS, num_dpt
+        )
+    else:
+        observations = vmObservationsRepository.lastObservationsDpt(
+            connection, config.NB_LAST_OBS, num_dpt
+        )
+    orgas = vmObservationsRepository.getOrgasDpt(connection, num_dpt)
+    observers = vmObservationsRepository.getObserversDpt(connection, num_dpt)
+
+    configuration = base_configuration.copy()
+    configuration.update({
+        'NB_LAST_OBS': config.NB_LAST_OBS,
+        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
+        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+        'MAP': config.MAP,
+        'MYTYPE': 0,
+        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'PATRIMONIALITE': config.PATRIMONIALITE,
+        'PROTECTION': config.PROTECTION
+    })
+
+    session.close()
+    connection.close()
+
+    return render_template(
+        'templates/ficheDepartement.html',
+        num_dpt=num_dpt,
+        listTaxons=listTaxons,
+        infosDpt=infosDpt,
+        communesDpt=communesDpt,
+        epciDpt=epciDpt,
+        referenciel=dpt,
+        statsorgadpt=statsorgadpt,
+        statsgroup2inpndpt=statsgroup2inpndpt,
+        statstaxongroup2inpndpt=statstaxongroup2inpndpt,
+        communesSearch=communesSearch,
+        epciSearch=epciSearch,
+        departementSearch=departementSearch,
+        observations=observations,
+        orgas=orgas,
+        observers=observers,
+        configuration=configuration
+    )
+
 
 
 @main.route('/liste/<cd_ref>', methods=['GET', 'POST'])

@@ -2,7 +2,7 @@
 <html>
    <head>
         <meta charset="utf-8" />
-        <title>Commune de {{referenciel.communeName}} | {{configuration.NOM_APPLICATION}}</title>
+        <title>Département - {{referenciel.dptName}} ({{referenciel.num_dpt}}) | {{configuration.NOM_APPLICATION}}</title>
 
         <!-- Jquery -->
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
@@ -67,7 +67,7 @@
             <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="parent">
-                        <h2><b>Commune : {{referenciel.communeName}}</b></h2>
+                        <h2><b>Département : {{referenciel.dptName}} ({{referenciel.num_dpt}})</b></h2>
                         <ul id="stat">
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 30px;"></span><br/>
@@ -77,18 +77,14 @@
                                 <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
                                 <b>{{listTaxons.taxons|length}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
                             </li>
-                            {% if infosCommune.communeYearSearch.yearmin %}
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span>
-                                <br/><b>Première observation</b><br/>{{infosCommune.communeYearSearch.yearmin|int}}
+                                <br/><b>Première observation</b><br/>{{infosDpt.dptYearSearch.yearmin|int}}
                             </li>
-                            {% endif %}
-                            {% if infosCommune.communeYearSearch.yearmax %}
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span>
-                                <br/><b>Dernière observation</b><br/>{{infosCommune.communeYearSearch.yearmax|int}}
+                                <br/><b>Dernière observation</b><br/>{{infosDpt.dptYearSearch.yearmax|int}}
                             </li>
-                            {% endif %}
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="font-size:30px;margin:5%;"></br>
                                 <b>{{orgas|length}}</b><br/>{{ 'Sources' if orgas|length > 1 else 'Source' }}
@@ -97,32 +93,116 @@
                                 <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
                                 <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
                             </li>
-                            {% if  epciCommune.nom_epci %}
+                            <li>
+                                <span class="glyphicon glyphicon-home" style="font-size: 25px;"></span>
+                                <br/>
+                                <span data-toggle="tooltip" data-original-title="Voir la liste des communes" data-placement="bottom">
+                                    <a id="btn-comm-childs" data-toggle="modal" data-target="#myModal"><b>{{communesDpt.communesDptChilds|length}}</b><br/>{{ 'Communes' if communesDpt.communesDptChilds|length > 1 else 'Commune' }}</a> 
+                                </span>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h3 class="modal-title" id="myModalLabel">{{ 'Communes' if communesDpt.communesDptChilds|length > 1 else 'Commune' }} de : {{referenciel.dptName}}</h3>
+                                          </div>
+                                          <div class="modal-body">
+                                            <table class="table table-hover">
+                                                <thead class="text-center">
+                                                    <tr>
+                                                        <th> Commune </th>
+                                                        <th> Code insee </th>
+                                                        <th> Nombre d'espèces </th>
+                                                        <th> Fiche </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for child in communesDpt.communesDptChilds %}
+                                                    <a href = "{{url_for('main.ficheCommune', insee = child.insee) }}">
+                                                        <tr>
+                                                            <td> {{child.commune_maj}} </td>
+                                                            <td> {{child.insee}} </td>
+                                                            <td> {{child.nb_sp}} </td>
+                                                            <td>
+                                                                <a href = "{{url_for('main.ficheCommune', insee = child.insee) }}">
+                                                                    <span id="ficheGlyficon"  data-toggle="tooltip" data-original-title="Consulter la fiche commune" data-placement="right" class="glyphicon glyphicon-list"></span>
+                                                                </a>
+                                                            </td>
+
+                                                        </tr>
+                                                    </a>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                  </div>
+                              </div>
+                            </li>
                             <li>
                                 <span class="glyphicon glyphicon-flag" style="font-size: 25px;"></span>
-                                <br/><b>EPCI</b>
-                                <br/><span data-toggle="tooltip" data-original-title="Consulter la fiche EPCI" data-placement="bottom"><a href = "{{url_for('main.ficheEpci', nom_epci_simple = epciCommune.nom_epci_simple)}}">{{epciCommune.nom_epci}}</a></span>
+                                <br/>
+                                <span data-toggle="tooltip" data-original-title="Voir la liste des Intercommunalités" data-placement="bottom">
+                                    <a id="btn-epci-childs" data-toggle="modal" data-target="#myModalepci"><b>{{epciDpt.epciDptChilds|length}}</b><br/>EPCI</a> 
+                                </span>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModalepci" tabindex="-1" role="dialog" aria-labelledby="myModalLabelepci">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h3 class="modal-title" id="myModalLabelepci">{{ 'Intercommunalités' if epciDpt.epciDptChilds|length > 1 else 'Intercommunalité' }} de : {{referenciel.dptName}}</h3>
+                                          </div>
+                                          <div class="modal-body">
+                                            <table class="table table-hover">
+                                                <thead class="text-center">
+                                                    <tr>
+                                                        <th> Intercommunalité </th>
+                                                        <th> Nombre d'espèces </th>
+                                                        <th> Nombre de communes </th>
+                                                        <th> Fiche </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for child in epciDpt.epciDptChilds %}
+                                                    <a href = "{{url_for('main.ficheEpci', nom_epci_simple = child.nom_epci_simple) }}">
+                                                        <tr>
+                                                            <td> {{child.nom_epci}} </td>
+                                                            <td> {{child.nb_sp}} </td>
+                                                            <td> {{child.nb_comm}} </td>
+                                                            <td>
+                                                                <a href = "{{url_for('main.ficheEpci', nom_epci_simple = child.nom_epci_simple) }}">
+                                                                    <span id="ficheGlyficon"  data-toggle="tooltip" data-original-title="Consulter la fiche EPCI" data-placement="right" class="glyphicon glyphicon-list"></span>
+                                                                </a>
+                                                            </td>
+
+                                                        </tr>
+                                                    </a>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                  </div>
+                              </div>
                             </li>
-                            {% endif %}
-                            <li>
-                                <span class="glyphicon glyphicon-tower" style="font-size: 25px;"></span></br>
-                                <a href = "{{url_for('main.ficheDepartement', num_dpt = referenciel.num_dpt) }}">
-                                    <span data-toggle="tooltip" data-original-title="Consulter la fiche département" data-placement="bottom"><b>{{referenciel.dptName}}</b><br/>({{referenciel.num_dpt}})</span>
-                                </a>
-                            </li>
+
+
                         </ul>
                     </div>
                 </div>
             </div>
 
 
-
-
-
             <div class="row rowMargin" id="clear">
                 <div class="col-xs-12" id="ObsCommunes"> 
                     <div class="panel panel-default" >
-                        <div class="panel-heading"><h3> {{listTaxons.nbObsTotal}} observations sur la commune de <i>{{referenciel.communeName}}</i></h3></div>
+                        <div class="panel-heading"><h3> {{listTaxons.nbObsTotal}} observations sur l'intercommunalité de <i>{{referenciel.dptName}}</i></h3></div>
                         <div class="row" id="mapRow">
                             <!-- CARTE des dernières observations -->
                             <div id="blocMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -138,12 +218,10 @@
                     </div>
                 </div>           
             </div>
-
-        {% if listTaxons.nbObsTotal > 0 %}
             <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="statCom">
-                        <h2 class="text-center">{{referenciel.communeName}} en quelques chiffres</h2>
+                        <h2 class="text-center">{{referenciel.dptName}} en quelques chiffres</h2>
 
 
                         <div class="row" id="otherInformations">
@@ -206,7 +284,7 @@
 
                 </div>
          </div>
-    {% endif %}
+
 
             <!--div class="row rowMargin">
                 <div class="col-xs-12">
@@ -225,7 +303,7 @@
                 </div>
             </div--><!-- /.row -->
 
-        
+
             <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="blocInfos">
@@ -258,31 +336,29 @@
         {% if configuration.AFFICHAGE_FOOTER %}
             {% include 'static/custom/templates/footer.html' %}
         {% endif %}
-
         
         <script type="text/javascript">
-            var statsorgacomm = {{statsorgacomm|tojson}};
-            var statsgroup2inpncomm = {{statsgroup2inpncomm|tojson}};
-            var statstaxongroup2inpncomm = {{statstaxongroup2inpncomm|tojson}};
+            var statsorgacomm = {{statsorgadpt|tojson}};
+            var statsgroup2inpncomm = {{statsgroup2inpndpt|tojson}};
+            var statstaxongroup2inpncomm = {{statstaxongroup2inpndpt|tojson}};
             var communesSearch = {{communesSearch|tojson}};
             var epciSearch = {{epciSearch|tojson}};
             var departementSearch = {{departementSearch|tojson}};
             var configuration = {{configuration|tojson}};
             var observations = {{observations|tojson}};
-            {% if infosCommune.communeYearSearch.yearmin %}
-                    var taxonYearMin = {{infosCommune.communeYearSearch.yearmin}};
+            var nb_obs = {{listTaxons.nbObsTotal}};
+            {% if infosDpt.dptYearSearch.yearmin %}
+                    var taxonYearMin = {{infosDpt.dptYearSearch.yearmin}};
             {% else %}
                     var taxonYearMin = 0000;
             {% endif %}
-            {% if infosCommune.communeYearSearch.yearmax %}
-                    var YEARMAX = {{infosCommune.communeYearSearch.yearmax}};
+            {% if infosDpt.dptYearSearch.yearmax %}
+                    var YEARMAX = {{infosDpt.dptYearSearch.yearmax}};
             {% else %}
                 var YEARMAX = 0000;
             {% endif %}
-            var nb_obs = {{listTaxons.nbObsTotal}};
-            var nom_epci = '{{epciCommune.nom_epci}}';
-            var communeGeoJson = {{referenciel.communeGeoJson|tojson}};
-            var insee = '{{insee}}';
+            var dptGeoJson = {{referenciel.dptGeoJson|tojson}};
+            var num_dpt = {{num_dpt}};
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
             var url_limit_dpt_territory = "{{url_for('static', filename='custom/dpt_pdl_simpli.json') }}";
 
@@ -299,7 +375,7 @@
         <script type="text/javascript" src="{{url_for('static', filename='chart_territoire.js') }}"></script>
         <script src="{{url_for('static', filename='listeEspeces.js') }}"></script>
         <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
-        <script src="{{url_for('static', filename='mapCommune.js') }}"></script>
+        <script src="{{url_for('static', filename='mapDepartement.js') }}"></script>
         <script src="{{url_for('static', filename='main.js') }}"></script>
 
    </body> 

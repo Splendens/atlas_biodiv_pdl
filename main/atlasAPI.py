@@ -71,6 +71,12 @@ def getpressionProspectionEpciAPI(nom_epci_simple):
     connection.close()
     return Response(json.dumps(observations), mimetype='application/json')
 
+@api.route('/pressionProspectionDpt/<num_dpt>', methods=['GET'])
+def getpressionProspectionDptAPI(num_dpt):
+    connection = utils.engine.connect()
+    observations = vmObservationsMaillesRepository.pressionProspectionDpt(connection, num_dpt)
+    connection.close()
+    return Response(json.dumps(observations), mimetype='application/json')
 
 
 @api.route('/observations/<insee>/<int:cd_ref>', methods=['GET'])

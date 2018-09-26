@@ -35,6 +35,24 @@ def getEpciFromNomsimple(connection, nom_epci_simple):
     return req[0].nom_epci
 
 
+def getDptFromNEpci(connection, nom_epci_simple):
+    sql = "SELECT distinct d.nom_dpt, \
+           d.num_dpt \
+           FROM atlas.vm_epci e \
+           JOIN atlas.l_communes_epci ec ON e.id = ec.id \
+           JOIN atlas.vm_departement d ON left(ec.insee,2)::int = d.num_dpt \
+           WHERE e.nom_epci_simple = :thisnomepcisimple"
+    req = connection.execute(text(sql), thisnomepcisimple=nom_epci_simple)
+    epciObj = dict()
+    for r in req:
+        epciObj = {
+            'dptName': r.nom_dpt,
+            'num_dpt': r.num_dpt,
+        }
+    return epciObj
+
+
+
 def getEpciObservationsChilds(connection, cd_ref):
     sql = """
     SELECT DISTINCT (e.nom_epci_simple) as nom_epci_simple,

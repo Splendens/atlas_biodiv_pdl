@@ -399,3 +399,56 @@ def getObserversEpci(connection, nom_epci_simple):
     """
     req = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
     return observersParser(req)
+
+
+
+
+
+
+def lastObservationsDpt(connection, mylimit, num_dpt):
+    sql = """SELECT o.*,
+            a.nom_organisme AS orgaobs,
+            COALESCE(split_part(tax.nom_vern, ',', 1) || ' | ', '')
+                || tax.lb_nom as taxon
+        FROM atlas.vm_observations o
+        /*JOIN atlas.vm_communes c ON ST_Intersects(o.the_geom_point, c.the_geom)*/
+        JOIN atlas.vm_communes c ON o.insee = c.insee
+        JOIN atlas.vm_taxons tax ON  o.cd_ref = tax.cd_ref
+        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme
+        WHERE left(o.insee,2)::int = :thisNumdpt
+        ORDER BY o.dateobs DESC """
+    observations = connection.execute(text(sql), thisNumdpt=num_dpt)
+    obsList = list()
+    for o in observations:
+        temp = dict(o)
+        temp.pop('the_geom_point', None)
+        temp['geojson_point'] = ast.literal_eval(o.geojson_point)
+        temp['dateobs'] = str(o.dateobs)
+        temp ['orga_obs'] = o.orgaobs
+        obsList.append(temp)
+    return obsList
+
+
+def getOrgasDpt(connection, num_dpt):
+    sql = "select distinct(a.nom_organisme) AS orgaobs \
+        FROM  atlas.vm_observations o \
+        JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme \
+        WHERE left(o.insee,2)::int = :thisNumdpt  \
+        GROUP BY nom_organisme".encode('UTF-8')
+    req = connection.execute(text(sql), thisNumdpt = num_dpt)
+    listOrgasCom = list()
+    for r in req:
+        temp = {'orga_obs': r.orgaobs}
+        listOrgasCom.append(temp)
+    return listOrgasCom
+
+
+
+def getObserversDpt(connection, num_dpt):
+    sql = """
+        SELECT distinct observateurs
+        FROM atlas.vm_observations o 
+        WHERE left(o.insee,2)::int = :thisNumdpt
+    """
+    req = connection.execute(text(sql), thisNumdpt=num_dpt)
+    return observersParser(req)
