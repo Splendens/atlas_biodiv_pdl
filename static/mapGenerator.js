@@ -818,17 +818,20 @@ function generateSliderOnMap(){
 
     });
 
-    map.addControl(new SliderControl());
-        
-        mySlider = new Slider('#sliderControl', {
-        value: [taxonYearMin, YEARMAX],
-        min : taxonYearMin,
-        max : YEARMAX,
-        step: configuration.MAP.STEP,
-      });
+  if(typeof taxonYearMin  !== 'undefined' && typeof YEARMAX !== 'undefined'){
 
-    $("#yearMax").html("&nbsp;&nbsp;&nbsp;&nbsp;"+ YEARMAX);
-    $("#yearMin").html(taxonYearMin + "&nbsp;&nbsp;&nbsp;&nbsp");
+      map.addControl(new SliderControl());
+          
+          mySlider = new Slider('#sliderControl', {
+          value: [taxonYearMin, YEARMAX],
+          min : taxonYearMin,
+          max : YEARMAX,
+          step: configuration.MAP.STEP,
+        });
+
+      $("#yearMax").html("&nbsp;&nbsp;&nbsp;&nbsp;"+ YEARMAX);
+      $("#yearMin").html(taxonYearMin + "&nbsp;&nbsp;&nbsp;&nbsp");
+  }
 
 
 

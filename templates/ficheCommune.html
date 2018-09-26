@@ -77,14 +77,18 @@
                                 <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
                                 <b>{{listTaxons.taxons|length}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
                             </li>
+                            {% if infosCommune.communeYearSearch.yearmin %}
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span>
                                 <br/><b>Première observation</b><br/>{{infosCommune.communeYearSearch.yearmin|int}}
                             </li>
+                            {% endif %}
+                            {% if infosCommune.communeYearSearch.yearmax %}
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span>
                                 <br/><b>Dernière observation</b><br/>{{infosCommune.communeYearSearch.yearmax|int}}
                             </li>
+                            {% endif %}
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="font-size:30px;margin:5%;"></br>
                                 <b>{{orgas|length}}</b><br/>{{ 'Sources' if orgas|length > 1 else 'Source' }}
@@ -93,10 +97,10 @@
                                 <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
                                 <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
                             </li>
-                            {% if  infosCommune.communeTerriSearch.epciName %}
+                            {% if  epciCommune.nom_epci %}
                             <li>
                                 <span class="glyphicon glyphicon-flag" style="font-size: 25px;"></span>
-                                <br/><b>EPCI</b><br/><a href = "{{url_for('main.ficheEpci', nom_epci_simple = infosCommune.communeTerriSearch.nom_epci_simple)}}">{{infosCommune.communeTerriSearch.epciName}}</a>
+                                <br/><b>EPCI</b><br/><a href = "{{url_for('main.ficheEpci', nom_epci_simple = epciCommune.nom_epci_simple)}}">{{epciCommune.nom_epci}}</a>
                             </li>
                             {% endif %}
                         </ul>
@@ -245,6 +249,7 @@
         {% if configuration.AFFICHAGE_FOOTER %}
             {% include 'static/custom/templates/footer.html' %}
         {% endif %}
+
         
         <script type="text/javascript">
             var statsorgacomm = {{statsorgacomm|tojson}};
@@ -255,10 +260,18 @@
             var departementSearch = {{departementSearch|tojson}};
             var configuration = {{configuration|tojson}};
             var observations = {{observations|tojson}};
+            {% if infosCommune.communeYearSearch.yearmin %}
+                    var taxonYearMin = {{infosCommune.communeYearSearch.yearmin}};
+            {% else %}
+                    var taxonYearMin = 0000;
+            {% endif %}
+            {% if infosCommune.communeYearSearch.yearmax %}
+                    var YEARMAX = {{infosCommune.communeYearSearch.yearmax}};
+            {% else %}
+                var YEARMAX = 0000;
+            {% endif %}
             var nb_obs = {{listTaxons.nbObsTotal}};
-            var taxonYearMin = {{infosCommune.communeYearSearch.yearmin}};
-            var YEARMAX = {{infosCommune.communeYearSearch.yearmax}};
-            var epciName = '{{infosCommune.communeTerriSearch.epciName}}';
+            var nom_epci = '{{epciCommune.nom_epci}}';
             var communeGeoJson = {{referenciel.communeGeoJson|tojson}};
             var insee = '{{insee}}';
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";

@@ -84,8 +84,8 @@ if (configuration.PRESSION_PROSPECTION){
 	    // affichage des mailles
 	    displayMaillePressionProspectionCommuneLayer(observations, taxonYearMin, YEARMAX);
 
-	      //display nb observations
-	  $("#nbObsLateral").html("<b>"+observations.length+" </b> </br> Observations" );
+		//display nb observations
+		$("#nbObsLateral").html("<b>"+observations.length+" </b> </br> Observations" );
 
 
 

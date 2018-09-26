@@ -56,12 +56,51 @@ def getCommunesObservationsChilds(connection, cd_ref):
 
 
 
+#def infosCommune(connection, insee):
+#    """
+#        recherche les infos sur la commune
+#    """
+#    sql = """
+#       WITH all_obs AS (
+#        SELECT
+#            extract(YEAR FROM o.dateobs) as annee, o.insee
+#        FROM atlas.vm_observations o
+#        WHERE o.insee = :thisInsee
+#    )
+#    SELECT  
+#            min(annee) AS yearmin,
+#            max(annee) AS yearmax,
+#            e.nom_epci_simple, 
+#            e.nom_epci
+#    FROM all_obs ao 
+#    JOIN atlas.l_communes_epci ec ON ao.insee = ec.insee
+#    JOIN atlas.vm_epci e ON e.id = ec.id
+#    GROUP BY  e.nom_epci_simple, e.nom_epci
+#    """
+#    req = connection.execute(text(sql), thisInsee=insee)
+#    communeYearSearch = dict()
+#    communeTerriSearch = dict()
+#    for r in req:
+#        communeYearSearch = {
+#            'yearmin': r.yearmin,
+#            'yearmax': r.yearmax
+#        }
+#        communeTerriSearch = {
+#            'nom_epci_simple': r.nom_epci_simple,
+#            'epciName': r.nom_epci
+#        }
+#    return {
+#        'communeYearSearch': communeYearSearch,
+#        'communeTerriSearch': communeTerriSearch
+#    }
+
+
 def infosCommune(connection, insee):
     """
         recherche les infos sur la commune
     """
     sql = """
-       WITH all_obs AS (
+    WITH all_obs AS (
         SELECT
             extract(YEAR FROM o.dateobs) as annee, o.insee
         FROM atlas.vm_observations o
@@ -69,29 +108,41 @@ def infosCommune(connection, insee):
     )
     SELECT  
             min(annee) AS yearmin,
-            max(annee) AS yearmax,
-            e.nom_epci_simple, 
-            e.nom_epci
+            max(annee) AS yearmax
+
     FROM all_obs ao 
     JOIN atlas.l_communes_epci ec ON ao.insee = ec.insee
     JOIN atlas.vm_epci e ON e.id = ec.id
-    GROUP BY  e.nom_epci_simple, e.nom_epci
     """
     req = connection.execute(text(sql), thisInsee=insee)
     communeYearSearch = dict()
-    communeTerriSearch = dict()
     for r in req:
         communeYearSearch = {
             'yearmin': r.yearmin,
             'yearmax': r.yearmax
         }
-        communeTerriSearch = {
-            'nom_epci_simple': r.nom_epci_simple,
-            'epciName': r.nom_epci
-        }
     return {
-        'communeYearSearch': communeYearSearch,
-        'communeTerriSearch': communeTerriSearch
+        'communeYearSearch': communeYearSearch
     }
 
 
+
+def epciCommune(connection, insee):
+    """
+        recherche l'epci de la commune
+    """
+    sql = """
+        SELECT  
+            e.nom_epci_simple, 
+            e.nom_epci
+        FROM atlas.vm_epci e
+        JOIN atlas.l_communes_epci ec ON e.id = ec.id
+        WHERE ec.insee =:thisInsee
+    """
+    req = connection.execute(text(sql), thisInsee=insee)
+
+    for r in req:
+        return {
+            'nom_epci_simple': r.nom_epci_simple,
+            'nom_epci': r.nom_epci
+        }

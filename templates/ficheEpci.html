@@ -109,8 +109,9 @@
                                             <table class="table table-hover">
                                                 <thead class="text-center">
                                                     <tr>
-                                                        <th> Nom de la commune </th>
+                                                        <th> Commune </th>
                                                         <th> Code insee </th>
+                                                        <th> Nombre d'espèces </th>
                                                         <th> Fiche </th>
                                                     </tr>
                                                 </thead>
@@ -120,6 +121,7 @@
                                                         <tr>
                                                             <td> {{child.commune_maj}} </td>
                                                             <td> {{child.insee}} </td>
+                                                            <td> {{child.nb_sp}} </td>
                                                             <td>
                                                                 <a href = "{{url_for('main.ficheCommune', insee = child.insee) }}">
                                                                     <span id="ficheGlyficon"  data-toggle="tooltip" data-original-title="Consulter la fiche commune" data-placement="right" class="glyphicon glyphicon-list"></span>
@@ -297,8 +299,16 @@
             var configuration = {{configuration|tojson}};
             var observations = {{observations|tojson}};
             var nb_obs = {{listTaxons.nbObsTotal}};
-            var taxonYearMin = {{infosEpci.epciYearSearch.yearmin}};
-            var YEARMAX = {{infosEpci.epciYearSearch.yearmax}};
+            {% if infosEpci.epciYearSearch.yearmin %}
+                    var taxonYearMin = {{infosEpci.epciYearSearch.yearmin}};
+            {% else %}
+                    var taxonYearMin = 0000;
+            {% endif %}
+            {% if infosEpci.epciYearSearch.yearmax %}
+                    var YEARMAX = {{infosEpci.epciYearSearch.yearmax}};
+            {% else %}
+                var YEARMAX = 0000;
+            {% endif %}
             var epciGeoJson = {{referenciel.epciGeoJson|tojson}};
             var nom_epci_simple = '{{nom_epci_simple}}';
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
