@@ -43,7 +43,7 @@ Highcharts.chart('statsorgacommGraph', {
     },
 
     title: {
-      text: "Nombre d'espèces sur le territoire<br>par base de données",
+      text: "Nombre d'espèces sur le territoire<br>par source de données",
       style : { "color": "#333333", "fontSize": "22px" }
     },
     yAxis: {
@@ -187,10 +187,13 @@ Highcharts.chart('group2inpnGraph', {
     enabled: false
   },
   title: {
-    text: "Répartition du nombre de données<br> par groupe taxonomique",
+    text: "Nombre de données",
     style : { "color": "#333333", "fontSize": "22px" }
   },
-
+  subtitle: {
+    text: "par groupe taxonomique",
+    style : { "color": "#333333", "fontSize": "18px" }
+  },
   tooltip: {
     headerFormat: '',
     pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
@@ -254,10 +257,13 @@ Highcharts.chart('taxongroup2inpnGraph', {
     enabled: false
   },
   title: {
-    text: "Répartition du nombre d'espèces<br> par groupe taxonomique",
+    text: "Nombre d'espèces",
     style : { "color": "#333333", "fontSize": "22px" }
   },
-
+  subtitle: {
+    text: "par groupe taxonomique",
+    style : { "color": "#333333", "fontSize": "18px" }
+  },
   tooltip: {
     headerFormat: '',
     pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
