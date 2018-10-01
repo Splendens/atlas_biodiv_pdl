@@ -144,9 +144,9 @@
 
                             </li>
                             <li>
-                                <span class="glyphicon glyphicon-tower" style="font-size: 25px;"></span></br>
+                                <span class="glyphicon glyphicon-tower" style="font-size: 25px;"></span></br><b>Département</b><br/>
                                 <a href = "{{url_for('main.ficheDepartement', num_dpt = epciDpt.num_dpt) }}">
-                                    <span data-toggle="tooltip" data-original-title="Consulter la fiche département" data-placement="bottom"><b>{{epciDpt.dptName}}</b><br/>({{epciDpt.num_dpt}})</span>
+                                    <span data-toggle="tooltip" data-original-title="Consulter la fiche département" data-placement="bottom">{{epciDpt.dptName}}<br/>({{epciDpt.num_dpt}})</span>
                                 </a>
                             </li>
 
@@ -180,7 +180,7 @@
             <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="statCom">
-                        <h2 class="text-center">{{referenciel.epciName}} en quelques chiffres</h2>
+                        <h2 class="text-center">L'intercommunalité <i>{{referenciel.epciName}}</i> en quelques chiffres</h2>
 
 
                         <div class="row" id="otherInformations">

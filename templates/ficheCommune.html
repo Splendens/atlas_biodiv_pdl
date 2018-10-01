@@ -105,9 +105,9 @@
                             </li>
                             {% endif %}
                             <li>
-                                <span class="glyphicon glyphicon-tower" style="font-size: 25px;"></span></br>
+                                <span class="glyphicon glyphicon-tower" style="font-size: 25px;"></span></br><b>Département</b><br/>
                                 <a href = "{{url_for('main.ficheDepartement', num_dpt = referenciel.num_dpt) }}">
-                                    <span data-toggle="tooltip" data-original-title="Consulter la fiche département" data-placement="bottom"><b>{{referenciel.dptName}}</b><br/>({{referenciel.num_dpt}})</span>
+                                    <span data-toggle="tooltip" data-original-title="Consulter la fiche département" data-placement="bottom">{{referenciel.dptName}}<br/>({{referenciel.num_dpt}})</span>
                                 </a>
                             </li>
                         </ul>
