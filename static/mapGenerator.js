@@ -235,7 +235,7 @@ function generateGeojsonMaille(observations, yearMin, yearMax) {
         if (observations[j].annee >=  properties.last_observation){
           properties.last_observation = observations[j].annee
         }
-        if (observations[j].orga_obs != properties.orga_obs) {
+        if (!properties.orga_obs.includes(observations[j].orga_obs)) {
           properties.orga_obs += (' <br/> ' + observations[j].orga_obs)
         }
         j = j+1
@@ -278,7 +278,7 @@ function generateGeojsonMailleCommunale(observations, yearMin, yearMax) {
         if (observations[j].annee >=  properties.last_observation){
           properties.last_observation = observations[j].annee
         }
-        if (observations[j].orga_obs != properties.orga_obs) {
+        if (!properties.orga_obs.includes(observations[j].orga_obs)) {
           properties.orga_obs += (' <br/> ' + observations[j].orga_obs)
         }
         j = j+1
@@ -508,7 +508,7 @@ function generateGeojsonMaillePressionProspectionMailleCommunale(observations, y
         if (observations[j].annee >=  properties.last_observation){
           properties.last_observation = observations[j].annee
         }
-        if (observations[j].orga_obs != properties.orga_obs) {
+        if (!properties.orga_obs.includes(observations[j].orga_obs)) {
           properties.orga_obs += (' <br/> ' + observations[j].orga_obs)
         }
         j = j+1
