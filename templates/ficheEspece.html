@@ -37,6 +37,7 @@
 
         <!-- Highcharts -->
         <script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
+
         <!--script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script-->
 
         <!-- D3 -->
@@ -106,6 +107,7 @@
 	                            <img src="{{url_for('static', filename='images/picto_'+ taxon.taxonSearch.group2_inpn| replace(" ", "_")|urlencode+'.png') }}" alt="{{taxon.taxonSearch.group2_inpn}}" data-toggle="tooltip" data-original-title="{{taxon.taxonSearch.group2_inpn}}" data-placement="right">
                             </a>
 						</div>
+
 						<div id="taxonName">
 
                             {% if taxon.taxonSearch.nom_vern != None %}
@@ -249,6 +251,14 @@
                                     
                                     <!--br/> <br/><p>Consultez la fiche espèce sur l'INPN &raquo;</p-->
                                  </a>
+                            </div>
+                            <br/>
+
+                            <div id="exportPdf">
+                                <a class="btn btn-default" href="{{ url_for('main.ficheEspece_pdf', cd_ref=cd_ref) }}" target="_blank" role="button">
+                                    <span class="glyphicon glyphicon-download-alt"> </span>
+                                    Export PDF
+                                </a>
                             </div>
 
 
@@ -627,9 +637,6 @@
 
 
             <div class="panel panel-default" id="graphBloc">
-
-
-
                 <div id="statsorgataxonChart"></div>
                 <div id="phenologyChart"></div>
             </div>
