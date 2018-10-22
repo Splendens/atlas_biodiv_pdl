@@ -173,3 +173,13 @@ table.dataTable {
 .corner-ribbon.yellow{background: #ec0;}
 
 
+
+/*** slider slick page acceuil****/
+.slidepartenaireindex{
+  width: 280px;
+}
+
+.slick-prev::before, 
+.slick-next::before {
+    color: #1e1b0c;
+  }

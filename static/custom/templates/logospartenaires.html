@@ -1,4 +1,4 @@
-<div class="col-sm-12">
+<!--div class="col-sm-12">
 	<div class="panel panel-default">
 		<div class="row">
 			<div class="col-lg-1 col-md-1 col-sm-3 col-xs-3" style="margin:1%;margin-left:5%;">
@@ -43,4 +43,143 @@
 			</div>							
 		</div>
 	</div>
+</div-->
+
+
+
+<div class="col-sm-12">
+	<div class="panel panel-default">
+		<div class="row" style="padding: 1%;">	
+
+			<div class="container">
+			  <section class="partner-logos slidepartenaireindexr">
+
+			  	<!--Region PdL-->
+			    <div class="slidepartenaireindex">
+		    		<a href="{{url_for('main.get_staticpages', page='acteurs') }}#regionpdl" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_region_pdl.png') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--DREAL PdL-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#drealpdl" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_dreal_pdl.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--CBNB-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#cbnb" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_CBN_de_Brest.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--CEN PdL-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#cenpdl" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_cen_pdl.jpg') }}"  width="80%">
+					</a>	    	
+			    </div>
+
+			  	<!--Coordi LPO-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#lpopdl" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_coordi_lpo_pdl.png') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--GRETIA-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#gretia" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_gretia.png') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--URCPIE-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#urcpie" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_urcpie_pdl.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--INPN-->
+			    <div class="slidepartenaireindex">
+					<a href="https://inpn.mnhn.fr/accueil/index" target="_blank">
+						<img src="{{url_for('static', filename='custom/images/logo_inpn.png') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--LPO 49-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#lpoanjou" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_lpo_49.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--LPO 44-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#lpoloireatlantique" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_lpo_44.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--GNLA-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#gnla" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_gnla.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--BV-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#bvivante" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_bvivante.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--LPO 72-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#lposarthe" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_lpo_72.png') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--MNE-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#mne" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_mne_53.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+			  	<!--LPO 85-->
+			    <div class="slidepartenaireindex">
+					<a href="{{url_for('main.get_staticpages', page='acteurs') }}#lpovendee" target="_self">
+						<img src="{{url_for('static', filename='custom/images/logo_lpo_85.jpg') }}"  width="80%">
+					</a>
+			    </div>
+
+
+			  </section>
+
+		  	</div>
+  
+		</div>
+	</div>
 </div>
+
+
+  <script type="text/javascript">
+		$(document).ready(function(){
+		  $('.partner-logos').slick({
+		  	  infinite: true,
+		  	  dots: false,
+			  slidesToShow: 5,
+			  slidesToScroll: 1,
+			  centerMode: false,
+			  autoplay: true,
+			  autoplaySpeed: 1200,
+			});
+		});
+  </script>
+
