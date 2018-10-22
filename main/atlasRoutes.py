@@ -4,7 +4,7 @@
 from flask import render_template, redirect, abort, url_for
 from configuration import config
 
-from flask_weasyprint import HTML, render_pdf
+#from flask_weasyprint import HTML, render_pdf
 
 from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, 
@@ -231,88 +231,88 @@ def ficheEspece(cd_ref):
     )
 
 
-@main.route('/ficheEspece_<cd_ref>.pdf')
-def ficheEspece_pdf(cd_ref):
-    session = utils.loadSession()
-    connection = utils.engine.connect()
-
-    cd_ref = int(cd_ref)
-    taxon = vmTaxrefRepository.searchEspece(connection, cd_ref)
-    statsorgataxon = vmStatsOrgaTaxonRepository.getStatsOrgaTaxonChilds(connection, cd_ref)
-    months = vmMoisRepository.getMonthlyObservationsChilds(connection, cd_ref)
-    synonyme = vmTaxrefRepository.getSynonymy(connection, cd_ref)
-    communes = vmCommunesRepository.getCommunesObservationsChilds(
-        connection, cd_ref
-    )
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
-    taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
-    firstPhoto = vmMedias.getFirstPhoto(
-        connection, cd_ref, config.ATTR_MAIN_PHOTO
-    )
-    photoCarousel = vmMedias.getPhotoCarousel(
-        connection, cd_ref, config.ATTR_OTHER_PHOTO
-    )
-    videoAudio = vmMedias.getVideo_and_audio(
-        connection, cd_ref, config.ATTR_AUDIO, config.ATTR_VIDEO_HEBERGEE,
-        config.ATTR_YOUTUBE, config.ATTR_DAILYMOTION, config.ATTR_VIMEO
-    )
-    articles = vmMedias.getLinks_and_articles(
-        connection, cd_ref, config.ATTR_LIEN, config.ATTR_PDF
-    )
-    taxonDescription = vmCorTaxonAttribut.getAttributesTaxon(
-        connection, cd_ref, config.ATTR_DESC, config.ATTR_COMMENTAIRE,
-        config.ATTR_MILIEU, config.ATTR_CHOROLOGIE
-    )
-    orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
-    observers = vmObservationsRepository.getObservers(connection, cd_ref)
-
-    configuration = base_configuration.copy()
-    configuration.update({
-        'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
-        'AFFICHAGE_ORGAS_OBS_FICHEESP': config.AFFICHAGE_ORGAS_OBS_FICHEESP,
-        'PATRIMONIALITE': config.PATRIMONIALITE,
-        'PROTECTION': config.PROTECTION,
-        'GLOSSAIRE': config.GLOSSAIRE,
-        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,       
-        'AFFICHAGE_SWITCHER': config.AFFICHAGE_SWITCHER,
-        'AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE': config.AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE,
-        'AFFICHAGE_ATLAS_MAILLE_COMMUNALE': config.AFFICHAGE_ATLAS_MAILLE_COMMUNALE,
-        'AFFICHAGE_ATLAS_MAILLE_CARREE': config.AFFICHAGE_ATLAS_MAILLE_CARREE,
-        'AFFICHAGE_ATLAS_POINT': config.AFFICHAGE_ATLAS_POINT,
-        'ZOOM_LEVEL_POINT': config.ZOOM_LEVEL_POINT,
-        'LIMIT_CLUSTER_POINT': config.LIMIT_CLUSTER_POINT,
-        'FICHE_ESPECE': True,
-        'MAP': config.MAP
-    })
-
-    connection.close()
-    session.close()
-    html = render_template('templates/testpdf.html', 
-        taxon=taxon,
-        listeTaxonsSearch=[],
-        observations=[],
-        cd_ref=cd_ref,
-        statsorgataxon=statsorgataxon,
-        months=months,
-        synonyme=synonyme,
-        communes=communes,
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
-        taxonomyHierarchy=taxonomyHierarchy,
-        firstPhoto=firstPhoto,
-        photoCarousel=photoCarousel,
-        videoAudio=videoAudio,
-        articles=articles,
-        taxonDescription=taxonDescription,
-        orgas=orgas,
-        observers=observers,
-        configuration=configuration
-        )
-    return render_pdf(HTML(string=html))
-
+#@main.route('/ficheEspece_<cd_ref>.pdf')
+#def ficheEspece_pdf(cd_ref):
+#    session = utils.loadSession()
+#    connection = utils.engine.connect()
+#
+#    cd_ref = int(cd_ref)
+#    taxon = vmTaxrefRepository.searchEspece(connection, cd_ref)
+#    statsorgataxon = vmStatsOrgaTaxonRepository.getStatsOrgaTaxonChilds(connection, cd_ref)
+#    months = vmMoisRepository.getMonthlyObservationsChilds(connection, cd_ref)
+#    synonyme = vmTaxrefRepository.getSynonymy(connection, cd_ref)
+#    communes = vmCommunesRepository.getCommunesObservationsChilds(
+#        connection, cd_ref
+#    )
+#    communesSearch = vmCommunesRepository.getAllCommunes(session)
+#    epciSearch = vmEpciRepository.getAllEpci(session)
+#    departementSearch = vmDepartementRepository.getAllDepartement(session)
+#    taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
+#    firstPhoto = vmMedias.getFirstPhoto(
+#        connection, cd_ref, config.ATTR_MAIN_PHOTO
+#    )
+#    photoCarousel = vmMedias.getPhotoCarousel(
+#        connection, cd_ref, config.ATTR_OTHER_PHOTO
+#    )
+#    videoAudio = vmMedias.getVideo_and_audio(
+#        connection, cd_ref, config.ATTR_AUDIO, config.ATTR_VIDEO_HEBERGEE,
+#        config.ATTR_YOUTUBE, config.ATTR_DAILYMOTION, config.ATTR_VIMEO
+#    )
+#    articles = vmMedias.getLinks_and_articles(
+#        connection, cd_ref, config.ATTR_LIEN, config.ATTR_PDF
+#    )
+#    taxonDescription = vmCorTaxonAttribut.getAttributesTaxon(
+#        connection, cd_ref, config.ATTR_DESC, config.ATTR_COMMENTAIRE,
+#        config.ATTR_MILIEU, config.ATTR_CHOROLOGIE
+#    )
+#    orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
+#    observers = vmObservationsRepository.getObservers(connection, cd_ref)
+#
+#    configuration = base_configuration.copy()
+#    configuration.update({
+#        'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
+#        'AFFICHAGE_ORGAS_OBS_FICHEESP': config.AFFICHAGE_ORGAS_OBS_FICHEESP,
+#        'PATRIMONIALITE': config.PATRIMONIALITE,
+#        'PROTECTION': config.PROTECTION,
+#        'GLOSSAIRE': config.GLOSSAIRE,
+#        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,       
+#        'AFFICHAGE_SWITCHER': config.AFFICHAGE_SWITCHER,
+#        'AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE': config.AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE,
+#        'AFFICHAGE_ATLAS_MAILLE_COMMUNALE': config.AFFICHAGE_ATLAS_MAILLE_COMMUNALE,
+#        'AFFICHAGE_ATLAS_MAILLE_CARREE': config.AFFICHAGE_ATLAS_MAILLE_CARREE,
+#        'AFFICHAGE_ATLAS_POINT': config.AFFICHAGE_ATLAS_POINT,
+#        'ZOOM_LEVEL_POINT': config.ZOOM_LEVEL_POINT,
+#        'LIMIT_CLUSTER_POINT': config.LIMIT_CLUSTER_POINT,
+#        'FICHE_ESPECE': True,
+#        'MAP': config.MAP
+#    })
+#
+#    connection.close()
+#    session.close()
+#    html = render_template('templates/testpdf.html', 
+#        taxon=taxon,
+#        listeTaxonsSearch=[],
+#        observations=[],
+#        cd_ref=cd_ref,
+#        statsorgataxon=statsorgataxon,
+#        months=months,
+#        synonyme=synonyme,
+#        communes=communes,
+#        communesSearch=communesSearch,
+#        epciSearch=epciSearch,
+#        departementSearch=departementSearch,
+#        taxonomyHierarchy=taxonomyHierarchy,
+#        firstPhoto=firstPhoto,
+#        photoCarousel=photoCarousel,
+#        videoAudio=videoAudio,
+#        articles=articles,
+#        taxonDescription=taxonDescription,
+#        orgas=orgas,
+#        observers=observers,
+#        configuration=configuration
+#        )
+#    return render_pdf(HTML(string=html))
+#
 
 
 #@main.route('/hello/', defaults={'name': 'World'})
