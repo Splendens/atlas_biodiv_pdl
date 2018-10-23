@@ -61,7 +61,7 @@
 								<span class="glyphicon glyphicon-search"></span>
 								<h1>{{stat.nbTotalObs}}</h1>
 								<h3> {{ 'observations' if stat.nbTotalObs > 1 else 'observation' }}</h3>
-								<p><a id="localScroll" href="#DernieresObservations" class="btn btn-default" role="button">Dernières observations</a></p>
+								<p style="margin: 0 0 7px;"><a id="localScroll" href="#DernieresObservations" class="btn btn-default" role="button">Dernières observations</a></p>
 							</div>
 						</div>
 						<div class = "col-lg-4 col-md-4 col-sm-6 col-xs-12 stat-object">
@@ -69,7 +69,7 @@
 								<span class="glyphicon glyphicon-leaf"></span>
 								<h1>{{stat.nbTotalTaxons}}</h1>
 								<h3> {{ 'espèces' if stat.nbTotalTaxons > 1 else 'espèce' }}</h3>
-								<form method="POST" id="searchFormTaxonsStat" class="navbar-form" role="search">
+								<form style="margin: 0 0 7px;" method="POST" id="searchFormTaxonsStat" class="navbar-form" role="search">
 									<div class="form-group has-feedback">
 										<input id="searchTaxonsStat" type="text" class="form-control" placeholder="Une espèce ?" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
 										<i class="glyphicon glyphicon-search form-control-feedback"></i>
@@ -83,16 +83,36 @@
 								<span class="glyphicon glyphicon-camera"></span>
 								<h1>{{stat.photo}}</h1>
 								<h3> {{ 'photos' if stat.photo > 1 else 'photo' }}</h3>
-								<p><a href="{{url_for('main.photos')}}" class="btn btn-default" role="button">Galerie photos</a></p>
+								<p style="margin: 0 0 9px;"><a href="{{url_for('main.photos')}}" class="btn btn-default" role="button">Galerie photos</a></p>
 							</div>
 						</div>
-						<div class ="col-lg-4 col-md-4 col-sm-6 col-xs-12 stat-object">
+
+						<div class ="col-lg-4 col-md-4 col-sm-6 col-xs-12 hidden-lg hidden-md stat-object">
 							<div class="thumbnail stat-thumbnail">
 								<img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}">
 								<!--img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}"-->
 								<h1>{{stat.town}}</h1>
 								<h3> {{ 'communes' if stat.town > 1 else 'commune' }}</h3>
-								<form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
+								<form style="margin: 0 0 7px;" method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
+									<div class="form-group has-feedback">
+										<input id="searchCommunesStat" type="text" class="form-control" placeholder="Une commune ?" >
+										<i class="glyphicon glyphicon-search form-control-feedback"></i>
+										<input id="hiddenInputCommunesStat" type="hidden" name="insee">
+									</div>
+								</form>
+							</div>
+						</div>
+					
+					</div>
+					<div class="row">
+
+						<div class ="col-lg-4 col-md-4 col-sm-6 col-xs-12 hidden-sm hidden-xs stat-object">
+							<div class="thumbnail stat-thumbnail">
+								<img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}">
+								<!--img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}"-->
+								<h1>{{stat.town}}</h1>
+								<h3> {{ 'communes' if stat.town > 1 else 'commune' }}</h3>
+								<form style="margin: 0 0 7px;" method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
 									<div class="form-group has-feedback">
 										<input id="searchCommunesStat" type="text" class="form-control" placeholder="Une commune ?" >
 										<i class="glyphicon glyphicon-search form-control-feedback"></i>
@@ -106,7 +126,7 @@
 								<span class="glyphicon glyphicon-flag"></span>
 								<h1>{{stat.epci}}</h1>
 								<h3> {{ 'intercommunalités' if stat.epci > 1 else 'intercommunalité' }} </h3>
-								<form method="POST" onsubmit="completeAction('#searchFormEpciStat', hiddenInputEpciStat)" id='searchFormEpciStat' action=""  class="navbar-form" role="search">
+								<form style="margin: 0 0 7px;" method="POST" onsubmit="completeAction('#searchFormEpciStat', hiddenInputEpciStat)" id='searchFormEpciStat' action=""  class="navbar-form" role="search">
 									<div class="form-group has-feedback">
 										<input id="searchEpciStat" type="text" class="form-control" placeholder="Un EPCI ?" >
 										<i class="glyphicon glyphicon-search form-control-feedback"></i>
@@ -120,7 +140,7 @@
 								<span class="glyphicon glyphicon-tower"></span>
 								<h1>{{stat.departement}}</h1>
 								<h3> {{ 'départements' if stat.departement > 1 else 'département' }} </h3>
-								<form method="POST" onsubmit="completeAction('#searchFormDepartementStat', hiddenInputDepartementStat)" id='searchFormDepartementStat' action=""  class="navbar-form" role="search">
+								<form style="margin: 0 0 7px;" method="POST" onsubmit="completeAction('#searchFormDepartementStat', hiddenInputDepartementStat)" id='searchFormDepartementStat' action=""  class="navbar-form" role="search">
 									<div class="form-group has-feedback">
 										<input id="searchDepartementStat" type="text" class="form-control" placeholder="Un département ?" >
 										<i class="glyphicon glyphicon-search form-control-feedback"></i>
@@ -131,6 +151,7 @@
 						</div>
 
 					</div>
+
 				</div>
 			</div>
 			{% endif %}
