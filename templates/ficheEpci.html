@@ -245,47 +245,8 @@
          </div>
 
 
-            <!--div class="row rowMargin">
-                <div class="col-xs-12">
-                    <div class="panel panel-default" id="blocInfos">
-                        <h2 class="text-center">Le territoire en quelques chiffres</h2>
 
-                          <div class="row rowMargin">
-                            <div class="col-xs-6 text-center" id="group2inpnGraph"></div>
-                            <div class="col-xs-6 text-center" id="taxongroup2inpnGraph"></div>
-                          </div>
-                          <div class="row rowMargin">
-                            <div class="text-center" id="statsorgacommGraph"></div>
-                          </div>
-                    </div>
-               
-                </div>
-            </div--><!-- /.row -->
-
-
-            <div class="row rowMargin">
-                <div class="col-xs-12">
-                    <div class="panel panel-default" id="blocInfos">
-
-                      <!-- Twpo columns of text  -->
-                      <div class="row faq">
-                        <h2 class="text-center">Besoin d'informations complémentaires ?</h2>
-                        <div class="col-xs-4 text-center">
-                            <h3>Informations <br/>sur les données</h3>
-                              <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='donnees') }}" role="button">En savoir plus ! &raquo;</a></p>
-                            </div><!-- /.col-lg-4 -->
-                            <div class="col-xs-4 text-center">
-                              <h3>Partenaires du portail<br/> et du SINP</h3>
-                              <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='acteurs') }}" role="button">Voir les partenaires &raquo;</a></p>
-                            </div><!-- /.col-lg-4 -->
-                            <div class="col-xs-4 text-center">
-                              <h3>Plus d'outils<br/> autour du SINP</h3>
-                              <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='outils') }}" role="button">Consulter l'annuaire &raquo;</a></p>
-                            </div><!-- /.col-lg-4 -->
-                      </div><!-- /.row -->
-                    </div>
-                </div>
-            </div><!-- /.row -->
+        {% include 'static/custom/templates/infoscompl.html' %}
 
 
         </div>
