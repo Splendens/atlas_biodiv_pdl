@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+        <title>{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}}</title>
+
+        <!-- Jquery -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/jquery-ui.css') }}" />
+        <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
+            {% if configuration.GLOSSAIRE %}
+            <!-- Jquery Glossarizer -->
+            <script src="{{url_for('static', filename='lib/glossarizer/tooltip/tooltip.js') }}"></script>
+            <script src="{{url_for('static', filename='lib/glossarizer/jquery.glossarize.js') }}"></script>
+            <link rel="stylesheet" href="{{url_for('static', filename='lib/glossarizer/tooltip/tooltip.css') }}">
+            {% endif %}
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}"></link>
+        <script type="text/javascript" src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
+        <!-- Bootstrap slider -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}" />
+        <script src="{{url_for('static', filename='lib/node_modules/bootstrap-slider/dist/bootstrap-slider.min.js') }}"></script>
+        <!-- Bootstrap switch -->
+        <script type="text/javascript" src="{{url_for('static', filename='lib/bootstrap-switch/js/bootstrap-switch.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap-switch/css/bootstrap-switch.min.css') }}" />
+
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet.css') }}" />
+        <script src="{{url_for('static', filename='lib/leaflet/leaflet.js') }}"></script>
+        <script src="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.css') }}" />
+            <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.Default.css') }}" />
+        <script src="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.min.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.css') }}" />
+
+        <!-- Highcharts -->
+        <script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+
+        <!--script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script-->
+
+        <!-- D3 -->
+        <!--script src="{{url_for('static', filename='lib/d3/d3.min.js') }}"></script-->
+        <!-- MorrisJs -->
+        <!--script src="{{url_for('static', filename='lib/morrisJs/morris.min.js') }}"></script-->
+        <!--link rel="stylesheet" href="{{url_for('static', filename='lib/morrisJs/morris.css') }}" /-->
+        <!-- RaphaelJs -->
+        <!--script src="{{url_for('static', filename='lib/raphaelJs/raphael.min.js') }}"></script-->
+
+        <!-- LightBox -->
+
+        <!-- CSS Application -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/ficheEspece.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/icones.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}" />
+
+
+    </head>
+
+<body>
+
+    <div class="container-fluid" id="page">
+
+        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <div class="panel panel-default" id="identityPanel">
+                <div class="row" id="rowIdentity">
+                    {% if firstPhoto != None %}
+                      <!-- Si il y a une photo principale -->
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="imgCol" >
+                        <div class="imgWrapper">
+                            <span class="glyphicon glyphicon-search" id="zoomPhotos"> </span>
+                            <a href="{{firstPhoto.path}}" data-lightbox="imageSet"
+                              data-title="{{firstPhoto.title}} &copy; {{firstPhoto.author}}"
+                            >
+                            {% if configuration.TAXHUB_URL != None %}
+                              {% set img_path = configuration.TAXHUB_URL+'/api/tmedias/thumbnail/'+firstPhoto.id_media|string+'?h=500' %}
+                            {% else %}
+                              {% set img_path = firstPhoto.path %}
+                            {% endif %}
+                              <img id="mainImg" src="{{img_path}}"
+                                style="width:100%;" alt="{{firstPhoto.title}} &copy; {{firstPhoto.author|striptags}}">
+                                <p class="imgDescription main">{{firstPhoto.title}} &copy; {{firstPhoto.author|striptags}}
+                                    
+                                    {% if firstPhoto.source != None or  firstPhoto.licence != None %}<br/>({% if firstPhoto.source != None %} {{firstPhoto.source}} {% endif %}{% if firstPhoto.licence != None %}{{firstPhoto.licence}} {% endif %}){% endif %}
+
+                                </p>
+                            </a>
+                        </div>
+
+
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="taxonIdentity">
+                    {% else %}
+                              <!-- Si pas de photo, alors le premier bloc occupe toute la largeur -->
+                    <div class="col-sm-12" id="taxonIdentity">
+                    {% endif %}
+                        <div id="groupLogoCol" >
+                            <a href="{{url_for('main.ficheGroupe', groupe=taxon.taxonSearch.groupAccent ) }}">
+                                <img src="{{url_for('static', filename='images/picto_'+ taxon.taxonSearch.group2_inpn| replace(" ", "_")|urlencode+'.png') }}" alt="{{taxon.taxonSearch.group2_inpn}}" data-toggle="tooltip" data-original-title="{{taxon.taxonSearch.group2_inpn}}" data-placement="right">
+                            </a>
+                        </div>
+
+                        <div id="taxonName">
+
+                            {% if taxon.taxonSearch.nom_vern != None %}
+                                <h3> {{taxon.taxonSearch.nom_vern}} </h3>
+                            {% endif %}
+                            <h3> {{taxon.taxonSearch.nom_complet_html|safe}}
+                            {% if taxon.taxonSearch.protection == 'oui' %}
+                                <br/>
+                                <a href="https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}/tab/statut" target="_blank">
+                                    <img class="caractEspece" width="130px" src="{{url_for('static', filename='images/logo_protection.png') }}"  data-toggle="tooltip" data-original-title="Ce taxon bénéficie d'un statut de protection" data-placement="right"></a>
+                            {% endif %}
+                            {% if taxon.taxonSearch.patrimonial in configuration.PATRIMONIALITE.config %}
+                                <img
+                                    class="caractEspece"
+                                    width="130px"
+                                    src="{{url_for('static', filename=configuration.PATRIMONIALITE.config[taxon.taxonSearch.patrimonial].icon) }}"
+                                    data-toggle="tooltip"
+                                    data-original-title="{{configuration.PATRIMONIALITE.config[taxon.taxonSearch.patrimonial].text}}" data-placement="right">
+                            {% endif %}
+                            </h3>
+
+                        <div id="taxonomy">
+                            {% for taxon in taxonomyHierarchy %}
+                                {{taxon.nom_rang}} :
+                                <i>
+                                {% if ( taxon.tri_rang >= configuration.LIMIT_FICHE_LISTE_HIERARCHY) %}
+                                     <a href = "{{url_for('main.ficheEspece', cd_ref = taxon.cd_ref) }}">{{taxon.lb_nom}}</a>
+                                {% else %}
+                                     <a href = "{{url_for('main.ficheRangTaxonomie', cd_ref = taxon.cd_ref) }}">{{taxon.lb_nom}}</a>
+
+                                {% endif %}
+                                </i>
+                                {% if not loop.last %}
+                                     <span class="glyphicon glyphicon-chevron-right"> </span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+
+                            <div id="inpnLink">
+                                <a class="btn btn-default" href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank" role="button">
+                                    
+                                    <img width="130px" src="{{url_for('static', filename='images/logo_inpn.png') }}"  data-toggle="tooltip" data-original-title="Consultez la fiche espèce sur l'INPN" data-placement="right">
+                                    
+                                    <!--br/> <br/><p>Consultez la fiche espèce sur l'INPN &raquo;</p-->
+                                 </a>
+                            </div>
+                            <br/>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" id="mapPanel">
+
+                    <div class="col-sm-2" id="mapStat">
+                        <ul>
+                            <li> <span data-icon="&#xe037;" style="font-size: 30px;"></span> </br><b>{{taxon.taxonSearch.nb_obs}}</b> </br> {{ 'observations' if taxon.taxonSearch.nb_obs > 1 else 'observation' }}</li>
+                            <li> <img id="picto" src="{{url_for('static', filename='images/church.png')}}" style="width"><br/><b>{{communes|length}}</b><br/>{{ 'communes' if communes|length > 1 else 'commune' }}</li>
+                            <li> <span data-icon="&#xe040;"  style="font-size: 30px;"></span><br/><b>{{observers|length}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}</li>
+                                {% if configuration.AFFICHAGE_ORGAS_OBS_FICHEESP %}
+                                <li><img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="width"><br/><b>{{orgas|length}}</b><br/>{{ 'sources' if orgas|length > 1 else 'source' }}</li>
+                                {% endif %}
+                            <li><span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span><br/><b>Première observation</b><br/>{{taxon.taxonSearch.yearmin|int}}</li>
+                            <li><span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span><br/><b>Dernière observation</b><br/>{{taxon.taxonSearch.yearmax|int}}</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+
+
+            <div class="panel panel-default" id="blocInfos">
+                <div id="synonymes">
+                    <h4>Synonymie</h4>
+                    {% if synonyme | length == 1 %}
+                        Aucun synonyme pour ce taxon
+                    {% else %}
+                        {% for syn in synonyme %}
+                            {% if not syn.lb_nom == taxon.taxonSearch.lb_nom %}
+                            {{ syn.nom_complet_html | safe}}
+                            {% endif %}
+                            {% if ( (not loop.last) and (not syn.lb_nom == taxon.taxonSearch.lb_nom) ) %}
+                            |
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+ 
+
+            <!--div class="panel panel-default">
+                <div class="row">
+                    <div class="col-sm-12">
+ 
+
+                        <div id="chorologie" class="tab-pane fade in active">
+
+                            <div class="panel-body">
+                               
+                                <h4 class="text-center">Carte de répartition actuelle en France métropolitaine</h4>
+                                                                           
+                                    <object data="https://inpn.mnhn.fr/cartosvg/couchegeo/repartition/atlas/{{taxon.taxonSearch.cd_ref}}/fr_light_l93,fr_light_mer_l93,fr_lit_l93" type="image/svg+xml" width="90%" height="90%">
+                                        <param name="src" value="/cartosvg/couchegeo/repartition/atlas/{{taxon.taxonSearch.cd_ref}}/fr_light_l93,fr_light_mer_l93,fr_lit_l93">
+                                        <param name="type" value="image/svg+xml">
+                                        <param name="pluginspage" value="http://www.adobe.com/svg/viewer/install/">
+                                    </object>
+                                    <p class="small text-justify" style="color:#b1b1b1;">Cartographie issue de l'<a href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank" style="color:#7785ce;">INPN</a> - Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes au niveau national : elles ne peuvent en aucun cas être considérées comme exhaustives.</p>
+
+                             </div>
+                        </div>
+ 
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div-->
+
+    <img id="chart" style="width: 600px;" />
+
+        <script type="text/javascript" src="{{url_for('static', filename='chart.js') }}"></script>
+
+
+
+
+</body>
+</html>

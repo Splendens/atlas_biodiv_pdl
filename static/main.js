@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
   $(window).keydown(function(event){
     if(event.keyCode == 13) {
@@ -7,7 +6,6 @@ $(document).ready(function() {
     }
   });
 });
-
 
 
 autocompleteSearch = function(list, inputID, urlDestination, nbProposal){
@@ -125,3 +123,9 @@ if (configuration.GLOSSAIRE) {
 		});
 	});
 }
+
+
+
+
+
+ 

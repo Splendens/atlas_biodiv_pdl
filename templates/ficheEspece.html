@@ -37,6 +37,7 @@
 
         <!-- Highcharts -->
         <script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
+
         <!--script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script-->
 
         <!-- D3 -->
@@ -106,6 +107,7 @@
 	                            <img src="{{url_for('static', filename='images/picto_'+ taxon.taxonSearch.group2_inpn| replace(" ", "_")|urlencode+'.png') }}" alt="{{taxon.taxonSearch.group2_inpn}}" data-toggle="tooltip" data-original-title="{{taxon.taxonSearch.group2_inpn}}" data-placement="right">
                             </a>
 						</div>
+
 						<div id="taxonName">
 
                             {% if taxon.taxonSearch.nom_vern != None %}
@@ -250,6 +252,8 @@
                                     <!--br/> <br/><p>Consultez la fiche espèce sur l'INPN &raquo;</p-->
                                  </a>
                             </div>
+                            <br/>
+
 
                             
 						</div>
@@ -382,7 +386,7 @@
                             <div id="avertissements" class="tab-pane fade">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <p class="alert alert-warning text-justify">Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à augmenter au fil du temps. <a href="{{url_for('main.get_staticpages', page='donnees') }}" style="color:#7785ce;">En savoir plus</a>
+                                        <p class="alert alert-warning text-justify">Avertissement : les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans être formellement validées.<a href="{{url_for('main.get_staticpages', page='donnees') }}" style="color:#7785ce;">En savoir plus</a>
                                         </p>
                                     </div>
                                 </div>
@@ -574,7 +578,8 @@
                         <i class ="btn-more" id="btn-more-audio" data-toggle="collapse" data-target="#moreAudio" rel="tooltip" title="Afficher plus d'enregistrements"> <span class="glyphicon glyphicon-chevron-down"> </span> </i>
                         {% endif %}
                     </h4>
-                    <hr class="small-hr">
+                    <hr class="small-hr"> le SINP ça parle de la mise en commun des données ?
+et que l'anim reste le role des locaux ?
 
                     <h4>{{videoAudio.audio[0].title}}</h4>
                     <audio controls>
@@ -627,9 +632,6 @@
 
 
             <div class="panel panel-default" id="graphBloc">
-
-
-
                 <div id="statsorgataxonChart"></div>
                 <div id="phenologyChart"></div>
             </div>
