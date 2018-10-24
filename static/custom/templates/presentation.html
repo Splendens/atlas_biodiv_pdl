@@ -180,24 +180,10 @@
               </div><!-- /.row -->
 
 
-              <hr class="featurette-divider">
+
                   
-                      <!-- Twpo columns of text  -->
-                      <h2 class="text-center">Besoin d'informations complémentaires ?<br/>Rendez-vous sur les pages dédiées :</h2>
-                      <div class="row faq">
-                        <div class="col-lg-4">
-                          <h3>Informations sur les données</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='donnees') }}" role="button">En savoir plus ! &raquo;</a></p>
-                        </div><!-- /.col-lg-4 -->
-                        <div class="col-lg-4">
-                          <h3>Partenaires du portail et du SINP</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='acteurs') }}" role="button">Voir les partenaires &raquo;</a></p>
-                        </div><!-- /.col-lg-4 -->
-                        <div class="col-lg-4">
-                          <h3>Plus d'outils autour du SINP ?</h3>
-                          <p><a class="btn btn-default" href="{{url_for('main.get_staticpages', page='outils') }}" role="button">Consulter l'annuaire &raquo;</a></p>
-                        </div><!-- /.col-lg-4 -->
-                      </div><!-- /.row -->
+            {% include 'static/custom/templates/infoscompl.html' %}
+
               
               <hr class="featurette-divider">
 
