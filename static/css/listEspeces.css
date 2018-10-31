@@ -144,7 +144,7 @@ tbody tr.current{
 
 #listTaxonsCommune #myTable_wrapper div.row:nth-of-type(2) {
 	margin-right: 0.1%;
-	max-height: 650px;
+	max-height: 565px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -154,3 +154,10 @@ tbody tr.current{
 	padding-right: 2%;
 	padding-left: 2%;
 }
+
+#exportlist {
+	color: #3c763d !important;
+	background-color: #dff0d8 !important; 
+	border-color: #d6e9c6 !important;
+}
+

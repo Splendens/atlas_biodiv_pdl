@@ -26,7 +26,7 @@ def getTaxonsCommunes(connection, insee):
         WHERE o.insee = :thisInsee
         GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
             t.patrimonial, t.protection_stricte, m.url, m.chemin, m.id_media
-        ORDER BY nb_obs DESC
+        ORDER BY group2_inpn, nom_complet_html ASC
     """.format(config.ATTR_MAIN_PHOTO)
     req = connection.execute(text(sql), thisInsee=insee)
     taxonCommunesList = list()
@@ -77,7 +77,7 @@ def getTaxonsEpci(connection, nom_epci_simple):
                      from taxonepci
            GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
                     patrimonial, protection_stricte, url, chemin, id_media
-        ORDER BY cd_ref DESC
+        ORDER BY group2_inpn, nom_complet_html ASC
     """.format(config.ATTR_MAIN_PHOTO)
     req = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
     taxonEpciList = list()
@@ -127,8 +127,7 @@ def getTaxonsDpt(connection, num_dpt):
                      from taxondpt
            GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
                     patrimonial, protection_stricte, url, chemin, id_media
-        ORDER BY cd_ref DESC
-
+        ORDER BY group2_inpn, nom_complet_html ASC
     """.format(config.ATTR_MAIN_PHOTO)
     req = connection.execute(text(sql), thisNumdpt=num_dpt)
     taxonEpciList = list()

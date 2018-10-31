@@ -22,7 +22,7 @@
 
         <!-- Highcharts -->
         <script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
-        <!--script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script-->
+        <script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script>
 
         <!-- D3 -->
         <!--script src="{{url_for('static', filename='lib/d3/d3.min.js') }}"></script-->
@@ -171,6 +171,13 @@
                             <div id="listMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
                                  <div id="listTaxonsCommune" class="panel panel-default">
                                     {% include 'templates/tabTaxons.html' %}
+                                </div>
+                                <div id="btnexportlist" class="panel panel-default alert alert-success" role="alert">
+                                     <p><b> Enregistrer la liste des espèces de <i>{{referenciel.epciName}}</i> <span class="glyphicon glyphicon-menu-right"></span> </b>
+                                        <button type="button" class="btn btn-outline-success"> 
+                                            <a href="{{ url_for('main.listeTaxonEpci_pdf', nom_epci_simple=referenciel.nom_epci_simple) }}" target="_blank" role="button"> <span class="glyphicon glyphicon-download-alt"></span> PDF </a>
+                                        </button>                                 
+                                     </p>   
                                 </div>
                              </div>
                         </div>

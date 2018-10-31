@@ -3,8 +3,8 @@
 
 from flask import render_template, redirect, abort, url_for
 from configuration import config
-
-#from flask_weasyprint import HTML, render_pdf
+from datetime import datetime
+from flask_weasyprint import HTML, render_pdf
 
 from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, 
@@ -231,106 +231,6 @@ def ficheEspece(cd_ref):
     )
 
 
-#@main.route('/ficheEspece_<cd_ref>.pdf')
-#def ficheEspece_pdf(cd_ref):
-#    session = utils.loadSession()
-#    connection = utils.engine.connect()
-#
-#    cd_ref = int(cd_ref)
-#    taxon = vmTaxrefRepository.searchEspece(connection, cd_ref)
-#    statsorgataxon = vmStatsOrgaTaxonRepository.getStatsOrgaTaxonChilds(connection, cd_ref)
-#    months = vmMoisRepository.getMonthlyObservationsChilds(connection, cd_ref)
-#    synonyme = vmTaxrefRepository.getSynonymy(connection, cd_ref)
-#    communes = vmCommunesRepository.getCommunesObservationsChilds(
-#        connection, cd_ref
-#    )
-#    communesSearch = vmCommunesRepository.getAllCommunes(session)
-#    epciSearch = vmEpciRepository.getAllEpci(session)
-#    departementSearch = vmDepartementRepository.getAllDepartement(session)
-#    taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
-#    firstPhoto = vmMedias.getFirstPhoto(
-#        connection, cd_ref, config.ATTR_MAIN_PHOTO
-#    )
-#    photoCarousel = vmMedias.getPhotoCarousel(
-#        connection, cd_ref, config.ATTR_OTHER_PHOTO
-#    )
-#    videoAudio = vmMedias.getVideo_and_audio(
-#        connection, cd_ref, config.ATTR_AUDIO, config.ATTR_VIDEO_HEBERGEE,
-#        config.ATTR_YOUTUBE, config.ATTR_DAILYMOTION, config.ATTR_VIMEO
-#    )
-#    articles = vmMedias.getLinks_and_articles(
-#        connection, cd_ref, config.ATTR_LIEN, config.ATTR_PDF
-#    )
-#    taxonDescription = vmCorTaxonAttribut.getAttributesTaxon(
-#        connection, cd_ref, config.ATTR_DESC, config.ATTR_COMMENTAIRE,
-#        config.ATTR_MILIEU, config.ATTR_CHOROLOGIE
-#    )
-#    orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
-#    observers = vmObservationsRepository.getObservers(connection, cd_ref)
-#
-#    configuration = base_configuration.copy()
-#    configuration.update({
-#        'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
-#        'AFFICHAGE_ORGAS_OBS_FICHEESP': config.AFFICHAGE_ORGAS_OBS_FICHEESP,
-#        'PATRIMONIALITE': config.PATRIMONIALITE,
-#        'PROTECTION': config.PROTECTION,
-#        'GLOSSAIRE': config.GLOSSAIRE,
-#        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,       
-#        'AFFICHAGE_SWITCHER': config.AFFICHAGE_SWITCHER,
-#        'AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE': config.AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE,
-#        'AFFICHAGE_ATLAS_MAILLE_COMMUNALE': config.AFFICHAGE_ATLAS_MAILLE_COMMUNALE,
-#        'AFFICHAGE_ATLAS_MAILLE_CARREE': config.AFFICHAGE_ATLAS_MAILLE_CARREE,
-#        'AFFICHAGE_ATLAS_POINT': config.AFFICHAGE_ATLAS_POINT,
-#        'ZOOM_LEVEL_POINT': config.ZOOM_LEVEL_POINT,
-#        'LIMIT_CLUSTER_POINT': config.LIMIT_CLUSTER_POINT,
-#        'FICHE_ESPECE': True,
-#        'MAP': config.MAP
-#    })
-#
-#    connection.close()
-#    session.close()
-#    html = render_template('templates/testpdf.html', 
-#        taxon=taxon,
-#        listeTaxonsSearch=[],
-#        observations=[],
-#        cd_ref=cd_ref,
-#        statsorgataxon=statsorgataxon,
-#        months=months,
-#        synonyme=synonyme,
-#        communes=communes,
-#        communesSearch=communesSearch,
-#        epciSearch=epciSearch,
-#        departementSearch=departementSearch,
-#        taxonomyHierarchy=taxonomyHierarchy,
-#        firstPhoto=firstPhoto,
-#        photoCarousel=photoCarousel,
-#        videoAudio=videoAudio,
-#        articles=articles,
-#        taxonDescription=taxonDescription,
-#        orgas=orgas,
-#        observers=observers,
-#        configuration=configuration
-#        )
-#    return render_pdf(HTML(string=html))
-#
-
-
-#@main.route('/hello/', defaults={'name': 'World'})
-#@main.route('/hello/<name>/')
-#def hello_html(name):
-#    return render_template('templates/testpdf.html', name=name)
-#
-#
-#@main.route('/hello_<name>.pdf')
-#def hello_pdf(name):
-#    # Make a PDF straight from HTML in a string.
-#    html = render_template('templates/testpdf.html', name=name)
-#    return render_pdf(HTML(string=html))
-
-
-
-
-
 @main.route('/commune/<insee>', methods=['GET', 'POST'])
 def ficheCommune(insee):
     session = utils.loadSession()
@@ -513,6 +413,126 @@ def ficheDepartement(num_dpt):
         observers=observers,
         configuration=configuration
     )
+
+
+@main.route('/BiodivPdL_liste_commune_<insee>.pdf')
+def listeTaxonCommune_pdf(insee):
+    session = utils.loadSession()
+    connection = utils.engine.connect()
+    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
+    #infosCommune = vmCommunesRepository.infosCommune(connection, insee)
+    #epciCommune = vmCommunesRepository.epciCommune(connection, insee)
+    commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
+    #statsorgacomm = vmStatsOrgaCommRepository.getStatsOrgaCommChilds(connection, insee)
+    #statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
+    #statstaxongroup2inpncomm = vmStatsTaxonGroup2inpnCommRepository.getStatsTaxonGroup2inpnCommChilds(connection, insee)
+    #communesSearch = vmCommunesRepository.getAllCommunes(session)
+    #epciSearch = vmEpciRepository.getAllEpci(session)
+    #departementSearch = vmDepartementRepository.getAllDepartement(session)
+    #if config.AFFICHAGE_MAILLE:
+    #    observations = vmObservationsMaillesRepository.lastObservationsCommuneMaille(
+    #        connection, config.NB_LAST_OBS, insee
+    #    )
+    #else:
+    #    observations = vmObservationsRepository.lastObservationsCommune(
+    #        connection, config.NB_LAST_OBS, insee
+    #    )
+    #orgas = vmObservationsRepository.getOrgasCommunes(connection, insee)
+    #observers = vmObservationsRepository.getObserversCommunes(connection, insee)
+
+    configuration = base_configuration.copy()
+    configuration.update({
+        'NB_LAST_OBS': config.NB_LAST_OBS,
+        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
+        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+        'MAP': config.MAP,
+        'MYTYPE': 0,
+        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'PATRIMONIALITE': config.PATRIMONIALITE,
+        'PROTECTION': config.PROTECTION
+    })
+    session.close()
+    connection.close()
+    html = render_template(
+        'static/custom/templates/listeTaxonCommune_pdf.html',
+        insee=insee,
+        now = (datetime.now()).strftime("%d-%m-%Y"),
+        listTaxons=listTaxons,
+        #infosCommune=infosCommune,
+        #epciCommune=epciCommune,
+        referenciel=commune,
+        #statsorgacomm=statsorgacomm,
+        #statsgroup2inpncomm=statsgroup2inpncomm,
+        #statstaxongroup2inpncomm=statstaxongroup2inpncomm,
+        #communesSearch=communesSearch,
+        #epciSearch=epciSearch,
+        #departementSearch=departementSearch,
+        #observations=observations,
+        #orgas=orgas,
+        #observers=observers,
+        configuration=configuration
+    )    # Make a PDF straight from HTML in a string.
+    return render_pdf(HTML(string=html))
+
+
+@main.route('/BiodivPdL_liste_epci_<nom_epci_simple>.pdf')
+def listeTaxonEpci_pdf(nom_epci_simple):
+    session = utils.loadSession()
+    connection = utils.engine.connect()
+    listTaxons = vmTaxonsRepository.getTaxonsEpci(connection, nom_epci_simple)
+    epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
+    configuration = base_configuration.copy()
+    configuration.update({
+        'NB_LAST_OBS': config.NB_LAST_OBS,
+        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
+        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+        'MAP': config.MAP,
+        'MYTYPE': 0,
+        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'PATRIMONIALITE': config.PATRIMONIALITE,
+        'PROTECTION': config.PROTECTION
+    })
+    session.close()
+    connection.close()
+    html = render_template(
+        'static/custom/templates/listeTaxonEpci_pdf.html',
+        nom_epci_simple=nom_epci_simple,
+        now = (datetime.now()).strftime("%d-%m-%Y"),
+        listTaxons=listTaxons,
+        referenciel=epci,
+        configuration=configuration
+    )    # Make a PDF straight from HTML in a string.
+    return render_pdf(HTML(string=html))
+
+
+@main.route('/BiodivPdL_liste_departement_<num_dpt>.pdf')
+def listeTaxonDpt_pdf(num_dpt):
+    session = utils.loadSession()
+    connection = utils.engine.connect()
+    listTaxons = vmTaxonsRepository.getTaxonsDpt(connection, num_dpt)
+    dpt = vmDepartementRepository.getDepartementFromNumdpt(connection, num_dpt)
+    configuration = base_configuration.copy()
+    configuration.update({
+        'NB_LAST_OBS': config.NB_LAST_OBS,
+        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
+        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+        'MAP': config.MAP,
+        'MYTYPE': 0,
+        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'PATRIMONIALITE': config.PATRIMONIALITE,
+        'PROTECTION': config.PROTECTION
+    })
+    session.close()
+    connection.close()
+    html = render_template(
+        'static/custom/templates/listeTaxonDpt_pdf.html',
+        num_dpt=num_dpt,
+        now = (datetime.now()).strftime("%d-%m-%Y"),
+        listTaxons=listTaxons,
+        referenciel=dpt,
+        configuration=configuration
+    )    # Make a PDF straight from HTML in a string.
+    return render_pdf(HTML(string=html))
 
 
 

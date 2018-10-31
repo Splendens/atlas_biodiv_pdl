@@ -22,7 +22,7 @@
 
         <!-- Highcharts -->
         <script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
-        <!--script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script-->
+        <script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script>
 
         <!-- D3 -->
         <!--script src="{{url_for('static', filename='lib/d3/d3.min.js') }}"></script-->
@@ -67,7 +67,12 @@
             <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="parent">
-                        <h2><b>Commune : {{referenciel.communeName}}</b></h2>
+                        <h2><b>Commune : {{referenciel.communeName}}</b></h2> 
+
+
+                            
+
+
                         <ul id="stat">
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 30px;"></span><br/>
@@ -132,6 +137,13 @@
                             <div id="listMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
                                  <div id="listTaxonsCommune" class="panel panel-default">
                                     {% include 'templates/tabTaxons.html' %}
+                                </div>
+                                <div id="btnexportlist" class="panel panel-default alert alert-success" role="alert">
+                                     <p><b> Enregistrer la liste des espèces de <i>{{referenciel.communeName}}</i> <span class="glyphicon glyphicon-menu-right"></span> </b>
+                                        <button type="button" class="btn btn-outline-success"> 
+                                            <a href="{{ url_for('main.listeTaxonCommune_pdf', insee=referenciel.insee) }}" target="_blank" role="button"> <span class="glyphicon glyphicon-download-alt"></span> PDF </a>
+                                        </button>                                 
+                                     </p>   
                                 </div>
                              </div>
                         </div>
