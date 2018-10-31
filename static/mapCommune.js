@@ -173,7 +173,7 @@ if (configuration.PRESSION_PROSPECTION){
 	    })
 	});
 
-  	function openFicheEspece(cd_ref){
+  	/*function openFicheEspece(cd_ref){
         $('#myTable tbody').on('click', '.taxonRow', function () {
 			cdref=($(this).attr('cdRef'));
 	    	window.open(configuration.URL_APPLICATION+'/espece/'+cdref,'_blank');
@@ -181,7 +181,7 @@ if (configuration.PRESSION_PROSPECTION){
 	};
 	$(document).ready(function(){
 	    openFicheEspece();
-	});
+	});*/
 
 }else{
 	// Display the 'x' last observations

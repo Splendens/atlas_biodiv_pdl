@@ -552,7 +552,7 @@ function generateSwitcherOnMap(){
 					    })
 					});
 
-				  	function openFicheEspece(cd_ref){
+				 /* 	function openFicheEspece(cd_ref){
 				        $('#myTable tbody').on('click', '.taxonRow', function () {
 							cdref=($(this).attr('cdRef'));
 					    	window.open(configuration.URL_APPLICATION+'/espece/'+cdref,'_blank');
@@ -560,9 +560,8 @@ function generateSwitcherOnMap(){
 					};
 					$(document).ready(function(){
 					    openFicheEspece();
-					});
-              
-              
+					}); */
+                            
         }
 
         return switcherMailleContainer;
