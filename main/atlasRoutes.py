@@ -419,7 +419,7 @@ def ficheDepartement(num_dpt):
 def listeTaxonCommune_pdf(insee):
     session = utils.loadSession()
     connection = utils.engine.connect()
-    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
+    listTaxons = vmTaxonsRepository.getTaxonsListeCommunes(connection, insee)
     #infosCommune = vmCommunesRepository.infosCommune(connection, insee)
     #epciCommune = vmCommunesRepository.epciCommune(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
@@ -442,12 +442,12 @@ def listeTaxonCommune_pdf(insee):
 
     configuration = base_configuration.copy()
     configuration.update({
-        'NB_LAST_OBS': config.NB_LAST_OBS,
-        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
-        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
-        'MAP': config.MAP,
-        'MYTYPE': 0,
-        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+      #  'NB_LAST_OBS': config.NB_LAST_OBS,
+      #  'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
+      #  'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+      #  'MAP': config.MAP,
+      #  'MYTYPE': 0,
+      #  'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -479,16 +479,16 @@ def listeTaxonCommune_pdf(insee):
 def listeTaxonEpci_pdf(nom_epci_simple):
     session = utils.loadSession()
     connection = utils.engine.connect()
-    listTaxons = vmTaxonsRepository.getTaxonsEpci(connection, nom_epci_simple)
+    listTaxons = vmTaxonsRepository.getListeTaxonsEpci(connection, nom_epci_simple)
     epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
     configuration = base_configuration.copy()
     configuration.update({
-        'NB_LAST_OBS': config.NB_LAST_OBS,
-        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
-        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
-        'MAP': config.MAP,
-        'MYTYPE': 0,
-        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+       # 'NB_LAST_OBS': config.NB_LAST_OBS,
+       # 'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
+       # 'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+       # 'MAP': config.MAP,
+       # 'MYTYPE': 0,
+       # 'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -509,16 +509,16 @@ def listeTaxonEpci_pdf(nom_epci_simple):
 def listeTaxonDpt_pdf(num_dpt):
     session = utils.loadSession()
     connection = utils.engine.connect()
-    listTaxons = vmTaxonsRepository.getTaxonsDpt(connection, num_dpt)
+    listTaxons = vmTaxonsRepository.getListeTaxonsDpt(connection, num_dpt)
     dpt = vmDepartementRepository.getDepartementFromNumdpt(connection, num_dpt)
     configuration = base_configuration.copy()
     configuration.update({
-        'NB_LAST_OBS': config.NB_LAST_OBS,
-        'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
-        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
-        'MAP': config.MAP,
-        'MYTYPE': 0,
-        'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+       # 'NB_LAST_OBS': config.NB_LAST_OBS,
+       # 'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
+       # 'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+       # 'MAP': config.MAP,
+       # 'MYTYPE': 0,
+       # 'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })

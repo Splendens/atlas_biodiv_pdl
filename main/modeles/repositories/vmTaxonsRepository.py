@@ -104,7 +104,6 @@ def getTaxonsEpci(connection, nom_epci_simple):
 # With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
 def getTaxonsDpt(connection, num_dpt):
     sql = """
-
         with taxondpt AS (
             SELECT DISTINCT
                         o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
@@ -130,7 +129,7 @@ def getTaxonsDpt(connection, num_dpt):
         ORDER BY group2_inpn, nom_complet_html ASC
     """.format(config.ATTR_MAIN_PHOTO)
     req = connection.execute(text(sql), thisNumdpt=num_dpt)
-    taxonEpciList = list()
+    taxonDptList = list()
     nbObsTotal = 0
     for r in req:
         temp = {
@@ -145,9 +144,134 @@ def getTaxonsDpt(connection, num_dpt):
             'path': utils.findPath(r),
             'id_media': r.id_media
         }
+        taxonDptList.append(temp)
+        nbObsTotal = nbObsTotal + r.nb_obs
+    return {'taxons': taxonDptList, 'nbObsTotal': nbObsTotal}
+
+
+
+
+
+# With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
+def getListeTaxonsCommunes(connection, insee):
+    sql = """
+        SELECT DISTINCT
+            o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
+            COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
+            t.group2_inpn, t.patrimonial, t.protection_stricte
+        FROM atlas.vm_observations o
+        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+        WHERE o.insee = :thisInsee
+        GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
+            t.patrimonial, t.protection_stricte
+        ORDER BY group2_inpn, nom_complet_html ASC
+    """
+    req = connection.execute(text(sql), thisInsee=insee)
+    taxonCommunesList = list()
+    nbObsTotal = 0
+    for r in req:
+        temp = {
+            'nom_complet_html': r.nom_complet_html,
+            'nb_obs': r.nb_obs,
+            'nom_vern': r.nom_vern,
+            'cd_ref': r.cd_ref,
+            'last_obs': r.last_obs,
+            'group2_inpn': deleteAccent(r.group2_inpn),
+            'patrimonial': r.patrimonial,
+            'protection_stricte': r.protection_stricte,
+        }
+        taxonCommunesList.append(temp)
+        nbObsTotal = nbObsTotal + r.nb_obs
+    return {'taxons': taxonCommunesList, 'nbObsTotal': nbObsTotal}
+
+
+
+# With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
+def getListeTaxonsEpci(connection, nom_epci_simple):
+    sql = """
+        with taxonepci AS (
+            SELECT DISTINCT
+                        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
+                        COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
+                        t.group2_inpn, t.patrimonial, t.protection_stricte, o.insee
+                    FROM atlas.vm_observations o
+                    JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+                    JOIN atlas.l_communes_epci ec ON ec.insee = o.insee
+                    JOIN atlas.vm_epci e ON ec.id = e.id
+                    WHERE e.nom_epci_simple = :thisNomEpciSimple
+                    GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
+                        t.patrimonial, t.protection_stricte, o.insee
+                    ORDER BY o.cd_ref DESC
+            )
+        select DISTINCT
+                    cd_ref, max(last_obs) as last_obs,
+                    SUM(nb_obs) AS nb_obs, nom_complet_html, nom_vern,
+                    group2_inpn, patrimonial, protection_stricte
+                    from taxonepci
+           GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
+                    patrimonial, protection_stricte
+        ORDER BY group2_inpn, nom_complet_html ASC
+    """
+    req = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
+    taxonEpciList = list()
+    nbObsTotal = 0
+    for r in req:
+        temp = {
+            'nom_complet_html': r.nom_complet_html,
+            'nb_obs': r.nb_obs,
+            'nom_vern': r.nom_vern,
+            'cd_ref': r.cd_ref,
+            'last_obs': r.last_obs,
+            'group2_inpn': deleteAccent(r.group2_inpn),
+            'patrimonial': r.patrimonial,
+            'protection_stricte': r.protection_stricte
+        }
         taxonEpciList.append(temp)
         nbObsTotal = nbObsTotal + r.nb_obs
     return {'taxons': taxonEpciList, 'nbObsTotal': nbObsTotal}
+
+
+# With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
+def getListeTaxonsDpt(connection, num_dpt):
+    sql = """
+        with taxondpt AS (
+            SELECT DISTINCT
+                        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
+                        COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
+                        t.group2_inpn, t.patrimonial, t.protection_stricte, o.insee
+                    FROM atlas.vm_observations o
+                    JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+                    WHERE left(o.insee,2)::int = :thisNumdpt
+                    GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
+                        t.patrimonial, t.protection_stricte, o.insee
+                    ORDER BY o.cd_ref DESC
+            )
+        select DISTINCT
+                    cd_ref, max(last_obs) as last_obs,
+                    SUM(nb_obs) AS nb_obs, nom_complet_html, nom_vern,
+                    group2_inpn, patrimonial, protection_stricte
+                     from taxondpt
+           GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
+                    patrimonial, protection_stricte
+        ORDER BY group2_inpn, nom_complet_html ASC
+    """
+    req = connection.execute(text(sql), thisNumdpt=num_dpt)
+    taxonDptList = list()
+    nbObsTotal = 0
+    for r in req:
+        temp = {
+            'nom_complet_html': r.nom_complet_html,
+            'nb_obs': r.nb_obs,
+            'nom_vern': r.nom_vern,
+            'cd_ref': r.cd_ref,
+            'last_obs': r.last_obs,
+            'group2_inpn': deleteAccent(r.group2_inpn),
+            'patrimonial': r.patrimonial,
+            'protection_stricte': r.protection_stricte
+        }
+        taxonDptList.append(temp)
+        nbObsTotal = nbObsTotal + r.nb_obs
+    return {'taxons': taxonDptList, 'nbObsTotal': nbObsTotal}
 
 
 
