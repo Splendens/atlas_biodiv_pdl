@@ -419,7 +419,7 @@ def ficheDepartement(num_dpt):
 def listeTaxonCommune_pdf(insee):
     session = utils.loadSession()
     connection = utils.engine.connect()
-    listTaxons = vmTaxonsRepository.getTaxonsListeCommunes(connection, insee)
+    listTaxons = vmTaxonsRepository.getListeTaxonsCommunes(connection, insee)
     #infosCommune = vmCommunesRepository.infosCommune(connection, insee)
     #epciCommune = vmCommunesRepository.epciCommune(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
