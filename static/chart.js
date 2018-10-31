@@ -1,4 +1,21 @@
-/* PROVENANCE DES DONNEES */
+// Download symbol
+Highcharts.SVGRenderer.prototype.symbols.download = function (x, y, w, h) {
+    var path = [
+        // Arrow stem
+        'M', x + w * 0.5, y,
+        'L', x + w * 0.5, y + h * 0.7,
+        // Arrow head
+        'M', x + w * 0.3, y + h * 0.5,
+        'L', x + w * 0.5, y + h * 0.7,
+        'L', x + w * 0.7, y + h * 0.5,
+        // Box
+        'M', x, y + h * 0.9,
+        'L', x, y + h,
+        'L', x + w, y + h,
+        'L', x + w, y + h * 0.9
+    ];
+    return path;
+};
 
 
 // Radialize the colors
@@ -42,14 +59,25 @@ Highcharts.chart('statsorgataxonChart', {
     plotShadow: false,
     type: 'pie'
   },
+  lang: {
+    //printChart: 'Print chart',
+    downloadPNG: 'Export PNG',
+    downloadJPEG: 'Export JPEG',
+    //downloadPDF: 'Download PDF',
+    //downloadSVG: 'Download SVG',
+    //contextButtonTitle: 'Context menu'
+  },
   credits: {
     enabled: false
   },
   title: {
-    text: "Répartition des données selon <br>la base de données de provenance",
+    text: "Origine des données",
     style : { "color": "#333333", "fontSize": "22px" }
   },
-
+  subtitle: {
+    text: "Bases de données moissonnées",
+    style : { "color": "#333333", "fontSize": "15px" }
+  },
   tooltip: {
     headerFormat: '',
     pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
@@ -94,7 +122,46 @@ Highcharts.chart('statsorgataxonChart', {
        enabled: true,
        padding: 0
    }
-  }]
+  }],
+
+  navigation: {
+        buttonOptions: {
+
+            theme: {
+                'stroke-width': 1,
+                stroke: 'silver',
+                r: 0,
+                states: {
+                    hover: {
+                        fill: '#a4edba'
+                    },
+                    select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                    }
+                },
+                style: {
+                    color: '#3c763d',
+                    textDecoration: 'bold'
+                }
+            }
+
+        }
+    },
+    exporting: {
+      filename: 'Origine_des_données',
+      buttons: {
+        contextButton: {
+          symbol: 'download',
+          text: 'Enregistrer',
+          menuItems: [
+            'downloadPNG',
+            'downloadJPEG'
+           ]
+        }
+      }
+    }
+
 });
 
 
@@ -106,6 +173,14 @@ Highcharts.chart('statsorgataxonChart', {
 Highcharts.chart('phenologyChart', {
     chart: {
         type: 'line'
+    },
+    lang: {
+      //printChart: 'Print chart',
+      downloadPNG: 'Export PNG',
+      downloadJPEG: 'Export JPEG',
+      //downloadPDF: 'Download PDF',
+      //downloadSVG: 'Download SVG',
+      //contextButtonTitle: 'Context menu'
     },
     credits: {
       enabled: false
@@ -159,6 +234,45 @@ Highcharts.chart('phenologyChart', {
         data: months,
         type: 'spline',
 
-    }]
+    }],
+
+  navigation: {
+        buttonOptions: {
+
+            theme: {
+                'stroke-width': 1,
+                stroke: 'silver',
+                r: 0,
+                states: {
+                    hover: {
+                        fill: '#a4edba'
+                    },
+                    select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                    }
+                },
+                style: {
+                    color: '#3c763d',
+                    textDecoration: 'bold'
+                }
+            }
+
+        }
+    },
+    exporting: {
+      filename: 'Phénologie',
+      buttons: {
+        contextButton: {
+          symbol: 'download',
+          text: 'Enregistrer',
+          menuItems: [
+            'downloadPNG',
+            'downloadJPEG'
+           ]
+        }
+      }
+    }
+
 });
 

@@ -1,3 +1,21 @@
+// Download symbol
+Highcharts.SVGRenderer.prototype.symbols.download = function (x, y, w, h) {
+    var path = [
+        // Arrow stem
+        'M', x + w * 0.5, y,
+        'L', x + w * 0.5, y + h * 0.7,
+        // Arrow head
+        'M', x + w * 0.3, y + h * 0.5,
+        'L', x + w * 0.5, y + h * 0.7,
+        'L', x + w * 0.7, y + h * 0.5,
+        // Box
+        'M', x, y + h * 0.9,
+        'L', x, y + h,
+        'L', x + w, y + h,
+        'L', x + w, y + h * 0.9
+    ];
+    return path;
+};
 
 // Radialize the colors
 Highcharts.setOptions({
@@ -36,6 +54,14 @@ var pieColors = (function () {
 Highcharts.chart('statsorgacommGraph', {
     chart: {
         type: 'column'
+    },
+    lang: {
+      //printChart: 'Print chart',
+      downloadPNG: 'Export PNG',
+      downloadJPEG: 'Export JPEG',
+      //downloadPDF: 'Download PDF',
+      //downloadSVG: 'Download SVG',
+      //contextButtonTitle: 'Context menu'
     },
 
     credits: {
@@ -105,7 +131,46 @@ Highcharts.chart('statsorgacommGraph', {
                 fontFamily: 'Verdana, sans-serif'
             }
         }
-    }]
+    }],
+
+  navigation: {
+        buttonOptions: {
+
+            theme: {
+                'stroke-width': 1,
+                stroke: 'silver',
+                r: 0,
+                states: {
+                    hover: {
+                        fill: '#a4edba'
+                    },
+                    select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                    }
+                },
+                style: {
+                    color: '#3c763d',
+                    textDecoration: 'bold'
+                }
+            }
+
+        }
+    },
+    exporting: {
+      filename: 'Nombre_espèces_sur_le_territoire_par_source_de_données',
+      buttons: {
+        contextButton: {
+          symbol: 'download',
+          text: 'Enregistrer',
+          menuItems: [
+            'downloadPNG',
+            'downloadJPEG'
+           ]
+        }
+      }
+    }
+
 });
 
 
@@ -182,7 +247,16 @@ Highcharts.chart('group2inpnGraph', {
     plotBorderWidth: null,
     plotShadow: false,
     type: 'pie'
-    },
+  },
+  lang: {
+      //printChart: 'Print chart',
+      downloadPNG: 'Export PNG',
+      downloadJPEG: 'Export JPEG',
+      //downloadPDF: 'Download PDF',
+      //downloadSVG: 'Download SVG',
+      //contextButtonTitle: 'Context menu'
+  },
+
   credits: {
     enabled: false
   },
@@ -238,7 +312,47 @@ Highcharts.chart('group2inpnGraph', {
        enabled: true,
        padding: 0
    }
-  }]
+  }],
+
+
+  navigation: {
+        buttonOptions: {
+
+            theme: {
+                'stroke-width': 1,
+                stroke: 'silver',
+                r: 0,
+                states: {
+                    hover: {
+                        fill: '#a4edba'
+                    },
+                    select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                    }
+                },
+                style: {
+                    color: '#3c763d',
+                    textDecoration: 'bold'
+                }
+            }
+
+        }
+    },
+    exporting: {
+      filename: 'Nombre_de_données_par_groupes_taxonomique',
+      buttons: {
+        contextButton: {
+          symbol: 'download',
+          text: 'Enregistrer',
+          menuItems: [
+            'downloadPNG',
+            'downloadJPEG'
+           ]
+        }
+      }
+    }
+
 });
 
 
@@ -253,6 +367,15 @@ Highcharts.chart('taxongroup2inpnGraph', {
     plotShadow: false,
     type: 'pie'
   },
+  lang: {
+    //printChart: 'Print chart',
+    downloadPNG: 'Export PNG',
+    downloadJPEG: 'Export JPEG',
+    //downloadPDF: 'Download PDF',
+    //downloadSVG: 'Download SVG',
+    //contextButtonTitle: 'Context menu'
+  },
+
   credits: {
     enabled: false
   },
@@ -311,6 +434,45 @@ Highcharts.chart('taxongroup2inpnGraph', {
        padding: 0
    }
 
-  }]
+  }],
+
+  navigation: {
+        buttonOptions: {
+
+            theme: {
+                'stroke-width': 1,
+                stroke: 'silver',
+                r: 0,
+                states: {
+                    hover: {
+                        fill: '#a4edba'
+                    },
+                    select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                    }
+                },
+                style: {
+                    color: '#3c763d',
+                    textDecoration: 'bold'
+                }
+            }
+
+        }
+    },
+    exporting: {
+      filename: 'Nombre_espèces_par_groupes_taxonomique',
+      buttons: {
+        contextButton: {
+          symbol: 'download',
+          text: 'Enregistrer',
+          menuItems: [
+            'downloadPNG',
+            'downloadJPEG'
+           ]
+        }
+      }
+    }
+
 });
 
