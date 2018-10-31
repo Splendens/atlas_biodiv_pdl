@@ -8,7 +8,7 @@
         <div>
 
             <h3 style="text-align:center;text-decoration:bold;">Liste des espèces du département : <i>{{ referenciel.dptName}} ({{(num_dpt)}})</i></h3>
-            <h4 style="text-align:center;text-decoration:none;">{{listTaxons.nbObsTotal}} {{ 'espèces' if listTaxons.nbObsTotal > 1 else 'espèce' }}</h4>
+            <h4 style="text-align:center;text-decoration:none;">{{listTaxons.taxons|length}} {{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}</h4>
             <h5 style="text-align:center;text-decoration:none;">Liste téléchargée le {{now}} sur<a href="http://www.biodiv-paysdelaloire.fr" target="_blank"> Biodiv'Pays de la Loire </a></h5>
             <br>
             {% for taxon in listTaxons.taxons %}
