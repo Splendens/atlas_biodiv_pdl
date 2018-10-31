@@ -14,16 +14,17 @@
             {% for taxon in listTaxons.taxons %}
                 <ul>
 
-                    <li>{{taxon.nom_complet_html|safe}}
-                        {% if taxon.nom_vern == None %}
+                    <li style="font-size:12px;margin-bottom:10px;">
+                        {{taxon.nom_complet_html|safe}}
+                            {% if taxon.nom_vern == None %}
 
-                        {% else %}
-                            - {{taxon.nom_vern|safe}}
-                        {% endif %}
-                        <br>
-                        <p style="color:#635d5d;"><i>Classe : {{taxon.group2_inpn}} - Dernière observation :</i> {{taxon.last_obs | int}}</p> 
+                            {% else %}
+                                - {{taxon.nom_vern|safe}}
+                            {% endif %}
+                        </p>
+                        <span style="color:#635d5d;"><i>Classe : {{taxon.group2_inpn}} - Dernière observation :</i> {{taxon.last_obs | int}}</span> </p>
                     </li>
-
+                    
                 </ul>
             {% endfor %}
 
