@@ -236,6 +236,7 @@ def ficheCommune(insee):
     session = utils.loadSession()
     connection = utils.engine.connect()
     listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
+    listespeces = vmTaxonsRepository.getListeTaxonsCommunes(connection, insee)
     infosCommune = vmCommunesRepository.infosCommune(connection, insee)
     epciCommune = vmCommunesRepository.epciCommune(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
@@ -275,6 +276,7 @@ def ficheCommune(insee):
         'templates/ficheCommune.html',
         insee=insee,
         listTaxons=listTaxons,
+        listespeces=listespeces,
         infosCommune=infosCommune,
         epciCommune=epciCommune,
         referenciel=commune,
@@ -296,6 +298,7 @@ def ficheEpci(nom_epci_simple):
     session = utils.loadSession()
     connection = utils.engine.connect()
     listTaxons = vmTaxonsRepository.getTaxonsEpci(connection, nom_epci_simple)
+    listespeces = vmTaxonsRepository.getListeTaxonsEpci(connection, nom_epci_simple)
     infosEpci = vmEpciRepository.infosEpci(connection, nom_epci_simple)
     communesEpci = vmEpciRepository.communesEpciChilds(connection, nom_epci_simple)
     epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
@@ -336,6 +339,7 @@ def ficheEpci(nom_epci_simple):
         'templates/ficheEpci.html',
         nom_epci_simple=nom_epci_simple,
         listTaxons=listTaxons,
+        listespeces=listespeces,
         infosEpci=infosEpci,
         communesEpci=communesEpci,
         referenciel=epci,
@@ -358,6 +362,7 @@ def ficheDepartement(num_dpt):
     session = utils.loadSession()
     connection = utils.engine.connect()
     listTaxons = vmTaxonsRepository.getTaxonsDpt(connection, num_dpt)
+    listespeces = vmTaxonsRepository.getListeTaxonsDpt(connection, num_dpt)
     infosDpt = vmDepartementRepository.infosDpt(connection, num_dpt)
     communesDpt = vmDepartementRepository.communesDptChilds(connection, num_dpt)
     epciDpt = vmDepartementRepository.epciDptChilds(connection, num_dpt)
@@ -398,6 +403,7 @@ def ficheDepartement(num_dpt):
         'templates/ficheDepartement.html',
         num_dpt=num_dpt,
         listTaxons=listTaxons,
+        listespeces=listespeces,
         infosDpt=infosDpt,
         communesDpt=communesDpt,
         epciDpt=epciDpt,

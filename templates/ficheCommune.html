@@ -18,7 +18,10 @@
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.css') }}" />
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.Default.css') }}" />
 
-
+        <!--Generation de PDF-->
+        <script src="{{url_for('static', filename='lib/jspdf/jspdf.min.js') }}"></script>
+        <script src="{{url_for('static', filename='lib/jspdf/jspdf-AutoTable.min.js') }}"></script>
+        <script src="{{url_for('static', filename='exportpdf.js') }}"></script>
 
         <!-- Highcharts -->
         <script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
@@ -54,7 +57,6 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/icones.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}"/>
 
-
    </head>
    <body>
     {% include 'templates/navbar.html' %}
@@ -67,11 +69,9 @@
             <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="parent">
-                        <h2><b>Commune : {{referenciel.communeName}}</b></h2> 
-
-
-                            
-
+                        <h2>
+                            <b>Commune : {{referenciel.communeName}}</b>
+                        </h2> 
 
                         <ul id="stat">
                             <li>
@@ -122,8 +122,6 @@
 
 
 
-
-
             <div class="row rowMargin" id="clear">
                 <div class="col-xs-12" id="ObsCommunes"> 
                     <div class="panel panel-default" >
@@ -139,10 +137,11 @@
                                     {% include 'templates/tabTaxons.html' %}
                                 </div>
                                 <div id="btnexportlist" class="panel panel-default alert alert-success" role="alert">
-                                     <p><b> Enregistrer la liste des espèces de <i>{{referenciel.communeName}}</i> <span class="glyphicon glyphicon-menu-right"></span> </b>
-                                        <button type="button" class="btn btn-outline-success"> 
+                                     <p><b> Enregistrer la liste des espèces de la commune <i>{{referenciel.communeName}}</i> </b>
+                                        <button class="btn btn-outline-success" id="exportcom" style="margin-left:10px;"><span class="glyphicon glyphicon-download-alt"></span> PDF</button>
+                                        <!--button type="button" class="btn btn-outline-success"> 
                                             <a href="{{ url_for('main.listeTaxonCommune_pdf', insee=referenciel.insee) }}" target="_blank" role="button"> <span class="glyphicon glyphicon-download-alt"></span> PDF </a>
-                                        </button>                                 
+                                        </button-->                                 
                                      </p>   
                                 </div>
                              </div>
@@ -235,6 +234,8 @@
 
         
         <script type="text/javascript">
+            var listespeces = {{listespeces|tojson}};
+            var referenciel = {{referenciel|tojson}};
             var statsorgacomm = {{statsorgacomm|tojson}};
             var statsgroup2inpncomm = {{statsgroup2inpncomm|tojson}};
             var statstaxongroup2inpncomm = {{statstaxongroup2inpncomm|tojson}};

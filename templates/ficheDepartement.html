@@ -18,6 +18,10 @@
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.css') }}" />
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.Default.css') }}" />
 
+        <!--Generation de PDF-->
+        <script src="{{url_for('static', filename='lib/jspdf/jspdf.min.js') }}"></script>
+        <script src="{{url_for('static', filename='lib/jspdf/jspdf-AutoTable.min.js') }}"></script>
+        <script src="{{url_for('static', filename='exportpdf.js') }}"></script>
 
 
         <!-- Highcharts -->
@@ -216,9 +220,10 @@
                                     {% include 'templates/tabTaxons.html' %}
                                 </div>
                                 <div id="btnexportlist" class="panel panel-default alert alert-success" role="alert">
-                                     <p><b> Enregistrer la liste des espèces de <i>{{referenciel.dptName}}</i> <span class="glyphicon glyphicon-menu-right"></span> </b>
-                                        <button type="button" class="btn btn-outline-success"> 
-                                            <a href="{{ url_for('main.listeTaxonDpt_pdf', num_dpt=referenciel.num_dpt) }}" target="_blank" role="button"> <span class="glyphicon glyphicon-download-alt"></span> PDF </a>
+                                     <p><b> Enregistrer la liste des espèces du département <i>{{referenciel.dptName}}</i> </b>
+                                        <button class="btn btn-outline-success" id="exportdpt" style="margin-left:10px;"><span class="glyphicon glyphicon-download-alt"></span> PDF</button>
+                                        <!--button type="button" class="btn btn-outline-success"> 
+                                            <a href="{{ url_for('main.listeTaxonDpt_pdf', num_dpt=referenciel.num_dpt) }}" target="_blank" role="button"> <span class="glyphicon glyphicon-download-alt"></span> PDF </a-->
                                         </button>                                 
                                      </p>   
                                 </div>
@@ -325,6 +330,8 @@
         {% endif %}
         
         <script type="text/javascript">
+            var referenciel = {{referenciel|tojson}};
+            var listespeces = {{listespeces|tojson}};
             var statsorgacomm = {{statsorgadpt|tojson}};
             var statsgroup2inpncomm = {{statsgroup2inpndpt|tojson}};
             var statstaxongroup2inpncomm = {{statstaxongroup2inpndpt|tojson}};

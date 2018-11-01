@@ -205,7 +205,7 @@ def getListeTaxonsEpci(connection, nom_epci_simple):
             )
         select DISTINCT
                     cd_ref, max(last_obs) as last_obs,
-                    SUM(nb_obs) AS nb_obs, nom_complet_html, nom_vern,
+                    SUM(nb_obs)::int AS nb_obs, nom_complet_html, nom_vern,
                     group2_inpn, patrimonial, protection_stricte
                     from taxonepci
            GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
@@ -248,7 +248,7 @@ def getListeTaxonsDpt(connection, num_dpt):
             )
         select DISTINCT
                     cd_ref, max(last_obs) as last_obs,
-                    SUM(nb_obs) AS nb_obs, nom_complet_html, nom_vern,
+                    SUM(nb_obs)::int AS nb_obs, nom_complet_html, nom_vern,
                     group2_inpn, patrimonial, protection_stricte
                      from taxondpt
            GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
