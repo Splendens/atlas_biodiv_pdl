@@ -302,7 +302,7 @@ def ficheEpci(nom_epci_simple):
     infosEpci = vmEpciRepository.infosEpci(connection, nom_epci_simple)
     communesEpci = vmEpciRepository.communesEpciChilds(connection, nom_epci_simple)
     epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
-    epciDpt = vmEpciRepository.getDptFromNEpci(connection, nom_epci_simple)
+    epciDpt = vmEpciRepository.getDptFromEpci(connection, nom_epci_simple)
     statsorgaepci = vmStatsOrgaEpciRepository.getStatsOrgaEpciChilds(connection, nom_epci_simple)
     statsgroup2inpnepci = vmStatsGroup2inpnEpciRepository.getStatsGroup2inpnEpciChilds(connection, nom_epci_simple)
     statstaxongroup2inpnepci = vmStatsTaxonGroup2inpnEpciRepository.getStatsTaxonGroup2inpnEpciChilds(connection, nom_epci_simple)

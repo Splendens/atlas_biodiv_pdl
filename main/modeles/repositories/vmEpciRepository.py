@@ -35,7 +35,7 @@ def getEpciFromNomsimple(connection, nom_epci_simple):
     return req[0].nom_epci
 
 
-def getDptFromNEpci(connection, nom_epci_simple):
+def getDptFromEpci(connection, nom_epci_simple):
     sql = "SELECT distinct d.nom_dpt, \
            d.num_dpt \
            FROM atlas.vm_epci e \

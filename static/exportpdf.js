@@ -73,7 +73,7 @@ $(document).ready(function(){
 
       //texte avant le tableau
       doc.setFontSize(18);
-      doc.text("Liste des espèces de l'EPCI : "+referenciel.epciName+' ('+referenciel.num_dpt+')', 14, 20);
+      doc.text("Liste des espèces de l'EPCI : "+referenciel.epciName+' ('+epciDpt.num_dpt+')', 14, 20);
 
       doc.setFontSize(14);
       doc.text("Nombre de taxons : "+listespeces.taxons.length, 14, 30);
