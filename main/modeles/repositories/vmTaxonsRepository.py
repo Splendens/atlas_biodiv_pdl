@@ -210,7 +210,7 @@ def getListeTaxonsEpci(connection, nom_epci_simple):
                     from taxonepci
            GROUP BY cd_ref, nom_vern, nom_complet, group2_inpn,
                     patrimonial, protection_stricte
-        ORDER BY group2_inpn, nom_complet_html ASC
+        ORDER BY group2_inpn, nom_complet ASC
     """
     req = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
     taxonEpciList = list()
@@ -251,7 +251,7 @@ def getListeTaxonsDpt(connection, num_dpt):
                     SUM(nb_obs)::int AS nb_obs, replace(replace(nom_complet_html, '<i>', ''), '</i>', '') as nom_complet, nom_vern,
                     group2_inpn, patrimonial, protection_stricte
                      from taxondpt
-           GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
+           GROUP BY cd_ref, nom_vern, nom_complet, group2_inpn,
                     patrimonial, protection_stricte
         ORDER BY group2_inpn, nom_complet ASC
     """
