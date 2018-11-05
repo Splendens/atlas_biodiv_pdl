@@ -137,7 +137,7 @@
                                     {% include 'templates/tabTaxons.html' %}
                                 </div>
                                 <div id="btnexportlist" class="panel panel-default alert alert-success" role="alert">
-                                     <p><b> Enregistrer la liste des espèces de la commune <i>{{referenciel.communeName}}</i> </b>
+                                     <p><b> Télécharger la liste des espèces de la commune <i>{{referenciel.communeName}}</i> </b>
                                         <button class="btn btn-outline-success" id="exportcom" style="margin-left:10px;"><span class="glyphicon glyphicon-download-alt"></span> PDF</button>
                                         <!--button type="button" class="btn btn-outline-success"> 
                                             <a href="{{ url_for('main.listeTaxonCommune_pdf', insee=referenciel.insee) }}" target="_blank" role="button"> <span class="glyphicon glyphicon-download-alt"></span> PDF </a>
