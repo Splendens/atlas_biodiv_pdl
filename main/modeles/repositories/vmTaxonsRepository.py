@@ -157,21 +157,21 @@ def getListeTaxonsCommunes(connection, insee):
     sql = """
         SELECT DISTINCT
             o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
-            COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
+            COUNT(o.id_observation) AS nb_obs, replace(replace(t.nom_complet_html, '<i>', ''), '</i>', '') as nom_complet, t.nom_vern,
             t.group2_inpn, t.patrimonial, t.protection_stricte
         FROM atlas.vm_observations o
         JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
         WHERE o.insee = :thisInsee
         GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
             t.patrimonial, t.protection_stricte
-        ORDER BY group2_inpn, nom_complet_html ASC
+        ORDER BY group2_inpn, nom_complet ASC
     """
     req = connection.execute(text(sql), thisInsee=insee)
     taxonCommunesList = list()
     nbObsTotal = 0
     for r in req:
         temp = {
-            'nom_complet_html': r.nom_complet_html,
+            'nom_complet': r.nom_complet,
             'nb_obs': r.nb_obs,
             'nom_vern': r.nom_vern,
             'cd_ref': r.cd_ref,
@@ -205,10 +205,10 @@ def getListeTaxonsEpci(connection, nom_epci_simple):
             )
         select DISTINCT
                     cd_ref, max(last_obs) as last_obs,
-                    SUM(nb_obs)::int AS nb_obs, nom_complet_html, nom_vern,
+                    SUM(nb_obs)::int AS nb_obs, replace(replace(nom_complet_html, '<i>', ''), '</i>', '') as nom_complet, nom_vern,
                     group2_inpn, patrimonial, protection_stricte
                     from taxonepci
-           GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
+           GROUP BY cd_ref, nom_vern, nom_complet, group2_inpn,
                     patrimonial, protection_stricte
         ORDER BY group2_inpn, nom_complet_html ASC
     """
@@ -217,7 +217,7 @@ def getListeTaxonsEpci(connection, nom_epci_simple):
     nbObsTotal = 0
     for r in req:
         temp = {
-            'nom_complet_html': r.nom_complet_html,
+            'nom_complet': r.nom_complet,
             'nb_obs': r.nb_obs,
             'nom_vern': r.nom_vern,
             'cd_ref': r.cd_ref,
@@ -248,19 +248,19 @@ def getListeTaxonsDpt(connection, num_dpt):
             )
         select DISTINCT
                     cd_ref, max(last_obs) as last_obs,
-                    SUM(nb_obs)::int AS nb_obs, nom_complet_html, nom_vern,
+                    SUM(nb_obs)::int AS nb_obs, replace(replace(nom_complet_html, '<i>', ''), '</i>', '') as nom_complet, nom_vern,
                     group2_inpn, patrimonial, protection_stricte
                      from taxondpt
            GROUP BY cd_ref, nom_vern, nom_complet_html, group2_inpn,
                     patrimonial, protection_stricte
-        ORDER BY group2_inpn, nom_complet_html ASC
+        ORDER BY group2_inpn, nom_complet ASC
     """
     req = connection.execute(text(sql), thisNumdpt=num_dpt)
     taxonDptList = list()
     nbObsTotal = 0
     for r in req:
         temp = {
-            'nom_complet_html': r.nom_complet_html,
+            'nom_complet': r.nom_complet,
             'nb_obs': r.nb_obs,
             'nom_vern': r.nom_vern,
             'cd_ref': r.cd_ref,

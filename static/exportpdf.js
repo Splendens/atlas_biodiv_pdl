@@ -9,14 +9,14 @@ $(document).ready(function(){
       var doc = new jsPDF();
 
       //texte avant le tableau
-      doc.setFontSize(18);
-      doc.text("Liste des espèces de la commune : "+referenciel.communeName+' ('+referenciel.num_dpt+')', 14, 20);
-
-      doc.setFontSize(14);
-      doc.text("Nombre de taxons : "+listespeces.taxons.length, 14, 30);
+      doc.setFontSize(16);
+      doc.text("Liste des espèces de la commune : "+referenciel.communeName+' ('+referenciel.num_dpt+')', 12, 20);
 
       doc.setFontSize(12);
-      doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 14, 40);
+      doc.text("Nombre d'espèces : "+listespeces.taxons.length, 12, 30);
+
+      doc.setFontSize(12);
+      doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 40);
 
       //var pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
       //var text = doc.splitTextToSize('blablabling.', pageWidth - 35, {});
@@ -24,15 +24,23 @@ $(document).ready(function(){
 
    
       //Initialisation du tableau
-      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière observation"];
+      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
       var rows = [];
 
       //On récupère les données du JSON listespece.taxons
+
+
+
       listespeces.taxons.forEach(element => {      
+
+          if ( element.nom_vern != null ) {
+            var nom_vern = element.nom_vern;
+          } else {var nom_vern = '';}
+
           var temp = [
                       element.group2_inpn,
-                      element.nom_complet_html,
-                      element.nom_vern,
+                      element.nom_complet,
+                      nom_vern,
                       element.last_obs
                       ];
           rows.push(temp);
@@ -44,7 +52,7 @@ $(document).ready(function(){
           margin: {horizontal: 7},
          // bodyStyles: {valign: 'top'},
           styles: {overflow: 'linebreak', columnWidth: 'wrap'},
-          columnStyles: {1: {columnWidth: 'auto'},2: {columnWidth: 70}}
+          columnStyles: {1: {columnWidth: 80},2: {columnWidth: 'auto'},3: {columnWidth: 25}}
       });
 
       //Enregistrement du PDF
@@ -79,15 +87,20 @@ $(document).ready(function(){
 
    
       //Initialisation du tableau
-      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière observation"];
+      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
       var rows = [];
 
       //On récupère les données du JSON listespece.taxons
       listespeces.taxons.forEach(element => {      
+
+          if ( element.nom_vern != null ) {
+            var nom_vern = element.nom_vern;
+          } else {var nom_vern = '';}
+
           var temp = [
                       element.group2_inpn,
-                      element.nom_complet_html,
-                      element.nom_vern,
+                      element.nom_complet,
+                      nom_vern,
                       element.last_obs
                       ];
           rows.push(temp);
@@ -99,7 +112,7 @@ $(document).ready(function(){
           margin: {horizontal: 7},
          // bodyStyles: {valign: 'top'},
           styles: {overflow: 'linebreak', columnWidth: 'wrap'},
-          columnStyles: {1: {columnWidth: 'auto'},2: {columnWidth: 70}}
+          columnStyles: {1: {columnWidth: 80},2: {columnWidth: 'auto'},3: {columnWidth: 25}}
       });
 
       //Enregistrement du PDF
@@ -133,15 +146,20 @@ $(document).ready(function(){
 
    
       //Initialisation du tableau
-      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière observation"];
+      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
       var rows = [];
 
       //On récupère les données du JSON listespece.taxons
-      listespeces.taxons.forEach(element => {      
+      listespeces.taxons.forEach(element => {    
+
+          if ( element.nom_vern != null ) {
+            var nom_vern = element.nom_vern;
+          } else {var nom_vern = '';}
+
           var temp = [
                       element.group2_inpn,
-                      element.nom_complet_html,
-                      element.nom_vern,
+                      element.nom_complet,
+                      nom_vern,
                       element.last_obs
                       ];
           rows.push(temp);
@@ -153,7 +171,7 @@ $(document).ready(function(){
           margin: {horizontal: 7},
          // bodyStyles: {valign: 'top'},
           styles: {overflow: 'linebreak', columnWidth: 'wrap'},
-          columnStyles: {1: {columnWidth: 'auto'},2: {columnWidth: 70}}
+          columnStyles: {1: {columnWidth: 80},2: {columnWidth: 'auto'},3: {columnWidth: 25}}
       });
 
       //Enregistrement du PDF
