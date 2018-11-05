@@ -176,7 +176,7 @@ def getListeTaxonsCommunes(connection, insee):
             'nom_vern': r.nom_vern,
             'cd_ref': r.cd_ref,
             'last_obs': r.last_obs,
-            'group2_inpn': deleteAccent(r.group2_inpn),
+            'group2_inpn': r.group2_inpn,
             'patrimonial': r.patrimonial,
             'protection_stricte': r.protection_stricte,
         }
@@ -222,7 +222,7 @@ def getListeTaxonsEpci(connection, nom_epci_simple):
             'nom_vern': r.nom_vern,
             'cd_ref': r.cd_ref,
             'last_obs': r.last_obs,
-            'group2_inpn': deleteAccent(r.group2_inpn),
+            'group2_inpn': r.group2_inpn,
             'patrimonial': r.patrimonial,
             'protection_stricte': r.protection_stricte
         }
@@ -265,7 +265,7 @@ def getListeTaxonsDpt(connection, num_dpt):
             'nom_vern': r.nom_vern,
             'cd_ref': r.cd_ref,
             'last_obs': r.last_obs,
-            'group2_inpn': deleteAccent(r.group2_inpn),
+            'group2_inpn': r.group2_inpn,
             'patrimonial': r.patrimonial,
             'protection_stricte': r.protection_stricte
         }
