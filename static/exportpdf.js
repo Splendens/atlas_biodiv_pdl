@@ -24,16 +24,16 @@ $(document).ready(function(){
 
    
       //Initialisation du tableau
-      var col = ["Cd_Ref","Classe","Nom complet", "Nom vernaculaire"];
+      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière observation"];
       var rows = [];
 
       //On récupère les données du JSON listespece.taxons
       listespeces.taxons.forEach(element => {      
           var temp = [
-                      element.cd_ref,
                       element.group2_inpn,
                       element.nom_complet_html,
-                      element.nom_vern
+                      element.nom_vern,
+                      element.last_obs
                       ];
           rows.push(temp);
       });        
@@ -44,7 +44,7 @@ $(document).ready(function(){
           margin: {horizontal: 7},
          // bodyStyles: {valign: 'top'},
           styles: {overflow: 'linebreak', columnWidth: 'wrap'},
-          columnStyles: {2: {columnWidth: 'auto'},3: {columnWidth: 70}}
+          columnStyles: {1: {columnWidth: 'auto'},2: {columnWidth: 70}}
       });
 
       //Enregistrement du PDF
@@ -79,16 +79,16 @@ $(document).ready(function(){
 
    
       //Initialisation du tableau
-      var col = ["Cd_Ref","Classe","Nom complet", "Nom vernaculaire"];
+      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière observation"];
       var rows = [];
 
       //On récupère les données du JSON listespece.taxons
       listespeces.taxons.forEach(element => {      
           var temp = [
-                      element.cd_ref,
                       element.group2_inpn,
                       element.nom_complet_html,
-                      element.nom_vern
+                      element.nom_vern,
+                      element.last_obs
                       ];
           rows.push(temp);
       });        
@@ -99,7 +99,7 @@ $(document).ready(function(){
           margin: {horizontal: 7},
          // bodyStyles: {valign: 'top'},
           styles: {overflow: 'linebreak', columnWidth: 'wrap'},
-          columnStyles: {2: {columnWidth: 'auto'},3: {columnWidth: 70}}
+          columnStyles: {1: {columnWidth: 'auto'},2: {columnWidth: 70}}
       });
 
       //Enregistrement du PDF
@@ -133,16 +133,16 @@ $(document).ready(function(){
 
    
       //Initialisation du tableau
-      var col = ["Cd_Ref","Classe","Nom complet", "Nom vernaculaire"];
+      var col = ["Classe","Nom complet", "Nom vernaculaire", "Dernière observation"];
       var rows = [];
 
       //On récupère les données du JSON listespece.taxons
       listespeces.taxons.forEach(element => {      
           var temp = [
-                      element.cd_ref,
                       element.group2_inpn,
                       element.nom_complet_html,
-                      element.nom_vern
+                      element.nom_vern,
+                      element.last_obs
                       ];
           rows.push(temp);
       });        
@@ -153,7 +153,7 @@ $(document).ready(function(){
           margin: {horizontal: 7},
          // bodyStyles: {valign: 'top'},
           styles: {overflow: 'linebreak', columnWidth: 'wrap'},
-          columnStyles: {2: {columnWidth: 'auto'},3: {columnWidth: 70}}
+          columnStyles: {1: {columnWidth: 'auto'},2: {columnWidth: 70}}
       });
 
       //Enregistrement du PDF
