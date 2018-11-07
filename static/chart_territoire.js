@@ -83,8 +83,8 @@ Highcharts.chart('statsorgacommGraph', {
         '<b>SICEN</b><br>(CEN Pays de la Loire)', 
         '<b>GRETIA</b>', 
         '<b>URCPIE</b>', 
-        '<b>Faune Anjou</b><br>(LPO49)', 
         '<b>Faune Loire-Atlantique</b><br>(LPO44, BV, GNLA)', 
+        '<b>Faune Anjou</b><br>(LPO49)', 
         '<b>Faune Vendée</b><br>(LPO85)', 
         '<b>Faune Maine</b><br>(LPO72, MNE)'
         ],

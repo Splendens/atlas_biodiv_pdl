@@ -35,8 +35,8 @@ def getStatsOrgaTaxonChilds(connection, cd_ref):
             {'label': "SICEN (CEN)", 'y': inter._03},
             {'label': "GRETIA", 'y': inter._05},
             {'label': "URCPIE", 'y': inter._70},
-            {'label': "Faune Anjou (LPO49)", 'y': inter._81},
-            {'label': "Faune Loire-Atlantique (LPO44, BV, GNLA)", 'y': inter._82},
+            {'label': "Faune Loire-Atlantique (LPO44, BV, GNLA)", 'y': inter._81},
+            {'label': "Faune Anjou (LPO49)", 'y': inter._82},
             {'label': "Faune Vendée (LPO85)", 'y': inter._83},
             {'label': "Faune Maine (LPO72, MNE)", 'y': inter._84}
         ]
