@@ -131,6 +131,7 @@ Highcharts.chart('statsorgacommGraph', {
                 fontSize: '13px',
                 fontFamily: 'Verdana, sans-serif'
             }
+          }
       }],
 
   navigation: {
