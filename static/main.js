@@ -44,6 +44,9 @@ autocompleteSearch = function(list, inputID, urlDestination, nbProposal){
     $( "#searchCommunesStat" ).focus(function() {
        autocompleteSearch(communesSearch, "#searchCommunesStat", "commune", 10);
     });
+    $( "#searchCommunesStatsmallindex" ).focus(function() {
+       autocompleteSearch(communesSearch, "#searchCommunesStatsmallindex", "commune", 10);
+    });
 
 
     $( "#searchEpci" ).focus(function() {
