@@ -72,23 +72,24 @@ Highcharts.chart('statsorgacommGraph', {
       text: "<b>Nombre d'espèces sur le territoire</b><br>par source de données",
       style : { "color": "#333333", "fontSize": "22px" }
     },
+
     yAxis: {
+        maxPadding:0.5,
         title: {
             text: "Nombre d'espèces"
         }
     },
     xAxis: {
-        categories: [
+       categories: [
         '<b>Calluna</b><br>(CBN de Brest)', 
         '<b>SICEN</b><br>(CEN Pays de la Loire)', 
         '<b>GRETIA</b>', 
         '<b>URCPIE</b>', 
-        '<b>Faune Loire-Atlantique</b><br>(LPO44, BV, GNLA)', 
         '<b>Faune Anjou</b><br>(LPO49)', 
+        '<b>Faune Loire-Atlantique</b><br>(LPO44, BV, GNLA)', 
         '<b>Faune Vendée</b><br>(LPO85)', 
         '<b>Faune Maine</b><br>(LPO72, MNE)'
         ],
-
         labels: {
           rotation: -45,
           style: {
@@ -121,17 +122,16 @@ Highcharts.chart('statsorgacommGraph', {
         data: statsorgacomm,
         dataLabels: {
             enabled: true,
-            rotation: -90,
+            //rotation: -90,
             color: "#333333",
-            align: 'right',
+            align: 'center',
             format: '{point.y:.0f}',
-            y: 20, // 10 pixels down from the top
+            y: -5, // 10 pixels down from the top
             style: {
                 fontSize: '13px',
                 fontFamily: 'Verdana, sans-serif'
             }
-        }
-    }],
+      }],
 
   navigation: {
         buttonOptions: {
