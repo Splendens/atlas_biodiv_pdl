@@ -2,13 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8" />
-
         <title>{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}}</title>
 
         <!-- Jquery -->
         <link rel="stylesheet" href="{{url_for('static', filename='lib/jquery-ui.css') }}" />
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='lib/jquery.lazy.min.js') }}"></script>
     		{% if configuration.GLOSSAIRE %}
       		<!-- Jquery Glossarizer -->
       		<script src="{{url_for('static', filename='lib/glossarizer/tooltip/tooltip.js') }}"></script>
