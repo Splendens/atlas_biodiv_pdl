@@ -30,8 +30,8 @@ def getStatsOrgaCommChilds(connection, insee):
             {'label': "SICEN (CEN)", 'y': inter._03nbtaxon},
             {'label': "GRETIA", 'y': inter._05nbtaxon},
             {'label': "URCPIE", 'y': inter._70nbtaxon},
-            {'label': "Faune Loire-Atlantique (LPO44, BV, GNLA)", 'y': inter._81nbtaxon},
             {'label': "Faune Anjou (LPO49)", 'y': inter._82nbtaxon},
+            {'label': "Faune Loire-Atlantique (LPO44, BV, GNLA)", 'y': inter._81nbtaxon},
             {'label': "Faune Vendée (LPO85)", 'y': inter._83nbtaxon},
             {'label': "Faune Maine (LPO72, MNE)", 'y': inter._84nbtaxon}
         ]
