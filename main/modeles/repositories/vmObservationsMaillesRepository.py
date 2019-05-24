@@ -14,7 +14,7 @@ def getObservationsMaillesChilds(connection, cd_ref):
                     (
                         SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
                     )
-                OR obs.cd_ref = :thiscdref
+                OR cd_ref = :thiscdref
             )
 
             SELECT

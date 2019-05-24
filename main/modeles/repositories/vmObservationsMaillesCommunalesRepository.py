@@ -13,7 +13,7 @@ def getObservationsMaillesCommunalesChilds(connection, cd_ref):
                 where cd_ref in (
                         SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
                     )
-                or obs.cd_ref = :thiscdref
+                or cd_ref = :thiscdref
         )
         SELECT
             obs.insee,
