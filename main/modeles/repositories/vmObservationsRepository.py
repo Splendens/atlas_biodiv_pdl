@@ -140,7 +140,7 @@ def observersParser(req):
     tabObs = list()
     for r in req:
         if r.observateurs != None:
-            tabObs = r.observateurs.split(', ')
+            tabObs = r.observateurs.replace(' & ',', ').split(', ')
         for o in tabObs:
             o = o.lower()
             setObs.add(o)
