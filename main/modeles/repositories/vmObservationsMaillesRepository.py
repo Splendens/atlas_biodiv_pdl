@@ -7,19 +7,25 @@ import ast
 
 
 def getObservationsMaillesChilds(connection, cd_ref):
-    sql = """SELECT
+    sql = """WITH obstax AS (
+                select *
+                from atlas.vm_observations
+                where  cd_ref in 
+                    (
+                        SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
+                    )
+                OR obs.cd_ref = :thiscdref
+            )
+
+            SELECT
             obs.id_maille,
             obs.geojson_maille,
             a.nom_organisme AS orgaobs, 
             o.dateobs,
             extract(YEAR FROM o.dateobs) as annee
         FROM atlas.vm_observations_mailles obs
-        JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+        JOIN obstax o ON o.id_observation = obs.id_observation
         LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
-        WHERE obs.cd_ref in (
-                SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
-            )
-            OR obs.cd_ref = :thiscdref
         ORDER BY id_maille"""
     observations = connection.execute(text(sql), thiscdref=cd_ref)
     tabObs = list()
