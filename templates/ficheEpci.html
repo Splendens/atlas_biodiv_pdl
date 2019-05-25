@@ -74,11 +74,11 @@
                         <ul id="stat">
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 30px;"></span><br/>
-                                <b>{{listTaxons.nbObsTotal}}</b><br/>{{ 'Observations' if listTaxons.nbObsTotal > 1 else 'Observation' }}
+                                <b>{{listTaxons.nbObsTotal | pretty}}</b><br/>{{ 'Observations' if listTaxons.nbObsTotal > 1 else 'Observation' }}
                             </li>
                             <li>
                                 <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
-                                <b>{{listTaxons.taxons|length}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
+                                <b>{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
                             </li>
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span>
@@ -90,17 +90,17 @@
                             </li>
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="font-size:30px;margin:5%;"></br>
-                                <b>{{orgas|length}}</b><br/>{{ 'Sources' if orgas|length > 1 else 'Source' }}
+                                <b>{{orgas|length | pretty}}</b><br/>{{ 'Sources' if orgas|length > 1 else 'Source' }}
                             </li>
                             <li>
                                 <span data-icon="&#xe040;" style="font-size: 30px;"></span></br>
-                                <b>{{observers|length}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
+                                <b>{{observers|length | pretty}}</b><br/>{{ 'Observateurs' if observers|length > 1 else 'Observateur' }}
                             </li>
                             <li>
                                 <span class="glyphicon glyphicon-home" style="font-size: 25px;"></span>
                                 <br/>
                                 <span data-toggle="tooltip" data-original-title="Voir la liste des communes" data-placement="bottom">
-                                    <a id="btn-comm-childs" data-toggle="modal" data-target="#myModal"><b>{{communesEpci.communesEpciChilds|length}}</b><br/>{{ 'Communes' if communesEpci.communesEpciChilds|length > 1 else 'Commune' }} dans l'EPCI</a>
+                                    <a id="btn-comm-childs" data-toggle="modal" data-target="#myModal"><b>{{communesEpci.communesEpciChilds|length | pretty}}</b><br/>{{ 'Communes' if communesEpci.communesEpciChilds|length > 1 else 'Commune' }} dans l'EPCI</a>
                                 </span>
 
                                 <!-- Modal -->
@@ -162,7 +162,7 @@
             <div class="row rowMargin" id="clear">
                 <div class="col-xs-12" id="ObsCommunes"> 
                     <div class="panel panel-default" >
-                        <div class="panel-heading"><h3> {{listTaxons.nbObsTotal}} {{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }} sur l'intercommunalité de <i>{{referenciel.epciName}}</i></h3></div>
+                        <div class="panel-heading"><h3> {{listTaxons.nbObsTotal | pretty}} {{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }} sur l'intercommunalité de <i>{{referenciel.epciName}}</i></h3></div>
                         <div class="row" id="mapRow">
                             <!-- CARTE des dernières observations -->
                             <div id="blocMap" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

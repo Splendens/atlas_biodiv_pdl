@@ -204,7 +204,7 @@
                                                                 >
                                                             {% endif %}
                                                             </td>
-                                                            <td> {{child.nb_obs}} </td>
+                                                            <td> {{child.nb_obs | pretty}} </td>
                                                             <td>
                                                                 <a href = "{{url_for('main.ficheEspece', cd_ref = child.cd_ref) }}">
                                                                     <span id="ficheGlyficon"  data-toggle="tooltip" data-original-title="Consulter la fiche espèce" data-placement="right" class="glyphicon glyphicon-list"></span>
@@ -273,11 +273,11 @@
                     </div>
                     <div class="col-sm-2" id="mapStat">
                         <ul>
-                            <li> <span data-icon="&#xe037;" style="font-size: 30px;"></span> </br><b>{{taxon.taxonSearch.nb_obs}}</b> </br> {{ 'observations' if taxon.taxonSearch.nb_obs > 1 else 'observation' }}</li>
+                            <li> <span data-icon="&#xe037;" style="font-size: 30px;"></span> </br><b>{{taxon.taxonSearch.nb_obs | pretty}}</b> </br> {{ 'observations' if taxon.taxonSearch.nb_obs > 1 else 'observation' }}</li>
                             <li> <img id="picto" src="{{url_for('static', filename='images/church.png')}}" style="width"><br/><b>{{communes|length}}</b><br/>{{ 'communes' if communes|length > 1 else 'commune' }}</li>
-                            <li> <span data-icon="&#xe040;"  style="font-size: 30px;"></span><br/><b>{{observers|length}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}</li>
+                            <li> <span data-icon="&#xe040;"  style="font-size: 30px;"></span><br/><b>{{observers|length | pretty}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}</li>
                                 {% if configuration.AFFICHAGE_ORGAS_OBS_FICHEESP %}
-                                <li><img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="width"><br/><b>{{orgas|length}}</b><br/>{{ 'sources' if orgas|length > 1 else 'source' }}</li>
+                                <li><img id="picto" src="{{url_for('static', filename='images/network.png')}}" style="width"><br/><b>{{orgas|length | pretty}}</b><br/>{{ 'sources' if orgas|length > 1 else 'source' }}</li>
                                 {% endif %}
                             <li><span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span><br/><b>Première observation</b><br/>{{taxon.taxonSearch.yearmin|int}}</li>
                             <li><span data-icon="&#xe037;" style="font-size: 25px; color: blue"></span><br/><b>Dernière observation</b><br/>{{taxon.taxonSearch.yearmax|int}}</li>
@@ -292,14 +292,14 @@
                 <div class="row" id="otherInformations">
                           <ul class="nav nav-tabs">
                             {% if articles | length != 0 %}
-                            <li class="active"><a data-toggle="tab" href="#articles"><b>{{articles|length}}</b> {{ 'articles' if articles|length > 1 else 'article' }}</a></li>
-                            <li><a data-toggle="tab" href="#communes"> <b>{{communes|length}}</b> {{ 'communes' if communes|length > 1 else 'commune' }}</a></li>
+                            <li class="active"><a data-toggle="tab" href="#articles"><b>{{articles|length | pretty}}</b> {{ 'articles' if articles|length > 1 else 'article' }}</a></li>
+                            <li><a data-toggle="tab" href="#communes"> <b>{{communes|length | pretty}}</b> {{ 'communes' if communes|length > 1 else 'commune' }}</a></li>
                             {% else %}
-                            <li class="active"><a data-toggle="tab" href="#communes"> <b>{{communes|length}}</b> {{ 'communes' if communes|length > 1 else 'commune' }}</a></li>
+                            <li class="active"><a data-toggle="tab" href="#communes"> <b>{{communes|length | pretty}}</b> {{ 'communes' if communes|length > 1 else 'commune' }}</a></li>
                             {% endif %}
-                            <li><a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> {{ 'observateurs' if observers|length > 1 else 'observateur' }}</a></li>
+                            <li><a data-toggle="tab" href="#observateurs"> <b>{{observers|length | pretty}} </b> {{ 'observateurs' if observers|length > 1 else 'observateur' }}</a></li>
                                 {% if configuration.AFFICHAGE_ORGAS_OBS_FICHEESP %}
-                            <li><a data-toggle="tab" href="#structures"> <b>{{orgas|length}} </b>{{ 'sources' if orgas|length > 1 else 'source' }}</a></li>
+                            <li><a data-toggle="tab" href="#structures"> <b>{{orgas|length | pretty}} </b>{{ 'sources' if orgas|length > 1 else 'source' }}</a></li>
                                 {% endif %}
                             <li><a data-toggle="tab" href="#avertissements"><span class="glyphicon glyphicon-info-sign"> </span>&nbsp;&nbsp;<b>information</b></a></li>
                           </ul>

@@ -90,7 +90,7 @@
                 -->
 
                 <td>{{taxon.last_obs | int}}</td>
-                <td>{{taxon.nb_obs}}</td>
+                <td>{{taxon.nb_obs | pretty}}</td>
                 {% if not configuration.PRESSION_PROSPECTION %}
                     {% if configuration.MYTYPE == 1 %}
                         <td>
