@@ -22,15 +22,15 @@
 	  <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
 		  <form method="POST" action="" id='searchFormTaxons' class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
-				   <input id="searchTaxons" type="text" style="width: 170px;" class="form-control" placeholder="Une espèce ? &nbsp; &nbsp; &nbsp;" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
+				   <input id="searchTaxons" type="text" class="form-control ajax-search" placeholder="Rechercher une espèce&nbsp;&nbsp;&nbsp;" loading="false" />
 				   <span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
-				<input id="hiddenInputTaxons" type="hidden" name="cd_ref">
+				<input id="hiddenInputTaxons" type="hidden" name="cd_ref" />
 	      </form>
 
 	      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormCommunes' action=""  class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
-					<input id="searchCommunes" type="text" style="width: 170px;" class="form-control" placeholder="Une commune ?" >
+					<input id="searchCommunes" type="text" class="form-control ajax-search" placeholder="Une commune ?" />
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 			    <input id="hiddenInputCommunes" type="hidden" name="insee">
@@ -38,7 +38,7 @@
 
 	      <form method="POST" onsubmit="completeAction('#searchFormEpci', hiddenInputEpci)" id='searchFormEpci' action=""  class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
-					<input id="searchEpci" type="text" style="width: 170px;" class="form-control" placeholder="Un EPCI ?" >
+					<input id="searchEpci" type="text" class="form-control ajax-search" placeholder="Un EPCI ?" />
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 			    <input id="hiddenInputEpci" type="hidden" name="nom_epci_simple">
@@ -46,7 +46,7 @@
 
 	      <form method="POST" onsubmit="completeAction('#searchFormDepartement', hiddenInputDepartement)" id='searchFormDepartement' action="" class="navbar-form navbar-left" role="search">
 				<div class="form-group has-feedback">
-					<input id="searchDepartement" type="text" style="width: 170px;" class="form-control" placeholder="Un département ?" >
+					<input id="searchDepartement" type="text" class="form-control ajax-search" placeholder="Un département ?" />
 					<span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 			   <input id="hiddenInputDepartement" type="hidden" name="num_dpt">

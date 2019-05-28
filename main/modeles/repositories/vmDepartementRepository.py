@@ -16,6 +16,16 @@ def getAllDepartement(session):
     return dptList
 
 
+def getDepartementSearch(session, search, limit=50):
+    req = session.query(distinct(VmDepartement.nom_dpt), VmDepartement.num_dpt) \
+        .filter(VmDepartement.nom_dpt.ilike('%' + search + '%')).limit(limit).all()
+    dptList = list()
+    for r in req:
+        temp = {'label': r[0], 'value': r[1]}
+        dptList.append(temp)
+    return dptList
+
+
 def getDepartementFromNumdpt(connection, num_dpt):
     sql = "SELECT d.num_dpt, \
            d.nom_dpt, \

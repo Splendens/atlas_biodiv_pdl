@@ -167,12 +167,11 @@ li.sidebar-brand {
 
 /* END Legend MAPS */
 
-#searchTaxons{
+input.ajax-search {
     background-position: right center;
     background-repeat: no-repeat;
     background-size: 25px 25px;
     background-position-x: calc(100% - 25px);
-    cursor: grab;
 }
 
 /* LightBox */

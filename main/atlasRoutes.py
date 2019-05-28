@@ -102,9 +102,6 @@ def index():
             connection, config.NB_DAY_LAST_OBS, config.ATTR_MAIN_PHOTO
         )
 
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     mostViewTaxon = vmTaxonsMostView.mostViewTaxon(connection)
     stat = vmObservationsRepository.statIndex(connection)
     customStat = vmObservationsRepository.genericStat(
@@ -136,9 +133,6 @@ def index():
     return render_template(
         'templates/index.html',
         observations=observations,
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         mostViewTaxon=mostViewTaxon,
         stat=stat,
         customStat=customStat,
@@ -160,9 +154,6 @@ def ficheEspece(cd_ref):
     communes = vmCommunesRepository.getCommunesObservationsChilds(
         connection, cd_ref
     )
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
     firstPhoto = vmMedias.getFirstPhoto(
         connection, cd_ref, config.ATTR_MAIN_PHOTO
@@ -216,9 +207,6 @@ def ficheEspece(cd_ref):
         months=months,
         synonyme=synonyme,
         communes=communes,
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         taxonomyHierarchy=taxonomyHierarchy,
         firstPhoto=firstPhoto,
         photoCarousel=photoCarousel,
@@ -243,9 +231,6 @@ def ficheCommune(insee):
     statsorgacomm = vmStatsOrgaCommRepository.getStatsOrgaCommChilds(connection, insee)
     statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
     statstaxongroup2inpncomm = vmStatsTaxonGroup2inpnCommRepository.getStatsTaxonGroup2inpnCommChilds(connection, insee)
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     if config.AFFICHAGE_MAILLE:
         observations = vmObservationsMaillesRepository.lastObservationsCommuneMaille(
             connection, config.NB_LAST_OBS, insee
@@ -283,9 +268,6 @@ def ficheCommune(insee):
         statsorgacomm=statsorgacomm,
         statsgroup2inpncomm=statsgroup2inpncomm,
         statstaxongroup2inpncomm=statstaxongroup2inpncomm,
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         observations=observations,
         orgas=orgas,
         observers=observers,
@@ -306,9 +288,6 @@ def ficheEpci(nom_epci_simple):
     statsorgaepci = vmStatsOrgaEpciRepository.getStatsOrgaEpciChilds(connection, nom_epci_simple)
     statsgroup2inpnepci = vmStatsGroup2inpnEpciRepository.getStatsGroup2inpnEpciChilds(connection, nom_epci_simple)
     statstaxongroup2inpnepci = vmStatsTaxonGroup2inpnEpciRepository.getStatsTaxonGroup2inpnEpciChilds(connection, nom_epci_simple)
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     if config.AFFICHAGE_MAILLE:
         observations = vmObservationsMaillesRepository.lastObservationsEpciMaille(
             connection, config.NB_LAST_OBS, nom_epci_simple
@@ -347,9 +326,6 @@ def ficheEpci(nom_epci_simple):
         statsorgaepci=statsorgaepci,
         statsgroup2inpnepci=statsgroup2inpnepci,
         statstaxongroup2inpnepci=statstaxongroup2inpnepci,
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         observations=observations,
         orgas=orgas,
         observers=observers,
@@ -370,9 +346,6 @@ def ficheDepartement(num_dpt):
     statsorgadpt = vmStatsOrgaDptRepository.getStatsOrgaDptChilds(connection, num_dpt)
     statsgroup2inpndpt = vmStatsGroup2inpnDptRepository.getStatsGroup2inpnDptChilds(connection, num_dpt)
     statstaxongroup2inpndpt = vmStatsTaxonGroup2inpnDptRepository.getStatsTaxonGroup2inpnDptChilds(connection, num_dpt)
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     if config.AFFICHAGE_MAILLE:
         observations = vmObservationsMaillesRepository.lastObservationsDptMaille(
             connection, config.NB_LAST_OBS, num_dpt
@@ -411,9 +384,6 @@ def ficheDepartement(num_dpt):
         statsorgadpt=statsorgadpt,
         statsgroup2inpndpt=statsgroup2inpndpt,
         statstaxongroup2inpndpt=statstaxongroup2inpndpt,
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         observations=observations,
         orgas=orgas,
         observers=observers,
@@ -432,9 +402,6 @@ def listeTaxonCommune_pdf(insee):
     #statsorgacomm = vmStatsOrgaCommRepository.getStatsOrgaCommChilds(connection, insee)
     #statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
     #statstaxongroup2inpncomm = vmStatsTaxonGroup2inpnCommRepository.getStatsTaxonGroup2inpnCommChilds(connection, insee)
-    #communesSearch = vmCommunesRepository.getAllCommunes(session)
-    #epciSearch = vmEpciRepository.getAllEpci(session)
-    #departementSearch = vmDepartementRepository.getAllDepartement(session)
     #if config.AFFICHAGE_MAILLE:
     #    observations = vmObservationsMaillesRepository.lastObservationsCommuneMaille(
     #        connection, config.NB_LAST_OBS, insee
@@ -470,9 +437,6 @@ def listeTaxonCommune_pdf(insee):
         #statsorgacomm=statsorgacomm,
         #statsgroup2inpncomm=statsgroup2inpncomm,
         #statstaxongroup2inpncomm=statstaxongroup2inpncomm,
-        #communesSearch=communesSearch,
-        #epciSearch=epciSearch,
-        #departementSearch=departementSearch,
         #observations=observations,
         #orgas=orgas,
         #observers=observers,
@@ -549,9 +513,6 @@ def ficheRangTaxonomie(cd_ref):
 
     listTaxons = vmTaxonsRepository.getTaxonsChildsList(connection, cd_ref)
     referenciel = vmTaxrefRepository.getInfoFromCd_ref(session, cd_ref)
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     taxonomyHierarchy = vmTaxrefRepository.getAllTaxonomy(session, cd_ref)
     orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
@@ -572,9 +533,6 @@ def ficheRangTaxonomie(cd_ref):
         'templates/ficheRangTaxonomique.html',
         listTaxons=listTaxons,
         referenciel=referenciel,
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         taxonomyHierarchy=taxonomyHierarchy,
         orgas=orgas,
         observers=observers,
@@ -589,9 +547,6 @@ def ficheGroupe(groupe):
 
     groups = vmTaxonsRepository.getAllINPNgroup(connection)
     listTaxons = vmTaxonsRepository.getTaxonsGroup(connection, groupe)
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     orgas = vmObservationsRepository.getGroupeOrgas(connection, groupe)
     observers = vmObservationsRepository.getGroupeObservers(connection, groupe)
 
@@ -610,9 +565,6 @@ def ficheGroupe(groupe):
     return render_template(
         'templates/ficheGroupe.html',
         listTaxons=listTaxons,
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         referenciel=groupe,
         groups=groups,
         orgas=orgas,
@@ -627,18 +579,12 @@ def photos():
     connection = utils.engine.connect()
 
     groups = vmTaxonsRepository.getINPNgroupPhotos(connection)
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     configuration = base_configuration
 
     session.close()
     connection.close()
     return render_template(
         'templates/galeriePhotos.html',
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         groups=groups,
         configuration=configuration
     )
@@ -650,15 +596,9 @@ def get_staticpages(page):
     if (page not in config.STATIC_PAGES):
         abort(404)
     static_page = config.STATIC_PAGES[page]
-    communesSearch = vmCommunesRepository.getAllCommunes(session)
-    epciSearch = vmEpciRepository.getAllEpci(session)
-    departementSearch = vmDepartementRepository.getAllDepartement(session)
     configuration = base_configuration
     session.close()
     return render_template(
         static_page['template'],
-        communesSearch=communesSearch,
-        epciSearch=epciSearch,
-        departementSearch=departementSearch,
         configuration=configuration
     )

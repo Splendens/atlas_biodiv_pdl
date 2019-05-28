@@ -8,82 +8,104 @@ $(document).ready(function() {
 });
 
 
-autocompleteSearch = function(list, inputID, urlDestination, nbProposal){
-    $(inputID).autocomplete({
-        source: function (request, response) {
-        var results = $.ui.autocomplete.filter(list, request.term);
-        response(results.slice(0, nbProposal))},
-             focus: function(event, ui) {
-                return false;
-            },
-           select : function (event, ui){
-             $(inputID).val(ui.item.label);
-              var url = ui.item.value;
-              if (urlDestination == "espece"){
-                  location.href = configuration.URL_APPLICATION+"/espece/"+url;
-              } 
-              if (urlDestination == "commune") {
-                  location.href = configuration.URL_APPLICATION+"/commune/"+url;
-              }
-              if (urlDestination == "epci") {
-                  location.href = configuration.URL_APPLICATION+"/epci/"+url;
-              }
-              if (urlDestination == "departement") {
-                  location.href = configuration.URL_APPLICATION+"/departement/"+url;
-              }
-              
-          return false;
-            }
-    });
+
+autocompleteSearch = function(inputID, urlDestination, nbProposal) {
+  $(inputID).autocomplete({
+    source: function(request, response) {
+      var searchUrl;
+      if (urlDestination == "espece") {
+        searchUrl = "/api/searchTaxon";
+      } else if (urlDestination == "commune") {
+        searchUrl = "/api/searchCommune";
+      } else if (urlDestination == "epci") {
+        searchUrl = "/api/searchEpci";
+      } else {
+        searchUrl = "/api/searchDepartement";
+      }
+
+      $(inputID)
+        .attr("loading", "true")
+        .css(
+          "background-image",
+          "url('" +
+            configuration.URL_APPLICATION +
+            "/static/images/loading3.gif')"
+        );
+      $.get(
+        configuration.URL_APPLICATION + searchUrl,
+        { search: request.term, limit: nbProposal },
+        function(results) {
+          response(results.slice(0, nbProposal));
+          $(inputID)
+            .attr("loading", "false")
+            .css("background-image", "none");
+        }
+      );
+    },
+    focus: function(event, ui) {
+      return false;
+    },
+    select: function(event, ui) {
+      $(inputID).val(ui.item.label);
+      var url = ui.item.value;
+      if (urlDestination == "espece") {
+        location.href = configuration.URL_APPLICATION + "/espece/" + url;
+      } else if (urlDestination == "commune") {
+        location.href = configuration.URL_APPLICATION + "/commune/" + url;
+      } else if (urlDestination == "epci") {
+        location.href = configuration.URL_APPLICATION + "/epci/" + url;
+      } else {
+        location.href = configuration.URL_APPLICATION + "/departement/" + url;
+      }
+
+      return false;
+    },
+    create: function (event,ui){
+       $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
+        return $('<li>')
+            .append('<a  class="search-bar-item">' + item.label + '</a>')
+            .appendTo(ul);
+       }
+    }
+  })
 };
 
+
 // Generate the autocompletion with the list of item, the input id and the form id
+    $("#searchTaxons").focus(function() {
+      autocompleteSearch("#searchTaxons", "espece", 20);
+    });
+    $("#searchTaxonsStat").focus(function() {
+      autocompleteSearch("#searchTaxonsStat", "espece", 10);
+    });
+
+
     $( "#searchCommunes" ).focus(function() {
-      autocompleteSearch(communesSearch, "#searchCommunes", "commune", 20)
+      autocompleteSearch("#searchCommunes", "commune", 20)
     });
     $( "#searchCommunesStat" ).focus(function() {
-       autocompleteSearch(communesSearch, "#searchCommunesStat", "commune", 10);
+       autocompleteSearch("#searchCommunesStat", "commune", 10);
     });
     $( "#searchCommunesStatsmallindex" ).focus(function() {
-       autocompleteSearch(communesSearch, "#searchCommunesStatsmallindex", "commune", 10);
+       autocompleteSearch("#searchCommunesStatsmallindex", "commune", 10);
     });
 
 
     $( "#searchEpci" ).focus(function() {
-      autocompleteSearch(epciSearch, "#searchEpci", "epci", 20)
+      autocompleteSearch("#searchEpci", "epci", 20)
     });
     $( "#searchEpciStat" ).focus(function() {
-       autocompleteSearch(epciSearch, "#searchEpciStat", "epci", 10);
+       autocompleteSearch("#searchEpciStat", "epci", 10);
     });
 
 
     $( "#searchDepartement" ).focus(function() {
-      autocompleteSearch(departementSearch, "#searchDepartement", "departement", 20)
+      autocompleteSearch("#searchDepartement", "departement", 20)
     });
     $( "#searchDepartementStat" ).focus(function() {
-       autocompleteSearch(departementSearch, "#searchDepartementStat", "departement", 10);
+       autocompleteSearch("#searchDepartementStat", "departement", 10);
     });
 
-
-$.ajax({
-  url: configuration.URL_APPLICATION+'/api/searchTaxon/',
-  dataType: "json"
-  }).done(function(list) {
-      $('[loading="true"]').css("background-image", "none")
-      $('[loading="true"]').prop("disabled", false);
-      $('[loading="true"]').attr('placeholder', "Une espèce ?")
-
-
-    $( "#searchTaxons" ).focus(function() {
-       autocompleteSearch(list, "#searchTaxons", "espece", 20);
-    });
-
-    // Autocomplete bloc stat
-    $( "#searchTaxonsStat" ).focus(function() {
-       autocompleteSearch(list, "#searchTaxonsStat", "espece", 10);
-    });
-
-});
 
 
 // child list display
