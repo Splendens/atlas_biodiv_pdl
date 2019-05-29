@@ -71,7 +71,7 @@
 								<h3> {{ 'espèces' if stat.nbTotalTaxons > 1 else 'espèce' }}</h3>
 								<form style="margin: 0 0 7px;" method="POST" id="searchFormTaxonsStat" class="navbar-form" role="search">
 									<div class="form-group has-feedback">
-										<input id="searchTaxonsStat" type="text" class="form-control" placeholder="Rechercher une espèce &nbsp; &nbsp; &nbsp;" loading="false" />
+										<input id="searchTaxonsStat" type="text" class="form-control" placeholder="Une espèce ?" loading="true" style="background-image: url('{{url_for('static', filename='images/loading3.gif') }}');" disabled>
 										<i class="glyphicon glyphicon-search form-control-feedback"></i>
 										<input id="hiddenInputTaxonStat" type="hidden" name="cd_ref">
 									</div>
@@ -95,7 +95,7 @@
 								<h3> {{ 'communes' if stat.town > 1 else 'commune' }}</h3>
 								<form style="margin: 0 0 7px;" method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
 									<div class="form-group has-feedback">
-										<input id="searchCommunesStatsmallindex" type="text" class="form-control" placeholder="Une commune ?" />
+										<input id="searchCommunesStatsmallindex" type="text" class="form-control" placeholder="Une commune ?" >
 										<i class="glyphicon glyphicon-search form-control-feedback"></i>
 										<input id="hiddenInputCommunesStat" type="hidden" name="insee">
 									</div>
@@ -128,7 +128,7 @@
 								<h3> {{ 'intercommunalités' if stat.epci > 1 else 'intercommunalité' }} </h3>
 								<form style="margin: 0 0 7px;" method="POST" onsubmit="completeAction('#searchFormEpciStat', hiddenInputEpciStat)" id='searchFormEpciStat' action=""  class="navbar-form" role="search">
 									<div class="form-group has-feedback">
-										<input id="searchEpciStat" type="text" class="form-control" placeholder="Un EPCI ?" />
+										<input id="searchEpciStat" type="text" class="form-control" placeholder="Un EPCI ?" >
 										<i class="glyphicon glyphicon-search form-control-feedback"></i>
 										<input id="hiddenInputEpciStat" type="hidden" name="nom_epci_simple">
 									</div>
@@ -142,7 +142,7 @@
 								<h3> {{ 'départements' if stat.departement > 1 else 'département' }} </h3>
 								<form style="margin: 0 0 7px;" method="POST" onsubmit="completeAction('#searchFormDepartementStat', hiddenInputDepartementStat)" id='searchFormDepartementStat' action=""  class="navbar-form" role="search">
 									<div class="form-group has-feedback">
-										<input id="searchDepartementStat" type="text" class="form-control" placeholder="Un département ?" />
+										<input id="searchDepartementStat" type="text" class="form-control" placeholder="Un département ?" >
 										<i class="glyphicon glyphicon-search form-control-feedback"></i>
 										<input id="hiddenInputDepartementStat" type="hidden" name="num_dpt">
 									</div>
@@ -294,6 +294,9 @@
 
     	<script type="text/javascript">
   			var observations = {{observations|tojson}}
+  			, communesSearch = {{communesSearch|tojson}}
+            , epciSearch = {{epciSearch|tojson}}
+            , departementSearch = {{departementSearch|tojson}}
   			, configuration = {{configuration|tojson}},
   			url_limit_dpt_territory = "{{url_for('static', filename='custom/dpt_pdl_simpli.json') }}",
   			url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";

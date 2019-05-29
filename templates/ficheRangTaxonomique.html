@@ -85,6 +85,9 @@
     {% endif %}
 
         <script type="text/javascript">
+            var communesSearch = {{communesSearch|tojson}};
+            var epciSearch = {{epciSearch|tojson}};
+            var departementSearch = {{departementSearch|tojson}};
             var configuration = {{configuration|tojson}};
             //calcul du nb de colonnes pour le fonctionnement de dataTables.js
             var nbColumn = 6;

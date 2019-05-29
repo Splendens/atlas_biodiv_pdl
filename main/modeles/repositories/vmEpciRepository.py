@@ -16,16 +16,6 @@ def getAllEpci(session):
     return epciList
 
 
-def getEpciSearch(session, search, limit=50):
-    req = session.query(distinct(VmEpci.nom_epci), VmEpci.nom_epci_simple) \
-        .filter(VmEpci.nom_epci_simple.ilike('%' + search + '%')).limit(limit).all()
-    epciList = list()
-    for r in req:
-        temp = {'label': r[0], 'value': r[1]}
-        epciList.append(temp)
-    return epciList
-
-
 def getEpciFromNomsimple(connection, nom_epci_simple):
     sql = "SELECT c.nom_epci, \
            c.nom_epci_simple, \
