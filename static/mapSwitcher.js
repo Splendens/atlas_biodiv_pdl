@@ -25,7 +25,7 @@ var compteurLegend = 0; // counter to not put the legend each time
 var $loader = $('#loadingGif').attr('src', configuration.URL_APPLICATION+'/static/images/loading.svg');
 
 
-//display une première couche sur la carte avec switcher: mailles carrées pour 3 et 6, points pour 5 et 7
+//display une première couche sur la carte avec switcher
 if(configuration.AFFICHAGE_ATLAS_MAILLE_CARREE){
       $.ajax({
         url: configuration.URL_APPLICATION+'/api/observationsMaille/'+cd_ref, 

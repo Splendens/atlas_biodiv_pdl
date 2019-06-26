@@ -418,7 +418,11 @@ function generateSwitcherOnMap(){
 
     });
 
+
+
+
 //*******MAILLESCARREES********
+
     var SwitcherMailleControl = L.Control.extend({
 
       options: {
@@ -571,7 +575,9 @@ function generateSwitcherOnMap(){
 
     });
 
+
     map.addControl(new SwitcherCommControl());
     map.addControl(new SwitcherMailleControl());
+
 
 }
