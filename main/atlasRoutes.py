@@ -28,7 +28,8 @@ base_configuration = {
     'AFFICHAGE_FOOTER': config.AFFICHAGE_FOOTER,
     'ID_GOOGLE_ANALYTICS': config.ID_GOOGLE_ANALYTICS,
     'STATIC_PAGES': config.STATIC_PAGES,
-    'TAXHUB_URL': config.TAXHUB_URL if hasattr(config, 'TAXHUB_URL') else None
+    'TAXHUB_URL': config.TAXHUB_URL if hasattr(config, 'TAXHUB_URL') else None,
+    'GROS_JEU_DONNEES' : config.GROS_JEU_DONNEES
 }
 
 
@@ -183,6 +184,7 @@ def ficheEspece(cd_ref):
     )
     orgas = vmObservationsRepository.getOrgasObservations(connection, cd_ref)
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
+    observationsMaille = vmObservationsMaillesRepository.getObservationsMaillesChilds(connection, cd_ref)
 
     configuration = base_configuration.copy()
     configuration.update({
@@ -193,7 +195,6 @@ def ficheEspece(cd_ref):
         'GLOSSAIRE': config.GLOSSAIRE,
         'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,       
         'AFFICHAGE_SWITCHER': config.AFFICHAGE_SWITCHER,
-        'AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE': config.AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE,
         'AFFICHAGE_ATLAS_MAILLE_COMMUNALE': config.AFFICHAGE_ATLAS_MAILLE_COMMUNALE,
         'AFFICHAGE_ATLAS_MAILLE_CARREE': config.AFFICHAGE_ATLAS_MAILLE_CARREE,
         'AFFICHAGE_ATLAS_POINT': config.AFFICHAGE_ATLAS_POINT,
@@ -219,6 +220,7 @@ def ficheEspece(cd_ref):
         communesSearch=communesSearch,
         epciSearch=epciSearch,
         departementSearch=departementSearch,
+        observationsMaille=observationsMaille,
         taxonomyHierarchy=taxonomyHierarchy,
         firstPhoto=firstPhoto,
         photoCarousel=photoCarousel,

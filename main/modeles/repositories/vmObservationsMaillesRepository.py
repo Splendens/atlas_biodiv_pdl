@@ -3,73 +3,133 @@
 
 from .. import utils
 from sqlalchemy.sql import text
+from main.configuration import config
 import ast
 
 
 def getObservationsMaillesChilds(connection, cd_ref):
-    sql = """WITH obstax AS (
-                select *
-                from atlas.vm_observations
-                where  cd_ref in 
-                    (
-                        SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
-                    )
-                OR cd_ref = :thiscdref
-            )
+    if config.GROS_JEU_DONNEES:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs,
+                count(obs.id_observation) as nbobs,
+                max(extract(year from dateobs)) as annee
+            FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE obs.cd_ref in (
+                    SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
+                )
+                OR obs.cd_ref = :thiscdref
+            GROUP BY
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme
+            ORDER BY obs.id_maille"""
+    else:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs,
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE obs.cd_ref in (
+                    SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
+                )
+                OR obs.cd_ref = :thiscdref
+            ORDER BY id_maille"""
 
-            SELECT
-            obs.id_maille,
-            obs.geojson_maille,
-            a.nom_organisme AS orgaobs, 
-            o.dateobs,
-            extract(YEAR FROM o.dateobs) as annee
-        FROM atlas.vm_observations_mailles obs
-        JOIN obstax o ON o.id_observation = obs.id_observation
-        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
-        ORDER BY id_maille"""
     observations = connection.execute(text(sql), thiscdref=cd_ref)
     tabObs = list()
-    for o in observations:
-        temp = {
-            'id_maille': o.id_maille,
-            'nb_observations': 1,
-            'annee': o.annee,
-            'dateobs': str(o.dateobs),
-            'orga_obs': o.orgaobs,
-            'geojson_maille': ast.literal_eval(o.geojson_maille)
-        }
-        tabObs.append(temp)
+    if config.GROS_JEU_DONNEES:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': o.nbobs,
+                'annee': o.annee,
+                'dateobs': None,
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
+    else:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
+
     return tabObs
 
 
 def pressionProspectionCommune(connection, insee):
-    sql = """SELECT
-            obs.id_maille,
-            obs.geojson_maille,
-            a.nom_organisme AS orgaobs, 
-            o.dateobs,
-            extract(YEAR FROM o.dateobs) as annee
-        FROM atlas.vm_observations_mailles obs
-        JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
-        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
-        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
-        WHERE o.insee = :thisInsee
-        ORDER BY id_maille"""
+    if config.GROS_JEU_DONNEES:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs, 
+                count(obs.id_observation) as nbobs,
+                max(extract(year from dateobs)) as annee
+            FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE o.insee = :thisInsee
+            GROUP BY
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme
+            ORDER BY obs.id_maille"""    
+    else:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs, 
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE o.insee = :thisInsee
+            ORDER BY id_maille"""
+
+
     observations = connection.execute(text(sql), thisInsee=insee)
     tabObs = list()
-    for o in observations:
-        temp = {
-            'id_maille': o.id_maille,
-            'nb_observations': 1,
-            'annee': o.annee,
-            'dateobs': str(o.dateobs),
-            'orga_obs': o.orgaobs,
-            'geojson_maille': ast.literal_eval(o.geojson_maille)
-        }
-        tabObs.append(temp)
+
+    if config.GROS_JEU_DONNEES:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': o.nbobs,
+                'annee': o.annee,
+                'dateobs': None,
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
+    else:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
     return tabObs
-
-
 
 
 # last observation for index.html
@@ -249,32 +309,67 @@ def lastObservationsEpciMaille(connection, mylimit, nom_epci_simple):
 
 
 def pressionProspectionEpci(connection, nom_epci_simple):
-    sql = """SELECT
-            obs.id_maille,
-            obs.geojson_maille,
-            a.nom_organisme AS orgaobs, 
-            o.dateobs,
-            extract(YEAR FROM o.dateobs) as annee
-        FROM atlas.vm_observations_mailles obs
-        JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
-        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
-        JOIN atlas.l_communes_epci ec ON ec.insee = o.insee
-        JOIN atlas.vm_epci e ON ec.id = e.id
-        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
-        WHERE e.nom_epci_simple = :thisNomEpciSimple
-        ORDER BY id_maille"""
+    if config.GROS_JEU_DONNEES:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs, 
+                count(obs.id_observation) as nbobs,
+                max(extract(year from dateobs)) as annee
+            FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+            JOIN atlas.l_communes_epci ec ON ec.insee = o.insee
+            JOIN atlas.vm_epci e ON ec.id = e.id
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE e.nom_epci_simple = :thisNomEpciSimple
+            GROUP BY
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme
+            ORDER BY obs.id_maille"""    
+    else:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs, 
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+            JOIN atlas.l_communes_epci ec ON ec.insee = o.insee
+            JOIN atlas.vm_epci e ON ec.id = e.id
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+           WHERE e.nom_epci_simple = :thisNomEpciSimple
+            ORDER BY id_maille"""
+
+
     observations = connection.execute(text(sql), thisNomEpciSimple=nom_epci_simple)
     tabObs = list()
-    for o in observations:
-        temp = {
-            'id_maille': o.id_maille,
-            'nb_observations': 1,
-            'annee': o.annee,
-            'dateobs': str(o.dateobs),
-            'orga_obs': o.orgaobs,
-            'geojson_maille': ast.literal_eval(o.geojson_maille)
-        }
-        tabObs.append(temp)
+
+    if config.GROS_JEU_DONNEES:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': o.nbobs,
+                'annee': o.annee,
+                'dateobs': None,
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
+    else:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
     return tabObs
 
 
@@ -323,28 +418,62 @@ def lastObservationsDptMaille(connection, mylimit, num_dpt):
 
 
 def pressionProspectionDpt(connection, num_dpt):
-    sql = """SELECT
-            obs.id_maille,
-            obs.geojson_maille,
-            a.nom_organisme AS orgaobs, 
-            o.dateobs,
-            extract(YEAR FROM o.dateobs) as annee
-        FROM atlas.vm_observations_mailles obs
-        JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
-        JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
-        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
-        WHERE left(o.insee,2)::int = :thisNumdpt
-        ORDER BY id_maille"""
+    if config.GROS_JEU_DONNEES:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs, 
+                count(obs.id_observation) as nbobs,
+                max(extract(year from dateobs)) as annee
+            FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE left(o.insee,2)::int = :thisNumdpt
+            GROUP BY
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme
+            ORDER BY obs.id_maille"""    
+    else:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs, 
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE left(o.insee,2)::int = :thisNumdpt
+            ORDER BY id_maille"""
+
+
     observations = connection.execute(text(sql), thisNumdpt=num_dpt)
     tabObs = list()
-    for o in observations:
-        temp = {
-            'id_maille': o.id_maille,
-            'nb_observations': 1,
-            'annee': o.annee,
-            'dateobs': str(o.dateobs),
-            'orga_obs': o.orgaobs,
-            'geojson_maille': ast.literal_eval(o.geojson_maille)
-        }
-        tabObs.append(temp)
+
+    if config.GROS_JEU_DONNEES:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': o.nbobs,
+                'annee': o.annee,
+                'dateobs': None,
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
+    else:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
     return tabObs
+

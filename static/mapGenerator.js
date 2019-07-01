@@ -225,7 +225,13 @@ function generateGeojsonMaille(observations, yearMin, yearMax) {
     if(observations[i].annee >= yearMin && observations[i].annee <= yearMax ) {
       geometry = observations[i].geojson_maille;
       idMaille = observations[i].id_maille;
-      properties = {id_maille : idMaille, nb_observations : 1, orga_obs: observations[i].orga_obs, last_observation: observations[i].annee, tabDateobs: [new Date(observations[i].dateobs)]};
+      properties = {
+        id_maille : idMaille, 
+        nb_observations : observations[i].nb_observations, 
+        orga_obs: observations[i].orga_obs, 
+        last_observation: observations[i].annee, 
+        tabDateobs: [new Date(observations[i].dateobs)]
+      };
       var j = i+1;
       while (j<observations.length && observations[j].id_maille <= idMaille){
         if(observations[j].annee >= yearMin && observations[j].annee <= yearMax ){
@@ -268,7 +274,14 @@ function generateGeojsonMailleCommunale(observations, yearMin, yearMax) {
     if(observations[i].annee >= yearMin && observations[i].annee <= yearMax ) {
       geometry = observations[i].geojson_maille;
       idMaille = observations[i].id_maille;
-      properties = {id_maille : idMaille, nom_com : observations[i].nom_com, nb_observations : 1, orga_obs: observations[i].orga_obs, last_observation: observations[i].annee, tabDateobs: [new Date(observations[i].dateobs)]};
+      properties = {
+        id_maille : idMaille, 
+        nom_com : observations[i].nom_com, 
+        nb_observations : observations[i].nb_observations, 
+        orga_obs: observations[i].orga_obs, 
+        last_observation: observations[i].annee, 
+        tabDateobs: [new Date(observations[i].dateobs)]
+      };
       var j = i+1;
       while (j<observations.length && observations[j].id_maille <= idMaille){
         if(observations[j].annee >= yearMin && observations[j].annee <= yearMax ){
@@ -344,7 +357,11 @@ function generateGeojsonMailleCommune(observations){
   while (i<observations.length){
       geometry = observations[i].geojson_maille;
       idMaille = observations[i].id_maille;
-      properties = {id_maille : idMaille, nb_observations : 1, last_observation: observations[i].annee};
+      properties = {
+        id_maille : idMaille, 
+        nb_observations: observations[i].nb_observations, 
+        last_observation: observations[i].annee
+      };
       var j = i+1;
       while (j<observations.length && observations[j].id_maille <= idMaille){
           properties.nb_observations +=  observations[j].nb_observations;
@@ -454,7 +471,14 @@ function generateGeojsonMaillePressionProspectionCommune(observations, yearMin, 
     if(observations[i].annee >= yearMin && observations[i].annee <= yearMax ) {
       geometry = observations[i].geojson_maille;
       idMaille = observations[i].id_maille;
-      properties = {id_maille : idMaille, nom_com : observations[i].nom_com, nb_observations : 1, orga_obs: observations[i].orga_obs, last_observation: observations[i].annee, tabDateobs: [new Date(observations[i].dateobs)]};
+      properties = {
+        id_maille : idMaille, 
+        nom_com : observations[i].nom_com, 
+        nb_observations: observations[i].nb_observations, 
+        orga_obs: observations[i].orga_obs, 
+        last_observation: observations[i].annee, 
+        tabDateobs: [new Date(observations[i].dateobs)]
+      };
       var j = i+1;
       while (j<observations.length && observations[j].id_maille <= idMaille){
         if(observations[j].annee >= yearMin && observations[j].annee <= yearMax ){
@@ -498,7 +522,14 @@ function generateGeojsonMaillePressionProspectionMailleCommunale(observations, y
     if(observations[i].annee >= yearMin && observations[i].annee <= yearMax ) {
       geometry = observations[i].geojson_maille;
       idMaille = observations[i].id_maille;
-      properties = {id_maille : idMaille, nom_com : observations[i].nom_com, nb_observations : 1, orga_obs: observations[i].orga_obs, last_observation: observations[i].annee, tabDateobs: [new Date(observations[i].dateobs)]};
+      properties = {
+        id_maille : idMaille, 
+        nom_com : observations[i].nom_com, 
+        nb_observations : observations[i].nb_observations,
+        orga_obs: observations[i].orga_obs, 
+        last_observation: observations[i].annee, 
+        tabDateobs: [new Date(observations[i].dateobs)]
+      };
       var j = i+1;
       while (j<observations.length && observations[j].id_maille <= idMaille){
         if(observations[j].annee >= yearMin && observations[j].annee <= yearMax ){

@@ -3,114 +3,223 @@
 
 from .. import utils
 from sqlalchemy.sql import text
+from main.configuration import config
 import ast
 
 
+
 def getObservationsMaillesCommunalesChilds(connection, cd_ref):
-    sql = """WITH obstax AS (
-                select *
-                from atlas.vm_observations
-                where cd_ref in (
-                        SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
-                    )
-                or cd_ref = :thiscdref
-        )
-        SELECT
-            obs.insee,
-            c.commune_maj AS nom_com,
-            obs.geojson_commune,
-            a.nom_organisme AS orgaobs, 
-            o.dateobs,
-            extract(YEAR FROM o.dateobs) as annee
-        FROM atlas.vm_observations_communes obs
-        JOIN obstax o ON o.id_observation = obs.id_observation
-        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
-        LEFT JOIN atlas.vm_communes c ON c.insee = obs.insee
-        ORDER BY insee"""
+    if config.GROS_JEU_DONNEES:
+        sql = """WITH obstax AS (
+                    select *
+                    from atlas.vm_observations
+                    where cd_ref in (
+                            SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
+                        )
+                    or cd_ref = :thiscdref
+            )
+            SELECT
+                obs.insee,
+                c.commune_maj AS nom_com,
+                obs.geojson_commune,
+                a.nom_organisme AS orgaobs, 
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_communes obs
+            JOIN obstax o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            JOIN atlas.vm_communes c ON c.insee = obs.insee
+            ORDER BY insee"""
+
+    else:
+        sql = """WITH obstax AS (
+                    select *
+                    from atlas.vm_observations
+                    where cd_ref in (
+                            SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
+                        )
+                    or cd_ref = :thiscdref
+            )
+            SELECT
+                obs.insee,
+                c.commune_maj AS nom_com,
+                obs.geojson_commune,
+                a.nom_organisme AS orgaobs, 
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_communes obs
+            JOIN obstax o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            JOIN atlas.vm_communes c ON c.insee = obs.insee
+            ORDER BY insee"""
+
     observations = connection.execute(text(sql), thiscdref=cd_ref)
     tabObs = list()
-    for o in observations:
-        temp = {
-            'id_maille': o.insee,
-            'nom_com': o.nom_com,
-            'nb_observations': 1,
-            'annee': o.annee,
-            'dateobs': str(o.dateobs),
-            'orga_obs': o.orgaobs,
-            'geojson_maille':  ast.literal_eval(o.geojson_commune)
-        }
-        tabObs.append(temp)
+
+    if config.GROS_JEU_DONNEES:
+        for o in observations:
+            temp = {
+                'id_maille': o.insee,
+                'nom_com': o.nom_com,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orga_obs': o.orgaobs,
+                'geojson_maille':  ast.literal_eval(o.geojson_commune)
+            }
+            tabObs.append(temp)
+    else:
+        for o in observations:
+            temp = {
+                'id_maille': o.insee,
+                'nom_com': o.nom_com,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orga_obs': o.orgaobs,
+                'geojson_maille':  ast.literal_eval(o.geojson_commune)
+            }
+            tabObs.append(temp)
+
     return tabObs
 
 
+
+
 def getpressionProspectionEpciMaillesCommunalesChilds(connection, nom_epci_simple):
-    sql = """SELECT
-            obs.insee,
-            c.commune_maj AS nom_com,
-            obs.geojson_commune,
-            a.nom_organisme AS orgaobs, 
-            o.dateobs,
-            extract(YEAR FROM o.dateobs) as annee
-        FROM atlas.vm_observations_communes obs
-        JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
-        JOIN atlas.l_communes_epci ec ON ec.insee = obs.insee
-        JOIN atlas.vm_epci e ON ec.id = e.id
-        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
-        LEFT JOIN atlas.vm_communes c ON c.insee = obs.insee
-        WHERE e.nom_epci_simple = :thisNomepcisimple
-        ORDER BY insee"""
+    if config.GROS_JEU_DONNEES:
+        sql = """SELECT
+                obs.insee,
+                c.commune_maj AS nom_com,
+                obs.geojson_commune,
+                a.nom_organisme AS orgaobs, 
+                count(o.id_observation) as nbobs,
+                max(extract(year from dateobs)) as annee
+            FROM atlas.vm_observations_communes obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.l_communes_epci ec ON ec.insee = obs.insee
+            JOIN atlas.vm_epci e ON ec.id = e.id
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            JOIN atlas.vm_communes c ON c.insee = obs.insee
+            WHERE e.nom_epci_simple = :thisNomepcisimple
+            GROUP BY
+                obs.insee,
+                c.commune_maj,
+                obs.geojson_commune,
+                a.nom_organisme
+            ORDER BY obs.insee"""    
+    else:
+        sql = """SELECT
+                obs.insee,
+                c.commune_maj AS nom_com,
+                obs.geojson_commune,
+                a.nom_organisme AS orgaobs, 
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_communes obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.l_communes_epci ec ON ec.insee = obs.insee
+            JOIN atlas.vm_epci e ON ec.id = e.id
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            JOIN atlas.vm_communes c ON c.insee = obs.insee
+            WHERE e.nom_epci_simple = :thisNomepcisimple
+            ORDER BY insee"""
+
     observations = connection.execute(text(sql), thisNomepcisimple=nom_epci_simple)
     tabObs = list()
-    for o in observations:
-        temp = {
-            'id_maille': o.insee,
-            'nom_com': o.nom_com,
-            'nb_observations': 1,
-            'annee': o.annee,
-            'dateobs': str(o.dateobs),
-            'orga_obs': o.orgaobs,
-            'geojson_maille':  ast.literal_eval(o.geojson_commune)
-        }
-        tabObs.append(temp)
+
+    if config.GROS_JEU_DONNEES:
+        for o in observations:
+            temp = {
+                'id_maille': o.insee,
+                'nom_com': o.nom_com,
+                'nb_observations': o.nbobs,
+                'annee': o.annee,
+                'dateobs': None,
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_commune)
+            }
+            tabObs.append(temp)
+    else:
+        for o in observations:
+            temp = {
+                'id_maille': o.insee,
+                'nom_com': o.nom_com,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orag_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_commune)
+            }
+            tabObs.append(temp)
     return tabObs
 
 
 
 def getpressionProspectionDptMaillesCommunalesChilds(connection, num_dpt):
-    sql = """SELECT
-            obs.insee,
-            c.commune_maj AS nom_com,
-            obs.geojson_commune,
-            a.nom_organisme AS orgaobs, 
-            o.dateobs,
-            extract(YEAR FROM o.dateobs) as annee
-        FROM atlas.vm_observations_communes obs
-        JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
-        LEFT JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
-        LEFT JOIN atlas.vm_communes c ON c.insee = obs.insee
-        WHERE left(obs.insee,2)::int = :thisNumdpt
-        ORDER BY insee"""
+    if config.GROS_JEU_DONNEES:
+        sql = """SELECT
+                obs.insee,
+                c.commune_maj AS nom_com,
+                obs.geojson_commune,
+                a.nom_organisme AS orgaobs, 
+                count(o.id_observation) as nbobs,
+                max(extract(year from dateobs)) as annee
+            FROM atlas.vm_observations_communes obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            JOIN atlas.vm_communes c ON c.insee = obs.insee
+            WHERE left(obs.insee,2)::int = :thisNumdpt
+            GROUP BY
+                obs.insee,
+                c.commune_maj,
+                obs.geojson_commune,
+                a.nom_organisme
+            ORDER BY obs.insee"""    
+    else:
+        sql = """SELECT
+                obs.insee,
+                c.commune_maj AS nom_com,
+                obs.geojson_commune,
+                a.nom_organisme AS orgaobs, 
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_communes obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            JOIN atlas.vm_communes c ON c.insee = obs.insee
+            WHERE left(obs.insee,2)::int = :thisNumdpt
+            ORDER BY obs.insee"""
+
+
     observations = connection.execute(text(sql), thisNumdpt=num_dpt)
     tabObs = list()
-    for o in observations:
-        temp = {
-            'id_maille': o.insee,
-            'nom_com': o.nom_com,
-            'nb_observations': 1,
-            'annee': o.annee,
-            'dateobs': str(o.dateobs),
-            'orga_obs': o.orgaobs,
-            'geojson_maille':  ast.literal_eval(o.geojson_commune)
-        }
-        tabObs.append(temp)
+
+    if config.GROS_JEU_DONNEES:
+        for o in observations:
+            temp = {
+                'id_maille': o.insee,
+                'nom_com': o.nom_com,
+                'nb_observations': o.nbobs,
+                'annee': o.annee,
+                'dateobs': None,
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_commune)
+            }
+            tabObs.append(temp)
+    else:
+        for o in observations:
+            temp = {
+                'id_maille': o.insee,
+                'nom_com': o.nom_com,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_commune)
+            }
+            tabObs.append(temp)
     return tabObs
-
-
-
-
-
-
-
 
 # last observation for index.html
 #def lastObservationsCommunes(connection, mylimit, idPhoto):

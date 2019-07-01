@@ -1,5 +1,7 @@
 var map = generateMap();
-generateSliderOnMap();
+if (configuration.GROS_JEU_DONNEES == false){
+    generateSliderOnMap()
+};
 generateSwitcherOnMap();
 var legend = L.control({position: 'bottomright'});
 
@@ -51,7 +53,7 @@ if(configuration.AFFICHAGE_ATLAS_MAILLE_CARREE){
               $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
          
       
-      
+      if (configuration.GROS_JEU_DONNEES == false){
            // Slider event
           mySlider.on("change",function(){
                 years = mySlider.getValue();
@@ -69,7 +71,7 @@ if(configuration.AFFICHAGE_ATLAS_MAILLE_CARREE){
               $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
       
              });
-      
+      }
       
           // Stat - map interaction
           $('#firstObs').click(function(){
@@ -196,24 +198,25 @@ function generateSwitcherOnMap(){
                       $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
                  
               
-              
-                   // Slider event
-                  mySlider.on("change",function(){
-                        years = mySlider.getValue();
-                        yearMin = years[0];
-                        yearMax = years[1];
-                        map.removeLayer(currentLayer);
-                        displayMailleCommunaleLayerFicheEspece(observations, yearMin, yearMax)
-              
-              
-                      nbObs=0;
-                      myGeoJson.features.forEach(function(l){
-                        nbObs += l.properties.nb_observations
-                      })
-              
-                      $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-              
-                     });
+                  if (configuration.GROS_JEU_DONNEES == false){
+                     // Slider event
+                    mySlider.on("change",function(){
+                          years = mySlider.getValue();
+                          yearMin = years[0];
+                          yearMax = years[1];
+                          map.removeLayer(currentLayer);
+                          displayMailleCommunaleLayerFicheEspece(observations, yearMin, yearMax)
+                
+                
+                        nbObs=0;
+                        myGeoJson.features.forEach(function(l){
+                          nbObs += l.properties.nb_observations
+                        })
+                
+                        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
+                
+                       });
+                  }
               
               
                   // Stat - map interaction
@@ -336,24 +339,25 @@ function generateSwitcherOnMap(){
                       $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
                  
               
-              
-                   // Slider event
-                  mySlider.on("change",function(){
-                        years = mySlider.getValue();
-                        yearMin = years[0];
-                        yearMax = years[1];
-                        map.removeLayer(currentLayer);
-                        displayMailleLayerFicheEspece(observations, yearMin, yearMax)
-              
-              
-                      nbObs=0;
-                      myGeoJson.features.forEach(function(l){
-                        nbObs += l.properties.nb_observations
-                      })
-              
-                      $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-              
-                     });
+                  if (configuration.GROS_JEU_DONNEES == false){
+                     // Slider event
+                    mySlider.on("change",function(){
+                          years = mySlider.getValue();
+                          yearMin = years[0];
+                          yearMax = years[1];
+                          map.removeLayer(currentLayer);
+                          displayMailleLayerFicheEspece(observations, yearMin, yearMax)
+                
+                
+                        nbObs=0;
+                        myGeoJson.features.forEach(function(l){
+                          nbObs += l.properties.nb_observations
+                        })
+                
+                        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
+                
+                       });
+                    }
               
               
                   // Stat - map interaction
@@ -482,12 +486,12 @@ function generateSwitcherOnMap(){
 
            
               if (mailleBoolean){
+                if (configuration.GROS_JEU_DONNEES == false){
                 // Slider event
                     mySlider.on("change",function(){
                         years = mySlider.getValue();
                         yearMin = years[0];
                         yearMax = years[1];
-
 
                         map.removeLayer(currentLayer);
                         if(map.getZoom() >= configuration.ZOOM_LEVEL_POINT && $('#AtlasPoint').hasClass('active')){
@@ -506,6 +510,7 @@ function generateSwitcherOnMap(){
                         $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
 
                        });
+                  }
 
 
                       // ZoomEvent: change maille to point
@@ -548,12 +553,12 @@ function generateSwitcherOnMap(){
               // if not display Maille
               }else {
                   if($('#AtlasPoint').hasClass('active')){
+                    if (configuration.GROS_JEU_DONNEES == false){
                       // Slider event
                       mySlider.on("change",function(){
                           years = mySlider.getValue();
                           yearMin = years[0];
                           yearMax = years[1];
-
 
                           map.removeLayer(currentLayer);
                           displayMarkerLayerFicheEspece(observations.point, yearMin, yearMax);
@@ -564,6 +569,7 @@ function generateSwitcherOnMap(){
 
                           $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
                          });
+                    }
                   }
 
               }

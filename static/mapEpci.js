@@ -1,7 +1,9 @@
 var map = generateMap();
 
 if (configuration.PRESSION_PROSPECTION){
-	generateSliderOnMap();
+	if (configuration.GROS_JEU_DONNEES == false){
+	    generateSliderOnMap();
+	}
 	generateSwitcherOnMap();
 }
 
@@ -95,25 +97,25 @@ if (configuration.PRESSION_PROSPECTION){
 	        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
 	   
 
+	    if (configuration.GROS_JEU_DONNEES == false){
+		     // Slider event
+		    mySlider.on("change",function(){
+		          years = mySlider.getValue();
+		          yearMin = years[0];
+		          yearMax = years[1];
+		          map.removeLayer(currentLayer);
+		          displayMaillePressionProspectionCommuneLayer(observations, yearMin, yearMax)
 
-	     // Slider event
-	    mySlider.on("change",function(){
-	          years = mySlider.getValue();
-	          yearMin = years[0];
-	          yearMax = years[1];
-	          map.removeLayer(currentLayer);
-	          displayMaillePressionProspectionCommuneLayer(observations, yearMin, yearMax)
 
+		        nbObs=0;
+		        myGeoJson.features.forEach(function(l){
+		          nbObs += l.properties.nb_observations
+		        })
 
-	        nbObs=0;
-	        myGeoJson.features.forEach(function(l){
-	          nbObs += l.properties.nb_observations
-	        })
+		        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
 
-	        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-
-	       });
-
+		       });
+		}
 
 	    // Stat - map interaction
 	    $('#firstObs').click(function(){
@@ -325,6 +327,7 @@ function generateSwitcherOnMap(){
 					        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
 					   
 
+	    			if (configuration.GROS_JEU_DONNEES == false){
 
 					     // Slider event
 					    mySlider.on("change",function(){
@@ -343,6 +346,7 @@ function generateSwitcherOnMap(){
 					        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
 
 					       });
+					}
 
 
 					    // Stat - map interaction
@@ -478,7 +482,7 @@ function generateSwitcherOnMap(){
 					        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
 					   
 
-
+	    			if (configuration.GROS_JEU_DONNEES == false){
 					     // Slider event
 					    mySlider.on("change",function(){
 					          years = mySlider.getValue();
@@ -496,6 +500,7 @@ function generateSwitcherOnMap(){
 					        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
 
 					       });
+					}
 
 
 					    // Stat - map interaction

@@ -60,14 +60,15 @@ MAP = {
     'BORDERS_WEIGHT': 3
 }
 
+#Mode gros jeu de données
+GROS_JEU_DONNEES = True
 
 # Affichage du type d'atlas (si un seul TRUE => pas de switcher ; si plusieurs en TRUE => switcher sur fiche espèce)
 #ATTENTION : il faut au moins un True ! Si toutes les valeurs sont False, aucune carte ne sera affichée
-AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE = False
 AFFICHAGE_ATLAS_MAILLE_COMMUNALE = True
 AFFICHAGE_ATLAS_MAILLE_CARREE = True
 AFFICHAGE_ATLAS_POINT = True
-AFFICHAGE_SWITCHER = AFFICHAGE_ATLAS_MAILLE_DEPARTEMENTALE + AFFICHAGE_ATLAS_MAILLE_COMMUNALE + AFFICHAGE_ATLAS_MAILLE_CARREE + AFFICHAGE_ATLAS_POINT
+AFFICHAGE_SWITCHER = AFFICHAGE_ATLAS_MAILLE_COMMUNALE + AFFICHAGE_ATLAS_MAILLE_CARREE + AFFICHAGE_ATLAS_POINT
 
 # Affichage des observations par maille ou point sur la page d'accueil et sur les fiches communes
 # True = maille carrée / False = point

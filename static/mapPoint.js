@@ -1,5 +1,7 @@
 var map = generateMap();
-generateSliderOnMap();
+if (configuration.GROS_JEU_DONNEES == false){
+    generateSliderOnMap()
+};
 var legend = L.control({position: 'bottomright'});
 
 // Legende
@@ -43,6 +45,7 @@ $.ajax({
     }
     
     if (mailleBoolean){
+      if (configuration.GROS_JEU_DONNEES == false){
       // Slider event
           mySlider.on("change",function(){
               years = mySlider.getValue();
@@ -65,6 +68,7 @@ $.ajax({
               $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
 
              });
+        }
 
 
             // ZoomEvent: change maille to point
@@ -100,6 +104,7 @@ $.ajax({
 
     // if not display Maille
     }else {
+          if (configuration.GROS_JEU_DONNEES == false){
             // Slider event
             mySlider.on("change",function(){
                 years = mySlider.getValue();
@@ -116,6 +121,7 @@ $.ajax({
 
                 $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
                });
+          }
 
     }
 
