@@ -1,4 +1,5 @@
 *.pyc
+atlas-service.conf
 tests/*
 config/settings.ini
 config/config.py

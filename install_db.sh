@@ -48,6 +48,7 @@ then
     sudo -n -u postgres -s createdb -O $owner_atlas $db_name
     echo "Ajout de postGIS et pgSQL à la base de données"
     sudo -n -u postgres -s psql -d $db_name -c "CREATE EXTENSION IF NOT EXISTS postgis;"  &>> log/install_db.log
+    sudo -n -u postgres -s psql -d $db_name -c "CREATE EXTENSION IF NOT EXISTS postgis_topology;"  &>> log/install_db.log
     sudo -n -u postgres -s psql -d $db_name -c "CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog; COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';"  &>> log/install_db.log
     # Si j'utilise GeoNature ($geonature_source = True), alors je créé les connexions en FWD à la BDD GeoNature
     if $geonature_source
@@ -57,16 +58,6 @@ then
         sudo -n -u postgres -s psql -d $db_name -c "CREATE SERVER geonaturedbserver FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '$db_source_host', dbname '$db_source_name', port '$db_source_port');"  &>> log/install_db.log
         sudo -n -u postgres -s psql -d $db_name -c "ALTER SERVER geonaturedbserver OWNER TO $owner_atlas;"  &>> log/install_db.log
         sudo -n -u postgres -s psql -d $db_name -c "CREATE USER MAPPING FOR $owner_atlas SERVER geonaturedbserver OPTIONS (user '$atlas_source_user', password '$atlas_source_pass') ;"  &>> log/install_db.log
-    fi
-
-    # Si j'utilise UsersHub ($usershub_source = True), alors je créé les connexions en FWD à la BDD UsersHub
-    if $usershub_source
-    then
-        echo "Ajout du FDW et connexion à la BDD mère UsersHub"
-        sudo -n -u postgres -s psql -d $db_name -c "CREATE EXTENSION IF NOT EXISTS postgres_fdw;"  &>> log/install_db.log
-        sudo -n -u postgres -s psql -d $db_name -c "CREATE SERVER usershubdbserver FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host '$dbusers_source_host', dbname '$dbusers_source_name', port '$dbusers_source_port');"  &>> log/install_db.log
-        sudo -n -u postgres -s psql -d $db_name -c "ALTER SERVER usershubdbserver OWNER TO $owner_atlas;"  &>> log/install_db.log
-        sudo -n -u postgres -s psql -d $db_name -c "CREATE USER MAPPING FOR $owner_atlas SERVER usershubdbserver OPTIONS (user '$atlas_dbusers_source_user', password '$atlas_dbusers_source_pass') ;"  &>> log/install_db.log
     fi
 
     # Création des schémas de la BDD
@@ -116,7 +107,7 @@ then
 		echo "Création de la table exemple syntheseff"
 		sudo -n -u postgres -s psql -d $db_name -c "CREATE TABLE synthese.syntheseff
 			(
-			  id_synthese serial PRIMARY KEY,
+			  id_synthese serial NOT NULL,
 			  id_organisme integer DEFAULT 2,
 			  cd_nom integer,
 			  insee character(5),
@@ -125,15 +116,14 @@ then
 			  altitude_retenue integer,
 			  supprime boolean DEFAULT false,
 			  the_geom_point geometry('POINT',3857),
-			  effectif_total integer,
-              diffusable boolean 
+			  effectif_total integer
 			);
 			INSERT INTO synthese.syntheseff 
-			  (cd_nom, insee, observateurs, altitude_retenue, the_geom_point, effectif_total, diffusable)
-			  VALUES (67111, 05122, 'Mon observateur', 1254, '0101000020110F0000B19F3DEA8636264124CB9EB2D66A5541', 3, true);
+			  (cd_nom, insee, observateurs, altitude_retenue, the_geom_point, effectif_total)
+			  VALUES (67111, 05122, 'Mon observateur', 1254, '0101000020110F0000B19F3DEA8636264124CB9EB2D66A5541', 3);
 			INSERT INTO synthese.syntheseff 
-			  (cd_nom, insee, observateurs, altitude_retenue, the_geom_point, effectif_total, diffusable)
-			  VALUES (67111, 05122, 'Mon observateur 3', 940, '0101000020110F00001F548906D05E25413391E5EE2B795541', 2, true);" &>> log/install_db.log
+			  (cd_nom, insee, observateurs, altitude_retenue, the_geom_point, effectif_total)
+			  VALUES (67111, 05122, 'Mon observateur 3', 940, '0101000020110F00001F548906D05E25413391E5EE2B795541', 2);" &>> log/install_db.log
         sudo -n -u postgres -s psql -d $db_name -c "ALTER TABLE synthese.syntheseff OWNER TO "$owner_atlas";"
 	fi
     
@@ -145,74 +135,25 @@ then
 		mkdir taxonomie
 		cd taxonomie
         wget https://raw.githubusercontent.com/PnX-SI/TaxHub/$taxhub_release/data/taxhubdb.sql
-        #sudo -n -u postgres -s psql -d $db_name -f taxhubdb.sql  &>> ../../log/install_db.log
-        export PGPASSWORD=$owner_atlas_pass;psql -d $db_name -U $owner_atlas -h $db_host -f  taxhubdb.sql  &>> ../../log/install_db.log
-        
-        wget http://geonature.fr/data/inpn/taxonomie/TAXREF_INPN_v9.0.zip
+        sudo -n -u postgres -s psql -d $db_name -f taxhubdb.sql  &>> ../../log/install_db.log
+        #wget https://github.com/PnX-SI/TaxHub/raw/master/data/inpn/TAXREF_INPN_v9.0.zip
+        wget https://github.com/PnX-SI/TaxHub/raw/1.2.1/data/inpn/TAXREF_INPN_v9.0.zip
         unzip TAXREF_INPN_v9.0.zip -d /tmp
-	    wget http://geonature.fr/data/inpn/taxonomie/ESPECES_REGLEMENTEES_20161103.zip
-	    unzip ESPECES_REGLEMENTEES_20161103.zip -d /tmp
-        wget  http://geonature.fr/data/inpn/taxonomie/LR_FRANCE_20160000.zip
-        unzip LR_FRANCE_20160000.zip -d /tmp
-        
-        wget https://raw.githubusercontent.com/PnX-SI/TaxHub/$taxhub_release/data/inpn/data_inpn_v9_taxhub.sql
-        # export PGPASSWORD=$owner_atlas_pass;psql -d $db_name -U $owner_atlas -h $db_host -f  data_inpn_v9_taxhub.sql &>> ../../log/install_db.log
+        #wget https://github.com/PnX-SI/TaxHub/raw/master/data/inpn/ESPECES_REGLEMENTEES.zip
+        wget https://github.com/PnX-SI/TaxHub/raw/1.2.1/data/inpn/ESPECES_REGLEMENTEES.zip
+		unzip ESPECES_REGLEMENTEES.zip -d /tmp
+        wget https://raw.githubusercontent.com/PnX-SI/TaxHub/master/data/inpn/data_inpn_v9_taxhub.sql
         sudo -n -u postgres -s psql -d $db_name  -f data_inpn_v9_taxhub.sql &>> ../../log/install_db.log
-
-
-        wget https://raw.githubusercontent.com/PnX-SI/TaxHub/$taxhub_release/data/materialized_views.sql
-        #sudo -n -u postgres -s psql -d $db_name -f vm_hierarchie_taxo.sql  &>> ../../log/install_db.log
-        export PGPASSWORD=$owner_atlas_pass;psql -d $db_name -U $owner_atlas -h $db_host -f  materialized_views.sql  &>> ../../log/install_db.log
-        
-
-        wget https://raw.githubusercontent.com/PnX-SI/TaxHub/$taxhub_release/data/taxhubdata.sql
-        #sudo -n -u postgres -s psql -d $db_name -f taxhubdata.sql  &>> ../../log/install_db.log
-        export PGPASSWORD=$owner_atlas_pass;psql -d $db_name -U $owner_atlas -h $db_host -f  taxhubdata.sql  &>> ../../log/install_db.log
-        
-
+        #wget https://raw.githubusercontent.com/PnX-SI/TaxHub/master/data/vm_hierarchie_taxo.sql
+        wget https://raw.githubusercontent.com/PnX-SI/TaxHub/1.2.1/data/vm_hierarchie_taxo.sql
+        sudo -n -u postgres -s psql -d $db_name -f vm_hierarchie_taxo.sql  &>> ../../log/install_db.log
+        wget https://raw.githubusercontent.com/PnX-SI/TaxHub/master/data/taxhubdata.sql
+        sudo -n -u postgres -s psql -d $db_name -f taxhubdata.sql  &>> ../../log/install_db.log
         rm /tmp/*.txt
         rm /tmp/*.csv
-        rm /tmp/*.sql
         cd ../..
 		rm -R data/taxonomie
-
     fi
-
- # Si j'utilise UsersHub ($usershub_source = True), alors je crée la table fille en FDW connectée à la BDD de UsersHub
-    if $usershub_source 
-    then
-        # Creation des tables filles en FWD
-        echo "Création de la connexion a GeoNature"
-        sudo cp data/atlas_usershub.sql /tmp/atlas_usershub.sql
-        sudo sed -i "s/myuser;$/$owner_atlas;/" /tmp/atlas_usershub.sql
-        sudo -n -u postgres -s psql -d $db_name -f /tmp/atlas_usershub.sql  &>> log/install_db.log
-    # Sinon je créé une table synthese.bib_organismes avec 3 organismes exemple
-    else
-        echo "Création de la table exemple bib_organismes"
-        sudo -n -u postgres -s psql -d $db_name -c "CREATE TABLE synthese.bib_organismes
-            (
-                id_organisme integer PRIMARY KEY,
-                nom_organisme character varying(100) NOT NULL,
-                adresse_organisme character varying(128) ,
-                cp_organisme character varying(5) ,
-                ville_organisme character varying(100) ,
-                tel_organisme character varying(14) ,
-                fax_organisme character varying(14) ,
-                email_organisme character varying(100) 
-            );
-            INSERT INTO synthese.bib_organismes
-              (id_organisme, nom_organisme, adresse_organisme, cp_organisme, ville_organisme, tel_organisme, fax_organisme, email_organisme)
-              VALUES (1, 'PNF', '', '', 'Montpellier', '', '', '');
-            INSERT INTO synthese.bib_organismes
-              (id_organisme, nom_organisme, adresse_organisme, cp_organisme, ville_organisme, tel_organisme, fax_organisme, email_organisme)
-              VALUES (2, 'Parc National des Ecrins', 'Domaine de Charance', '05000', 'GAP', '04 92 40 20 10', '', '');
-            INSERT INTO synthese.bib_organismes
-              (id_organisme, nom_organisme, adresse_organisme, cp_organisme, ville_organisme, tel_organisme, fax_organisme, email_organisme)
-              VALUES VALUES (99, 'Autre', '', '', '', '', '', '');" &>> log/install_db.log
-        sudo -n -u postgres -s psql -d $db_name -c "ALTER TABLE synthese.bib_organismes OWNER TO "$owner_atlas";"
-    fi
-
-
     
     # Creation des Vues Matérialisées (et remplacement éventuel des valeurs en dur par les paramètres)
     echo "Création des vues materialisées"
