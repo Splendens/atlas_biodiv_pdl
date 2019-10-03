@@ -172,6 +172,45 @@ $(document).ready(function(){
       doc.setTextColor(13, 43, 63);
       doc.text("Référentiel : TAXREF v11", 12, 50);
 
+      doc.setLineWidth(0.2);
+      doc.setDrawColor(27, 86, 126);
+      doc.line(12, 55, 200, 55);
+
+      doc.setFontSize(11);
+      doc.setFontType("bold");
+      doc.setTextColor(13, 43, 63);
+      doc.text("Avertissement", 12, 60);
+
+      doc.setFontSize(11);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("Les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données", 12, 70);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage", 12, 75);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à", 12, 80);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, ", 12, 85);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans", 12, 90);  
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("être formellement validées.", 12, 95); 
+
+      doc.setLineWidth(0.2);
+      doc.setDrawColor(27, 86, 126);
+      doc.line(12, 100, 200, 100);  
+
       //récupère les classes taxo observée sur le territoire
       var classetaxon = [];
       for(i = 0; i< listespeces.taxons.length; i++){    
@@ -219,8 +258,8 @@ $(document).ready(function(){
           //paramétrage du rendu du tableau
 
           if (first == true ) { 
-              startytable = 70; 
-              startytitretable = 65; 
+              startytable = 105; 
+              startytitretable = 110; 
           } else { 
               startytable = doc.autoTable.previous.finalY + 20; 
               startytitretable = doc.autoTable.previous.finalY + 15; 
@@ -331,6 +370,46 @@ $(document).ready(function(){
       doc.setTextColor(13, 43, 63);
       doc.text("Référentiel : TAXREF v11", 12, 50);
 
+      doc.setLineWidth(0.2);
+      doc.setDrawColor(27, 86, 126);
+      doc.line(12, 55, 200, 55);
+
+      doc.setFontSize(11);
+      doc.setFontType("bold");
+      doc.setTextColor(13, 43, 63);
+      doc.text("Avertissement", 12, 60);
+
+      doc.setFontSize(11);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("Les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données", 12, 70);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage", 12, 75);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à", 12, 80);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, ", 12, 85);
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans", 12, 90);  
+
+      doc.setFontType("normal");
+      doc.setTextColor(13, 43, 63);
+      doc.text("être formellement validées.", 12, 95); 
+
+      doc.setLineWidth(0.2);
+      doc.setDrawColor(27, 86, 126);
+      doc.line(12, 100, 200, 100);  
+
+
       //récupère les classes taxo observée sur le territoire
       var classetaxon = [];
       for(i = 0; i< listespeces.taxons.length; i++){    
@@ -378,8 +457,8 @@ $(document).ready(function(){
           //paramétrage du rendu du tableau
 
           if (first == true ) { 
-              startytable = 70; 
-              startytitretable = 65; 
+              startytable = 105; 
+              startytitretable = 110; 
           } else { 
               startytable = doc.autoTable.previous.finalY + 20; 
               startytitretable = doc.autoTable.previous.finalY + 15; 
