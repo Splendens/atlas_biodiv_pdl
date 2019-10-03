@@ -3,8 +3,8 @@
 
 from flask import render_template, redirect, abort, url_for
 from configuration import config
-#from datetime import datetime
-#from flask_weasyprint import HTML, render_pdf
+from datetime import datetime
+from flask_weasyprint import HTML, render_pdf
 
 from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository, 
