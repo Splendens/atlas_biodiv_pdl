@@ -320,8 +320,8 @@
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;
                                                 </button>
-                                                <h4 class="modal-title">Liste des communes où le taxon a été
-                                                    observée</h4>
+                                                <h4 class="modal-title"><<b>Liste des communes où le taxon a été
+                                                    observé</b></h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="">
@@ -351,12 +351,12 @@
                             <div class="col-lg-6 col-sm-12">
                             {% endif %}
                                 <button type="button" class="btn btn-default btn-block btn-lg" data-toggle="modal"
-                                        data-target="#listOservers">
+                                        data-target="#listObservers">
                                     <b>{{ observers|length | pretty }} </b> {{ 'observateurs' if observers|length > 1 else 'observateur' }}
                                 </button>
 
                                 <!-- Modal -->
-                                <div id="listOservers" class="modal fade" role="dialog">
+                                <div id="listObservers" class="modal fade" role="dialog">
                                     <div class="modal-dialog modal-lg">
 
                                         <!-- Modal content-->
@@ -364,7 +364,7 @@
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;
                                                 </button>
-                                                <h4 class="modal-title">Liste des observateurs du taxon</h4>
+                                                <h4 class="modal-title"><b>Liste des observateurs du taxon</b></h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="">
@@ -404,7 +404,7 @@
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;
                                                 </button>
-                                                <h4 class="modal-title">Liste des sources de données pour ce taxon</h4>
+                                                <h4 class="modal-title"><b>Liste des sources de données pour ce taxon</b></h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="">
