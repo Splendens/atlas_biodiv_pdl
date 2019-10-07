@@ -29,7 +29,7 @@ def getStatsOrgaEpciChilds(connection, nom_epci_simple):
             {'label': "Calluna (CBNB)", 'y': inter._06nbtaxon},
             {'label': "SICEN (CEN)", 'y': inter._03nbtaxon},
             {'label': "GRETIA", 'y': inter._05nbtaxon},
-            {'label': "URCPIE", 'y': inter._70nbtaxon},
+            {'label': "Kollect (URCPIE)", 'y': inter._70nbtaxon},
             {'label': "Faune Loire-Atlantique (LPO44, BV, GNLA)", 'y': inter._81nbtaxon},
             {'label': "Faune Anjou (LPO49)", 'y': inter._82nbtaxon},
             {'label': "Faune Vendée (LPO85)", 'y': inter._83nbtaxon},
