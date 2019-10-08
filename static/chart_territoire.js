@@ -51,7 +51,7 @@ var pieColors = (function () {
 
 
 // Histogramme du nombre d'espèces par organismes/BD moissonnée
-Highcharts.chart('statsorgacommGraph', {
+Highcharts.chart('statsorgataxonterriGraph', {
     chart: {
         type: 'column'
     },
@@ -69,7 +69,7 @@ Highcharts.chart('statsorgacommGraph', {
     },
 
     title: {
-      text: "<b>Nombre d'espèces sur le territoire</b><br>par source de données",
+      text: "<b>Nombre d'espèces<br>sur le territoire</b><br>par source de données",
       style : { "color": "#333333", "fontSize": "22px" }
     },
 
@@ -119,7 +119,7 @@ Highcharts.chart('statsorgacommGraph', {
 
     series: [{
         name: 'label',
-        data: statsorgacomm,
+        data: statsorgataxonterri,
         dataLabels: {
             enabled: true,
             //rotation: -90,
@@ -174,6 +174,132 @@ Highcharts.chart('statsorgacommGraph', {
 
 });
 
+
+
+
+// Histogramme du nombre d'espèces par organismes/BD moissonnée
+Highcharts.chart('statsorgadataterriGraph', {
+    chart: {
+        type: 'column'
+    },
+    lang: {
+      //printChart: 'Print chart',
+      downloadPNG: 'Export PNG',
+      downloadJPEG: 'Export JPEG',
+      //downloadPDF: 'Download PDF',
+      //downloadSVG: 'Download SVG',
+      //contextButtonTitle: 'Context menu'
+    },
+
+    credits: {
+      enabled: false
+    },
+
+    title: {
+      text: "<b>Nombre d'observations<br>sur le territoire</b><br>par source de données",
+      style : { "color": "#333333", "fontSize": "22px" }
+    },
+
+    yAxis: {
+        maxPadding:0.5,
+        title: {
+            text: "Nombre d'observations"
+        }
+    },
+    xAxis: {
+       categories: [
+        '<b>Calluna</b><br>(CBN de Brest)', 
+        '<b>SICEN</b><br>(CEN Pays de la Loire)', 
+        '<b>GRETIA</b>', 
+        '<b>Kollect</b><br>URCPIE',
+        '<b>Faune Loire-Atlantique</b><br>(LPO44, BV, GNLA)', 
+        '<b>Faune Anjou</b><br>(LPO49)', 
+        '<b>Faune Vendée</b><br>(LPO85)', 
+        '<b>Faune Maine</b><br>(LPO72, MNE)'
+        ],
+        labels: {
+          rotation: -45,
+          style: {
+              fontSize: '13px',
+              fontFamily: 'Verdana, sans-serif'
+          }
+        }
+    },
+
+    legend: {
+        enabled: false
+    },
+
+    tooltip: {
+        pointFormat: "<b>{point.y:.0f} observation(s)</b>"
+    },
+
+    plotOptions: {
+      column: {
+        color: "#8ac3e5",
+        borderColor: "#7094db"
+      },
+      series: {
+        minPointLength: 5
+      }
+    },
+
+    series: [{
+        name: 'label',
+        data: statsorgadataterri,
+        dataLabels: {
+            enabled: true,
+            //rotation: -90,
+            color: "#333333",
+            align: 'center',
+            format: '{point.y:.0f}',
+            y: -5, // 10 pixels down from the top
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+          }
+      }],
+
+  navigation: {
+        buttonOptions: {
+
+            theme: {
+                'stroke-width': 1,
+                stroke: 'silver',
+                r: 0,
+                states: {
+                    hover: {
+                        fill: '#a4edba'
+                    },
+                    select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                    }
+                },
+                style: {
+                    color: '#3c763d',
+                    textDecoration: 'bold'
+                }
+            }
+
+        }
+    },
+    exporting: {
+      filename: 'Nombre_obervations_sur_le_territoire_par_source_de_données',
+      buttons: {
+        contextButton: {
+          symbol: 'download',
+          text: 'Enregistrer',
+          menuItems: [
+            'downloadPNG',
+            'downloadJPEG'
+           ]
+        }
+      }
+    }
+
+});
 
 // PieChart Répartition du nombre d'espèces par organismes/BD moissonnée
 /*Highcharts.chart('statsorgacommGraph', {
@@ -262,7 +388,7 @@ Highcharts.chart('group2inpnGraph', {
     enabled: false
   },
   title: {
-    text: "<b>Nombre de données</b>",
+    text: "<b>Nombre d'observations</b>",
     style : { "color": "#333333", "fontSize": "22px" }
   },
   subtitle: {
@@ -272,7 +398,7 @@ Highcharts.chart('group2inpnGraph', {
   tooltip: {
     headerFormat: '',
     pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
-    valueSuffix: ' donnée(s) <br>({point.percentage:.2f}%)'
+    valueSuffix: ' observation(s) <br>({point.percentage:.2f}%)'
   },
 
   plotOptions: {
@@ -292,7 +418,7 @@ Highcharts.chart('group2inpnGraph', {
         allowOverlap: true,
         connectorColor: "#7094db",
         enabled: true,
-        format: '<b>{point.label}</b><br><b>{point.y} donnée(s)</b><br>{point.percentage:.2f} %',
+        format: '<b>{point.label}</b><br><b>{point.y} observation(s)</b><br>{point.percentage:.2f} %',
         style : { "color": "#333333", "fontSize": "11px" },
         /*distance: 10,*/
         filter: {

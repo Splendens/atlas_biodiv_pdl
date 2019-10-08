@@ -4,18 +4,18 @@
 from sqlalchemy.sql import text
 
 
-def getStatsOrgaCommChilds(connection, insee):
+def getStatsOrgaTaxonCommChilds(connection, insee):
     sql = """
        
     SELECT 
-    _03nbobs, _03nbtaxon, 
-    _05nbobs, _05nbtaxon, 
-    _06nbobs, _06nbtaxon, 
-    _70nbobs, _70nbtaxon, 
-    _81nbobs, _81nbtaxon, 
-    _82nbobs, _82nbtaxon, 
-    _83nbobs, _83nbtaxon, 
-    _84nbobs, _84nbtaxon 
+    _03nbtaxon, 
+    _05nbtaxon, 
+    _06nbtaxon, 
+    _70nbtaxon, 
+    _81nbtaxon, 
+    _82nbtaxon, 
+    _83nbtaxon, 
+    _84nbtaxon 
 
     FROM atlas.vm_stats_orga_comm orgas
 
@@ -34,5 +34,39 @@ def getStatsOrgaCommChilds(connection, insee):
             {'label': "Faune Anjou (LPO49)", 'y': inter._82nbtaxon},
             {'label': "Faune Vendée (LPO85)", 'y': inter._83nbtaxon},
             {'label': "Faune Maine (LPO72, MNE)", 'y': inter._84nbtaxon}
+        ]
+
+
+
+def getStatsOrgaDataCommChilds(connection, insee):
+    sql = """
+       
+    SELECT 
+    _03nbobs, 
+    _05nbobs, 
+    _06nbobs, 
+    _70nbobs, 
+    _81nbobs, 
+    _82nbobs, 
+    _83nbobs, 
+    _84nbobs 
+
+    FROM atlas.vm_stats_orga_comm orgas
+
+    WHERE orgas.insee = :thisinsee
+
+    """.encode('UTF-8')
+
+    mesOrgas = connection.execute(text(sql), thisinsee=insee)
+    for inter in mesOrgas:
+        return [
+            {'label': "Calluna (CBNB)", 'y': inter._06nbobs},
+            {'label': "SICEN (CEN)", 'y': inter._03nbobs},
+            {'label': "GRETIA", 'y': inter._05nbobs},
+            {'label': "Kollect (URCPIE)", 'y': inter._70nbobs},
+            {'label': "Faune Loire-Atlantique (LPO44, BV, GNLA)", 'y': inter._81nbobs},
+            {'label': "Faune Anjou (LPO49)", 'y': inter._82nbobs},
+            {'label': "Faune Vendée (LPO85)", 'y': inter._83nbobs},
+            {'label': "Faune Maine (LPO72, MNE)", 'y': inter._84nbobs}
         ]
 

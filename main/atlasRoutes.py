@@ -242,7 +242,8 @@ def ficheCommune(insee):
     infosCommune = vmCommunesRepository.infosCommune(connection, insee)
     epciCommune = vmCommunesRepository.epciCommune(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
-    statsorgacomm = vmStatsOrgaCommRepository.getStatsOrgaCommChilds(connection, insee)
+    statsorgataxoncomm = vmStatsOrgaCommRepository.getStatsOrgaTaxonCommChilds(connection, insee)
+    statsorgadatacomm = vmStatsOrgaCommRepository.getStatsOrgaDataCommChilds(connection, insee)
     statsgroup2inpncomm = vmStatsGroup2inpnCommRepository.getStatsGroup2inpnCommChilds(connection, insee)
     statstaxongroup2inpncomm = vmStatsTaxonGroup2inpnCommRepository.getStatsTaxonGroup2inpnCommChilds(connection, insee)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
@@ -282,7 +283,8 @@ def ficheCommune(insee):
         infosCommune=infosCommune,
         epciCommune=epciCommune,
         referenciel=commune,
-        statsorgacomm=statsorgacomm,
+        statsorgataxoncomm=statsorgataxoncomm,
+        statsorgadatacomm=statsorgadatacomm,
         statsgroup2inpncomm=statsgroup2inpncomm,
         statstaxongroup2inpncomm=statstaxongroup2inpncomm,
         communesSearch=communesSearch,
@@ -305,7 +307,8 @@ def ficheEpci(nom_epci_simple):
     communesEpci = vmEpciRepository.communesEpciChilds(connection, nom_epci_simple)
     epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
     epciDpt = vmEpciRepository.getDptFromEpci(connection, nom_epci_simple)
-    statsorgaepci = vmStatsOrgaEpciRepository.getStatsOrgaEpciChilds(connection, nom_epci_simple)
+    statsorgataxonepci = vmStatsOrgaEpciRepository.getStatsOrgaTaxonEpciChilds(connection, nom_epci_simple)
+    statsorgadataepci = vmStatsOrgaEpciRepository.getStatsOrgaDataEpciChilds(connection, nom_epci_simple)
     statsgroup2inpnepci = vmStatsGroup2inpnEpciRepository.getStatsGroup2inpnEpciChilds(connection, nom_epci_simple)
     statstaxongroup2inpnepci = vmStatsTaxonGroup2inpnEpciRepository.getStatsTaxonGroup2inpnEpciChilds(connection, nom_epci_simple)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
@@ -346,7 +349,8 @@ def ficheEpci(nom_epci_simple):
         communesEpci=communesEpci,
         referenciel=epci,
         epciDpt=epciDpt,
-        statsorgaepci=statsorgaepci,
+        statsorgataxonepci=statsorgataxonepci,
+        statsorgadataepci=statsorgadataepci,
         statsgroup2inpnepci=statsgroup2inpnepci,
         statstaxongroup2inpnepci=statstaxongroup2inpnepci,
         communesSearch=communesSearch,
@@ -369,7 +373,8 @@ def ficheDepartement(num_dpt):
     communesDpt = vmDepartementRepository.communesDptChilds(connection, num_dpt)
     epciDpt = vmDepartementRepository.epciDptChilds(connection, num_dpt)
     dpt = vmDepartementRepository.getDepartementFromNumdpt(connection, num_dpt)
-    statsorgadpt = vmStatsOrgaDptRepository.getStatsOrgaDptChilds(connection, num_dpt)
+    statsorgataxondpt = vmStatsOrgaDptRepository.getStatsOrgaTaxonDptChilds(connection, num_dpt)
+    statsorgadatadpt = vmStatsOrgaDptRepository.getStatsOrgaDataDptChilds(connection, num_dpt)
     statsgroup2inpndpt = vmStatsGroup2inpnDptRepository.getStatsGroup2inpnDptChilds(connection, num_dpt)
     statstaxongroup2inpndpt = vmStatsTaxonGroup2inpnDptRepository.getStatsTaxonGroup2inpnDptChilds(connection, num_dpt)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
@@ -410,7 +415,8 @@ def ficheDepartement(num_dpt):
         communesDpt=communesDpt,
         epciDpt=epciDpt,
         referenciel=dpt,
-        statsorgadpt=statsorgadpt,
+        statsorgataxondpt=statsorgataxondpt,
+        statsorgadatadpt=statsorgadatadpt,
         statsgroup2inpndpt=statsgroup2inpndpt,
         statstaxongroup2inpndpt=statstaxongroup2inpndpt,
         communesSearch=communesSearch,

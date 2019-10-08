@@ -182,28 +182,32 @@
                             <div class="tab-content" style="width:100%;">
                                 
                                 <div id="donnees" class="tab-pane fade in active">
-                                    <div class="col-xs-6 text-center">
-                                        <div class="text-center" id="group2inpnGraph"></div>
-                                    </div>
-                                    <div class="col-xs-6 text-center">
+                                    <div class="col-md-6 col-xs-12 text-center">
                                         <div class="text-center" id="taxongroup2inpnGraph"></div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 text-center">
+                                        <div class="text-center" id="group2inpnGraph"></div>
                                     </div>
                                 </div>
 
                                 <div id="provenance" class="tab-pane fade">
 
-                                    <div class="col-xs-12 text-center">
-                                        <div id="statsorgacommGraph"></div>
+                                    <div class="col-md-6 col-xs-12 text-center">
+                                        <div id="statsorgataxonterriGraph"></div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 text-center">
+                                        <div id="statsorgadataterriGraph"></div>
                                     </div>
 
                                     <div class="col-xs-12 text-center">
+                                        <h3><b>A l'origine des données :</b></h3>
+                                        <br>
 
                                         <div class="col-xs-6 text-center">
 
                                             <button type="button" class="btn btn-default btn-block btn-lg" data-toggle="modal"
                                         data-target="#listSources">
-                                                <h4><b>{{orgas|length | pretty}} {{ 'sources' if orgas|length > 1 else 'source' }}</b>
-                                                <br>à l'origine des données</h4>
+                                                <h4><b>{{orgas|length | pretty}} {{ 'sources' if orgas|length > 1 else 'source' }}</b></h4>
                                             </button>
                                             <!-- Modal -->
                                             <div id="listSources" class="modal fade" role="dialog">
@@ -241,8 +245,7 @@
                                         <div class="col-xs-6 text-center">
                                             <button type="button" class="btn btn-default btn-block btn-lg" data-toggle="modal"
                                         data-target="#listObservers">
-                                                <h4><b>{{ observers|length | pretty }} {{ 'observateurs' if observers|length > 1 else 'observateur' }}</b>
-                                                <br>à l'origine des données</h4>
+                                                <h4><b>{{ observers|length | pretty }} {{ 'observateurs' if observers|length > 1 else 'observateur' }}</b></h4>
                                                 </button>
 
                                                 <!-- Modal -->
@@ -307,7 +310,8 @@
         <script type="text/javascript">
             var listespeces = {{listespeces|tojson}};
             var referenciel = {{referenciel|tojson}};
-            var statsorgacomm = {{statsorgacomm|tojson}};
+            var statsorgataxonterri = {{statsorgataxoncomm|tojson}};
+            var statsorgadataterri = {{statsorgadatacomm|tojson}};
             var statsgroup2inpncomm = {{statsgroup2inpncomm|tojson}};
             var statstaxongroup2inpncomm = {{statstaxongroup2inpncomm|tojson}};
             var communesSearch = {{communesSearch|tojson}};
