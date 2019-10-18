@@ -63,8 +63,8 @@ QUERY_RESULTS_MESTAXON=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t 
     done
 
 
-
-#On recupère tous les cd_nom de toxonomie.bib_noms (geonaturedb) pour télécharger les medias de nos taxons (et pas de tout TAXREF)
+ 
+ #On recupère tous les cd_nom de toxonomie.bib_noms (geonaturedb) pour télécharger les medias de nos taxons (#et pas de tout TAXREF)
   QUERYGETCDNOM="select cd_nom from taxonomie.bib_noms;" 
   QUERY_RESULTS_CDNOM=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBTAXHUB -c "$QUERYGETCDNOM"))
 
@@ -95,7 +95,7 @@ for (( i=0 ; i<${cnt} ; i++ )); do
 
 
    #On recupère le fichier JSON associe au cd_nom
-    JSONDATA=$(curl -X GET "https://taxref.mnhn.fr/api/media/cdNom/$CDNOM" -H "accept: application/json" | jq -r '.media.media') 
+    JSONDATA=$(curl -X GET "https://taxref.mnhn.fr/api/taxa/$CDNOM/media" -H "accept: application/hal+json;version=1" | jq -r '._embedded.media') 
 
         #On boucle dans le fichier JSON
         for ROW in $(echo "${JSONDATA}" | jq -r '.[] | @base64'); do
@@ -104,7 +104,7 @@ for (( i=0 ; i<${cnt} ; i++ )); do
             }
 
         #On recupère l'url pour télécharger le média
-        URL=$(_jq '.url')
+        URL=$(_jq '._links.file.href')
         #On recupère le numero du media         
         NUMBERMEDIA=$(echo $URL | tr -cd '[[:digit:]]')
 
@@ -119,7 +119,7 @@ for (( i=0 ; i<${cnt} ; i++ )); do
             if [[ -z $ix ]]
               then
                #On recupère l'url pour télécharger le média
-                URL=$(_jq '.url')
+                URL=$(_jq '._links.file.href')
                 echo $URL
             
                 #On recupère la licence d'utilisation du média
@@ -132,7 +132,7 @@ for (( i=0 ; i<${cnt} ; i++ )); do
                 echo $COPYRIGHT
             
                 #On recupère la legende associee au média
-                LEGENDE=$(_jq '.legende')
+                LEGENDE=$(_jq '.title')
                 LEGENDE=`echo $LEGENDE | sed -e s/\'/\'\'/ `
                 echo $LEGENDE
 
