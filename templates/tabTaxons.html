@@ -6,7 +6,6 @@
             <th data-priority="6">Nom Vernaculaire</th>
             
 
-            <!--
             {% if configuration.PROTECTION %}
                 <th data-priority="7">Protection</th>
             {% endif %}
@@ -15,7 +14,6 @@
             {% endif %}
             
             
-            -->
             
             <th data-priority="9">Dernière observation</th>
             <th id="sorted" data-priority="4"> Nombre d'observation(s)</th>
@@ -62,7 +60,7 @@
                 
 
 
-                <!--
+                
 
                 {% if configuration.PROTECTION %}
                     <td>
@@ -87,7 +85,7 @@
 
                 {% endif %}
 
-                -->
+                
 
                 <td>{{taxon.last_obs | int}}</td>
                 <td>{{taxon.nb_obs | pretty}}</td>
