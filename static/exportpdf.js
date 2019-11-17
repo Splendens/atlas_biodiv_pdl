@@ -17,50 +17,51 @@ $(document).ready(function(){
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
       doc.text("Nombre d'espèces : "+listespeces.taxons.length, 12, 30);
-      doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 40);
 
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Référentiel : TAXREF v11", 12, 50);
+      doc.text("Nombre d'espèces protégées : "+taxonProCom.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonPatriCom.nbTaxonPatri, 12, 40);
+      doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
+      doc.text("Référentiel : TAXREF v12", 12, 60);
 
       doc.setLineWidth(0.2);
       doc.setDrawColor(27, 86, 126);
-      doc.line(12, 55, 200, 55);
+      doc.line(12, 75, 200, 75);
 
       doc.setFontSize(11);
       doc.setFontType("bold");
       doc.setTextColor(13, 43, 63);
-      doc.text("Avertissement", 12, 60);
+      doc.text("Avertissement", 12, 80);
 
       doc.setFontSize(11);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("Les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données", 12, 70);
+      doc.text("Les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données", 12, 90);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage", 12, 75);
+      doc.text("existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage", 12, 95);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à", 12, 80);
+      doc.text("des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à", 12, 100);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, ", 12, 85);
+      doc.text("augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, ", 12, 105);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans", 12, 90);  
+      doc.text("et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans", 12, 110);  
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("être formellement validées.", 12, 95); 
-
+      doc.text("être formellement validées.", 12, 115); 
+    
       doc.setLineWidth(0.2);
       doc.setDrawColor(27, 86, 126);
-      doc.line(12, 100, 200, 100);  
+      doc.line(12, 120, 200, 120); 
 
 
       //récupère les classes taxo observée sur le territoire
@@ -85,7 +86,7 @@ $(document).ready(function(){
 
 
           //Initialisation du tableau
-          window[col] = ["Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
+          window[col] = ["Nom complet", "Nom vernaculaire", "Protégée", "Patrimoniale", "Dernière\nobservation"];
           window[rows]  = [];
 
           //On récupère les données du JSON listespece.taxons
@@ -95,10 +96,20 @@ $(document).ready(function(){
                 var nom_vern = element.nom_vern;
               } else {var nom_vern = '';}
 
+              if ( element.protection_stricte != null ) {
+                var protection_stricte = 'protégée';
+              } else {var protection_stricte = '';}
+
+              if ( element.patrimonial != null ) {
+                var patrimonial = 'patrimoniale';
+              } else {var patrimonial = '';}
+
               if ( element.group2_inpn == classetaxon[i] ) {
                   var temp = [
                               element.nom_complet,
                               nom_vern,
+                              protection_stricte,
+                              patrimonial,
                               element.last_obs
                               ];
                   window[rows].push(temp);
@@ -110,8 +121,8 @@ $(document).ready(function(){
           //paramétrage du rendu du tableau
 
           if (first == true ) { 
-              startytable = 105; 
-              startytitretable = 110; 
+              startytable = 140; 
+              startytitretable = 135; 
           } else { 
               startytable = doc.autoTable.previous.finalY + 20; 
               startytitretable = doc.autoTable.previous.finalY + 15; 
@@ -161,55 +172,55 @@ $(document).ready(function(){
       doc.setFontType("bold");
       doc.setTextColor(27, 86, 126);
       doc.text("Liste des espèces de l'EPCI : "+referenciel.epciName+' ('+epciDpt.num_dpt+')', 12, 20);
-
-      doc.setFontSize(12);
+doc.setFontSize(12);
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
       doc.text("Nombre d'espèces : "+listespeces.taxons.length, 12, 30);
-      doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 40);
-      
+
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Référentiel : TAXREF v11", 12, 50);
+      doc.text("Nombre d'espèces protégées : "+taxonProEpci.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonPatriEpci.nbTaxonPatri, 12, 40);
+      doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
+      doc.text("Référentiel : TAXREF v12", 12, 60);
 
       doc.setLineWidth(0.2);
       doc.setDrawColor(27, 86, 126);
-      doc.line(12, 55, 200, 55);
+      doc.line(12, 75, 200, 75);
 
       doc.setFontSize(11);
       doc.setFontType("bold");
       doc.setTextColor(13, 43, 63);
-      doc.text("Avertissement", 12, 60);
+      doc.text("Avertissement", 12, 80);
 
       doc.setFontSize(11);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("Les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données", 12, 70);
+      doc.text("Les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données", 12, 90);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage", 12, 75);
+      doc.text("existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage", 12, 95);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à", 12, 80);
+      doc.text("des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à", 12, 100);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, ", 12, 85);
+      doc.text("augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, ", 12, 105);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans", 12, 90);  
+      doc.text("et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans", 12, 110);  
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("être formellement validées.", 12, 95); 
-
+      doc.text("être formellement validées.", 12, 115); 
+    
       doc.setLineWidth(0.2);
       doc.setDrawColor(27, 86, 126);
-      doc.line(12, 100, 200, 100);  
+      doc.line(12, 120, 200, 120);  
 
       //récupère les classes taxo observée sur le territoire
       var classetaxon = [];
@@ -233,7 +244,7 @@ $(document).ready(function(){
 
 
           //Initialisation du tableau
-          window[col] = ["Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
+          window[col] = ["Nom complet", "Nom vernaculaire", "Protégée", "Patrimoniale", "Dernière\nobservation"];
           window[rows]  = [];
 
           //On récupère les données du JSON listespece.taxons
@@ -243,10 +254,20 @@ $(document).ready(function(){
                 var nom_vern = element.nom_vern;
               } else {var nom_vern = '';}
 
+              if ( element.protection_stricte != null ) {
+                var protection_stricte = 'protégée';
+              } else {var protection_stricte = '';}
+
+              if ( element.patrimonial != null ) {
+                var patrimonial = 'patrimoniale';
+              } else {var patrimonial = '';}
+
               if ( element.group2_inpn == classetaxon[i] ) {
                   var temp = [
                               element.nom_complet,
                               nom_vern,
+                              protection_stricte,
+                              patrimonial,
                               element.last_obs
                               ];
                   window[rows].push(temp);
@@ -258,8 +279,8 @@ $(document).ready(function(){
           //paramétrage du rendu du tableau
 
           if (first == true ) { 
-              startytable = 105; 
-              startytitretable = 110; 
+              startytable = 140; 
+              startytitretable = 135; 
           } else { 
               startytable = doc.autoTable.previous.finalY + 20; 
               startytitretable = doc.autoTable.previous.finalY + 15; 
@@ -360,54 +381,56 @@ $(document).ready(function(){
       doc.setTextColor(27, 86, 126);
       doc.text("Liste des espèces du département : "+referenciel.dptName+' ('+referenciel.num_dpt+')', 12, 20);
 
-      doc.setFontSize(12);
+     doc.setFontSize(12);
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
       doc.text("Nombre d'espèces : "+listespeces.taxons.length, 12, 30);
-      doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 40);
       
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Référentiel : TAXREF v11", 12, 50);
+      doc.text("Nombre d'espèces protégées : "+taxonProDpt.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonPatriDpt.nbTaxonPatri, 12, 40);
+      doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
+
+      doc.text("Référentiel : TAXREF v12", 12, 60);
 
       doc.setLineWidth(0.2);
       doc.setDrawColor(27, 86, 126);
-      doc.line(12, 55, 200, 55);
+      doc.line(12, 75, 200, 75);
 
       doc.setFontSize(11);
       doc.setFontType("bold");
       doc.setTextColor(13, 43, 63);
-      doc.text("Avertissement", 12, 60);
+      doc.text("Avertissement", 12, 80);
 
       doc.setFontSize(11);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("Les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données", 12, 70);
+      doc.text("Les données visualisables reflètent l'état d'avancement des connaissances et/ou la disponibilité des données", 12, 90);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage", 12, 75);
+      doc.text("existantes : elles ne peuvent en aucun cas être considérées comme exhaustives. De plus, le moissonnage", 12, 95);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à", 12, 80);
+      doc.text("des bases de données partenaires est toujours en cours, le nombre de données visualisables est amené à", 12, 100);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, ", 12, 85);
+      doc.text("augmenter au fil du temps. Il est à noter que certaines données visualisables sont validées au niveau régional, ", 12, 105);
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans", 12, 90);  
+      doc.text("et que d'autres sont encore dans un processus de validation. Ces dernières sont donc visualisables sans", 12, 110);  
 
       doc.setFontType("normal");
       doc.setTextColor(13, 43, 63);
-      doc.text("être formellement validées.", 12, 95); 
-
+      doc.text("être formellement validées.", 12, 115); 
+    
       doc.setLineWidth(0.2);
       doc.setDrawColor(27, 86, 126);
-      doc.line(12, 100, 200, 100);  
+      doc.line(12, 120, 200, 120); 
 
 
       //récupère les classes taxo observée sur le territoire
@@ -432,7 +455,7 @@ $(document).ready(function(){
 
 
           //Initialisation du tableau
-          window[col] = ["Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
+          window[col] = ["Nom complet", "Nom vernaculaire", "Protégée", "Patrimoniale", "Dernière\nobservation"];
           window[rows]  = [];
 
           //On récupère les données du JSON listespece.taxons
@@ -442,10 +465,20 @@ $(document).ready(function(){
                 var nom_vern = element.nom_vern;
               } else {var nom_vern = '';}
 
+              if ( element.protection_stricte != null ) {
+                var protection_stricte = 'protégée';
+              } else {var protection_stricte = '';}
+
+              if ( element.patrimonial != null ) {
+                var patrimonial = 'patrimoniale';
+              } else {var patrimonial = '';}
+
               if ( element.group2_inpn == classetaxon[i] ) {
                   var temp = [
                               element.nom_complet,
                               nom_vern,
+                              protection_stricte,
+                              patrimonial,
                               element.last_obs
                               ];
                   window[rows].push(temp);
@@ -457,8 +490,8 @@ $(document).ready(function(){
           //paramétrage du rendu du tableau
 
           if (first == true ) { 
-              startytable = 105; 
-              startytitretable = 110; 
+              startytable = 140; 
+              startytitretable = 135; 
           } else { 
               startytable = doc.autoTable.previous.finalY + 20; 
               startytitretable = doc.autoTable.previous.finalY + 15; 

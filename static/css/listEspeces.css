@@ -161,3 +161,6 @@ tbody tr.current{
 	border-color: #d6e9c6 !important;
 }
 
+tr.taxonRow {
+	cursor: auto;
+}

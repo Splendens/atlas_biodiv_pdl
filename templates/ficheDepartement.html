@@ -81,6 +81,14 @@
                                 <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
                                 <b>{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
                             </li>
+                             <li>
+                                <img id="picto" src="{{url_for('static', filename='images/logo_protection.png')}}" style="font-size:30px;margin:5%;width:32px;"></br>
+                                <b>{{ taxonProDpt.nbTaxonPro }}</b><br/>{{ 'Espèces protégées' if taxonProDpt.nbTaxonPro > 1 else 'Espèce protégée' }}
+                            </li>
+                            <li>
+                                <img id="picto" src="{{url_for('static', filename='custom/images/logo_patrimonial.png')}}" style="font-size:30px;margin:5%;width:30px;"></br>
+                                <b>{{ taxonPatriDpt.nbTaxonPatri }}</b><br/>{{ 'Espèces patrimoniales' if taxonPatriDpt.nbTaxonPatri > 1 else 'Espèce patrimoniale' }}
+                            </li>
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span>
                                 <br/><b>Première observation</b><br/>{{infosDpt.dptYearSearch.yearmin|int}}
@@ -406,6 +414,8 @@
         <script type="text/javascript">
             var referenciel = {{referenciel|tojson}};
             var listespeces = {{listespeces|tojson}};
+            var taxonProDpt = {{taxonProDpt|tojson}};
+            var taxonPatriDpt = {{taxonPatriDpt|tojson}};
             var statsorgataxonterri = {{statsorgataxondpt|tojson}};
             var statsorgadataterri = {{statsorgadatadpt|tojson}};
             var statsgroup2inpncomm = {{statsgroup2inpndpt|tojson}};

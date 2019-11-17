@@ -114,19 +114,21 @@
                                 <h3> {{taxon.taxonSearch.nom_vern}} </h3>
                             {% endif %}
                             <h3> {{taxon.taxonSearch.nom_complet_html|safe}}
-                            <br>
+                            <br><br>
                             {% if taxon.taxonSearch.protection == 'oui' %}
-                                <br/>
                                 <a href="https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}/tab/statut" target="_blank">
-                                    <img class="caractEspece" width="130px" src="{{url_for('static', filename='images/logo_protection.png') }}"  data-toggle="tooltip" data-original-title="Ce taxon bénéficie d'un statut de protection" data-placement="right"></a>
+                                    <img class="caractEspece" width="130px" src="{{url_for('static', filename='images/logo_protection.png') }}"  data-toggle="tooltip" data-original-title="Ce taxon bénéficie d'un statut de protection" data-placement="right">
+                                </a>
                             {% endif %}
                             {% if taxon.taxonSearch.patrimonial in configuration.PATRIMONIALITE.config %}
-                                <img
+                                <a href="https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}/tab/statut" target="_blank">
+                                    <img
                                     class="caractEspece"
                                     width="130px"
                                     src="{{url_for('static', filename=configuration.PATRIMONIALITE.config[taxon.taxonSearch.patrimonial].icon) }}"
                                     data-toggle="tooltip"
                                     data-original-title="{{configuration.PATRIMONIALITE.config[taxon.taxonSearch.patrimonial].text}}" data-placement="right">
+                                </a>
                             {% endif %}
                             </h3>
 

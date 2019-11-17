@@ -239,6 +239,8 @@ def ficheCommune(insee):
     connection = utils.engine.connect()
     listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
     listespeces = vmTaxonsRepository.getListeTaxonsCommunes(connection, insee)
+    taxonProCom = vmTaxonsRepository.getNbTaxonsProCommunes(connection, insee)
+    taxonPatriCom = vmTaxonsRepository.getNbTaxonsPatriCommunes(connection, insee)
     infosCommune = vmCommunesRepository.infosCommune(connection, insee)
     epciCommune = vmCommunesRepository.epciCommune(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
@@ -280,6 +282,8 @@ def ficheCommune(insee):
         insee=insee,
         listTaxons=listTaxons,
         listespeces=listespeces,
+        taxonProCom=taxonProCom,
+        taxonPatriCom=taxonPatriCom,
         infosCommune=infosCommune,
         epciCommune=epciCommune,
         referenciel=commune,
@@ -303,6 +307,8 @@ def ficheEpci(nom_epci_simple):
     connection = utils.engine.connect()
     listTaxons = vmTaxonsRepository.getTaxonsEpci(connection, nom_epci_simple)
     listespeces = vmTaxonsRepository.getListeTaxonsEpci(connection, nom_epci_simple)
+    taxonProEpci = vmTaxonsRepository.getNbTaxonsProEpci(connection, nom_epci_simple)
+    taxonPatriEpci = vmTaxonsRepository.getNbTaxonsPatriEpci(connection, nom_epci_simple)
     infosEpci = vmEpciRepository.infosEpci(connection, nom_epci_simple)
     communesEpci = vmEpciRepository.communesEpciChilds(connection, nom_epci_simple)
     epci = vmEpciRepository.getEpciFromNomsimple(connection, nom_epci_simple)
@@ -345,6 +351,8 @@ def ficheEpci(nom_epci_simple):
         nom_epci_simple=nom_epci_simple,
         listTaxons=listTaxons,
         listespeces=listespeces,
+        taxonProEpci=taxonProEpci,
+        taxonPatriEpci=taxonPatriEpci,
         infosEpci=infosEpci,
         communesEpci=communesEpci,
         referenciel=epci,
@@ -369,6 +377,8 @@ def ficheDepartement(num_dpt):
     connection = utils.engine.connect()
     listTaxons = vmTaxonsRepository.getTaxonsDpt(connection, num_dpt)
     listespeces = vmTaxonsRepository.getListeTaxonsDpt(connection, num_dpt)
+    taxonProDpt = vmTaxonsRepository.getNbTaxonsProDpt(connection, num_dpt)
+    taxonPatriDpt = vmTaxonsRepository.getNbTaxonsPatriDpt(connection, num_dpt)
     infosDpt = vmDepartementRepository.infosDpt(connection, num_dpt)
     communesDpt = vmDepartementRepository.communesDptChilds(connection, num_dpt)
     epciDpt = vmDepartementRepository.epciDptChilds(connection, num_dpt)
@@ -411,6 +421,8 @@ def ficheDepartement(num_dpt):
         num_dpt=num_dpt,
         listTaxons=listTaxons,
         listespeces=listespeces,
+        taxonProDpt=taxonProDpt,
+        taxonPatriDpt=taxonPatriDpt,
         infosDpt=infosDpt,
         communesDpt=communesDpt,
         epciDpt=epciDpt,

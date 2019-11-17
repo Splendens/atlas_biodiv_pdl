@@ -16,7 +16,7 @@
             
             
             <th data-priority="9">Dernière observation</th>
-            <th id="sorted" data-priority="4"> Nombre d'observation(s)</th>
+            <th id="sorted" data-priority="4"> Nombre d'obs.</th>
 
             {% if not configuration.PRESSION_PROSPECTION %}
                 {% if configuration.MYTYPE == 1 %}
@@ -75,11 +75,13 @@
                 {% if configuration.PATRIMONIALITE %}
                     <td>
                         {% if taxon.patrimonial in configuration.PATRIMONIALITE.config %}
-                            <img
-                                src="{{url_for('static', filename=configuration.PATRIMONIALITE.config[taxon.patrimonial].icon) }}"
-                                style="width : 30px; height: 30px" data-placement="left" data-toggle="tooltip"
-                                data-original-title="{{configuration.PATRIMONIALITE.config[taxon.patrimonial].text}}" data-placement="right"
-                            >
+                            <a href="https://inpn.mnhn.fr/espece/cd_nom/{{taxon.cd_ref}}/tab/statut" target="_blank">
+                                <img
+                                    src="{{url_for('static', filename=configuration.PATRIMONIALITE.config[taxon.patrimonial].icon) }}"
+                                    style="width : 30px; height: 30px" data-placement="left" data-toggle="tooltip"
+                                    data-original-title="{{configuration.PATRIMONIALITE.config[taxon.patrimonial].text}}" data-placement="right"
+                                >
+                            </a>
                         {% endif %}
                     </td>
 
