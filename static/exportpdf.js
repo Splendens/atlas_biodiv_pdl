@@ -20,7 +20,7 @@ $(document).ready(function(){
 
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Nombre d'espèces protégées : "+taxonProCom.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonPatriCom.nbTaxonPatri, 12, 40);
+      doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
       doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
       doc.text("Référentiel : TAXREF v12", 12, 60);
 
@@ -179,7 +179,7 @@ doc.setFontSize(12);
 
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Nombre d'espèces protégées : "+taxonProEpci.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonPatriEpci.nbTaxonPatri, 12, 40);
+      doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
       doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
       doc.text("Référentiel : TAXREF v12", 12, 60);
 
@@ -388,7 +388,7 @@ doc.setFontSize(12);
       
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Nombre d'espèces protégées : "+taxonProDpt.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonPatriDpt.nbTaxonPatri, 12, 40);
+      doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
       doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
 
       doc.text("Référentiel : TAXREF v12", 12, 60);

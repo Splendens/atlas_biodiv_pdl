@@ -34,6 +34,12 @@
   height: 500px;
 }
 
+#statutsTaxonsGraph {
+  max-width: 650px;
+  margin: 1% auto;
+  height: 500px;
+}
+
 
 /* Stats fiche espece */
 

@@ -83,11 +83,11 @@
                             </li>
                              <li>
                                 <img id="picto" src="{{url_for('static', filename='images/logo_protection.png')}}" style="font-size:30px;margin:5%;width:32px;"></br>
-                                <b>{{ taxonProDpt.nbTaxonPro }}</b><br/>{{ 'Espèces protégées' if taxonProDpt.nbTaxonPro > 1 else 'Espèce protégée' }}
+                                <b>{{ taxonProPatri.nbTaxonPro }}</b><br/>{{ 'Espèces protégées' if taxonProPatri.nbTaxonPro > 1 else 'Espèce protégée' }}
                             </li>
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='custom/images/logo_patrimonial.png')}}" style="font-size:30px;margin:5%;width:30px;"></br>
-                                <b>{{ taxonPatriDpt.nbTaxonPatri }}</b><br/>{{ 'Espèces patrimoniales' if taxonPatriDpt.nbTaxonPatri > 1 else 'Espèce patrimoniale' }}
+                                <b>{{ taxonProPatri.nbTaxonPatri }}</b><br/>{{ 'Espèces patrimoniales' if taxonProPatri.nbTaxonPatri > 1 else 'Espèce patrimoniale' }}
                             </li>
                             <li>
                                 <span data-icon="&#xe037;" style="font-size: 25px; color: brown"></span>
@@ -276,6 +276,14 @@
                                     <div class="col-md-6 col-xs-12 text-center">
                                         <div class="text-center" id="group2inpnGraph"></div>
                                     </div>
+                                    <div class="col-xs-12 text-center">
+                                        <br/>
+                                        <hr/>
+                                        <br/>
+                                    </div>
+                                    <div class="col-xs-12 text-center">
+                                        <div class="text-center" id="statutsTaxonsGraph"></div>
+                                    </div>
                                 </div>
 
                                 <div id="provenance" class="tab-pane fade">
@@ -414,11 +422,11 @@
         <script type="text/javascript">
             var referenciel = {{referenciel|tojson}};
             var listespeces = {{listespeces|tojson}};
-            var taxonProDpt = {{taxonProDpt|tojson}};
-            var taxonPatriDpt = {{taxonPatriDpt|tojson}};
+            var taxonProPatri = {{taxonProPatri|tojson}};
+            var statstaxonstatuts = {{statsStatutTaxonDpt|tojson}};
             var statsorgataxonterri = {{statsorgataxondpt|tojson}};
             var statsorgadataterri = {{statsorgadatadpt|tojson}};
-            var statsgroup2inpncomm = {{statsgroup2inpndpt|tojson}};
+            var statsgroup2inpnterri = {{statsgroup2inpndpt|tojson}};
             var statstaxongroup2inpncomm = {{statstaxongroup2inpndpt|tojson}};
             var communesSearch = {{communesSearch|tojson}};
             var epciSearch = {{epciSearch|tojson}};
