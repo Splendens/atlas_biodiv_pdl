@@ -82,14 +82,19 @@
                                 <span data-icon="&#xe03b;" style="font-size: 30px;"></span></br>
                                 <b>{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'Espèces' if listTaxons.taxons|length > 1 else 'Espèce' }}
                             </li>
+
+                        {% if configuration.PROTECTION %}
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='images/logo_protection.png')}}" style="font-size:30px;margin:5%;width:32px;"></br>
                                 <b>{{ taxonProPatri.nbTaxonPro }}</b><br/>{{ 'Espèces protégées' if taxonProPatri.nbTaxonPro > 1 else 'Espèce protégée' }}
                             </li>
+                        {% endif %}
+                        {% if configuration.AFFICHE_PATRIMONIALITE %}
                             <li>
                                 <img id="picto" src="{{url_for('static', filename='custom/images/logo_patrimonial.png')}}" style="font-size:30px;margin:5%;width:30px;"></br>
                                 <b>{{ taxonProPatri.nbTaxonPatri }}</b><br/>{{ 'Espèces patrimoniales' if taxonProPatri.nbTaxonPatri > 1 else 'Espèce patrimoniale' }}
                             </li>
+                        {% endif %}
 
                             {% if infosCommune.communeYearSearch.yearmin %}
                             <li>
@@ -198,14 +203,14 @@
                                     <div class="col-md-6 col-xs-12 text-center">
                                         <div class="text-center" id="group2inpnGraph"></div>
                                     </div>
+                                    {% if (configuration.AFFICHE_PATRIMONIALITE and configuration.PROTECTION) %}
                                     <div class="col-xs-12 text-center">
-                                        <br/>
-                                        <hr/>
-                                        <br/>
+                                        <br/><hr/><br/>
                                     </div>
                                     <div class="col-xs-12 text-center">
                                         <div class="text-center" id="statutsTaxonsGraph"></div>
                                     </div>
+                                    {% endif %}
                                 </div>
 
                                 <div id="provenance" class="tab-pane fade">
@@ -361,7 +366,7 @@
             {% if not configuration.PRESSION_PROSPECTION %}
                 {% if configuration.MYTYPE == 1 %} nbColumn = nbColumn+1;{% endif %}
             {% endif %}
-            {% if configuration.PATRIMONIALITE %} nbColumn = nbColumn+1;{% endif %}
+            {% if configuration.AFFICHE_PATRIMONIALITE %} nbColumn = nbColumn+1;{% endif %}
             {% if configuration.PROTECTION %} nbColumn = nbColumn+1;{% endif %}
             var noSordedColumns=[nbColumn-2,nbColumn-1]; //var for dataTables js lib
             var defaultSortedColumn=nbColumn-4; //var for dataTables js lib

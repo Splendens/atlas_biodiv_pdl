@@ -606,119 +606,122 @@ Highcharts.chart('taxongroup2inpnGraph', {
 
 
 
+if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
+  
 
-// PieChart proportion statuts des taxons
-Highcharts.chart('statutsTaxonsGraph', {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie'
-  },
-  lang: {
-      //printChart: 'Print chart',
-      downloadPNG: 'Export PNG',
-      downloadJPEG: 'Export JPEG',
-      //downloadPDF: 'Download PDF',
-      //downloadSVG: 'Download SVG',
-      //contextButtonTitle: 'Context menu'
-  },
+    // PieChart proportion statuts des taxons
+    Highcharts.chart('statutsTaxonsGraph', {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+      },
+      lang: {
+          //printChart: 'Print chart',
+          downloadPNG: 'Export PNG',
+          downloadJPEG: 'Export JPEG',
+          //downloadPDF: 'Download PDF',
+          //downloadSVG: 'Download SVG',
+          //contextButtonTitle: 'Context menu'
+      },
 
-  credits: {
-    enabled: false
-  },
-  title: {
-    text: "<b>Proportion des taxons</b>",
-    style : { "color": "#333333", "fontSize": "22px" }
-  },
-  subtitle: {
-    text: "par statuts (protection, patrimonialité)",
-    style : { "color": "#333333", "fontSize": "18px" }
-  },
-  tooltip: {
-    headerFormat: '',
-    pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
-    valueSuffix: ' taxon(s) <br>({point.percentage:.2f}%)'
-  },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: "<b>Proportion des taxons</b>",
+        style : { "color": "#333333", "fontSize": "22px" }
+      },
+      subtitle: {
+        text: "par statuts (protection, patrimonialité)",
+        style : { "color": "#333333", "fontSize": "18px" }
+      },
+      tooltip: {
+        headerFormat: '',
+        pointFormat: '<b>{point.label}</b> <br> <b>{point.y}</b>', 
+        valueSuffix: ' taxon(s) <br>({point.percentage:.2f}%)'
+      },
 
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      colors: pieColors,
-      borderColor: "#7094db",
-      /*
-       style: {
-          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-        },
-        */
-      showInLegend: false,
-      
-      dataLabels: {
-        allowOverlap: true,
-        connectorColor: "#7094db",
-        enabled: true,
-        format: '<b>{point.label}</b><br><b>{point.y} taxon(s)</b><br>{point.percentage:.2f} %',
-        style : { "color": "#333333", "fontSize": "11px" },
-        /*distance: 10,*/
-        filter: {
-          property: 'percentage',
-          operator: '>',
-          value: 0
-        }
-      }
-
-    }
-  },
-
-  series: [{
-   data : statstaxonstatuts,
-   innerSize: '30%',                
-  // showInLegend:true,
-   dataLabels: {
-       enabled: true,
-       padding: 0
-   }
-  }],
-
-
-  navigation: {
-        buttonOptions: {
-
-            theme: {
-                'stroke-width': 1,
-                stroke: 'silver',
-                r: 0,
-                states: {
-                    hover: {
-                        fill: '#a4edba'
-                    },
-                    select: {
-                        stroke: '#039',
-                        fill: '#a4edba'
-                    }
-                },
-                style: {
-                    color: '#3c763d',
-                    textDecoration: 'bold'
-                }
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          colors: pieColors,
+          borderColor: "#7094db",
+          /*
+           style: {
+              color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+            },
+            */
+          showInLegend: false,
+          
+          dataLabels: {
+            allowOverlap: true,
+            connectorColor: "#7094db",
+            enabled: true,
+            format: '<b>{point.label}</b><br><b>{point.y} taxon(s)</b><br>{point.percentage:.2f} %',
+            style : { "color": "#333333", "fontSize": "11px" },
+            /*distance: 10,*/
+            filter: {
+              property: 'percentage',
+              operator: '>',
+              value: 0
             }
+          }
 
         }
-    },
-    exporting: {
-      filename: 'Repartition_proportion_statuts_des_taxons',
-      buttons: {
-        contextButton: {
-          symbol: 'download',
-          text: 'Enregistrer',
-          menuItems: [
-            'downloadPNG',
-            'downloadJPEG'
-           ]
+      },
+
+      series: [{
+       data : statstaxonstatuts,
+       innerSize: '30%',                
+      // showInLegend:true,
+       dataLabels: {
+           enabled: true,
+           padding: 0
+       }
+      }],
+
+
+      navigation: {
+            buttonOptions: {
+
+                theme: {
+                    'stroke-width': 1,
+                    stroke: 'silver',
+                    r: 0,
+                    states: {
+                        hover: {
+                            fill: '#a4edba'
+                        },
+                        select: {
+                            stroke: '#039',
+                            fill: '#a4edba'
+                        }
+                    },
+                    style: {
+                        color: '#3c763d',
+                        textDecoration: 'bold'
+                    }
+                }
+
+            }
+        },
+        exporting: {
+          filename: 'Repartition_proportion_statuts_des_taxons',
+          buttons: {
+            contextButton: {
+              symbol: 'download',
+              text: 'Enregistrer',
+              menuItems: [
+                'downloadPNG',
+                'downloadJPEG'
+               ]
+            }
+          }
         }
-      }
-    }
 
-});
+    });
 
+}

@@ -191,6 +191,7 @@ def ficheEspece(cd_ref):
     configuration.update({
         'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
         'AFFICHAGE_ORGAS_OBS_FICHEESP': config.AFFICHAGE_ORGAS_OBS_FICHEESP,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION,
         'GLOSSAIRE': config.GLOSSAIRE,
@@ -271,6 +272,7 @@ def ficheCommune(insee):
         'MAP': config.MAP,
         'MYTYPE': 0,
         'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -340,6 +342,7 @@ def ficheEpci(nom_epci_simple):
         'MAP': config.MAP,
         'MYTYPE': 0,
         'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -410,6 +413,7 @@ def ficheDepartement(num_dpt):
         'MAP': config.MAP,
         'MYTYPE': 0,
         'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -475,6 +479,7 @@ def listeTaxonCommune_pdf(insee):
       #  'MAP': config.MAP,
       #  'MYTYPE': 0,
       #  'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -516,6 +521,7 @@ def listeTaxonEpci_pdf(nom_epci_simple):
        # 'MAP': config.MAP,
        # 'MYTYPE': 0,
        # 'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -546,6 +552,7 @@ def listeTaxonDpt_pdf(num_dpt):
        # 'MAP': config.MAP,
        # 'MYTYPE': 0,
        # 'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })
@@ -585,6 +592,7 @@ def ficheRangTaxonomie(cd_ref):
         'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
         'AFFICHAGE_ORGAS_OBS_FICHETAXO': config.AFFICHAGE_ORGAS_OBS_FICHETAXO,
         'MYTYPE': 0,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION,
     })
@@ -624,6 +632,7 @@ def ficheGroupe(groupe):
         'LIMIT_FICHE_LISTE_HIERARCHY': config.LIMIT_FICHE_LISTE_HIERARCHY,
         'AFFICHAGE_ORGAS_OBS_FICHEGROUPE': config.AFFICHAGE_ORGAS_OBS_FICHEGROUPE,
         'MYTYPE': 0,
+        'AFFICHE_PATRIMONIALITE' : config.AFFICHE_PATRIMONIALITE,
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })

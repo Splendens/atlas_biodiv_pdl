@@ -20,7 +20,20 @@ $(document).ready(function(){
 
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+
+      if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+        doc.text("----------", 12, 40);
+      }  
+      if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+        doc.text("Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+      }    
+      if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+        doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro, 12, 40);
+      }    
+      if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
+        doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+      }    
+      
       doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
       doc.text("Référentiel : TAXREF v12", 12, 60);
 
@@ -86,8 +99,22 @@ $(document).ready(function(){
 
 
           //Initialisation du tableau
-          window[col] = ["Nom complet", "Nom vernaculaire", "Protégée", "Patrimoniale", "Dernière\nobservation"];
-          window[rows]  = [];
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
+            window[rows]  = [];
+          }    
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Patrimonial", "Dernière\nobservation"];
+            window[rows]  = [];
+          }    
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Protégé", "Dernière\nobservation"];
+            window[rows]  = [];
+          }    
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Protégé", "Patrimonial", "Dernière\nobservation"];
+            window[rows]  = [];
+          } 
 
           //On récupère les données du JSON listespece.taxons
           listespeces.taxons.forEach(element => {      
@@ -97,13 +124,52 @@ $(document).ready(function(){
               } else {var nom_vern = '';}
 
               if ( element.protection_stricte != null ) {
-                var protection_stricte = 'protégée';
+                var protection_stricte = 'protégé';
               } else {var protection_stricte = '';}
 
               if ( element.patrimonial != null ) {
-                var patrimonial = 'patrimoniale';
+                var patrimonial = 'patrimonial';
               } else {var patrimonial = '';}
 
+
+
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              patrimonial,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              protection_stricte,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
               if ( element.group2_inpn == classetaxon[i] ) {
                   var temp = [
                               element.nom_complet,
@@ -114,6 +180,10 @@ $(document).ready(function(){
                               ];
                   window[rows].push(temp);
                 }
+          } 
+
+
+
           }); 
 
 
@@ -179,7 +249,20 @@ doc.setFontSize(12);
 
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+
+      if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+        doc.text("----------", 12, 40);
+      }  
+      if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+        doc.text("Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+      }    
+      if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+        doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro, 12, 40);
+      }    
+      if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
+        doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+      }    
+      
       doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
       doc.text("Référentiel : TAXREF v12", 12, 60);
 
@@ -244,8 +327,22 @@ doc.setFontSize(12);
 
 
           //Initialisation du tableau
-          window[col] = ["Nom complet", "Nom vernaculaire", "Protégée", "Patrimoniale", "Dernière\nobservation"];
-          window[rows]  = [];
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
+            window[rows]  = [];
+          } 
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Patrimonial", "Dernière\nobservation"];
+            window[rows]  = [];
+          }    
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Protégé", "Dernière\nobservation"];
+            window[rows]  = [];
+          }    
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Protégé", "Patrimonial", "Dernière\nobservation"];
+            window[rows]  = [];
+          } 
 
           //On récupère les données du JSON listespece.taxons
           listespeces.taxons.forEach(element => {      
@@ -255,13 +352,49 @@ doc.setFontSize(12);
               } else {var nom_vern = '';}
 
               if ( element.protection_stricte != null ) {
-                var protection_stricte = 'protégée';
+                var protection_stricte = 'protégé';
               } else {var protection_stricte = '';}
 
               if ( element.patrimonial != null ) {
-                var patrimonial = 'patrimoniale';
+                var patrimonial = 'patrimonial';
               } else {var patrimonial = '';}
 
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              patrimonial,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              protection_stricte,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
               if ( element.group2_inpn == classetaxon[i] ) {
                   var temp = [
                               element.nom_complet,
@@ -272,6 +405,9 @@ doc.setFontSize(12);
                               ];
                   window[rows].push(temp);
                 }
+          } 
+
+
           }); 
 
 
@@ -388,7 +524,21 @@ doc.setFontSize(12);
       
       doc.setFontSize(11);
       doc.setTextColor(13, 43, 63);
-      doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+
+
+      if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+        doc.text("----------", 12, 40);
+      }  
+      if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+        doc.text("Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+      }    
+      if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+        doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro, 12, 40);
+      }    
+      if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
+        doc.text("Nombre d'espèces protégées : "+taxonProPatri.nbTaxonPro+" - Nombre d'espèces patrimoniales : "+taxonProPatri.nbTaxonPatri, 12, 40);
+      }    
+      
       doc.text("Liste téléchargée sur Biodiv'Pays de la Loire le "+datenow, 12, 50);
 
       doc.text("Référentiel : TAXREF v12", 12, 60);
@@ -455,8 +605,22 @@ doc.setFontSize(12);
 
 
           //Initialisation du tableau
-          window[col] = ["Nom complet", "Nom vernaculaire", "Protégée", "Patrimoniale", "Dernière\nobservation"];
-          window[rows]  = [];
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Dernière\nobservation"];
+            window[rows]  = [];
+          } 
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Patrimonial", "Dernière\nobservation"];
+            window[rows]  = [];
+          }    
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Protégé", "Dernière\nobservation"];
+            window[rows]  = [];
+          }    
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
+            window[col] = ["Nom complet", "Nom vernaculaire", "Protégé", "Patrimonial", "Dernière\nobservation"];
+            window[rows]  = [];
+          } 
 
           //On récupère les données du JSON listespece.taxons
           listespeces.taxons.forEach(element => {      
@@ -466,13 +630,50 @@ doc.setFontSize(12);
               } else {var nom_vern = '';}
 
               if ( element.protection_stricte != null ) {
-                var protection_stricte = 'protégée';
+                var protection_stricte = 'protégé';
               } else {var protection_stricte = '';}
 
               if ( element.patrimonial != null ) {
-                var patrimonial = 'patrimoniale';
+                var patrimonial = 'patrimonial';
               } else {var patrimonial = '';}
 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION == false) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION == false) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              patrimonial,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE == false) && (configuration.PROTECTION) ) {
+              if ( element.group2_inpn == classetaxon[i] ) {
+                  var temp = [
+                              element.nom_complet,
+                              nom_vern,
+                              protection_stricte,
+                              element.last_obs
+                              ];
+                  window[rows].push(temp);
+                }
+          } 
+
+          if ( (configuration.AFFICHE_PATRIMONIALITE) && (configuration.PROTECTION) ) {
               if ( element.group2_inpn == classetaxon[i] ) {
                   var temp = [
                               element.nom_complet,
@@ -483,6 +684,9 @@ doc.setFontSize(12);
                               ];
                   window[rows].push(temp);
                 }
+          } 
+
+
           }); 
 
 

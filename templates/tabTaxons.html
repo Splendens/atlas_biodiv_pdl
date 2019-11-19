@@ -9,7 +9,7 @@
             {% if configuration.PROTECTION %}
                 <th data-priority="7">Protection</th>
             {% endif %}
-            {% if configuration.PATRIMONIALITE %}
+            {% if configuration.AFFICHE_PATRIMONIALITE %}
                 <th data-priority="8">{{configuration.PATRIMONIALITE.label}}</th>
             {% endif %}
             
@@ -72,7 +72,7 @@
                     </td>
                 {% endif %}
 
-                {% if configuration.PATRIMONIALITE %}
+                {% if configuration.AFFICHE_PATRIMONIALITE %}
                     <td>
                         {% if taxon.patrimonial in configuration.PATRIMONIALITE.config %}
                             <a href="https://inpn.mnhn.fr/espece/cd_nom/{{taxon.cd_ref}}/tab/statut" target="_blank">
