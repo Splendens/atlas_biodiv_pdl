@@ -469,7 +469,11 @@
         <script src="{{url_for('static', filename='listeEspeces.js') }}"></script>
         <script src="{{url_for('static', filename='listeTerritoire.js') }}"></script>
         <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
-        <script src="{{url_for('static', filename='mapDepartement.js') }}"></script>
+        {% if configuration.TAILLE_MAILLES_DPT == '10' %}
+            <script src="{{url_for('static', filename='mapDepartementMailles10.js') }}"></script>
+        {% else %}
+            <script src="{{url_for('static', filename='mapDepartement.js') }}"></script>
+        {% endif %}
         <script src="{{url_for('static', filename='main.js') }}"></script>
 
    </body> 

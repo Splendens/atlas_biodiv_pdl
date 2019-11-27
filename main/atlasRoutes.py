@@ -395,9 +395,14 @@ def ficheDepartement(num_dpt):
     epciSearch = vmEpciRepository.getAllEpci(session)
     departementSearch = vmDepartementRepository.getAllDepartement(session)
     if config.AFFICHAGE_MAILLE:
-        observations = vmObservationsMaillesRepository.lastObservationsDptMaille(
+        if (config.TAILLE_MAILLES_DPT=='10'):
+            observations = vmObservationsMaillesRepository.lastObservationsDptMaille10(
             connection, config.NB_LAST_OBS, num_dpt
-        )
+            )
+        else:
+            observations = vmObservationsMaillesRepository.lastObservationsDptMaille(
+            connection, config.NB_LAST_OBS, num_dpt
+            )
     else:
         observations = vmObservationsRepository.lastObservationsDpt(
             connection, config.NB_LAST_OBS, num_dpt
@@ -410,6 +415,7 @@ def ficheDepartement(num_dpt):
         'NB_LAST_OBS': config.NB_LAST_OBS,
         'AFFICHAGE_ORGAS_OBS_FICHECOMM': config.AFFICHAGE_ORGAS_OBS_FICHECOMM,
         'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+        'TAILLE_MAILLES_DPT': config.TAILLE_MAILLES_DPT,
         'MAP': config.MAP,
         'MYTYPE': 0,
         'PRESSION_PROSPECTION': config.PRESSION_PROSPECTION,

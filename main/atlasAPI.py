@@ -85,6 +85,14 @@ def getpressionProspectionDptAPI(num_dpt):
     connection.close()
     return Response(json.dumps(observations), mimetype='application/json')
 
+@api.route('/pressionProspectionDpt10/<num_dpt>', methods=['GET'])
+def getpressionProspectionDpt10API(num_dpt):
+    connection = utils.engine.connect()
+    observations = vmObservationsMaillesRepository.pressionProspectionDpt10(connection, num_dpt)
+    connection.close()
+    return Response(json.dumps(observations), mimetype='application/json')
+
+
 @api.route('/pressionProspectionDptMaillesCommunales/<num_dpt>', methods=['GET'])
 def getpressionProspectionDptMaillesCommunalesAPI(num_dpt):
     connection = utils.engine.connect()

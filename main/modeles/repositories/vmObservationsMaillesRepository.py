@@ -415,6 +415,46 @@ def lastObservationsDptMaille(connection, mylimit, num_dpt):
 
 
 
+def lastObservationsDptMaille10(connection, mylimit, num_dpt):
+    sql = """
+    WITH last_obs AS (
+        SELECT
+            obs.cd_ref, obs.dateobs, t.lb_nom,
+            t.nom_vern, obs.the_geom_point as l_geom
+        FROM atlas.vm_observations obs
+        JOIN atlas.vm_communes c
+        /*ON ST_Intersects(obs.the_geom_point, c.the_geom)*/
+        ON obs.insee = c.insee
+        JOIN atlas.vm_taxons t ON  obs.cd_ref = t.cd_ref
+        WHERE left(obs.insee,2)::int = :thisNumdpt
+        ORDER BY obs.dateobs DESC
+        LIMIT :thislimit
+    )
+    SELECT l.lb_nom, l.nom_vern, l.cd_ref, m.id_maille, m.geojson_maille
+    FROM atlas.t_mailles_10_territoire m
+    JOIN last_obs  l
+    ON st_intersects(l.l_geom, m.the_geom)
+    GROUP BY l.lb_nom, l.cd_ref, m.id_maille, l.nom_vern, m.geojson_maille
+    """
+    observations = connection.execute(
+        text(sql), thisNumdpt=num_dpt, thislimit=mylimit
+    )
+    obsList = list()
+    for o in observations:
+        if o.nom_vern:
+            taxon = o.nom_vern + ' | ' + o.lb_nom
+        else:
+            taxon = o.lb_nom
+        temp = {
+            'cd_ref': o.cd_ref,
+            'taxon': taxon,
+            'geojson_maille': ast.literal_eval(o.geojson_maille),
+            'id_maille': o.id_maille
+        }
+        obsList.append(temp)
+    return obsList
+
+
 
 
 def pressionProspectionDpt(connection, num_dpt):
@@ -443,6 +483,69 @@ def pressionProspectionDpt(connection, num_dpt):
                 o.dateobs,
                 extract(YEAR FROM o.dateobs) as annee
             FROM atlas.vm_observations_mailles obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE left(o.insee,2)::int = :thisNumdpt
+            ORDER BY id_maille"""
+
+
+    observations = connection.execute(text(sql), thisNumdpt=num_dpt)
+    tabObs = list()
+
+    if config.GROS_JEU_DONNEES:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': o.nbobs,
+                'annee': o.annee,
+                'dateobs': None,
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
+    else:
+        for o in observations:
+            temp = {
+                'id_maille': o.id_maille,
+                'nb_observations': 1,
+                'annee': o.annee,
+                'dateobs': str(o.dateobs),
+                'orga_obs': o.orgaobs,
+                'geojson_maille': ast.literal_eval(o.geojson_maille)
+            }
+            tabObs.append(temp)
+    return tabObs
+
+
+
+
+def pressionProspectionDpt10(connection, num_dpt):
+    if config.GROS_JEU_DONNEES:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs, 
+                count(obs.id_observation) as nbobs,
+                max(extract(year from dateobs)) as annee
+            FROM atlas.vm_observations_mailles_10 obs
+            JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
+            JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
+            JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
+            WHERE left(o.insee,2)::int = :thisNumdpt
+            GROUP BY
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme
+            ORDER BY obs.id_maille"""    
+    else:
+        sql = """SELECT
+                obs.id_maille,
+                obs.geojson_maille,
+                a.nom_organisme AS orgaobs, 
+                o.dateobs,
+                extract(YEAR FROM o.dateobs) as annee
+            FROM atlas.vm_observations_mailles_10 obs
             JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
             JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
             JOIN atlas.vm_organismes a ON a.id_organisme = o.id_organisme 
