@@ -275,7 +275,7 @@
                             
                             <div class="tab-content" style="width:100%;">
                                 
-                                <div id="donnees" class="tab-pane fade in active">
+                                <!--div id="donnees" class="tab-pane fade in active">
                                     <div class="col-md-6 col-xs-12 text-center">
                                         <div class="text-center" id="taxongroup2inpnGraph"></div>
                                     </div>
@@ -290,17 +290,17 @@
                                         <div class="text-center" id="statutsTaxonsGraph"></div>
                                     </div>
                                     {% endif %}
-                                </div>
+                                </div-->
 
                                 <div id="provenance" class="tab-pane fade">
 
 
-                                    <div class="col-md-6 col-xs-12 text-center">
+                                    <!--div class="col-md-6 col-xs-12 text-center">
                                         <div id="statsorgataxonterriGraph"></div>
                                     </div>
                                     <div class="col-md-6 col-xs-12 text-center">
                                         <div id="statsorgadataterriGraph"></div>
-                                    </div>
+                                    </div-->
 
                                     <div class="col-xs-12 text-center">
                                         <h3><b>A l'origine des données :</b></h3>
@@ -465,15 +465,16 @@
             var noSordedColumns=[nbColumn-2,nbColumn-1]; //var for dataTables js lib
             var defaultSortedColumn=nbColumn-4; //var for dataTables js lib
         </script>
-        <script type="text/javascript" src="{{url_for('static', filename='chart_territoire.js') }}"></script>
+        <!--script type="text/javascript" src="{{url_for('static', filename='chart_territoire.js') }}"></script-->
         <script src="{{url_for('static', filename='listeEspeces.js') }}"></script>
         <script src="{{url_for('static', filename='listeTerritoire.js') }}"></script>
-        <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
+        <!--script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
         {% if configuration.TAILLE_MAILLES_DPT == '10' %}
             <script src="{{url_for('static', filename='mapDepartementMailles10.js') }}"></script>
         {% else %}
             <script src="{{url_for('static', filename='mapDepartement.js') }}"></script>
         {% endif %}
+    -->
         <script src="{{url_for('static', filename='main.js') }}"></script>
 
    </body> 
