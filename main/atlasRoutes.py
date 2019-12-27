@@ -387,8 +387,8 @@ def ficheDepartement(num_dpt):
     communesDpt = vmDepartementRepository.communesDptChilds(connection, num_dpt)
     epciDpt = vmDepartementRepository.epciDptChilds(connection, num_dpt)
     dpt = vmDepartementRepository.getDepartementFromNumdpt(connection, num_dpt)
-    statsorgataxondpt = vmStatsOrgaDptRepository.getStatsOrgaTaxonDptChilds(connection, num_dpt)
-    statsorgadatadpt = vmStatsOrgaDptRepository.getStatsOrgaDataDptChilds(connection, num_dpt)
+    #statsorgataxondpt = vmStatsOrgaDptRepository.getStatsOrgaTaxonDptChilds(connection, num_dpt)
+    #statsorgadatadpt = vmStatsOrgaDptRepository.getStatsOrgaDataDptChilds(connection, num_dpt)
     #statsgroup2inpndpt = vmStatsGroup2inpnDptRepository.getStatsGroup2inpnDptChilds(connection, num_dpt)
     #statstaxongroup2inpndpt = vmStatsTaxonGroup2inpnDptRepository.getStatsTaxonGroup2inpnDptChilds(connection, num_dpt)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
@@ -438,8 +438,8 @@ def ficheDepartement(num_dpt):
         communesDpt=communesDpt,
         epciDpt=epciDpt,
         referenciel=dpt,
-        statsorgataxondpt=statsorgataxondpt,
-        statsorgadatadpt=statsorgadatadpt,
+        #statsorgataxondpt=statsorgataxondpt,
+        #statsorgadatadpt=statsorgadatadpt,
         #statsgroup2inpndpt=statsgroup2inpndpt,
         #statstaxongroup2inpndpt=statstaxongroup2inpndpt,
         communesSearch=communesSearch,
