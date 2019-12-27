@@ -264,9 +264,9 @@
                         <div class="row" id="otherInformations">
                          
                           <ul class="nav nav-tabs">
-                            <li class="active">
+                            <!--li class="active">
                                 <a data-toggle="tab" href="#donnees"> <b>Observations et espèces</b> </a>
-                            </li>
+                            </li-->
                             <li> 
                                 <a data-toggle="tab" href="#provenance"> <b>Provenance des données</b> </a>
                             </li>
@@ -275,7 +275,7 @@
                             
                             <div class="tab-content" style="width:100%;">
                                 
-                                <div id="donnees" class="tab-pane fade in active">
+                                <!--div id="donnees" class="tab-pane fade in active">
                                     <div class="col-md-6 col-xs-12 text-center">
                                         <div class="text-center" id="taxongroup2inpnGraph"></div>
                                     </div>
@@ -290,9 +290,9 @@
                                         <div class="text-center" id="statutsTaxonsGraph"></div>
                                     </div>
                                     {% endif %}
-                                </div>
+                                </div-->
 
-                                <div id="provenance" class="tab-pane fade">
+                                <div id="provenance" class="tab-pane fade in active">
 
 
                                     <div class="col-md-6 col-xs-12 text-center">
@@ -429,11 +429,8 @@
             var referenciel = {{referenciel|tojson}};
             var listespeces = {{listespeces|tojson}};
             var taxonProPatri = {{taxonProPatri|tojson}};
-            var statstaxonstatuts = {{statsStatutTaxonDpt|tojson}};
             var statsorgataxonterri = {{statsorgataxondpt|tojson}};
             var statsorgadataterri = {{statsorgadatadpt|tojson}};
-            var statsgroup2inpnterri = {{statsgroup2inpndpt|tojson}};
-            var statstaxongroup2inpncomm = {{statstaxongroup2inpndpt|tojson}};
             var communesSearch = {{communesSearch|tojson}};
             var epciSearch = {{epciSearch|tojson}};
             var departementSearch = {{departementSearch|tojson}};
