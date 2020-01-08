@@ -94,13 +94,9 @@ def communesDptChilds(connection, num_dpt):
         recherche les communes de l'epci
     """
     sql = """  
-    SELECT c.commune_maj, c.insee, count(distinct o.cd_ref) AS nb_sp
-    FROM atlas.vm_communes c  
-        JOIN atlas.vm_departement e ON e.num_dpt = left(c.insee,2)::int
-        LEFT JOIN atlas.vm_observations o ON o.insee = c.insee
-    WHERE e.num_dpt = :thisNumdpt
-    GROUP BY c.commune_maj, c.insee
-    ORDER BY c.commune_maj
+    SELECT *
+    FROM atlas.vm_synthese_comm_dpt c  
+    WHERE c.num_dpt = :thisNumdpt
     """
     req = connection.execute(text(sql), thisNumdpt=num_dpt)
     communesDptChilds = list()
@@ -122,18 +118,9 @@ def epciDptChilds(connection, num_dpt):
         recherche les communes du departement
     """
     sql = """  
-    SELECT  
-        e.nom_epci_simple, 
-        e.nom_epci, 
-        count(distinct ec.insee) AS nb_comm,
-        count(distinct o.cd_ref) AS nb_sp
-    FROM atlas.vm_epci e
-        JOIN atlas.l_communes_epci ec ON e.id = ec.id
-        JOIN atlas.vm_communes c ON c.insee = ec.insee
-        LEFT JOIN atlas.vm_observations o ON o.insee = c.insee
-    WHERE left(ec.insee,2)::int = :thisNumdpt
-    GROUP BY e.nom_epci_simple, e.nom_epci, left(ec.insee,2)
-    ORDER BY e.nom_epci
+    SELECT  *
+    FROM atlas.vm_synthese_epci_dpt e
+    WHERE e.num_dpt = :thisNumdpt
 
     """
     req = connection.execute(text(sql), thisNumdpt=num_dpt)
