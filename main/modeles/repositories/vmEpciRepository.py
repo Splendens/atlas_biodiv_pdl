@@ -114,14 +114,9 @@ def communesEpciChilds(connection, nom_epci_simple):
         recherche les communes de l'epci
     """
     sql = """  
-    SELECT c.commune_maj, c.insee, count(distinct o.cd_ref) AS nb_sp
-    FROM atlas.vm_communes c  
-        JOIN atlas.l_communes_epci ec ON c.insee = ec.insee
-        JOIN atlas.vm_epci e ON ec.id = e.id
-        LEFT JOIN atlas.vm_observations o ON o.insee = c.insee
+    SELECT *
+    FROM atlas.vm_synthese_comm_epci e
     WHERE e.nom_epci_simple = :thisnomepcisimple
-    GROUP BY c.commune_maj, c.insee
-    ORDER BY c.commune_maj
     """
     req = connection.execute(text(sql), thisnomepcisimple=nom_epci_simple)
     communesEpciChilds = list()
