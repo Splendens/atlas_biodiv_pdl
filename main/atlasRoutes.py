@@ -394,19 +394,19 @@ def ficheDepartement(num_dpt):
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     epciSearch = vmEpciRepository.getAllEpci(session)
     departementSearch = vmDepartementRepository.getAllDepartement(session)
-    #if config.AFFICHAGE_MAILLE:
-    #    if (config.TAILLE_MAILLES_DPT=='10'):
-    #        observations = vmObservationsMaillesRepository.lastObservationsDptMaille10(
-    #        connection, config.NB_LAST_OBS, num_dpt
-    #        )
-    #    else:
-    #        observations = vmObservationsMaillesRepository.lastObservationsDptMaille(
-    #        connection, config.NB_LAST_OBS, num_dpt
-    #        )
-    #else:
-    #    observations = vmObservationsRepository.lastObservationsDpt(
-    #        connection, config.NB_LAST_OBS, num_dpt
-    #    )
+    if config.AFFICHAGE_MAILLE:
+        if (config.TAILLE_MAILLES_DPT=='10'):
+            observations = vmObservationsMaillesRepository.lastObservationsDptMaille10(
+            connection, config.NB_LAST_OBS, num_dpt
+            )
+        else:
+            observations = vmObservationsMaillesRepository.lastObservationsDptMaille(
+            connection, config.NB_LAST_OBS, num_dpt
+            )
+    else:
+        observations = vmObservationsRepository.lastObservationsDpt(
+            connection, config.NB_LAST_OBS, num_dpt
+        )
     orgas = vmObservationsRepository.getOrgasDpt(connection, num_dpt)
     observers = vmObservationsRepository.getObserversDpt(connection, num_dpt)
 
@@ -445,7 +445,7 @@ def ficheDepartement(num_dpt):
         communesSearch=communesSearch,
         epciSearch=epciSearch,
         departementSearch=departementSearch,
-        #observations=observations,
+        observations=observations,
         orgas=orgas,
         observers=observers,
         configuration=configuration
