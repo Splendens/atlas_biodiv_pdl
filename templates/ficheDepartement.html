@@ -224,13 +224,13 @@
 
                         <div class="row" id="mapRow">
                             <!-- CARTE des dernières observations -->
-                            <div id="blocMap" class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <!--div id="blocMap" class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                 <div id="map">
                                     <img id ="loadingGif" src="">
                                 </div>
-                            </div>
+                            </div-->
                             <!-- LISTE des dernières observations -->
-                            <div id="listMap" class="col-lg-7 col-md-7 col-sm-12 col-xs-12"> 
+                            <div id="listMap" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
                                  <div id="listTaxonsCommune" class="panel panel-default">
                                     {% include 'templates/tabTaxonsSansPhoto.html' %}
                                 </div>
@@ -468,11 +468,11 @@
         <script src="{{url_for('static', filename='listeEspeces.js') }}"></script>
         <script src="{{url_for('static', filename='listeTerritoire.js') }}"></script>
         <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
-        <{% if configuration.TAILLE_MAILLES_DPT == '10' %}
+        <!--{% if configuration.TAILLE_MAILLES_DPT == '10' %}
             <script src="{{url_for('static', filename='mapDepartementMailles10.js') }}"></script>
         {% else %}
             <script src="{{url_for('static', filename='mapDepartement.js') }}"></script>
-        {% endif %}>
+        {% endif %}-->
         <script src="{{url_for('static', filename='main.js') }}"></script>
 
    </body> 
