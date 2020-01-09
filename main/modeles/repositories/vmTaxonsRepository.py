@@ -215,26 +215,9 @@ def getListeTaxonsEpci(connection, nom_epci_simple):
 # With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
 def getListeTaxonsDpt(connection, num_dpt):
     sql = """
-        with taxondpt AS (
-            SELECT DISTINCT
-                        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
-                        COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
-                        t.group2_inpn, t.patrimonial, t.protection_stricte, o.insee
-                    FROM atlas.vm_observations o
-                    JOIN atlas.vm_taxons t ON t.cd_ref=o.cd_ref
-                    WHERE left(o.insee,2)::int = :thisNumdpt
-                    GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
-                        t.patrimonial, t.protection_stricte, o.insee
-                    ORDER BY o.cd_ref DESC
-            )
-        select DISTINCT
-                    cd_ref, max(last_obs) as last_obs,
-                    SUM(nb_obs)::int AS nb_obs, replace(replace(nom_complet_html, '<i>', ''), '</i>', '') as nom_complet, nom_vern,
-                    group2_inpn, patrimonial, protection_stricte
-                     from taxondpt
-           GROUP BY cd_ref, nom_vern, nom_complet, group2_inpn,
-                    patrimonial, protection_stricte
-        ORDER BY group2_inpn, nom_complet ASC
+    SELECT *
+    FROM  atlas.vm_synthese_liste_taxons_dpt
+    WHERE num_dpt = :thisNumdpt
     """
     req = connection.execute(text(sql), thisNumdpt=num_dpt)
     taxonDptList = list()
