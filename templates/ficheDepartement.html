@@ -25,8 +25,8 @@
 
 
         <!-- Highcharts -->
-        <!--script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
-        <script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script-->
+        <script src="{{url_for('static', filename='lib/highcharts6/code/highcharts.js') }}"></script>
+        <script src="{{url_for('static', filename='lib/highcharts6/code/modules/exporting.js') }}"></script>
 
         <!-- D3 -->
         <!--script src="{{url_for('static', filename='lib/d3/d3.min.js') }}"></script-->
@@ -255,7 +255,7 @@
                     </div>
                 </div>           
             </div>
-            <!--div class="row rowMargin">
+            <div class="row rowMargin">
                 <div class="col-xs-12">
                     <div class="panel panel-default" id="statCom">
                         <h2 class="text-center">Le département <i>{{referenciel.dptName}}</i> en quelques chiffres</h2>
@@ -292,7 +292,7 @@
                                     {% endif %}
                                 </div>
 
-                                <div id="provenance" class="tab-pane fade in active">
+                                <div id="provenance" class="tab-pane fade">
 
 
                                     <div class="col-md-6 col-xs-12 text-center">
@@ -312,9 +312,11 @@
                                         data-target="#listSources">
                                                 <h4><b>{{orgas|length | pretty}} {{ 'sources' if orgas|length > 1 else 'source' }}</b></h4>
                                             </button>
+                                            <!-- Modal -->
                                             <div id="listSources" class="modal fade" role="dialog">
                                                 <div class="modal-dialog modal-lg">
 
+                                                    <!-- Modal content-->
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal">&times;
@@ -349,9 +351,11 @@
                                                 <h4><b>{{ observers|length | pretty }} {{ 'observateurs' if observers|length > 1 else 'observateur' }}</b></h4>
                                                 </button>
 
+                                                <!-- Modal -->
                                                 <div id="listObservers" class="modal fade" role="dialog">
                                                     <div class="modal-dialog modal-lg">
 
+                                                        <!-- Modal content-->
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal">&times;
@@ -389,7 +393,7 @@
                     </div>
 
                 </div>
-         </div-->
+         </div>
 
 
             <!--div class="row rowMargin">
@@ -425,6 +429,11 @@
             var referenciel = {{referenciel|tojson}};
             var listespeces = {{listespeces|tojson}};
             var taxonProPatri = {{taxonProPatri|tojson}};
+            var statstaxonstatuts = {{statsStatutTaxonDpt|tojson}};
+            var statsorgataxonterri = {{statsorgataxondpt|tojson}};
+            var statsorgadataterri = {{statsorgadatadpt|tojson}};
+            var statsgroup2inpnterri = {{statsgroup2inpndpt|tojson}};
+            var statstaxongroup2inpncomm = {{statstaxongroup2inpndpt|tojson}};
             var communesSearch = {{communesSearch|tojson}};
             var epciSearch = {{epciSearch|tojson}};
             var departementSearch = {{departementSearch|tojson}};
@@ -455,10 +464,10 @@
             var noSordedColumns=[nbColumn-2,nbColumn-1]; //var for dataTables js lib
             var defaultSortedColumn=nbColumn-4; //var for dataTables js lib
         </script>
-        <!--script type="text/javascript" src="{{url_for('static', filename='chart_territoire.js') }}"></script-->
+        <script type="text/javascript" src="{{url_for('static', filename='chart_territoire.js') }}"></script>
         <script src="{{url_for('static', filename='listeEspeces.js') }}"></script>
         <script src="{{url_for('static', filename='listeTerritoire.js') }}"></script>
-        <!--script src="{{url_for('static', filename='mapGenerator.js') }}"></script-->
+        <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
         <!--{% if configuration.TAILLE_MAILLES_DPT == '10' %}
             <script src="{{url_for('static', filename='mapDepartementMailles10.js') }}"></script>
         {% else %}
