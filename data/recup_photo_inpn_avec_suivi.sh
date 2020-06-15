@@ -25,47 +25,15 @@
 #SETTINGS
 DBTAXHUB=mydbtaxo
 DBATLAS=mydbatlas
-TABLESYNTHESE=syntheseff
 SOURCE="INPN"
 IDTYPE=2
 MYUSER="mon user"
 CHEMIN_MEDIA_TAXHUB="/home/${MYUSER}/taxhub/static/medias/"
 DBPGPASSWORD="lemotdepasse"
 
-
-#On récupère tous les taxons présents dans la synthese
-
-QUERYMESTAXON="WITH observations AS (SELECT DISTINCT cd_nom FROM synthese.$TABLESYNTHESE)
-SELECT json_build_object('cd_nom', o.cd_nom, 'cd_ref', tx.cd_ref, 'nom_tax', tx.lb_nom)   
-FROM observations o JOIN atlas.vm_taxref tx ON o.cd_nom = tx.cd_nom"
-
-QUERY_RESULTS_MESTAXON=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBATLAS -c "$QUERYMESTAXON"))
-
-
-    for ROW in $(echo "${QUERY_RESULTS_MESTAXON[@]}" | jq -r '. | @base64'); do
-        _taxon() {
-            echo ${ROW} | base64 --decode | jq -r ${1}
-        }
-
-        TAXCDNOM=$(_taxon '.cd_nom')
-        echo ${TAXCDNOM}
-      
-        TAXCDREF=$(_taxon '.cd_ref')
-        echo ${TAXCDREF}
-
-        NOMTAX=$(_taxon '.nom_tax')
-        echo ${NOMTAX}
-
-#On fait un insert dans taxonomie.bib_nom pour chaque cdNom
-        QUERYINSERTBIBNOM="insert into taxonomie.bib_noms (cd_nom, cd_ref, nom_francais) values (${TAXCDNOM}, ${TAXCDREF}, '${NOMTAX}') ON CONFLICT (cd_nom) DO NOTHING;" 
-        QUERY_RESULTS_INSERTBIBNOM=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBTAXHUB -c "$QUERYINSERTBIBNOM"))
-
-    done
-
-
  
- #On recupère tous les cd_nom de toxonomie.bib_noms (geonaturedb) pour télécharger les medias de nos taxons (#et pas de tout TAXREF)
-  QUERYGETCDNOM="select cd_nom from taxonomie.bib_noms;" 
+#On recupère tous les cd_nom de toxonomie.bib_noms (geonature2db) pour télécharger les medias de nos taxons (#et pas de tout TAXREF)
+  QUERYGETCDNOM="select cd_nom from taxonomie.bib_noms where cd_nom = cd_ref;" 
   QUERY_RESULTS_CDNOM=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBTAXHUB -c "$QUERYGETCDNOM"))
 
 
@@ -201,7 +169,7 @@ QUERYPHOTO1="UPDATE taxonomie.t_medias SET id_type = 1
 RESULTS_QUERYPHOTO1=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBTAXHUB -c "$QUERYPHOTO1")) 
 
 
-#On rafraichit la vm_medias de l'atlas
+#On rafraichit les vm de l'atlas
 
 QUERYREFRESH="REFRESH MATERIALIZED VIEW atlas.vm_medias; REFRESH MATERIALIZED VIEW atlas.vm_taxons_plus_observes;" 
 RESULTS_QUERYREFRESH=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBATLAS -c "$QUERYREFRESH"))
