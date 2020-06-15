@@ -60,11 +60,14 @@ for (( i=0 ; i<${cnt} ; i++ )); do
                         regexp_replace(
                             regexp_replace(
                                 regexp_replace(
-                                    nom_francais, '''|,|\s', '_', 'g'
+                                    regexp_replace(
+                                        nom_francais, '''|,|\s', '_', 'g'
+                                    )
+                                    ,'\)', ''
                                 )
-                                ,'\)', ''
+                                ,'\(', ''
                             )
-                            ,'\(', ''
+                            ,'''', ''
                         )
                         ,'.jpg'
                     )
