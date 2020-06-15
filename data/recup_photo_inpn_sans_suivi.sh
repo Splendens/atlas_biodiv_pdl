@@ -42,7 +42,18 @@ QUERY_RESULTS_CDNOM=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U 
     TITRE=`echo $TITRE | sed -e s/\'/\'\'/ `
 
     QUERYTITREMEDIA="SELECT
-                    regexp_replace(nom_francais, '''|,|\s', '_', 'g')
+                    concat(
+                        regexp_replace(
+                            regexp_replace(
+                                regexp_replace(
+                                    nom_francais, '''|,|\s', '_', 'g'
+                                )
+                                ,'\)', ''
+                            )
+                            ,'\(', ''
+                        )
+                        ,'.jpg'
+                    )
                     FROM taxonomie.bib_noms 
                     WHERE cd_nom=$CDNOM;"
     TITREMEDIA=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBTAXHUB -c "$QUERYTITREMEDIA"))
@@ -137,3 +148,4 @@ RESULTS_QUERYPHOTO1=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U 
 QUERYREFRESH="REFRESH MATERIALIZED VIEW atlas.vm_medias; REFRESH MATERIALIZED VIEW atlas.vm_taxons_plus_observes;" 
 RESULTS_QUERYREFRESH=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBATLAS -c "$QUERYREFRESH"))
 
+cd "/home/${MYUSER}/"
