@@ -49,11 +49,11 @@ QUERY_RESULTS_CDNOM=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U 
                                     regexp_replace(
                                         nom_francais, '''|,|\s', '_', 'g'
                                     )
-                                    ,'\)', ''
+                                    ,'\)', '', 'g'
                                 )
-                                ,'\(', ''
+                                ,'\(', '', 'g'
                             )
-                            ,'''', ''
+                            ,'''', '', 'g'
                         )
                         ,'.jpg'
                     )
