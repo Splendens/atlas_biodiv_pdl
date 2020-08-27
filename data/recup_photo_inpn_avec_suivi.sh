@@ -191,7 +191,10 @@ RESULTS_QUERYREFRESH=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U
 cd "/home/${MYUSER}/"
 
 
-
 #   update  taxonomie.t_medias set desc_media = '' where desc_media = 'null';
 #   update  taxonomie.t_medias set auteur = '' where auteur = 'null';
+#   update  taxonomie.t_medias set url = '' where url = 'null';
+#   update  taxonomie.t_medias set desc_media = '' where desc_media is null;
+#   update  taxonomie.t_medias set auteur = '' where auteur is null;
+#   update  taxonomie.t_medias set url = '' where url is null;
 
