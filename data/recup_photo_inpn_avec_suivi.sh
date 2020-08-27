@@ -189,3 +189,9 @@ QUERYREFRESH="REFRESH MATERIALIZED VIEW atlas.vm_medias; REFRESH MATERIALIZED VI
 RESULTS_QUERYREFRESH=($(PGPASSWORD=$DBPGPASSWORD psql -h localhost -p 5432 -t -U postgres -d $DBATLAS -c "$QUERYREFRESH"))
 
 cd "/home/${MYUSER}/"
+
+
+
+#   update  taxonomie.t_medias set desc_media = '' where desc_media = 'null';
+#   update  taxonomie.t_medias set auteur = '' where auteur = 'null';
+
